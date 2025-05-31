@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
@@ -46,6 +47,10 @@ import se.premex.mcpserver.ui.theme.MCPServerTheme
 class MainActivity : ComponentActivity() {
     // Service status flag
     private var isServerRunning = mutableStateOf(false)
+
+    // Tool state flags
+    private var isSmsToolEnabled = mutableStateOf(true)
+    private var isAdsToolEnabled = mutableStateOf(false)
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -80,7 +85,11 @@ class MainActivity : ComponentActivity() {
                             }
                         },
                         modifier = Modifier.padding(innerPadding),
-                        getConnectionUrl = { getConnectionUrl() }
+                        getConnectionUrl = { getConnectionUrl() },
+                        isSmsToolEnabled = isSmsToolEnabled.value,
+                        isAdsToolEnabled = isAdsToolEnabled.value,
+                        onToggleSmsToolEnabled = { isSmsToolEnabled.value = it },
+                        onToggleAdsToolEnabled = { isAdsToolEnabled.value = it }
                     )
                 }
             }
@@ -117,6 +126,11 @@ class MainActivity : ComponentActivity() {
         val serviceIntent = Intent(this, McpServerService::class.java)
 
         if (start) {
+            // Add enabled tools as extras
+            serviceIntent.putExtra(McpServerService.EXTRA_ENABLE_SMS_TOOL, isSmsToolEnabled.value)
+            serviceIntent.putExtra(McpServerService.EXTRA_ENABLE_ADS_TOOL, isAdsToolEnabled.value)
+
+            // Start service
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(serviceIntent)
             } else {
@@ -141,7 +155,11 @@ fun McpServerControl(
     isRunning: Boolean,
     onToggleServer: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    getConnectionUrl: () -> String
+    getConnectionUrl: () -> String,
+    isSmsToolEnabled: Boolean,
+    isAdsToolEnabled: Boolean,
+    onToggleSmsToolEnabled: (Boolean) -> Unit,
+    onToggleAdsToolEnabled: (Boolean) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -194,6 +212,42 @@ fun McpServerControl(
                     Switch(
                         checked = isRunning,
                         onCheckedChange = onToggleServer
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Enable SMS Tool",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+
+                    Checkbox(
+                        checked = isSmsToolEnabled,
+                        onCheckedChange = onToggleSmsToolEnabled
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Enable Ads Tool",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+
+                    Checkbox(
+                        checked = isAdsToolEnabled,
+                        onCheckedChange = onToggleAdsToolEnabled
                     )
                 }
 
@@ -281,7 +335,11 @@ fun McpServerControlPreview() {
         McpServerControl(
             isRunning = true,
             onToggleServer = {},
-            getConnectionUrl = { "http://192.168.1.1:3001/sse" }
+            getConnectionUrl = { "http://192.168.1.1:3001/sse" },
+            isSmsToolEnabled = true,
+            isAdsToolEnabled = false,
+            onToggleSmsToolEnabled = {},
+            onToggleAdsToolEnabled = {}
         )
     }
 }

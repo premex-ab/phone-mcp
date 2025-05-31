@@ -23,11 +23,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import se.premex.adserver.mcp.ads.appendSmsTools
+import se.premex.adserver.mcp.ads.appendAdTools
 
 class McpServerService : Service() {
     companion object {
         private const val TAG = "McpServerService"
         private const val NOTIFICATION_ID = 1001
+
+        // Intent extra keys for tool configuration
+        const val EXTRA_ENABLE_SMS_TOOL = "enableSmsTools"
+        const val EXTRA_ENABLE_ADS_TOOL = "enableAdsTools"
     }
 
     private val serviceJob = Job()
@@ -36,6 +41,10 @@ class McpServerService : Service() {
         null
     private var notificationManager: NotificationManager? = null
 
+    // Tool configuration flags (default values)
+    private var enableSmsTools = true
+    private var enableAdsTools = false
+
     override fun onCreate() {
         super.onCreate()
         Log.i(TAG, "onCreate: Initializing McpServerService")
@@ -43,6 +52,7 @@ class McpServerService : Service() {
 
         // Create a pending intent for the notification that will bring existing activity to front
         val activityIntent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         }
 
@@ -65,6 +75,14 @@ class McpServerService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.i(TAG, "onStartCommand: Starting service with id $startId")
+
+        // Read tool configuration from intent
+        intent?.let {
+            enableSmsTools = it.getBooleanExtra(EXTRA_ENABLE_SMS_TOOL, true)
+            enableAdsTools = it.getBooleanExtra(EXTRA_ENABLE_ADS_TOOL, false)
+
+            Log.d(TAG, "onStartCommand: Tool configuration: SMS=$enableSmsTools, Ads=$enableAdsTools")
+        }
 
         // Launch server initialization in a background coroutine
         serviceScope.launch {
@@ -202,13 +220,19 @@ class McpServerService : Service() {
             )
         )
 
-        appendSmsTools(
-            server = server
-        )
-        //appendAdTools(
-        //    server = server,
-        //    clientId = "da9f87c34f4641a4a2bdace0ff4895fe",
-        //)
+        // Conditionally add tools based on configuration
+        if (enableSmsTools) {
+            Log.d(TAG, "configureServer: Adding SMS tools")
+            appendSmsTools(server = server)
+        }
+
+        if (enableAdsTools) {
+            Log.d(TAG, "configureServer: Adding Ads tools")
+            appendAdTools(
+                server = server,
+                clientId = "da9f87c34f4641a4a2bdace0ff4895fe",
+            )
+        }
 
         return server
     }
