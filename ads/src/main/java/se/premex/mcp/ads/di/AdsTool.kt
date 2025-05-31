@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
-import se.premex.mcpserver.di.McpTool
+import se.premex.mcp.core.tool.McpTool
 import javax.inject.Singleton
 
 class AdsTool : McpTool {

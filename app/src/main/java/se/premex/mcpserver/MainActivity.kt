@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
@@ -29,22 +28,18 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
-import se.premex.mcpserver.di.McpTool
+import se.premex.mcp.core.tool.McpTool
 import se.premex.mcpserver.di.ToolService
 import se.premex.mcpserver.ui.theme.MCPServerTheme
 import javax.inject.Inject
@@ -114,11 +109,13 @@ class MainActivity : ComponentActivity() {
                     // Permission already granted
                     toggleService(true)
                 }
+
                 shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
                     // Could show educational UI here explaining why notifications are important
                     // For simplicity, we're just requesting directly
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
+
                 else -> {
                     // Request permission
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
@@ -297,7 +294,7 @@ fun McpServerControl(
                                     text = """
                                     {
                                         "mcpServers": {
-                                            "adserver": {
+                                            "premexMcpServer": {
                                                 "command": "npx",
                                                 "args": ["mcp-remote", "${getConnectionUrl()}"]
                                             }
@@ -332,8 +329,8 @@ fun McpServerControlPreview() {
             onToggleServer = {},
             getConnectionUrl = { "http://192.168.1.1:3001/sse" },
             tools = listOf(
-                McpTool("sms", "SMS Tool"),
-                McpTool("ads", "Ads Tool")
+                McpToolPreview("sms", "SMS Tool", true),
+                McpToolPreview("ads", "Ads Tool", true)
             ),
             toolEnabledStates = mapOf(
                 "sms" to true,
@@ -342,4 +339,11 @@ fun McpServerControlPreview() {
             onToggleToolEnabled = {}
         )
     }
+}
+
+private class McpToolPreview(
+    override val id: String, override val name: String,
+    override val enabledByDefault: Boolean
+) : McpTool {
+
 }

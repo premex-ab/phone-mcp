@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
 
     // Module dependencies
+    implementation(project(":core"))
     //implementation(project(":ads-mcp-extensions"))
 
     // External dependencies

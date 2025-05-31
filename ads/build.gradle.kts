@@ -39,6 +39,9 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
+    // Module dependencies
+    implementation(project(":core"))
+
     api(libs.io.modelcontextprotocol.kotlin.sdk)
     implementation(libs.io.ktor.ktor.client.core)
     implementation(libs.io.ktor.ktor.client.cio)

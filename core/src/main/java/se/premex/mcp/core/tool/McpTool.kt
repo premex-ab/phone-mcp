@@ -1,4 +1,4 @@
-package se.premex.mcpserver.di
+package se.premex.mcp.core.tool
 
 /**
  * Common interface for MCP tools that can be enabled/disabled in the application

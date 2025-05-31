@@ -23,3 +23,4 @@ rootProject.name = "MCP server"
 include(":app")
 include(":sms")
 include(":ads")
+include(":core")

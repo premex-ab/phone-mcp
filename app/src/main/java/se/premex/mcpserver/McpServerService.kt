@@ -9,6 +9,7 @@ import android.content.Intent
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import dagger.hilt.android.AndroidEntryPoint
 import io.ktor.server.cio.CIO
 import io.ktor.server.cio.CIOApplicationEngine
 import io.ktor.server.engine.EmbeddedServer
@@ -24,26 +25,33 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import se.premex.adserver.mcp.ads.appendSmsTools
 import se.premex.adserver.mcp.ads.appendAdTools
+import se.premex.mcp.core.tool.McpTool
+import se.premex.mcpserver.di.ToolService
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class McpServerService : Service() {
     companion object {
         private const val TAG = "McpServerService"
         private const val NOTIFICATION_ID = 1001
 
         // Intent extra keys for tool configuration
-        const val EXTRA_ENABLE_SMS_TOOL = "enableSmsTools"
-        const val EXTRA_ENABLE_ADS_TOOL = "enableAdsTools"
+        const val EXTRA_TOOL_STATES = "toolsStates"
     }
 
     private val serviceJob = Job()
     private val serviceScope = CoroutineScope(Dispatchers.IO + serviceJob)
-    private var server: EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration>? =
-        null
+    private var server: EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration>? = null
     private var notificationManager: NotificationManager? = null
 
-    // Tool configuration flags (default values)
-    private var enableSmsTools = true
-    private var enableAdsTools = false
+    // Tool states from the intent or default values
+    private var toolStates: Map<String, Boolean> = emptyMap()
+
+    @Inject
+    lateinit var toolService: ToolService
+
+    @Inject
+    lateinit var availableTools: Set<@JvmSuppressWildcards McpTool>
 
     override fun onCreate() {
         super.onCreate()
@@ -52,7 +60,6 @@ class McpServerService : Service() {
 
         // Create a pending intent for the notification that will bring existing activity to front
         val activityIntent = Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         }
 
@@ -76,12 +83,19 @@ class McpServerService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.i(TAG, "onStartCommand: Starting service with id $startId")
 
-        // Read tool configuration from intent
+        // Read tool states from intent
         intent?.let {
-            enableSmsTools = it.getBooleanExtra(EXTRA_ENABLE_SMS_TOOL, true)
-            enableAdsTools = it.getBooleanExtra(EXTRA_ENABLE_ADS_TOOL, false)
+            @Suppress("UNCHECKED_CAST")
+            val receivedToolStates = it.getSerializableExtra(EXTRA_TOOL_STATES) as? HashMap<String, Boolean>
 
-            Log.d(TAG, "onStartCommand: Tool configuration: SMS=$enableSmsTools, Ads=$enableAdsTools")
+            if (receivedToolStates != null) {
+                toolStates = receivedToolStates.toMap()
+                Log.d(TAG, "onStartCommand: Received tool states: $toolStates")
+            } else {
+                // If no tool states were passed, use the current tool states from the ToolService
+                toolStates = toolService.toolEnabledStates.value
+                Log.d(TAG, "onStartCommand: Using default tool states: $toolStates")
+            }
         }
 
         // Launch server initialization in a background coroutine
@@ -220,18 +234,30 @@ class McpServerService : Service() {
             )
         )
 
-        // Conditionally add tools based on configuration
-        if (enableSmsTools) {
-            Log.d(TAG, "configureServer: Adding SMS tools")
-            appendSmsTools(server = server)
-        }
+        // Add tools based on their enabled state
+        for (tool in availableTools) {
+            val isEnabled = toolStates[tool.id] ?: tool.enabledByDefault
 
-        if (enableAdsTools) {
-            Log.d(TAG, "configureServer: Adding Ads tools")
-            appendAdTools(
-                server = server,
-                clientId = "da9f87c34f4641a4a2bdace0ff4895fe",
-            )
+            if (isEnabled) {
+                when (tool.id) {
+                    "sms" -> {
+                        Log.d(TAG, "configureServer: Adding SMS tools")
+                        appendSmsTools(server = server)
+                    }
+                    "ads" -> {
+                        Log.d(TAG, "configureServer: Adding Ads tools")
+                        appendAdTools(
+                            server = server,
+                            clientId = "da9f87c34f4641a4a2bdace0ff4895fe",
+                        )
+                    }
+                    else -> {
+                        Log.d(TAG, "configureServer: Unknown tool ID: ${tool.id}")
+                    }
+                }
+            } else {
+                Log.d(TAG, "configureServer: Tool ${tool.id} is disabled, skipping")
+            }
         }
 
         return server
