@@ -41,12 +41,16 @@ class McpServerService : Service() {
         Log.i(TAG, "onCreate: Initializing McpServerService")
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        // Create a pending intent for the notification to launch the app
+        // Create a pending intent for the notification that will bring existing activity to front
+        val activityIntent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        }
+
         val pendingIntent = PendingIntent.getActivity(
             this,
             0,
-            Intent(this, MainActivity::class.java),
-            PendingIntent.FLAG_IMMUTABLE
+            activityIntent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
         // Start foreground service immediately with the initial notification
@@ -113,12 +117,16 @@ class McpServerService : Service() {
 
             Log.i(TAG, "startServerWithHost: $successMessage")
 
-            // Create PendingIntent for notification
+            // Create PendingIntent for notification with single activity flags
+            val activityIntent = Intent(this, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            }
+
             val pendingIntent = PendingIntent.getActivity(
                 this,
                 0,
-                Intent(this, MainActivity::class.java),
-                PendingIntent.FLAG_IMMUTABLE
+                activityIntent,
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             )
 
             updateNotification("MCP Server Running", successMessage, pendingIntent)
