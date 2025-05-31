@@ -1,18 +1,18 @@
 package se.premex.mcpserver
 
 import android.app.Notification
-import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import io.ktor.server.cio.*
-import io.ktor.server.engine.*
+import io.ktor.server.cio.CIO
+import io.ktor.server.cio.CIOApplicationEngine
+import io.ktor.server.engine.EmbeddedServer
+import io.ktor.server.engine.embeddedServer
 import io.modelcontextprotocol.kotlin.sdk.Implementation
 import io.modelcontextprotocol.kotlin.sdk.ServerCapabilities
 import io.modelcontextprotocol.kotlin.sdk.server.Server
@@ -27,24 +27,19 @@ import se.premex.adserver.mcp.ads.appendSmsTools
 class McpServerService : Service() {
     companion object {
         private const val TAG = "McpServerService"
-        private const val CHANNEL_ID = "mcp_server_channel"
         private const val NOTIFICATION_ID = 1001
     }
 
     private val serviceJob = Job()
     private val serviceScope = CoroutineScope(Dispatchers.IO + serviceJob)
-    private var server: EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration>? = null
+    private var server: EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration>? =
+        null
     private var notificationManager: NotificationManager? = null
 
     override fun onCreate() {
         super.onCreate()
         Log.i(TAG, "onCreate: Initializing McpServerService")
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        createNotificationChannel()
-    }
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.i(TAG, "onStartCommand: Starting service with id $startId")
 
         // Create a pending intent for the notification to launch the app
         val pendingIntent = PendingIntent.getActivity(
@@ -54,16 +49,20 @@ class McpServerService : Service() {
             PendingIntent.FLAG_IMMUTABLE
         )
 
-        // Start with "Starting..." notification
-        val startingNotification = createNotification(
+        // Start foreground service immediately with the initial notification
+        val initialNotification = createNotification(
             "Starting MCP server",
             "Initializing server...",
             pendingIntent
         )
 
-        Log.d(TAG, "onStartCommand: Starting foreground service with notification")
-        startForeground(NOTIFICATION_ID, startingNotification)
+        startForeground(NOTIFICATION_ID, initialNotification)
+    }
 
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        Log.i(TAG, "onStartCommand: Starting service with id $startId")
+
+        // Launch server initialization in a background coroutine
         serviceScope.launch {
             Log.d(TAG, "onStartCommand: Launching coroutine to start server")
             startMcpServer()
@@ -144,10 +143,14 @@ class McpServerService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? = null
 
-    private fun createNotification(title: String, content: String, contentIntent: PendingIntent? = null): Notification {
+    private fun createNotification(
+        title: String,
+        content: String,
+        contentIntent: PendingIntent? = null
+    ): Notification {
         Log.d(TAG, "createNotification: Creating notification with title: $title")
 
-        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
+        val builder = NotificationCompat.Builder(this, McpServerApplication.CHANNEL_ID)
             .setContentTitle(title)
             .setContentText(content)
             .setSmallIcon(android.R.drawable.ic_dialog_info)
@@ -162,31 +165,15 @@ class McpServerService : Service() {
         return builder.build()
     }
 
-    private fun updateNotification(title: String, content: String, contentIntent: PendingIntent? = null) {
+    private fun updateNotification(
+        title: String,
+        content: String,
+        contentIntent: PendingIntent? = null
+    ) {
         Log.d(TAG, "updateNotification: Updating notification with title: $title")
         val notification = createNotification(title, content, contentIntent)
         notificationManager?.notify(NOTIFICATION_ID, notification)
     }
-
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Log.d(TAG, "createNotificationChannel: Creating notification channel")
-
-            val channel = NotificationChannel(
-                CHANNEL_ID,
-                "MCP Server Channel",
-                NotificationManager.IMPORTANCE_HIGH
-            ).apply {
-                description = "Notifications for MCP Server status"
-                enableLights(true)
-                enableVibration(true)
-            }
-
-            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            manager.createNotificationChannel(channel)
-        }
-    }
-
 
     private fun configureServer(): Server {
         val server = Server(
