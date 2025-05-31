@@ -197,73 +197,76 @@ fun McpServerControl(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                // Only show connection information and instructions when server is running
+                if (isRunning) {
+                    Spacer(modifier = Modifier.height(16.dp))
 
-                Text(
-                    text = "Connection URL:",
-                    style = MaterialTheme.typography.bodyLarge
-                )
-
-                Text(
-                    text = getConnectionUrl(),
-                    style = MaterialTheme.typography.bodyMedium
-                )
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                // Client configuration instructions
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceVariant
+                    Text(
+                        text = "Connection URL:",
+                        style = MaterialTheme.typography.bodyLarge
                     )
-                ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp)
+
+                    Text(
+                        text = getConnectionUrl(),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    // Client configuration instructions
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceVariant
+                        )
                     ) {
-                        Text(
-                            text = "MCP Client Configuration",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold
-                        )
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        Text(
-                            text = "To connect Claude Desktop or other MCP clients, add this to your claude_desktop_config.json:",
-                            style = MaterialTheme.typography.bodySmall
-                        )
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        Card(
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.surface
-                            )
+                        Column(
+                            modifier = Modifier.padding(16.dp)
                         ) {
                             Text(
-                                text = """
-                                {
-                                    "mcpServers": {
-                                        "adserver": {
-                                            "command": "npx",
-                                            "args": ["mcp-remote", "${getConnectionUrl()}"]
+                                text = "MCP Client Configuration",
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold
+                            )
+
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            Text(
+                                text = "To connect Claude Desktop or other MCP clients, add this to your claude_desktop_config.json:",
+                                style = MaterialTheme.typography.bodySmall
+                            )
+
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = MaterialTheme.colorScheme.surface
+                                )
+                            ) {
+                                Text(
+                                    text = """
+                                    {
+                                        "mcpServers": {
+                                            "adserver": {
+                                                "command": "npx",
+                                                "args": ["mcp-remote", "${getConnectionUrl()}"]
+                                            }
                                         }
                                     }
-                                }
-                                """.trimIndent(),
-                                style = MaterialTheme.typography.bodySmall,
-                                modifier = Modifier.padding(8.dp)
+                                    """.trimIndent(),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    modifier = Modifier.padding(8.dp)
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            Text(
+                                text = "Location: ~/Library/Application Support/Claude/claude_desktop_config.json",
+                                style = MaterialTheme.typography.bodySmall
                             )
                         }
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        Text(
-                            text = "Location: ~/Library/Application Support/Claude/claude_desktop_config.json",
-                            style = MaterialTheme.typography.bodySmall
-                        )
                     }
                 }
             }
