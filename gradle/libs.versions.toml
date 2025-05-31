@@ -1,0 +1,51 @@
+[versions]
+agp = "8.10.1"
+kotlin = "2.0.21"
+coreKtx = "1.10.1"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
+lifecycleRuntimeKtx = "2.6.1"
+activityCompose = "1.8.0"
+composeBom = "2024.09.00"
+ktorVersion = "3.1.3"
+mcpVersion = "0.5.0"
+slf4jVersion = "2.0.17"
+appcompat = "1.6.1"
+material = "1.10.0"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+io-ktor-ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktorVersion" }
+io-ktor-ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktorVersion" }
+io-ktor-ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorVersion" }
+io-ktor-ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorVersion" }
+io-ktor-ktor-server-cio = { module = "io.ktor:ktor-server-cio", version.ref = "ktorVersion" }
+io-ktor-ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktorVersion" }
+io-ktor-ktor-server-sse = { module = "io.ktor:ktor-server-sse", version.ref = "ktorVersion" }
+io-modelcontextprotocol-kotlin-sdk = { module = "io.modelcontextprotocol:kotlin-sdk", version.ref = "mcpVersion" }
+org-jetbrains-kotlinx-kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"
+org-slf4j-slf4j-nop = { module = "org.slf4j:slf4j-nop", version.ref = "slf4jVersion" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+nl-littlerobots-version-catalog-update = "nl.littlerobots.version-catalog-update:1.0.0"
+org-jetbrains-kotlin-plugin-serialization = "org.jetbrains.kotlin.plugin.serialization:2.1.21"
+android-library = { id = "com.android.library", version.ref = "agp" }
