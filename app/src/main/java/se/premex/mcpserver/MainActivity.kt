@@ -3,8 +3,10 @@ package se.premex.mcpserver
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
+import android.text.format.Formatter
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,12 +28,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -75,7 +79,8 @@ class MainActivity : ComponentActivity() {
                                 toggleService(false)
                             }
                         },
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier.padding(innerPadding),
+                        getConnectionUrl = { getConnectionUrl() }
                     )
                 }
             }
@@ -123,13 +128,20 @@ class MainActivity : ComponentActivity() {
             isServerRunning.value = false
         }
     }
+
+    private fun getConnectionUrl(): String {
+        val wifiManager = applicationContext.getSystemService(WIFI_SERVICE) as WifiManager
+        val ipAddress = Formatter.formatIpAddress(wifiManager.connectionInfo.ipAddress)
+        return "http://$ipAddress:3001/sse"
+    }
 }
 
 @Composable
 fun McpServerControl(
     isRunning: Boolean,
     onToggleServer: (Boolean) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    getConnectionUrl: () -> String
 ) {
     Column(
         modifier = modifier
@@ -193,7 +205,7 @@ fun McpServerControl(
                 )
 
                 Text(
-                    text = "http://localhost:3001/sse",
+                    text = getConnectionUrl(),
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -207,7 +219,8 @@ fun McpServerControlPreview() {
     MCPServerTheme {
         McpServerControl(
             isRunning = true,
-            onToggleServer = {}
+            onToggleServer = {},
+            getConnectionUrl = { "http://192.168.1.1:3001/sse" }
         )
     }
 }

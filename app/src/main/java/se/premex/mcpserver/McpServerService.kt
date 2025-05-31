@@ -109,10 +109,21 @@ class McpServerService : Service() {
             Log.d(TAG, "startServerWithHost: Server configured, attempting to start")
             server?.start(wait = false)
 
+            // Get WiFi IP address to show in notification
+            val wifiIp = NetworkUtils.getWifiIpAddress(this)
+
             val successMessage = if (host == "127.0.0.1") {
-                "Server running on localhost:$port (local device only)"
+                if (wifiIp != null) {
+                    "Server running on $wifiIp:$port"
+                } else {
+                    "Server running on localhost:$port (local device only)"
+                }
             } else {
-                "Server running on $host:$port (accessible from network)"
+                if (wifiIp != null) {
+                    "Server running on $wifiIp:$port"
+                } else {
+                    "Server running on $host:$port"
+                }
             }
 
             Log.i(TAG, "startServerWithHost: $successMessage")
