@@ -30,6 +30,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,15 +43,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import dagger.hilt.android.AndroidEntryPoint
+import se.premex.mcpserver.di.McpTool
+import se.premex.mcpserver.di.ToolService
 import se.premex.mcpserver.ui.theme.MCPServerTheme
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     // Service status flag
     private var isServerRunning = mutableStateOf(false)
 
-    // Tool state flags
-    private var isSmsToolEnabled = mutableStateOf(true)
-    private var isAdsToolEnabled = mutableStateOf(false)
+    @Inject
+    lateinit var toolService: ToolService
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -71,6 +76,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val toolStates by toolService.toolEnabledStates.collectAsState()
+
             MCPServerTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     McpServerControl(
@@ -86,10 +93,11 @@ class MainActivity : ComponentActivity() {
                         },
                         modifier = Modifier.padding(innerPadding),
                         getConnectionUrl = { getConnectionUrl() },
-                        isSmsToolEnabled = isSmsToolEnabled.value,
-                        isAdsToolEnabled = isAdsToolEnabled.value,
-                        onToggleSmsToolEnabled = { isSmsToolEnabled.value = it },
-                        onToggleAdsToolEnabled = { isAdsToolEnabled.value = it }
+                        tools = toolService.tools.toList(),
+                        toolEnabledStates = toolStates,
+                        onToggleToolEnabled = { toolId ->
+                            toolService.toggleToolEnabled(toolId)
+                        }
                     )
                 }
             }
@@ -126,9 +134,11 @@ class MainActivity : ComponentActivity() {
         val serviceIntent = Intent(this, McpServerService::class.java)
 
         if (start) {
-            // Add enabled tools as extras
-            serviceIntent.putExtra(McpServerService.EXTRA_ENABLE_SMS_TOOL, isSmsToolEnabled.value)
-            serviceIntent.putExtra(McpServerService.EXTRA_ENABLE_ADS_TOOL, isAdsToolEnabled.value)
+            // Pass all tool states as an extra
+            serviceIntent.putExtra(
+                McpServerService.EXTRA_TOOL_STATES,
+                HashMap(toolService.toolEnabledStates.value)
+            )
 
             // Start service
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -156,10 +166,9 @@ fun McpServerControl(
     onToggleServer: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     getConnectionUrl: () -> String,
-    isSmsToolEnabled: Boolean,
-    isAdsToolEnabled: Boolean,
-    onToggleSmsToolEnabled: (Boolean) -> Unit,
-    onToggleAdsToolEnabled: (Boolean) -> Unit
+    tools: List<McpTool>,
+    toolEnabledStates: Map<String, Boolean>,
+    onToggleToolEnabled: (String) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -217,38 +226,24 @@ fun McpServerControl(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = "Enable SMS Tool",
-                        style = MaterialTheme.typography.bodyLarge
-                    )
+                tools.forEach { tool ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Enable ${tool.name}",
+                            style = MaterialTheme.typography.bodyLarge
+                        )
 
-                    Checkbox(
-                        checked = isSmsToolEnabled,
-                        onCheckedChange = onToggleSmsToolEnabled
-                    )
-                }
+                        Checkbox(
+                            checked = toolEnabledStates[tool.id] == true,
+                            onCheckedChange = { onToggleToolEnabled(tool.id) }
+                        )
+                    }
 
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = "Enable Ads Tool",
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-
-                    Checkbox(
-                        checked = isAdsToolEnabled,
-                        onCheckedChange = onToggleAdsToolEnabled
-                    )
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
 
                 // Only show connection information and instructions when server is running
@@ -336,10 +331,15 @@ fun McpServerControlPreview() {
             isRunning = true,
             onToggleServer = {},
             getConnectionUrl = { "http://192.168.1.1:3001/sse" },
-            isSmsToolEnabled = true,
-            isAdsToolEnabled = false,
-            onToggleSmsToolEnabled = {},
-            onToggleAdsToolEnabled = {}
+            tools = listOf(
+                McpTool("sms", "SMS Tool"),
+                McpTool("ads", "Ads Tool")
+            ),
+            toolEnabledStates = mapOf(
+                "sms" to true,
+                "ads" to false
+            ),
+            onToggleToolEnabled = {}
         )
     }
 }
