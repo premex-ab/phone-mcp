@@ -125,9 +125,13 @@ class McpServerService : Service() {
         Log.d(TAG, "startServerWithHost: Configuring server on $host:$port")
 
         try {
+            // Konfigurera MCP-servern en gång utanför embeddedServer
+            val mcpServer = configureServer()
+
             server = embeddedServer(CIO, host = host, port = port) {
                 mcp {
-                    return@mcp configureServer()
+                    // Returnera den förkonfigurerade serverinstansen
+                    return@mcp mcpServer
                 }
             }
 
