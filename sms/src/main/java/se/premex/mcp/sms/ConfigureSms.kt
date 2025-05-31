@@ -24,7 +24,7 @@ fun appendSmsTools(
 
     // Register a tool to fetch weather alerts by state
     server.addTool(
-        name = "get_ad_snippet",
+        name = "send_sms",
         description = """
             Tool that can send sms to a phone number
         """.trimIndent(),
@@ -62,7 +62,7 @@ fun appendSmsTools(
         CallToolResult(
             content =
                 listOf(
-                    TextContent("Sms successfully sent to $phoneNumber")
+                    TextContent("Sms successfully sent to $phoneNumber  with content $message")
                 )
         )
     }

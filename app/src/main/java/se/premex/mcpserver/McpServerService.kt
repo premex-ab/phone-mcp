@@ -78,21 +78,14 @@ class McpServerService : Service() {
     private fun startMcpServer() {
         Log.i(TAG, "startMcpServer: Attempting to start MCP server")
         try {
-            // First try with localhost (most compatible)
-            Log.d(TAG, "startMcpServer: Trying with localhost (127.0.0.1)")
-            startServerWithHost("127.0.0.1", 3001)
-            Log.i(TAG, "startMcpServer: Successfully started server on localhost")
+            // Always bind to all interfaces (0.0.0.0)
+            Log.d(TAG, "startMcpServer: Starting server on all interfaces (0.0.0.0)")
+            startServerWithHost("0.0.0.0", 3001)
+            Log.i(TAG, "startMcpServer: Successfully started server on all interfaces")
         } catch (e: Exception) {
-            Log.w(TAG, "startMcpServer: Failed with localhost, trying 0.0.0.0", e)
-            try {
-                // If localhost fails, try with all interfaces (may fail due to Android restrictions)
-                startServerWithHost("0.0.0.0", 3001)
-                Log.i(TAG, "startMcpServer: Successfully started server on all interfaces")
-            } catch (e: Exception) {
-                val errorMessage = "Failed to start server: ${e.message}"
-                Log.e(TAG, "startMcpServer: Failed to start server on any interface", e)
-                updateNotification("MCP Server Error", errorMessage)
-            }
+            val errorMessage = "Failed to start server: ${e.message}"
+            Log.e(TAG, "startMcpServer: Failed to start server", e)
+            updateNotification("MCP Server Error", errorMessage)
         }
     }
 
