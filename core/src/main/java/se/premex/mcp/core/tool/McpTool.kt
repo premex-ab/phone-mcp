@@ -12,4 +12,10 @@ interface McpTool {
 
     /** Whether the tool is enabled by default */
     val enabledByDefault: Boolean
+
+    /**
+     * Configures the tool with the given server instance
+     * @param server The MCP server instance to configure the tool with
+     */
+    fun configure(server: io.modelcontextprotocol.kotlin.sdk.server.Server)
 }

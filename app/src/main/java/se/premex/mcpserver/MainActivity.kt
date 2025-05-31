@@ -39,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
+import io.modelcontextprotocol.kotlin.sdk.server.Server
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcpserver.di.ToolService
 import se.premex.mcpserver.ui.theme.MCPServerTheme
@@ -172,7 +173,7 @@ fun McpServerControl(
             .fillMaxSize()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Top
     ) {
         Text(
             text = "MCP Server Control",
@@ -223,6 +224,11 @@ fun McpServerControl(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
+                if (isRunning) {
+                    Instructions(getConnectionUrl)
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+
                 tools.forEach { tool ->
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -243,55 +249,62 @@ fun McpServerControl(
                     Spacer(modifier = Modifier.height(16.dp))
                 }
 
-                // Only show connection information and instructions when server is running
-                if (isRunning) {
-                    Spacer(modifier = Modifier.height(16.dp))
 
-                    Text(
-                        text = "Connection URL:",
-                        style = MaterialTheme.typography.bodyLarge
+            }
+        }
+    }
+}
+
+@Composable
+private fun Instructions(getConnectionUrl: () -> String) {
+    Column {
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Connection URL:",
+            style = MaterialTheme.typography.bodyLarge
+        )
+
+        Text(
+            text = getConnectionUrl(),
+            style = MaterialTheme.typography.bodyMedium
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // Client configuration instructions
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
+            )
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Text(
+                    text = "MCP Client Configuration",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = "To connect Claude Desktop or other MCP clients, add this to your claude_desktop_config.json:",
+                    style = MaterialTheme.typography.bodySmall
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surface
                     )
-
+                ) {
                     Text(
-                        text = getConnectionUrl(),
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-
-                    Spacer(modifier = Modifier.height(24.dp))
-
-                    // Client configuration instructions
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceVariant
-                        )
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(16.dp)
-                        ) {
-                            Text(
-                                text = "MCP Client Configuration",
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold
-                            )
-
-                            Spacer(modifier = Modifier.height(8.dp))
-
-                            Text(
-                                text = "To connect Claude Desktop or other MCP clients, add this to your claude_desktop_config.json:",
-                                style = MaterialTheme.typography.bodySmall
-                            )
-
-                            Spacer(modifier = Modifier.height(8.dp))
-
-                            Card(
-                                modifier = Modifier.fillMaxWidth(),
-                                colors = CardDefaults.cardColors(
-                                    containerColor = MaterialTheme.colorScheme.surface
-                                )
-                            ) {
-                                Text(
-                                    text = """
+                        text = """
                                     {
                                         "mcpServers": {
                                             "premexMcpServer": {
@@ -301,20 +314,17 @@ fun McpServerControl(
                                         }
                                     }
                                     """.trimIndent(),
-                                    style = MaterialTheme.typography.bodySmall,
-                                    modifier = Modifier.padding(8.dp)
-                                )
-                            }
-
-                            Spacer(modifier = Modifier.height(8.dp))
-
-                            Text(
-                                text = "Location: ~/Library/Application Support/Claude/claude_desktop_config.json",
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                        }
-                    }
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(8.dp)
+                    )
                 }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = "Location: ~/Library/Application Support/Claude/claude_desktop_config.json",
+                    style = MaterialTheme.typography.bodySmall
+                )
             }
         }
     }
@@ -343,7 +353,11 @@ fun McpServerControlPreview() {
 
 private class McpToolPreview(
     override val id: String, override val name: String,
-    override val enabledByDefault: Boolean
-) : McpTool {
+    override val enabledByDefault: Boolean,
+
+    ) : McpTool {
+    override fun configure(server: Server) {
+
+    }
 
 }

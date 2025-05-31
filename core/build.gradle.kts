@@ -9,5 +9,5 @@ java {
 }
 
 dependencies {
-    // Add any dependencies the core module might need
+    implementation(libs.io.modelcontextprotocol.kotlin.sdk)
 }

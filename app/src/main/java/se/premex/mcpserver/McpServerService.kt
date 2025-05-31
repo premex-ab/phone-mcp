@@ -224,7 +224,7 @@ class McpServerService : Service() {
     }
 
     private fun configureServer(): Server {
-        val server = Server(
+        val server: Server = Server(
             Implementation(
                 name = "mcp-kotlin test server",
                 version = "0.1.0"
@@ -243,6 +243,7 @@ class McpServerService : Service() {
             val isEnabled = toolStates[tool.id] ?: tool.enabledByDefault
 
             if (isEnabled) {
+                tool.configure(server = server)
                 when (tool.id) {
                     "sms" -> {
                         Log.d(TAG, "configureServer: Adding SMS tools")
