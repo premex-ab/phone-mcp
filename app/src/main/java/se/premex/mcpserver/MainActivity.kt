@@ -20,6 +20,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
@@ -168,89 +170,91 @@ fun McpServerControl(
     toolEnabledStates: Map<String, Boolean>,
     onToggleToolEnabled: (String) -> Unit
 ) {
-    Column(
+    LazyColumn(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        Text(
-            text = "MCP Server Control",
-            style = MaterialTheme.typography.headlineMedium,
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Bold
-        )
+        item {
+            Text(
+                text = "MCP Server Control",
+                style = MaterialTheme.typography.headlineMedium,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Bold
+            )
 
-        Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+        }
 
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-        ) {
-            Column(
-                modifier = Modifier.padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+        item {
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
             ) {
-                Text(
-                    text = "Server Status:",
-                    style = MaterialTheme.typography.bodyLarge
-                )
-
-                Text(
-                    text = if (isRunning) "RUNNING" else "STOPPED",
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = if (isRunning) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error,
-                    fontWeight = FontWeight.Bold
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Toggle Server",
+                        text = "Server Status:",
                         style = MaterialTheme.typography.bodyLarge
                     )
 
-                    Switch(
-                        checked = isRunning,
-                        onCheckedChange = onToggleServer
+                    Text(
+                        text = if (isRunning) "RUNNING" else "STOPPED",
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = if (isRunning) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error,
+                        fontWeight = FontWeight.Bold
                     )
-                }
 
-                Spacer(modifier = Modifier.height(16.dp))
-
-                if (isRunning) {
-                    Instructions(getConnectionUrl)
                     Spacer(modifier = Modifier.height(16.dp))
-                }
 
-                tools.forEach { tool ->
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "Enable ${tool.name}",
+                            text = "Toggle Server",
                             style = MaterialTheme.typography.bodyLarge
                         )
 
-                        Checkbox(
-                            checked = toolEnabledStates[tool.id] == true,
-                            onCheckedChange = { onToggleToolEnabled(tool.id) }
+                        Switch(
+                            checked = isRunning,
+                            onCheckedChange = onToggleServer
                         )
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))
+
+                    if (isRunning) {
+                        Instructions(getConnectionUrl)
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
                 }
-
-
             }
+        }
+
+        items(tools) { tool ->
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "Enable ${tool.name}",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+
+                Checkbox(
+                    checked = toolEnabledStates[tool.id] == true,
+                    onCheckedChange = { onToggleToolEnabled(tool.id) }
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
@@ -359,5 +363,5 @@ private class McpToolPreview(
     override fun configure(server: Server) {
 
     }
-
 }
+

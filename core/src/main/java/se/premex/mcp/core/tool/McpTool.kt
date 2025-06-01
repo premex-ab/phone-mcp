@@ -1,5 +1,7 @@
 package se.premex.mcp.core.tool
 
+import io.modelcontextprotocol.kotlin.sdk.server.Server
+
 /**
  * Common interface for MCP tools that can be enabled/disabled in the application
  */
@@ -17,5 +19,5 @@ interface McpTool {
      * Configures the tool with the given server instance
      * @param server The MCP server instance to configure the tool with
      */
-    fun configure(server: io.modelcontextprotocol.kotlin.sdk.server.Server)
+    fun configure(server: Server)
 }
