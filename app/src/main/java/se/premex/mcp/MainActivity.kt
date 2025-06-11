@@ -1,4 +1,4 @@
-package se.premex.mcpserver
+package se.premex.mcp
 
 import android.Manifest
 import android.content.Intent
@@ -54,8 +54,8 @@ import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 import io.modelcontextprotocol.kotlin.sdk.server.Server
 import se.premex.mcp.core.tool.McpTool
-import se.premex.mcpserver.di.ToolService
-import se.premex.mcpserver.ui.theme.MCPServerTheme
+import se.premex.mcp.di.ToolService
+import se.premex.mcp.ui.theme.MCPServerTheme
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -106,52 +106,55 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val toolStates by toolService.toolEnabledStates.collectAsState()
 
-            MCPServerTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    McpServerControl(
-                        isRunning = isServerRunning.value,
-                        onToggleServer = { shouldStart ->
-                            // Check permissions only when trying to start the service
-                            if (shouldStart) {
-                                checkRequiredPermissions()
-                            } else {
-                                // No permission needed to stop the service
-                                toggleService(false)
-                            }
-                        },
-                        modifier = Modifier.padding(innerPadding),
-                        getConnectionUrl = { getConnectionUrl() },
-                        tools = toolService.tools.toList(),
-                        toolEnabledStates = toolStates,
-                        onToggleTool = { tool ->
-                            handleToolToggle(tool)
-                        }
-                    )
+                val toolStates by toolService.toolEnabledStates.collectAsState()
 
-                    // Show warning dialog if needed
-                    if (showToolWarningDialog.value && currentToolRequiringWarning != null) {
-                        ToolWarningDialog(
-                            tool = currentToolRequiringWarning!!,
-                            onDismiss = {
-                                // Cancel enabling the tool
-                                showToolWarningDialog.value = false
-                                currentToolRequiringWarning = null
-                            },
-                            onConfirm = {
-                                // User confirmed, enable the tool
-                                showToolWarningDialog.value = false
-                                currentToolRequiringWarning?.let { tool ->
-                                    toolService.toggleToolEnabled(tool.id)
+                MCPServerTheme {
+                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                        McpServerControl(
+                            isRunning = isServerRunning.value,
+                            onToggleServer = { shouldStart ->
+                                // Check permissions only when trying to start the service
+                                if (shouldStart) {
+                                    checkRequiredPermissions()
+                                } else {
+                                    // No permission needed to stop the service
+                                    toggleService(false)
                                 }
-                                currentToolRequiringWarning = null
+                            },
+                            modifier = Modifier.padding(innerPadding),
+                            getConnectionUrl = { getConnectionUrl() },
+                            tools = toolService.tools.toList(),
+                            toolEnabledStates = toolStates,
+                            onToggleTool = { tool ->
+                                handleToolToggle(tool)
                             }
                         )
+
+                        // Show warning dialog if needed
+                        if (showToolWarningDialog.value && currentToolRequiringWarning != null) {
+                            ToolWarningDialog(
+                                tool = currentToolRequiringWarning!!,
+                                onDismiss = {
+                                    // Cancel enabling the tool
+                                    showToolWarningDialog.value = false
+                                    currentToolRequiringWarning = null
+                                },
+                                onConfirm = {
+                                    // User confirmed, enable the tool
+                                    showToolWarningDialog.value = false
+                                    currentToolRequiringWarning?.let { tool ->
+                                        toolService.toggleToolEnabled(tool.id)
+                                    }
+                                    currentToolRequiringWarning = null
+                                }
+                            )
+                        }
+
+
                     }
                 }
             }
-        }
     }
 
     private fun checkRequiredPermissions() {
@@ -351,19 +354,17 @@ fun McpServerControl(
         }
 
         items(tools) { tool ->
-            var expanded by remember { mutableStateOf(false) }
 
             Column(modifier = Modifier.fillMaxWidth()) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { expanded = !expanded }
                         .padding(vertical = 8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Enable ${tool.name}",
+                        text = tool.name,
                         style = MaterialTheme.typography.bodyLarge
                     )
 
@@ -373,34 +374,6 @@ fun McpServerControl(
                     )
                 }
 
-                if (expanded) {
-                    // Show additional information or controls for the tool
-                    Text(
-                        text = "Additional settings for ${tool.name}",
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
-                    )
-
-                    // You can add more UI elements here for tool-specific settings
-
-                    Icon(
-                        imageVector = Icons.Filled.KeyboardArrowUp,
-                        contentDescription = "Collapse",
-                        modifier = Modifier
-                            .size(24.dp)
-                            .align(Alignment.End)
-                            .padding(end = 16.dp)
-                    )
-                } else {
-                    Icon(
-                        imageVector = Icons.Filled.KeyboardArrowDown,
-                        contentDescription = "Expand",
-                        modifier = Modifier
-                            .size(24.dp)
-                            .align(Alignment.End)
-                            .padding(end = 16.dp)
-                    )
-                }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -462,14 +435,6 @@ private fun Instructions(getConnectionUrl: () -> String) {
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Text(
-                        text = "To connect Claude Desktop or other MCP clients, add this to your claude_desktop_config.json:",
-                        style = MaterialTheme.typography.bodySmall
-                    )
-
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Card(
@@ -502,13 +467,6 @@ private fun Instructions(getConnectionUrl: () -> String) {
                             modifier = Modifier.padding(8.dp)
                         )
                     }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Text(
-                        text = "Location: ~/Library/Application Support/Claude/claude_desktop_config.json",
-                        style = MaterialTheme.typography.bodySmall
-                    )
                 }
             }
         }

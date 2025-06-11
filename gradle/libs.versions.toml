@@ -16,8 +16,13 @@ material = "1.10.0"
 hiltVersion = "2.56.2"
 hiltComposeVersion = "1.2.0"
 ksp = "2.1.21-2.0.1"
+updateCompose = "1.3.1"
 
 [libraries]
+com-google-firebase-firebase-bom = "com.google.firebase:firebase-bom:33.15.0"
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+
+
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -49,6 +54,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hiltVersion" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltComposeVersion" }
+se-warting-inapp-update-compose-mui = { module = "se.warting.in-app-update:in-app-update-compose-mui", version.ref = "updateCompose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

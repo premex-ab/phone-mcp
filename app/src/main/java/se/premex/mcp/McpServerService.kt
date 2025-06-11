@@ -1,4 +1,4 @@
-package se.premex.mcpserver
+package se.premex.mcp
 
 import android.app.Notification
 import android.app.NotificationManager
@@ -38,8 +38,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import se.premex.mcp.core.tool.McpTool
-import se.premex.mcpserver.auth.AuthRepository
-import se.premex.mcpserver.di.ToolService
+import se.premex.mcp.auth.AuthRepository
+import se.premex.mcp.di.ToolService
 import javax.inject.Inject
 import kotlin.collections.set
 

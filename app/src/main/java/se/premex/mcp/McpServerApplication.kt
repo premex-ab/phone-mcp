@@ -1,4 +1,4 @@
-package se.premex.mcpserver
+package se.premex.mcp
 
 import android.app.Application
 import android.os.Build

@@ -1,4 +1,4 @@
-package se.premex.mcpserver.di
+package se.premex.mcp.di
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -30,10 +30,10 @@ class AdsTool : McpTool {
 @InstallIn(SingletonComponent::class)
 object AdsToolModule {
 
-    @Provides
-    @Singleton
-    @IntoSet
-    fun provideAdsTool(): McpTool {
-        return AdsTool()
-    }
+//    @Provides
+//    @Singleton
+//    @IntoSet
+//    fun provideAdsTool(): McpTool {
+//        return AdsTool()
+//    }
 }

@@ -1,4 +1,4 @@
-package se.premex.mcpserver.auth
+package se.premex.mcp.auth
 
 import java.util.UUID
 import javax.inject.Inject

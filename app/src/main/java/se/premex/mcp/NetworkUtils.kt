@@ -1,11 +1,7 @@
-package se.premex.mcpserver
+package se.premex.mcp
 
 import android.content.Context
-import android.net.ConnectivityManager
-import android.net.Network
-import android.net.NetworkCapabilities
 import android.net.wifi.WifiManager
-import android.os.Build
 import android.util.Log
 import java.net.Inet4Address
 import java.net.NetworkInterface

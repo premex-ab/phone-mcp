@@ -1,3 +1,6 @@
+
+import com.android.tools.r8.internal.`in`
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -7,22 +10,22 @@ plugins {
 }
 
 android {
-    namespace = "se.premex.mcpserver"
+    namespace = "se.premex.mcp"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "se.premex.mcpserver"
+        applicationId = "se.premex.mcp"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
-        versionName = "1.0"
+        versionName = "0.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -42,6 +45,14 @@ android {
 }
 
 dependencies {
+
+    // Import the BoM for the Firebase platform
+    implementation(platform(libs.com.google.firebase.firebase.bom))
+
+    // Add the dependency for the Analytics library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation(libs.firebase.analytics)
+
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
@@ -50,6 +61,9 @@ dependencies {
     // Module dependencies
     implementation(project(":core"))
     //implementation(project(":ads-mcp-extensions"))
+
+    // In-App Update
+    //implementation(libs.se.warting.inapp.update.compose.mui)
 
     // External dependencies
     implementation(libs.io.modelcontextprotocol.kotlin.sdk)
@@ -83,4 +97,3 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
-
