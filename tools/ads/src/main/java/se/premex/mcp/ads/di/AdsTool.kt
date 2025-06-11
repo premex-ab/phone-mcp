@@ -17,6 +17,10 @@ class AdsTool : McpTool {
     override fun configure(server: Server) {
         appendAdTools(server, "da9f87c34f4641a4a2bdace0ff4895fe")
     }
+
+    override fun requiredPermissions(): Set<String> {
+        return emptySet()
+    }
 }
 
 @Module

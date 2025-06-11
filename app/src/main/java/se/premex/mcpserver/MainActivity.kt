@@ -55,6 +55,23 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var toolService: ToolService
 
+    private val requestMultiplePermissionsLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissionsResult ->
+        val allGranted = permissionsResult.all { it.value }
+        if (allGranted) {
+            toggleService(true)
+        } else {
+            // Some permissions denied - inform the user
+            Toast.makeText(
+                this,
+                "All permissions are required to run the MCP server service",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    // Keep this for backward compatibility or single permission scenarios
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
@@ -83,7 +100,7 @@ class MainActivity : ComponentActivity() {
                         onToggleServer = { shouldStart ->
                             // Check permissions only when trying to start the service
                             if (shouldStart) {
-                                checkNotificationPermission()
+                                checkRequiredPermissions()
                             } else {
                                 // No permission needed to stop the service
                                 toggleService(false)
@@ -102,31 +119,49 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun checkNotificationPermission() {
+    private fun checkRequiredPermissions() {
+        // Create a set to store all required permissions
+        val requiredPermissions = mutableSetOf<String>()
+
+        // Add notification permission if on Android 13 (Tiramisu) or higher
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            when {
-                ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) == PackageManager.PERMISSION_GRANTED -> {
-                    // Permission already granted
-                    toggleService(true)
-                }
+            requiredPermissions.add(Manifest.permission.POST_NOTIFICATIONS)
+        }
 
-                shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
-                    // Could show educational UI here explaining why notifications are important
-                    // For simplicity, we're just requesting directly
-                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                }
+        // Get permissions from each enabled tool
+        toolService.tools.forEach { tool ->
+            if (toolService.toolEnabledStates.value[tool.id] == true) {
+                // Add all permissions required by this enabled tool
+                requiredPermissions.addAll(tool.requiredPermissions())
+            }
+        }
 
-                else -> {
-                    // Request permission
-                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        // If no permissions required, start service directly
+        if (requiredPermissions.isEmpty()) {
+            toggleService(true)
+            return
+        }
+
+        // Check if all permissions are already granted
+        val missingPermissions = requiredPermissions.filter { permission ->
+            ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED
+        }.toTypedArray()
+
+        when {
+            // All permissions already granted
+            missingPermissions.isEmpty() -> {
+                toggleService(true)
+            }
+            // Request the missing permissions
+            else -> {
+                if (missingPermissions.size == 1) {
+                    // If only one permission is needed, use the single permission request
+                    requestPermissionLauncher.launch(missingPermissions.first())
+                } else {
+                    // If multiple permissions are needed, use the multiple permissions request
+                    requestMultiplePermissionsLauncher.launch(missingPermissions)
                 }
             }
-        } else {
-            // For Android 12 and below, notification permission is granted by default
-            toggleService(true)
         }
     }
 
@@ -362,6 +397,10 @@ private class McpToolPreview(
     ) : McpTool {
     override fun configure(server: Server) {
 
+    }
+
+    override fun requiredPermissions(): Set<String> {
+        TODO("Not yet implemented")
     }
 }
 

@@ -20,4 +20,6 @@ interface McpTool {
      * @param server The MCP server instance to configure the tool with
      */
     fun configure(server: Server)
+
+    fun requiredPermissions(): Set<String>
 }
