@@ -12,6 +12,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,11 +21,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
@@ -33,6 +39,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -273,20 +281,56 @@ fun McpServerControl(
         }
 
         items(tools) { tool ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "Enable ${tool.name}",
-                    style = MaterialTheme.typography.bodyLarge
-                )
+            var expanded by remember { mutableStateOf(false) }
 
-                Checkbox(
-                    checked = toolEnabledStates[tool.id] == true,
-                    onCheckedChange = { onToggleToolEnabled(tool.id) }
-                )
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { expanded = !expanded }
+                        .padding(vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Enable ${tool.name}",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+
+                    Checkbox(
+                        checked = toolEnabledStates[tool.id] == true,
+                        onCheckedChange = { onToggleToolEnabled(tool.id) }
+                    )
+                }
+
+                if (expanded) {
+                    // Show additional information or controls for the tool
+                    Text(
+                        text = "Additional settings for ${tool.name}",
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
+                    )
+
+                    // You can add more UI elements here for tool-specific settings
+
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowUp,
+                        contentDescription = "Collapse",
+                        modifier = Modifier
+                            .size(24.dp)
+                            .align(Alignment.End)
+                            .padding(end = 16.dp)
+                    )
+                } else {
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "Expand",
+                        modifier = Modifier
+                            .size(24.dp)
+                            .align(Alignment.End)
+                            .padding(end = 16.dp)
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -296,74 +340,106 @@ fun McpServerControl(
 
 @Composable
 private fun Instructions(getConnectionUrl: () -> String) {
+    // State for tracking if client configuration section is expanded
+    var configExpanded by remember { mutableStateOf(false) }
+
     Column {
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text(
-            text = "Connection URL:",
-            style = MaterialTheme.typography.bodyLarge
-        )
+        // Connection URL row with expand/collapse icon
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = "Connection URL:",
+                    style = MaterialTheme.typography.bodyLarge
+                )
 
-        Text(
-            text = getConnectionUrl(),
-            style = MaterialTheme.typography.bodyMedium
-        )
+                Text(
+                    text = getConnectionUrl(),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+
+            // Clickable icon to expand/collapse client config
+            Icon(
+                imageVector = if (configExpanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
+                contentDescription = if (configExpanded) "Collapse client configuration" else "Expand client configuration",
+                modifier = Modifier
+                    .size(24.dp)
+                    .clickable { configExpanded = !configExpanded }
+            )
+        }
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Client configuration instructions
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant
-            )
-        ) {
-            Column(
-                modifier = Modifier.padding(16.dp)
+        // Client configuration instructions - only show when expanded
+        if (configExpanded) {
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant
+                )
             ) {
-                Text(
-                    text = "MCP Client Configuration",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
-                    text = "To connect Claude Desktop or other MCP clients, add this to your claude_desktop_config.json:",
-                    style = MaterialTheme.typography.bodySmall
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
-                    )
+                Column(
+                    modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = """
+                        text = "MCP Client Configuration",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        text = "To connect Claude Desktop or other MCP clients, add this to your claude_desktop_config.json:",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surface
+                        )
+                    ) {
+                        Text(
+                            text = """
                                     {
                                         "mcpServers": {
-                                            "premexMcpServer": {
+                                            "phone": {
                                                 "command": "npx",
-                                                "args": ["mcp-remote", "${getConnectionUrl()}"]
+                                                "args": [
+                                                    "mcp-remote", 
+                                                    "http://${getConnectionUrl().removePrefix("ws://")}",
+                                                    "--header",
+                                                    "Authorization: Bearer ${'\$'}{AUTH_TOKEN}",
+                                                    "--allow-http"
+                                                ],
+                                                "env": {
+                                                    "AUTH_TOKEN": "YTpi"
+                                                }
                                             }
                                         }
                                     }
                                     """.trimIndent(),
-                        style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier.padding(8.dp)
+                            style = MaterialTheme.typography.bodySmall,
+                            modifier = Modifier.padding(8.dp)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        text = "Location: ~/Library/Application Support/Claude/claude_desktop_config.json",
+                        style = MaterialTheme.typography.bodySmall
                     )
                 }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
-                    text = "Location: ~/Library/Application Support/Claude/claude_desktop_config.json",
-                    style = MaterialTheme.typography.bodySmall
-                )
             }
         }
     }
@@ -403,4 +479,3 @@ private class McpToolPreview(
         TODO("Not yet implemented")
     }
 }
-

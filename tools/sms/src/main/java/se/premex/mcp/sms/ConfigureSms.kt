@@ -11,13 +11,19 @@ import kotlinx.serialization.json.putJsonObject
 import se.premex.mcp.sms.SmsSender
 
 /**
- * Appends ad-related tools to the provided MCP server instance.
+ * Registers an SMS sending tool to a Model Context Protocol server.
  *
- * This function registers a tool that fetches text ads based on the conversation context,
- * user intent, and keywords extracted from the conversation.
+ * This function configures and adds a tool named "send_sms" to the provided MCP server,
+ * which enables the capability to send SMS messages to specified phone numbers.
  *
- * @param server The MCP server instance to which the ad tools will be added.
- * @param clientId The client identifier used for ad requests (default: "da9f87c34f4641a4a2bdace0ff4895fe").
+ * @param server The MCP server instance to which the SMS tool will be added
+ * @param smsSender The SMS sending service implementation that will handle the actual message delivery
+ *
+ * The tool expects two required parameters:
+ * - phoneNumber: String in E.164 format (e.g., +1234567890)
+ * - message: String content to be sent as the SMS message
+ *
+ * @return None. The function registers the tool with the server directly.
  */
 fun appendSmsTools(
     server: Server,
@@ -77,4 +83,3 @@ fun appendSmsTools(
         )
     }
 }
-
