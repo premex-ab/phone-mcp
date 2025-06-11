@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "se.premex.mcp.sms"
+    namespace = "se.premex.mcp.contacts"
     compileSdk = 35
 
     defaultConfig {
@@ -52,4 +52,3 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
-

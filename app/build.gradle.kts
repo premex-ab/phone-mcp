@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.io.ktor.ktor.serialization.kotlinx.json)
     implementation(project(":tools:sms"))
     implementation(project(":tools:ads"))
+    implementation(project(":tools:contacts"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

@@ -27,6 +27,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
@@ -35,6 +37,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -59,6 +62,10 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
     // Service status flag
     private var isServerRunning = mutableStateOf(false)
+
+    // Add dialog state for tool warnings
+    private var showToolWarningDialog = mutableStateOf(false)
+    private var currentToolRequiringWarning: McpTool? = null
 
     @Inject
     lateinit var toolService: ToolService
@@ -89,7 +96,7 @@ class MainActivity : ComponentActivity() {
             // Permission denied - inform the user that the service cannot be started
             Toast.makeText(
                 this,
-                "Notification permission is required to run the MCP server service",
+                "permission is required to run the MCP server service",
                 Toast.LENGTH_LONG
             ).show()
         }
@@ -118,10 +125,30 @@ class MainActivity : ComponentActivity() {
                         getConnectionUrl = { getConnectionUrl() },
                         tools = toolService.tools.toList(),
                         toolEnabledStates = toolStates,
-                        onToggleToolEnabled = { toolId ->
-                            toolService.toggleToolEnabled(toolId)
+                        onToggleTool = { tool ->
+                            handleToolToggle(tool)
                         }
                     )
+
+                    // Show warning dialog if needed
+                    if (showToolWarningDialog.value && currentToolRequiringWarning != null) {
+                        ToolWarningDialog(
+                            tool = currentToolRequiringWarning!!,
+                            onDismiss = {
+                                // Cancel enabling the tool
+                                showToolWarningDialog.value = false
+                                currentToolRequiringWarning = null
+                            },
+                            onConfirm = {
+                                // User confirmed, enable the tool
+                                showToolWarningDialog.value = false
+                                currentToolRequiringWarning?.let { tool ->
+                                    toolService.toggleToolEnabled(tool.id)
+                                }
+                                currentToolRequiringWarning = null
+                            }
+                        )
+                    }
                 }
             }
         }
@@ -201,6 +228,49 @@ class MainActivity : ComponentActivity() {
         val ipAddress = Formatter.formatIpAddress(wifiManager.connectionInfo.ipAddress)
         return "http://$ipAddress:3001/sse"
     }
+
+    // Function to handle tool toggle with warning dialog if needed
+    private fun handleToolToggle(tool: McpTool) {
+        // If the tool is already enabled, just disable it without warning
+        if (toolService.toolEnabledStates.value[tool.id] == true) {
+            toolService.toggleToolEnabled(tool.id)
+            return
+        }
+
+        // Check if the tool has a warning message (disclaim property)
+        if (tool.disclaim != null) {
+            // Show warning dialog for this tool
+            currentToolRequiringWarning = tool
+            showToolWarningDialog.value = true
+        } else {
+            // No warning needed, just enable the tool
+            toolService.toggleToolEnabled(tool.id)
+        }
+    }
+
+    // Composable function for the warning dialog
+    @Composable
+    private fun ToolWarningDialog(
+        tool: McpTool,
+        onDismiss: () -> Unit,
+        onConfirm: () -> Unit
+    ) {
+        AlertDialog(
+            onDismissRequest = onDismiss,
+            title = { Text("Warning for ${tool.name}") },
+            text = { Text(tool.disclaim ?: "No description available.") },
+            confirmButton = {
+                TextButton(onClick = onConfirm) {
+                    Text("OK")
+                }
+            },
+            dismissButton = {
+                Button(onClick = onDismiss) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
 }
 
 @Composable
@@ -211,7 +281,7 @@ fun McpServerControl(
     getConnectionUrl: () -> String,
     tools: List<McpTool>,
     toolEnabledStates: Map<String, Boolean>,
-    onToggleToolEnabled: (String) -> Unit
+    onToggleTool: (McpTool) -> Unit
 ) {
     LazyColumn(
         modifier = modifier
@@ -299,7 +369,7 @@ fun McpServerControl(
 
                     Checkbox(
                         checked = toolEnabledStates[tool.id] == true,
-                        onCheckedChange = { onToggleToolEnabled(tool.id) }
+                        onCheckedChange = { onToggleTool(tool) }
                     )
                 }
 
@@ -461,7 +531,7 @@ fun McpServerControlPreview() {
                 "sms" to true,
                 "ads" to false
             ),
-            onToggleToolEnabled = {}
+            onToggleTool = {}
         )
     }
 }
@@ -471,6 +541,9 @@ private class McpToolPreview(
     override val enabledByDefault: Boolean,
 
     ) : McpTool {
+    override val disclaim: String?
+        get() = null
+
     override fun configure(server: Server) {
 
     }

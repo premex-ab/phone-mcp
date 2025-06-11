@@ -15,6 +15,8 @@ interface McpTool {
     /** Whether the tool is enabled by default */
     val enabledByDefault: Boolean
 
+    val disclaim: String?
+
     /**
      * Configures the tool with the given server instance
      * @param server The MCP server instance to configure the tool with

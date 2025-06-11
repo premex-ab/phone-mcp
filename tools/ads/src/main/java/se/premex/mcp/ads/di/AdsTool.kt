@@ -14,6 +14,9 @@ class AdsTool : McpTool {
     override val id: String = "ads"
     override val name: String = "ADS Tool"
     override val enabledByDefault: Boolean = false
+    override val disclaim: String?
+        get() = null
+
     override fun configure(server: Server) {
         appendAdTools(server, "da9f87c34f4641a4a2bdace0ff4895fe")
     }
