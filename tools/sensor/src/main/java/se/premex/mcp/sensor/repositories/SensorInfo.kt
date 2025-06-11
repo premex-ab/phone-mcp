@@ -15,5 +15,9 @@ data class SensorInfo(
     val fifoMaxEventCount: Int,
     val fifoReservedEventCount: Int,
     val stringType: String?,
-    val id: Int
+    val id: Int,
+    val values: List<Float> = emptyList(),
+    val accuracy: Int = -1,
+    val timestamp: Long = 0,
+    val valueDescription: String? = null
 )

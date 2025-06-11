@@ -15,7 +15,18 @@ internal fun appendSensorTools(
     server.addTool(
         name = "phone_sensor",
         description = """
-             These sensors are capable of providing raw data with high precision and accuracy, and are useful if you want to monitor three-dimensional device movement or positioning, or you want to monitor changes in the ambient environment near a device. For example, a game might track readings from a device's gravity sensor to infer complex user gestures and motions, such as tilt, shake, rotation, or swing. Likewise, a weather application might use a device's temperature sensor and humidity sensor to calculate and report the dewpoint, or a travel application might use the geomagnetic field sensor and accelerometer to report a compass bearing.
+            Access all Android sensors. 
+            Some of these sensors are hardware-based and some are software-based. 
+            Hardware-based sensors are physical components built into a handset 
+            or tablet device. They derive their data by directly measuring 
+            specific environmental properties, such as acceleration, 
+            geomagnetic field strength, or angular change. 
+            Software-based sensors are not physical devices, 
+            although they mimic hardware-based sensors. 
+            Software-based sensors derive their data from one or more of the
+            hardware-based sensors and are sometimes called virtual 
+            sensors or synthetic sensors. The linear acceleration sensor 
+            and the gravity sensor are examples of software-based sensors. 
         """.trimIndent(),
     )
     { request ->
