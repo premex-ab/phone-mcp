@@ -84,6 +84,7 @@ dependencies {
     implementation(project(":tools:sms"))
     implementation(project(":tools:ads"))
     implementation(project(":tools:contacts"))
+    implementation(project(":tools:sensor"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
