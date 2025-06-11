@@ -40,6 +40,7 @@ io-ktor-ktor-server-cio = { module = "io.ktor:ktor-server-cio", version.ref = "k
 io-ktor-ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktorVersion" }
 io-ktor-ktor-server-sse = { module = "io.ktor:ktor-server-sse", version.ref = "ktorVersion" }
 io-ktor-ktor-server-auth = { module = "io.ktor:ktor-server-auth", version.ref = "ktorVersion" }
+io-ktor-ktor-server-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktorVersion" }
 io-modelcontextprotocol-kotlin-sdk = { module = "io.modelcontextprotocol:kotlin-sdk", version.ref = "mcpVersion" }
 org-jetbrains-kotlinx-kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"
 org-slf4j-slf4j-nop = { module = "org.slf4j:slf4j-nop", version.ref = "slf4jVersion" }

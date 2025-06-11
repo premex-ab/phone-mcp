@@ -10,16 +10,18 @@ import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import dagger.hilt.android.AndroidEntryPoint
+import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.install
 import io.ktor.server.auth.UserIdPrincipal
 import io.ktor.server.auth.authenticate
 import io.ktor.server.auth.authentication
-import io.ktor.server.auth.basic
+import io.ktor.server.auth.bearer
 import io.ktor.server.cio.CIO
 import io.ktor.server.cio.CIOApplicationEngine
 import io.ktor.server.engine.EmbeddedServer
 import io.ktor.server.engine.embeddedServer
+import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.response.respond
 import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
@@ -36,6 +38,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import se.premex.mcp.core.tool.McpTool
+import se.premex.mcpserver.auth.AuthRepository
 import se.premex.mcpserver.di.ToolService
 import javax.inject.Inject
 import kotlin.collections.set
@@ -71,6 +74,9 @@ class McpServerService : Service() {
 
     @Inject
     lateinit var availableTools: Set<@JvmSuppressWildcards McpTool>
+
+    @Inject
+    lateinit var authRepository: AuthRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -305,24 +311,31 @@ class McpServerService : Service() {
                 Log.d(TAG, "$LOG_PREFIX_SERVER: Configuring server authentication and routes")
 
                 authentication {
-                    basic(name = "basic-auth") {
+                    bearer(name = "bearer-auth") {
                         realm = "Ktor Server"
-                        validate { credentials ->
-                            //if (validateKey(credentials.name, credentials.password)) {
-                            Log.d(
-                                TAG,
-                                "$LOG_PREFIX_SERVER: Authenticated user: ${credentials.name}"
-                            )
-                            UserIdPrincipal(credentials.name)
-                            //} else {
-                            //    null
-                            //}
+                        authenticate { tokenCredential ->
+                            val userId = authRepository.validateBearerToken(tokenCredential.token)
+                            if (userId != null) {
+                                Log.d(TAG, "$LOG_PREFIX_SERVER: Authenticated user with ID: $userId")
+                                UserIdPrincipal(userId)
+                            } else {
+                                Log.d(TAG, "$LOG_PREFIX_SERVER: Authentication failed for token")
+                                null
+                            }
                         }
                     }
                 }
                 install(SSE)
+                install(CORS) {
+                    // Configure CORS settings as needed
+                    anyHost() // Allow requests from any origin (for development only)
+                    allowHeader(HttpHeaders.Authorization)
+                    allowHeader(HttpHeaders.ContentType)
+                    allowHeader(HttpHeaders.Accept)
+                }
+
                 routing {
-                    authenticate("basic-auth") {
+                    authenticate("bearer-auth") {
                         sse("/sse") {
                             Log.d(TAG, "$LOG_PREFIX_TRANSPORT: New SSE connection established")
                             val transport = SseServerTransport("/message", this)
@@ -413,4 +426,3 @@ class McpServerService : Service() {
         return server
     }
 }
-

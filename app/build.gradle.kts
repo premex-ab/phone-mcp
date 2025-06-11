@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.io.ktor.ktor.server.cio)
     implementation(libs.io.ktor.ktor.server.sse)
     implementation(libs.io.ktor.ktor.server.auth)
+    implementation(libs.io.ktor.ktor.server.cors)
     implementation(libs.io.ktor.ktor.client.content.negotiation)
     implementation(libs.io.ktor.ktor.serialization.kotlinx.json)
     implementation(project(":tools:sms"))
