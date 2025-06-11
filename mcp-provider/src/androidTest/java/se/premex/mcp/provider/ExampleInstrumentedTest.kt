@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:mcp-provider/src/androidTest/java/se/premex/mcp/provider/ExampleInstrumentedTest.kt
 package se.premex.mcp.provider
+========
+package se.premex.mcp
+>>>>>>>> 77eca3c (Refactor package structure and update build configuration for MCP):app/src/androidTest/java/se/premex/mcp/ExampleInstrumentedTest.kt
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

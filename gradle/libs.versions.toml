@@ -26,7 +26,6 @@ androidx-datastore-preferences = { module = "androidx.datastore:datastore-prefer
 com-google-firebase-firebase-bom = "com.google.firebase:firebase-bom:33.15.0"
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 
-
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -66,6 +65,7 @@ androidx-camera-extensions = { group = "androidx.camera", name = "camera-extensi
 kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2"
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycleProcess" }
 org-jetbrains-kotlinx-kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1"
+se-warting-inapp-update-compose-mui = { module = "se.warting.in-app-update:in-app-update-compose-mui", version.ref = "updateCompose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
