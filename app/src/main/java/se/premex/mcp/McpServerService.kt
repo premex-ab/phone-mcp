@@ -195,17 +195,20 @@ class McpServerService : Service() {
             val wifiIp = NetworkUtils.getWifiIpAddress(this)
             Log.d(TAG, "$LOG_PREFIX_SERVER: Obtained WiFi IP address: $wifiIp")
 
+            // Get connection instructions including the authentication token
+            val authInstructions = authRepository.getConnectionInstructions()
+
             val successMessage = if (host == "127.0.0.1") {
                 if (wifiIp != null) {
-                    "Server running on $wifiIp:$port"
+                    "Server running on $wifiIp:$port\n$authInstructions"
                 } else {
-                    "Server running on localhost:$port (local device only)"
+                    "Server running on localhost:$port (local device only)\n$authInstructions"
                 }
             } else {
                 if (wifiIp != null) {
-                    "Server running on $wifiIp:$port"
+                    "Server running on $wifiIp:$port\n$authInstructions"
                 } else {
-                    "Server running on $host:$port"
+                    "Server running on $host:$port\n$authInstructions"
                 }
             }
 
@@ -314,12 +317,12 @@ class McpServerService : Service() {
                     bearer(name = "bearer-auth") {
                         realm = "Ktor Server"
                         authenticate { tokenCredential ->
-                            val userId = authRepository.validateBearerToken(tokenCredential.token)
-                            if (userId != null) {
-                                Log.d(TAG, "$LOG_PREFIX_SERVER: Authenticated user with ID: $userId")
-                                UserIdPrincipal(userId)
+                            val authResult = authRepository.validateBearerToken(tokenCredential.token)
+                            if (authResult.isAuthenticated) {
+                                Log.d(TAG, "$LOG_PREFIX_SERVER: Authentication successful. User ID: ${authResult.userId}")
+                                authResult.userId?.let { UserIdPrincipal(it) }
                             } else {
-                                Log.d(TAG, "$LOG_PREFIX_SERVER: Authentication failed for token")
+                                Log.d(TAG, "$LOG_PREFIX_SERVER: Authentication failed: ${authResult.message}")
                                 null
                             }
                         }

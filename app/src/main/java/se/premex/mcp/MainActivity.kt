@@ -53,10 +53,12 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 import io.modelcontextprotocol.kotlin.sdk.server.Server
+import se.premex.mcp.auth.AuthRepository
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.di.ToolService
 import se.premex.mcp.ui.theme.MCPServerTheme
 import javax.inject.Inject
+import kotlin.collections.set
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -69,6 +71,9 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var toolService: ToolService
+
+    @Inject
+    lateinit var authRepository: AuthRepository
 
     private val requestMultiplePermissionsLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -106,8 +111,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-
                 val toolStates by toolService.toolEnabledStates.collectAsState()
+
+                // Extract the auth token from the instructions string
+                // The format is "Please use the token 'XXXXXX' to authenticate your connection."
+                val authInstructions = authRepository.getConnectionInstructions()
+                val authToken = authInstructions.substringAfter("'").substringBefore("'")
 
                 MCPServerTheme {
                     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -128,7 +137,8 @@ class MainActivity : ComponentActivity() {
                             toolEnabledStates = toolStates,
                             onToggleTool = { tool ->
                                 handleToolToggle(tool)
-                            }
+                            },
+                            authToken = authToken
                         )
 
                         // Show warning dialog if needed
@@ -284,7 +294,8 @@ fun McpServerControl(
     getConnectionUrl: () -> String,
     tools: List<McpTool>,
     toolEnabledStates: Map<String, Boolean>,
-    onToggleTool: (McpTool) -> Unit
+    onToggleTool: (McpTool) -> Unit,
+    authToken: String = "YTpi"
 ) {
     LazyColumn(
         modifier = modifier
@@ -346,7 +357,7 @@ fun McpServerControl(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     if (isRunning) {
-                        Instructions(getConnectionUrl)
+                        Instructions(getConnectionUrl, authToken)
                         Spacer(modifier = Modifier.height(16.dp))
                     }
                 }
@@ -382,7 +393,7 @@ fun McpServerControl(
 }
 
 @Composable
-private fun Instructions(getConnectionUrl: () -> String) {
+private fun Instructions(getConnectionUrl: () -> String, authToken: String = "YTpi") {
     // State for tracking if client configuration section is expanded
     var configExpanded by remember { mutableStateOf(false) }
 
@@ -451,13 +462,13 @@ private fun Instructions(getConnectionUrl: () -> String) {
                                                 "command": "npx",
                                                 "args": [
                                                     "mcp-remote", 
-                                                    "http://${getConnectionUrl().removePrefix("ws://")}",
+                                                    "${getConnectionUrl().removePrefix("ws://")}",
                                                     "--header",
                                                     "Authorization: Bearer ${'\$'}{AUTH_TOKEN}",
                                                     "--allow-http"
                                                 ],
                                                 "env": {
-                                                    "AUTH_TOKEN": "YTpi"
+                                                    "AUTH_TOKEN": "$authToken"
                                                 }
                                             }
                                         }
