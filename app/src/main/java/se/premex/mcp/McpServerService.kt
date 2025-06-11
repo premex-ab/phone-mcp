@@ -36,9 +36,12 @@ import io.modelcontextprotocol.kotlin.sdk.server.SseServerTransport
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.auth.AuthRepository
+import se.premex.mcp.data.ToolPreferencesRepository
 import se.premex.mcp.di.ToolService
 import javax.inject.Inject
 import kotlin.collections.set
@@ -48,9 +51,6 @@ class McpServerService : Service() {
     companion object {
         private const val TAG = "McpServerService"
         private const val NOTIFICATION_ID = 1001
-
-        // Intent extra keys for tool configuration
-        const val EXTRA_TOOL_STATES = "toolsStates"
 
         // Log tag prefixes for better filtering
         private const val LOG_PREFIX_LIFECYCLE = "Lifecycle"
@@ -66,11 +66,14 @@ class McpServerService : Service() {
         null
     private var notificationManager: NotificationManager? = null
 
-    // Tool states from the intent or default values
+    // Tool states will be loaded from the repository
     private var toolStates: Map<String, Boolean> = emptyMap()
 
     @Inject
     lateinit var toolService: ToolService
+
+    @Inject
+    lateinit var toolPreferencesRepository: ToolPreferencesRepository
 
     @Inject
     lateinit var availableTools: Set<@JvmSuppressWildcards McpTool>
@@ -116,29 +119,10 @@ class McpServerService : Service() {
             "$LOG_PREFIX_LIFECYCLE: onStartCommand called with startId=$startId, flags=$flags"
         )
 
-        // Read tool states from intent
-        intent?.let {
-            @Suppress("UNCHECKED_CAST")
-            val receivedToolStates =
-                it.getSerializableExtra(EXTRA_TOOL_STATES) as? HashMap<String, Boolean>
-
-            if (receivedToolStates != null) {
-                toolStates = receivedToolStates.toMap()
-                Log.d(TAG, "$LOG_PREFIX_TOOLS: Received tool states from intent: $toolStates")
-            } else {
-                // If no tool states were passed, use the current tool states from the ToolService
-                toolStates = toolService.toolEnabledStates.value
-                Log.d(
-                    TAG,
-                    "$LOG_PREFIX_TOOLS: No tool states in intent, using defaults: $toolStates"
-                )
-            }
-        } ?: run {
-            toolStates = toolService.toolEnabledStates.value
-            Log.d(
-                TAG,
-                "$LOG_PREFIX_TOOLS: No intent provided, using default tool states: $toolStates"
-            )
+        // Load tool states from the repository
+        runBlocking {
+            toolStates = toolPreferencesRepository.getToolEnabledStates().first()
+            Log.d(TAG, "$LOG_PREFIX_TOOLS: Loaded tool states from repository: $toolStates")
         }
 
         // Launch server initialization in a background coroutine
@@ -284,7 +268,7 @@ class McpServerService : Service() {
             )
         )
 
-        // Add tools based on their enabled state
+        // Add tools based on their enabled state from the repository
         Log.d(TAG, "$LOG_PREFIX_TOOLS: Configuring ${availableTools.size} available tools")
         var enabledCount = 0
         for (tool in availableTools) {

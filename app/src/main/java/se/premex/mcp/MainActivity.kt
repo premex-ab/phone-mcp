@@ -217,13 +217,7 @@ class MainActivity : ComponentActivity() {
         val serviceIntent = Intent(this, McpServerService::class.java)
 
         if (start) {
-            // Pass all tool states as an extra
-            serviceIntent.putExtra(
-                McpServerService.EXTRA_TOOL_STATES,
-                HashMap(toolService.toolEnabledStates.value)
-            )
-
-            // Start service
+            // Start service (no need to pass tool states anymore, they're loaded from DataStore)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(serviceIntent)
             } else {
