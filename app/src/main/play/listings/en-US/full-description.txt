@@ -1,0 +1,31 @@
+Phone MCP turns your Android device into a server that supports the Model Context Protocol (MCP). This allows AI agents that are MCP-compatible to securely interact with selected phone capabilities.
+
+The app does not include or run any AI models itself. It simply enables communication between external AI systems and your phone's features — under your control.
+
+Current Features
+- Access to contact list (read-only)
+- Send SMS messages through the system messaging app
+
+These actions require explicit permission from the user and are only available when actively granted.
+
+How It Works
+- Install and open Phone MCP
+- Start the MCP server from the app
+- Connect to the server from an external MCP-compatible AI agent
+- Select which features the agent is allowed to use
+
+No action is taken without the user's involvement. All access is local and protected by Android's permission model.
+
+Designed For
+- Developers building or testing MCP-compatible AI agents
+- Users running personal AI systems or interpreters on external machines
+- Anyone looking to extend AI interaction to their phone in a secure, structured way
+
+Privacy and Data
+- No user data is collected or shared
+- No telemetry or background analytics
+- No cloud dependencies — everything runs locally
+
+Access is always permission-based and clearly indicated
+
+Note that this is an early version of Phone MCP. Future updates may include additional optional features like location access, camera, and more — all with strict opt-in controls.

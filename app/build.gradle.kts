@@ -6,6 +6,12 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.hilt.android)
+    id("com.github.triplet.play") version "3.12.1"
+}
+
+play {
+    serviceAccountCredentials.set(file("byggappen-dev-b151ea2d4990.json"))
+    defaultToAppBundles.set(true)
 }
 
 android {
@@ -16,8 +22,8 @@ android {
         applicationId = "se.premex.mcp"
         minSdk = 24
         targetSdk = 36
-        versionCode = 3
-        versionName = "0.2.0"
+        versionCode = 4
+        versionName = "0.3.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
