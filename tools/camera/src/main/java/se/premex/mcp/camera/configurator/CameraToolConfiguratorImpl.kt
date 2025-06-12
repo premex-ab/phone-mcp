@@ -60,9 +60,15 @@ class CameraToolConfiguratorImpl(
             description = """
                 Take a photo using the device camera.
                 You can specify which camera to use by providing a camera_id parameter 
-                (obtained from phone_camera tool). If no camera_id is provided, 
+                (obtained from phone_get_cameras tool). If no camera_id is provided, 
                 the default back-facing camera will be used.
-                You can also specify the image quality from 1-100 (default: 80).
+                Additional parameters allow fine control over camera settings:
+                - quality: Image quality from 1-100 (default: 80)
+                - flash_mode: Flash mode (OFF, SINGLE, TORCH)
+                - focus_mode: Focus mode (AUTO, CONTINUOUS_PICTURE, CONTINUOUS_VIDEO, EDOF, FIXED, INFINITY, MACRO, MANUAL)
+                - white_balance: White balance mode (AUTO, CLOUDY_DAYLIGHT, DAYLIGHT, FLUORESCENT, INCANDESCENT, SHADE, TWILIGHT, WARM_FLUORESCENT)
+                - zoom_level: Digital zoom level (1.0 = no zoom, higher values = more zoom)
+                - picture_size: Desired image resolution in format "WIDTHxHEIGHT" (e.g. "4032x3024")
             """.trimIndent(),
             inputSchema = Tool.Input(
                 properties = buildJsonObject {
@@ -70,14 +76,49 @@ class CameraToolConfiguratorImpl(
                         put("type", "string")
                         put(
                             "description",
-                            "Optional camera ID to use for taking the photo (from phone_camera tool)."
+                            "Optional camera ID to use for taking the photo (from phone_get_cameras tool)"
                         )
                     }
                     putJsonObject("quality") {
                         put("type", "integer")
                         put(
                             "description",
-                            "Optional photo quality from 1-100 (default: 80)."
+                            "Optional photo quality from 1-100 (default: 80)"
+                        )
+                    }
+                    putJsonObject("flash_mode") {
+                        put("type", "string")
+                        put(
+                            "description",
+                            "Optional flash mode: OFF, SINGLE, TORCH (default: camera's auto flash)"
+                        )
+                    }
+                    putJsonObject("focus_mode") {
+                        put("type", "string")
+                        put(
+                            "description",
+                            "Optional focus mode: AUTO, CONTINUOUS_PICTURE, CONTINUOUS_VIDEO, EDOF, FIXED, INFINITY, MACRO, MANUAL (default: CONTINUOUS_PICTURE)"
+                        )
+                    }
+                    putJsonObject("white_balance") {
+                        put("type", "string")
+                        put(
+                            "description",
+                            "Optional white balance mode: AUTO, CLOUDY_DAYLIGHT, DAYLIGHT, FLUORESCENT, INCANDESCENT, SHADE, TWILIGHT, WARM_FLUORESCENT (default: AUTO)"
+                        )
+                    }
+                    putJsonObject("zoom_level") {
+                        put("type", "number")
+                        put(
+                            "description",
+                            "Optional digital zoom level: 1.0 = no zoom, higher values = more zoom (limited by camera)"
+                        )
+                    }
+                    putJsonObject("picture_size") {
+                        put("type", "string")
+                        put(
+                            "description",
+                            "Optional picture size in format 'WIDTHxHEIGHT' (e.g. '4032x3024'). Use values from phone_get_cameras"
                         )
                     }
                 }
@@ -85,6 +126,11 @@ class CameraToolConfiguratorImpl(
         ) { request ->
             val cameraId = request.arguments["camera_id"]?.jsonPrimitive?.content
             val quality = request.arguments["quality"]?.jsonPrimitive?.content?.toIntOrNull() ?: 80
+            val flashMode = request.arguments["flash_mode"]?.jsonPrimitive?.content
+            val focusMode = request.arguments["focus_mode"]?.jsonPrimitive?.content
+            val whiteBalance = request.arguments["white_balance"]?.jsonPrimitive?.content
+            val zoomLevel = request.arguments["zoom_level"]?.jsonPrimitive?.content?.toFloatOrNull()
+            val pictureSize = request.arguments["picture_size"]?.jsonPrimitive?.content
 
             try {
                 // Quality should be between 1-100
@@ -94,11 +140,16 @@ class CameraToolConfiguratorImpl(
                     else -> quality
                 }
 
-                // Take photo using the repository
+                // Take photo using the repository with all the parameters
                 val photoFile: File? = runBlocking {
                     cameraRepository.takePhoto(
                         cameraId = cameraId,
-                        quality = qualityValidated
+                        quality = qualityValidated,
+                        flashMode = flashMode,
+                        focusMode = focusMode,
+                        whiteBalance = whiteBalance,
+                        zoomLevel = zoomLevel,
+                        pictureSize = pictureSize
                     )
                 }
 

@@ -90,7 +90,15 @@ class CameraRepositoryImpl(
         }
     }
 
-    override suspend fun takePhoto(cameraId: String?, quality: Int): File? = withContext(Dispatchers.IO) {
+    override suspend fun takePhoto(
+        cameraId: String?,
+        quality: Int,
+        flashMode: String?,
+        focusMode: String?,
+        whiteBalance: String?,
+        zoomLevel: Float?,
+        pictureSize: String?
+    ): File? = withContext(Dispatchers.IO) {
         val cameraManager = context.getSystemService(Context.CAMERA_SERVICE) as CameraManager
 
         // Use the provided cameraId or get the first available camera (preferring back camera)
@@ -104,10 +112,26 @@ class CameraRepositoryImpl(
         val streamConfigurationMap = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
             ?: return@withContext null
 
-        // Get the largest supported size for JPEG format
+        // Parse requested picture size or use the largest supported size
         val jpegSizes = streamConfigurationMap.getOutputSizes(android.graphics.ImageFormat.JPEG)
-        val previewSize = jpegSizes.maxByOrNull { it.width * it.height }
-            ?: return@withContext null
+        val selectedSize = if (pictureSize != null) {
+            try {
+                val parts = pictureSize.split("x")
+                val width = parts[0].toInt()
+                val height = parts[1].toInt()
+
+                // Find the closest matching size
+                jpegSizes.firstOrNull { it.width == width && it.height == height }
+                    ?: jpegSizes.maxByOrNull { it.width * it.height }
+                    ?: return@withContext null
+            } catch (e: Exception) {
+                jpegSizes.maxByOrNull { it.width * it.height }
+                    ?: return@withContext null
+            }
+        } else {
+            jpegSizes.maxByOrNull { it.width * it.height }
+                ?: return@withContext null
+        }
 
         // Start a background thread for camera operations
         val cameraThread = HandlerThread("CameraThread").apply { start() }
@@ -116,8 +140,8 @@ class CameraRepositoryImpl(
         try {
             // Set up the ImageReader for capturing the photo
             val imageReader = ImageReader.newInstance(
-                previewSize.width,
-                previewSize.height,
+                selectedSize.width,
+                selectedSize.height,
                 android.graphics.ImageFormat.JPEG,
                 2
             )
@@ -165,12 +189,112 @@ class CameraRepositoryImpl(
             // Create a capture request for taking the photo
             val captureBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE).apply {
                 addTarget(imageReader.surface)
-                set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE)
+
+                // Set JPEG quality
                 set(CaptureRequest.JPEG_QUALITY, quality.toByte())
 
                 // Set the correct orientation
                 val rotation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION) ?: 0
                 set(CaptureRequest.JPEG_ORIENTATION, rotation)
+
+                // Set focus mode
+                when (focusMode) {
+                    "AUTO" -> set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_AUTO)
+                    "CONTINUOUS_PICTURE" -> set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE)
+                    "CONTINUOUS_VIDEO" -> set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_VIDEO)
+                    "EDOF" -> set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_EDOF)
+                    "MACRO" -> set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_MACRO)
+                    "OFF", "FIXED", "INFINITY" -> set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_OFF)
+                    "MANUAL" -> {
+                        set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_OFF)
+                        // If manual focus distance was provided, it could be set here
+                    }
+                    else -> set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE)
+                }
+
+                // Set flash mode if camera has flash
+                if (characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true) {
+                    when (flashMode) {
+                        "OFF" -> {
+                            set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON)
+                            set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_OFF)
+                        }
+                        "SINGLE" -> {
+                            set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON_ALWAYS_FLASH)
+                        }
+                        "TORCH" -> {
+                            set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON)
+                            set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_TORCH)
+                        }
+                        else -> {
+                            set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH)
+                        }
+                    }
+                }
+
+                // Set white balance mode
+                when (whiteBalance) {
+                    "AUTO" -> {
+                        set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO)
+                    }
+                    "CLOUDY_DAYLIGHT" -> {
+                        set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_CLOUDY_DAYLIGHT)
+                    }
+                    "DAYLIGHT" -> {
+                        set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_DAYLIGHT)
+                    }
+                    "FLUORESCENT" -> {
+                        set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_FLUORESCENT)
+                    }
+                    "INCANDESCENT" -> {
+                        set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_INCANDESCENT)
+                    }
+                    "SHADE" -> {
+                        set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_SHADE)
+                    }
+                    "TWILIGHT" -> {
+                        set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_TWILIGHT)
+                    }
+                    "WARM_FLUORESCENT" -> {
+                        set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_WARM_FLUORESCENT)
+                    }
+                    else -> {
+                        set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO)
+                    }
+                }
+
+                // Set zoom level if zoom is supported
+                if (characteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM) ?: 1.0f > 1.0f) {
+                    val maxZoom = characteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM) ?: 1.0f
+                    val requestedZoom = zoomLevel ?: 1.0f
+                    val validatedZoom = when {
+                        requestedZoom < 1.0f -> 1.0f
+                        requestedZoom > maxZoom -> maxZoom
+                        else -> requestedZoom
+                    }
+
+                    if (validatedZoom > 1.0f) {
+                        // Get the active array size
+                        val activeArraySize = characteristics.get(CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE)
+                        if (activeArraySize != null) {
+                            // Calculate the zoom rect
+                            val cropWidth = activeArraySize.width() / validatedZoom
+                            val cropHeight = activeArraySize.height() / validatedZoom
+                            val left = (activeArraySize.width() - cropWidth) / 2
+                            val top = (activeArraySize.height() - cropHeight) / 2
+                            val right = left + cropWidth
+                            val bottom = top + cropHeight
+
+                            val zoomRect = android.graphics.Rect(
+                                left.toInt(),
+                                top.toInt(),
+                                right.toInt(),
+                                bottom.toInt()
+                            )
+                            set(CaptureRequest.SCALER_CROP_REGION, zoomRect)
+                        }
+                    }
+                }
             }
 
             // Capture the photo
