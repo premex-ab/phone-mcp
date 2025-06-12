@@ -21,7 +21,7 @@ internal fun appendContactsTools(
     server.addTool(
         name = "get_phone_contacts",
         description = """
-            Retreive phone number(s) from contacts.
+            Retrieve phone number(s) from contacts on the android device.
         """.trimIndent(),
         inputSchema = Tool.Input(
             properties = buildJsonObject {
