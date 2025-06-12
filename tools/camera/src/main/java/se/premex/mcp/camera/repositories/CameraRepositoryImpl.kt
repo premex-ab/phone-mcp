@@ -1,26 +1,25 @@
 package se.premex.mcp.camera.repositories
 
 import android.content.Context
-import android.hardware.camera2.CameraCharacteristics
-import android.hardware.camera2.CameraDevice
-import android.hardware.camera2.CameraManager
-import android.hardware.camera2.CameraCaptureSession
-import android.hardware.camera2.CaptureRequest
-import android.hardware.camera2.CaptureResult
-import android.hardware.camera2.TotalCaptureResult
-import android.hardware.camera2.params.StreamConfigurationMap
-import android.media.ImageReader
-import android.os.Handler
-import android.os.HandlerThread
-import android.util.Size
-import android.view.Surface
+import android.util.Log
+import androidx.camera.camera2.interop.Camera2CameraInfo
+import androidx.camera.camera2.interop.ExperimentalCamera2Interop
+import androidx.camera.core.AspectRatio
+import androidx.camera.core.Camera
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.DisplayOrientedMeteringPointFactory
+import androidx.camera.core.FocusMeteringAction
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import java.io.File
-import java.io.FileOutputStream
-import java.util.concurrent.Semaphore
-import java.util.concurrent.TimeUnit
+import java.util.concurrent.Executor
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
@@ -28,67 +27,114 @@ class CameraRepositoryImpl(
     private val context: Context
 ) : CameraRepository {
 
+    companion object {
+        private const val TAG = "CameraRepositoryImpl"
+    }
+
+    // Lazily initialize the camera executor
+    private val cameraExecutor: Executor by lazy {
+        ContextCompat.getMainExecutor(context)
+    }
+
+    @androidx.annotation.OptIn(ExperimentalCamera2Interop::class)
     override fun getCamerasInfo(): List<CameraInfo> {
-        val cameraManager = context.getSystemService(Context.CAMERA_SERVICE) as CameraManager
-        val cameraIds = cameraManager.cameraIdList
+        val cameraInfoList = mutableListOf<CameraInfo>()
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
 
-        return cameraIds.map { cameraId ->
-            val characteristics = cameraManager.getCameraCharacteristics(cameraId)
-            val streamConfigurationMap = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
+        try {
+            // Get camera provider
+            val cameraProvider = cameraProviderFuture.get()
 
-            // Determine camera facing
-            val facing = when(characteristics.get(CameraCharacteristics.LENS_FACING)) {
-                CameraCharacteristics.LENS_FACING_FRONT -> "Front"
-                CameraCharacteristics.LENS_FACING_BACK -> "Back"
-                CameraCharacteristics.LENS_FACING_EXTERNAL -> "External"
-                else -> "Unknown"
+            // Get available camera infos
+            val availableCameraInfos = cameraProvider.availableCameraInfos
+
+            for (cameraInfo in availableCameraInfos) {
+                // Extract Camera2 camera characteristics
+                val camera2CameraInfo = Camera2CameraInfo.from(cameraInfo)
+                val cameraId = camera2CameraInfo.cameraId
+                val characteristics = camera2CameraInfo.getCameraCharacteristic(
+                    android.hardware.camera2.CameraCharacteristics.LENS_FACING
+                ) as Int?
+
+                // Determine camera facing
+                val facing = when (characteristics) {
+                    android.hardware.camera2.CameraCharacteristics.LENS_FACING_FRONT -> "Front"
+                    android.hardware.camera2.CameraCharacteristics.LENS_FACING_BACK -> "Back"
+                    android.hardware.camera2.CameraCharacteristics.LENS_FACING_EXTERNAL -> "External"
+                    else -> "Unknown"
+                }
+
+                // Get sensor orientation
+                val orientation = camera2CameraInfo.getCameraCharacteristic(
+                    android.hardware.camera2.CameraCharacteristics.SENSOR_ORIENTATION
+                ) as Int? ?: 0
+
+                // Get supported picture sizes using Camera2 interop
+                val streamConfigMap = camera2CameraInfo.getCameraCharacteristic(
+                    android.hardware.camera2.CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP
+                ) as android.hardware.camera2.params.StreamConfigurationMap?
+
+                // Get picture sizes
+                val pictureSizes =
+                    streamConfigMap?.getOutputSizes(android.graphics.ImageFormat.JPEG)
+                        ?.map { "${it.width}x${it.height}" } ?: emptyList()
+
+                // Get video sizes
+                val videoSizes =
+                    streamConfigMap?.getOutputSizes(android.media.MediaRecorder::class.java)
+                        ?.map { "${it.width}x${it.height}" } ?: emptyList()
+
+                // Check if flash is available
+                val hasFlash = camera2CameraInfo.getCameraCharacteristic(
+                    android.hardware.camera2.CameraCharacteristics.FLASH_INFO_AVAILABLE
+                ) as Boolean? ?: false
+
+                // Get available flash modes
+                val flashModes = if (hasFlash) {
+                    listOf("OFF", "SINGLE", "TORCH")
+                } else {
+                    listOf("NONE")
+                }
+
+                // Define focus modes
+                val focusModes =
+                    listOf("AUTO", "CONTINUOUS_PICTURE", "CONTINUOUS_VIDEO", "OFF", "MANUAL")
+
+                // Define white balance modes
+                val whiteBalanceModes = listOf(
+                    "AUTO", "CLOUDY_DAYLIGHT", "DAYLIGHT", "FLUORESCENT",
+                    "INCANDESCENT", "SHADE", "TWILIGHT", "WARM_FLUORESCENT"
+                )
+
+                // Check zoom capability
+                val maxZoomLevel = camera2CameraInfo.getCameraCharacteristic(
+                    android.hardware.camera2.CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM
+                ) as Float? ?: 1.0f
+
+                val isZoomSupported = maxZoomLevel > 1.0f
+
+                // Create and add CameraInfo
+                val info = CameraInfo(
+                    id = cameraId,
+                    facing = facing,
+                    orientation = orientation,
+                    supportedPictureSizes = pictureSizes,
+                    supportedVideoSizes = videoSizes,
+                    supportedFlashModes = flashModes,
+                    hasFlash = hasFlash,
+                    supportedFocusModes = focusModes,
+                    supportedWhiteBalance = whiteBalanceModes,
+                    maxZoomLevel = maxZoomLevel,
+                    isZoomSupported = isZoomSupported
+                )
+
+                cameraInfoList.add(info)
             }
-
-            // Get camera orientation
-            val orientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION) ?: 0
-
-            // Get supported picture sizes
-            val pictureSizes = streamConfigurationMap?.getOutputSizes(android.graphics.ImageFormat.JPEG)?.toList() ?: emptyList()
-            val pictureSizesStr = pictureSizes.map { "${it.width}x${it.height}" }
-
-            // Get supported video sizes
-            val videoSizes = streamConfigurationMap?.getOutputSizes(android.media.MediaRecorder::class.java)?.toList() ?: emptyList()
-            val videoSizesStr = videoSizes.map { "${it.width}x${it.height}" }
-
-            // Check if flash is available
-            val hasFlash = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) ?: false
-
-            // Get available flash modes (simplified - would need camera device to get actual modes)
-            val flashModes = if (hasFlash) {
-                listOf("OFF", "SINGLE", "TORCH")
-            } else {
-                listOf("NONE")
-            }
-
-            // Get available focus modes (simplified - would need camera device to get actual modes)
-            val focusModes = listOf("AUTO", "CONTINUOUS_PICTURE", "CONTINUOUS_VIDEO", "EDOF", "FIXED", "INFINITY", "MACRO", "MANUAL")
-
-            // Get white balance modes (simplified)
-            val whiteBalanceModes = listOf("AUTO", "CLOUDY_DAYLIGHT", "DAYLIGHT", "FLUORESCENT", "INCANDESCENT", "SHADE", "TWILIGHT", "WARM_FLUORESCENT")
-
-            // Check zoom capability
-            val maxZoomLevel = characteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM) ?: 1.0f
-            val isZoomSupported = maxZoomLevel > 1.0f
-
-            CameraInfo(
-                id = cameraId,
-                facing = facing,
-                orientation = orientation,
-                supportedPictureSizes = pictureSizesStr,
-                supportedVideoSizes = videoSizesStr,
-                supportedFlashModes = flashModes,
-                hasFlash = hasFlash,
-                supportedFocusModes = focusModes,
-                supportedWhiteBalance = whiteBalanceModes,
-                maxZoomLevel = maxZoomLevel,
-                isZoomSupported = isZoomSupported
-            )
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting cameras info", e)
         }
+
+        return cameraInfoList
     }
 
     override suspend fun takePhoto(
@@ -100,288 +146,44 @@ class CameraRepositoryImpl(
         zoomLevel: Float?,
         pictureSize: String?
     ): File? = withContext(Dispatchers.IO) {
-        val cameraManager = context.getSystemService(Context.CAMERA_SERVICE) as CameraManager
-
-        // Use the provided cameraId or get the first available camera (preferring back camera)
-        val actualCameraId = cameraId ?: getDefaultCameraId(cameraManager)
-        if (actualCameraId == null) {
-            return@withContext null
-        }
-
-        // Get characteristics to determine the optimal photo size
-        val characteristics = cameraManager.getCameraCharacteristics(actualCameraId)
-        val streamConfigurationMap = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
-            ?: return@withContext null
-
-        // Parse requested picture size or use the largest supported size
-        val jpegSizes = streamConfigurationMap.getOutputSizes(android.graphics.ImageFormat.JPEG)
-        val selectedSize = if (pictureSize != null) {
-            try {
-                val parts = pictureSize.split("x")
-                val width = parts[0].toInt()
-                val height = parts[1].toInt()
-
-                // Find the closest matching size
-                jpegSizes.firstOrNull { it.width == width && it.height == height }
-                    ?: jpegSizes.maxByOrNull { it.width * it.height }
-                    ?: return@withContext null
-            } catch (e: Exception) {
-                jpegSizes.maxByOrNull { it.width * it.height }
-                    ?: return@withContext null
-            }
-        } else {
-            jpegSizes.maxByOrNull { it.width * it.height }
-                ?: return@withContext null
-        }
-
-        // Start a background thread for camera operations
-        val cameraThread = HandlerThread("CameraThread").apply { start() }
-        val cameraHandler = Handler(cameraThread.looper)
-
         try {
-            // Set up the ImageReader for capturing the photo
-            val imageReader = ImageReader.newInstance(
-                selectedSize.width,
-                selectedSize.height,
-                android.graphics.ImageFormat.JPEG,
-                2
-            )
+            Log.d(TAG, "Taking photo with cameraId: $cameraId, quality: $quality")
 
-            // Create output file
+            // Create output file for the photo
             val photoFile = createTempPhotoFile()
 
-            // Use the ImageReader to save the captured image
-            val imageSavedSemaphore = Semaphore(0)
-            val focusLockSemaphore = Semaphore(0)
+            // Get the camera provider
+            val cameraProvider = getCameraProvider()
 
-            imageReader.setOnImageAvailableListener({ reader ->
-                val image = reader.acquireLatestImage()
-                try {
-                    val buffer = image.planes[0].buffer
-                    val bytes = ByteArray(buffer.capacity())
-                    buffer.get(bytes)
+            // Configure camera selector based on camera ID or default to back camera
+            val cameraSelector = configureCameraSelector(cameraId, cameraProvider)
 
-                    // Save the image with specified quality
-                    FileOutputStream(photoFile).use { output ->
-                        output.write(bytes)
-                    }
+            // Configure image capture use case
+            val imageCapture = configureImageCapture(
+                quality,
+                flashMode,
+                pictureSize
+            )
 
-                    imageSavedSemaphore.release()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                } finally {
-                    image.close()
-                }
-            }, cameraHandler)
+            // Bind use cases and get camera
+            val camera = bindUseCases(cameraProvider, cameraSelector, imageCapture)
 
-            // Open the camera
-            val cameraOpenCloseSemaphore = Semaphore(1)
-            cameraOpenCloseSemaphore.acquire()
+            // Apply camera settings (zoom, focus mode, white balance)
+            applyCameraSettings(camera, focusMode, whiteBalance, zoomLevel)
 
-            var cameraDevice: CameraDevice? = null
+            // Take photo and wait for result
+            val photo = capturePhoto(imageCapture, photoFile)
 
-            // Open camera
-            cameraDevice = openCamera(cameraManager, actualCameraId, cameraHandler, cameraOpenCloseSemaphore)
-                ?: return@withContext null
-
-            // Create a capture session and take a picture
-            val captureSession = createCaptureSession(cameraDevice, imageReader.surface, cameraHandler)
-                ?: return@withContext null
-
-            // Create a capture request for taking the photo
-            val captureBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE).apply {
-                addTarget(imageReader.surface)
-
-                // Set JPEG quality
-                set(CaptureRequest.JPEG_QUALITY, quality.toByte())
-
-                // Set the correct orientation
-                val rotation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION) ?: 0
-                set(CaptureRequest.JPEG_ORIENTATION, rotation)
-
-                // Set focus mode
-                when (focusMode) {
-                    "AUTO" -> set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_AUTO)
-                    "CONTINUOUS_PICTURE" -> set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE)
-                    "CONTINUOUS_VIDEO" -> set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_VIDEO)
-                    "EDOF" -> set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_EDOF)
-                    "MACRO" -> set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_MACRO)
-                    "OFF", "FIXED", "INFINITY" -> set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_OFF)
-                    "MANUAL" -> {
-                        set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_OFF)
-                        // If manual focus distance was provided, it could be set here
-                    }
-                    else -> set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE)
-                }
-
-                // Set flash mode if camera has flash
-                if (characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true) {
-                    when (flashMode) {
-                        "OFF" -> {
-                            set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON)
-                            set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_OFF)
-                        }
-                        "SINGLE" -> {
-                            set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON_ALWAYS_FLASH)
-                        }
-                        "TORCH" -> {
-                            set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON)
-                            set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_TORCH)
-                        }
-                        else -> {
-                            set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH)
-                        }
-                    }
-                }
-
-                // Set white balance mode
-                when (whiteBalance) {
-                    "AUTO" -> {
-                        set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO)
-                    }
-                    "CLOUDY_DAYLIGHT" -> {
-                        set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_CLOUDY_DAYLIGHT)
-                    }
-                    "DAYLIGHT" -> {
-                        set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_DAYLIGHT)
-                    }
-                    "FLUORESCENT" -> {
-                        set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_FLUORESCENT)
-                    }
-                    "INCANDESCENT" -> {
-                        set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_INCANDESCENT)
-                    }
-                    "SHADE" -> {
-                        set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_SHADE)
-                    }
-                    "TWILIGHT" -> {
-                        set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_TWILIGHT)
-                    }
-                    "WARM_FLUORESCENT" -> {
-                        set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_WARM_FLUORESCENT)
-                    }
-                    else -> {
-                        set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO)
-                    }
-                }
-
-                // Set zoom level if zoom is supported
-                if (characteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM) ?: 1.0f > 1.0f) {
-                    val maxZoom = characteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM) ?: 1.0f
-                    val requestedZoom = zoomLevel ?: 1.0f
-                    val validatedZoom = when {
-                        requestedZoom < 1.0f -> 1.0f
-                        requestedZoom > maxZoom -> maxZoom
-                        else -> requestedZoom
-                    }
-
-                    if (validatedZoom > 1.0f) {
-                        // Get the active array size
-                        val activeArraySize = characteristics.get(CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE)
-                        if (activeArraySize != null) {
-                            // Calculate the zoom rect
-                            val cropWidth = activeArraySize.width() / validatedZoom
-                            val cropHeight = activeArraySize.height() / validatedZoom
-                            val left = (activeArraySize.width() - cropWidth) / 2
-                            val top = (activeArraySize.height() - cropHeight) / 2
-                            val right = left + cropWidth
-                            val bottom = top + cropHeight
-
-                            val zoomRect = android.graphics.Rect(
-                                left.toInt(),
-                                top.toInt(),
-                                right.toInt(),
-                                bottom.toInt()
-                            )
-                            set(CaptureRequest.SCALER_CROP_REGION, zoomRect)
-                        }
-                    }
-                }
+            // Shutdown camera (ensure this runs on main thread)
+            withContext(Dispatchers.Main) {
+                cameraProvider.unbindAll()
             }
 
-            // Create a preview surface and capture session
-            val previewBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW).apply {
-                addTarget(imageReader.surface)
-
-                // Set up autofocus
-                set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_AUTO)
-                // Trigger auto-focus
-                set(CaptureRequest.CONTROL_AF_TRIGGER, CaptureRequest.CONTROL_AF_TRIGGER_START)
-            }
-
-            // Run autofocus sequence first, then take picture
-            captureSession.capture(previewBuilder.build(), object : CameraCaptureSession.CaptureCallback() {
-                override fun onCaptureCompleted(
-                    session: CameraCaptureSession,
-                    request: CaptureRequest,
-                    result: TotalCaptureResult
-                ) {
-                    super.onCaptureCompleted(session, request, result)
-
-                    // Check if auto-focus sequence is done and locked
-                    val afState = result.get(CaptureResult.CONTROL_AF_STATE)
-                    if (afState == CaptureResult.CONTROL_AF_STATE_FOCUSED_LOCKED ||
-                        afState == CaptureResult.CONTROL_AF_STATE_PASSIVE_FOCUSED) {
-                        // Autofocus completed successfully
-                        focusLockSemaphore.release()
-                    } else if (afState == CaptureResult.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED ||
-                               afState == CaptureResult.CONTROL_AF_STATE_PASSIVE_UNFOCUSED) {
-                        // Couldn't focus but we'll take the picture anyway
-                        focusLockSemaphore.release()
-                    }
-                }
-            }, cameraHandler)
-
-            // Wait for focus to be acquired (or timeout after 1 second)
-            focusLockSemaphore.tryAcquire(1000, TimeUnit.MILLISECONDS)
-
-            // Now capture the photo with established focus
-            captureSession.capture(captureBuilder.build(), object : CameraCaptureSession.CaptureCallback() {
-                override fun onCaptureCompleted(
-                    session: CameraCaptureSession,
-                    request: CaptureRequest,
-                    result: TotalCaptureResult
-                ) {
-                    super.onCaptureCompleted(session, request, result)
-                }
-            }, cameraHandler)
-
-            // Wait for image to be saved
-            if (!imageSavedSemaphore.tryAcquire(5000, TimeUnit.MILLISECONDS)) {
-                return@withContext null
-            }
-
-            // Close the camera and release resources
-            cameraDevice.close()
-            captureSession.close()
-
-            return@withContext photoFile
+            photo
         } catch (e: Exception) {
-            e.printStackTrace()
-            return@withContext null
-        } finally {
-            cameraThread.quitSafely()
+            Log.e(TAG, "Error taking photo", e)
+            null
         }
-    }
-
-    /**
-     * Gets the default camera ID (prefers back camera)
-     */
-    private fun getDefaultCameraId(cameraManager: CameraManager): String? {
-        val cameraIds = cameraManager.cameraIdList
-        if (cameraIds.isEmpty()) return null
-
-        // Try to find a back-facing camera first
-        for (id in cameraIds) {
-            val characteristics = cameraManager.getCameraCharacteristics(id)
-            val facing = characteristics.get(CameraCharacteristics.LENS_FACING)
-            if (facing == CameraCharacteristics.LENS_FACING_BACK) {
-                return id
-            }
-        }
-
-        // If no back-facing camera is found, return the first camera
-        return cameraIds[0]
     }
 
     /**
@@ -393,62 +195,184 @@ class CameraRepositoryImpl(
     }
 
     /**
-     * Opens the camera device
+     * Get the camera provider using coroutines
      */
-    private suspend fun openCamera(
-        cameraManager: CameraManager,
-        cameraId: String,
-        handler: Handler,
-        cameraOpenCloseSemaphore: Semaphore
-    ): CameraDevice? = suspendCancellableCoroutine  { cont ->
-        try {
-            cameraManager.openCamera(cameraId, object : CameraDevice.StateCallback() {
-                override fun onOpened(camera: CameraDevice) {
-                    cameraOpenCloseSemaphore.release()
-                    cont.resume(camera)
+    private suspend fun getCameraProvider(): ProcessCameraProvider {
+        return suspendCancellableCoroutine { continuation ->
+            val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
+            cameraProviderFuture.addListener({
+                try {
+                    val cameraProvider = cameraProviderFuture.get()
+                    continuation.resume(cameraProvider)
+                } catch (e: Exception) {
+                    continuation.resumeWithException(e)
                 }
-
-                override fun onDisconnected(camera: CameraDevice) {
-                    cameraOpenCloseSemaphore.release()
-                    camera.close()
-                    cont.resume(null)
-                }
-
-                override fun onError(camera: CameraDevice, error: Int) {
-                    cameraOpenCloseSemaphore.release()
-                    camera.close()
-                    cont.resume(null)
-                }
-            }, handler)
-        } catch (e: Exception) {
-            cont.resumeWithException(e)
+            }, ContextCompat.getMainExecutor(context))
         }
     }
 
     /**
-     * Creates a capture session for the camera
+     * Configure the camera selector based on camera ID or default to back camera
      */
-    private suspend fun createCaptureSession(
-        cameraDevice: CameraDevice,
-        surface: Surface,
-        handler: Handler
-    ): CameraCaptureSession? = suspendCancellableCoroutine { cont ->
-        try {
-            cameraDevice.createCaptureSession(
-                listOf(surface),
-                object : CameraCaptureSession.StateCallback() {
-                    override fun onConfigured(session: CameraCaptureSession) {
-                        cont.resume(session)
-                    }
+    @androidx.annotation.OptIn(ExperimentalCamera2Interop::class)
+    @OptIn(ExperimentalCamera2Interop::class)
+    private fun configureCameraSelector(
+        cameraId: String?,
+        cameraProvider: ProcessCameraProvider
+    ): CameraSelector {
+        // If camera ID is provided, create a selector for that specific camera
+        if (cameraId != null) {
+            val availableCameraInfos = cameraProvider.availableCameraInfos
+            for (cameraInfo in availableCameraInfos) {
+                val camera2CameraInfo = Camera2CameraInfo.from(cameraInfo)
+                if (camera2CameraInfo.cameraId == cameraId) {
+                    return CameraSelector.Builder()
+                        .addCameraFilter { cameraList ->
+                            cameraList.filter { candidate ->
+                                val candidateInfo = Camera2CameraInfo.from(candidate)
+                                candidateInfo.cameraId == cameraId
+                            }
+                        }
+                        .build()
+                }
+            }
+        }
 
-                    override fun onConfigureFailed(session: CameraCaptureSession) {
-                        cont.resume(null)
-                    }
-                },
-                handler
+        // Default to back camera
+        return CameraSelector.DEFAULT_BACK_CAMERA
+    }
+
+    /**
+     * Configure image capture use case based on provided parameters
+     */
+    private fun configureImageCapture(
+        quality: Int,
+        flashMode: String?,
+        pictureSize: String?
+    ): ImageCapture {
+        val builder = ImageCapture.Builder()
+            .setJpegQuality(quality)
+
+        // Set flash mode
+        when (flashMode) {
+            "OFF" -> builder.setFlashMode(ImageCapture.FLASH_MODE_OFF)
+            "SINGLE" -> builder.setFlashMode(ImageCapture.FLASH_MODE_ON)
+            "TORCH" -> builder.setFlashMode(ImageCapture.FLASH_MODE_AUTO)
+            else -> builder.setFlashMode(ImageCapture.FLASH_MODE_AUTO)
+        }
+
+        // Set target resolution based on picture size if provided
+        if (!pictureSize.isNullOrEmpty()) {
+            try {
+                val parts = pictureSize.split("x")
+                if (parts.size == 2) {
+                    val width = parts[0].toInt()
+                    val height = parts[1].toInt()
+                    builder.setTargetResolution(android.util.Size(width, height))
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error parsing picture size: $pictureSize", e)
+                builder.setTargetAspectRatio(AspectRatio.RATIO_16_9)
+            }
+        }
+
+        return builder.build()
+    }
+
+    /**
+     * Bind use cases to camera provider and get camera instance
+     */
+    private suspend fun bindUseCases(
+        cameraProvider: ProcessCameraProvider,
+        cameraSelector: CameraSelector,
+        imageCapture: ImageCapture
+    ): Camera = withContext(Dispatchers.Main) {
+        try {
+            // Unbind any existing use cases
+            cameraProvider.unbindAll()
+
+            // Bind use cases to camera and return the camera instance
+            cameraProvider.bindToLifecycle(
+                ProcessLifecycleOwner.get(),
+                cameraSelector,
+                imageCapture
             )
         } catch (e: Exception) {
-            cont.resumeWithException(e)
+            Log.e(TAG, "Use case binding failed", e)
+            throw e
+        }
+    }
+
+    /**
+     * Apply camera settings like focus mode, white balance, and zoom
+     */
+    private suspend fun applyCameraSettings(
+        camera: Camera,
+        focusMode: String?,
+        whiteBalance: String?,
+        zoomLevel: Float?
+    ) = withContext(Dispatchers.Main) {
+        // Set camera control settings
+        val cameraControl = camera.cameraControl
+        val cameraInfo = camera.cameraInfo
+
+        // Apply focus mode
+        when (focusMode) {
+            "AUTO" -> {
+                // For auto focus, we focus at the center of the frame
+
+            }
+            "CONTINUOUS_PICTURE", "CONTINUOUS_VIDEO" -> {
+                // CameraX handles continuous focus automatically, nothing to do
+            }
+            "OFF", "MANUAL" -> {
+                // Cancel any auto focus
+                cameraControl.cancelFocusAndMetering()
+            }
+        }
+
+        // Apply zoom level
+        val validZoomLevel = zoomLevel ?: 1.0f
+        if (validZoomLevel > 1.0f) {
+            val maxZoom = cameraInfo.zoomState.value?.maxZoomRatio ?: 1.0f
+            val clampedZoomLevel = minOf(validZoomLevel, maxZoom)
+            cameraControl.setZoomRatio(clampedZoomLevel)
+        }
+
+        // White balance - unfortunately, CameraX doesn't expose direct white balance control yet
+        // We'll need to use Camera2Interop for this in a future implementation
+    }
+
+    /**
+     * Take a photo with the configured ImageCapture use case
+     */
+    private suspend fun capturePhoto(
+        imageCapture: ImageCapture,
+        photoFile: File
+    ): File? {
+        return suspendCancellableCoroutine { continuation ->
+            val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+
+            imageCapture.takePicture(
+                outputOptions,
+                ContextCompat.getMainExecutor(context),
+                object : ImageCapture.OnImageSavedCallback {
+                    override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                        Log.d(TAG, "Photo capture succeeded: ${photoFile.absolutePath}")
+                        continuation.resume(photoFile)
+                    }
+
+                    override fun onError(exception: ImageCaptureException) {
+                        Log.e(TAG, "Photo capture failed: ${exception.message}", exception)
+                        continuation.resume(null)
+                    }
+                }
+            )
+
+            continuation.invokeOnCancellation {
+                Log.d(TAG, "Photo capture cancelled")
+                // If coroutine is cancelled, we cannot abort an in-progress capture in the current CameraX API
+            }
         }
     }
 }

@@ -34,10 +34,21 @@ android {
 dependencies {
     // Hilt
     implementation(libs.hilt.android)
+    implementation(libs.androidx.lifecycle.process)
     ksp(libs.hilt.compiler)
 
     // Module dependencies
     implementation(project(":core"))
+
+    // CameraX
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.camera.extensions)
+
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
 
     api(libs.io.modelcontextprotocol.kotlin.sdk)
     implementation(libs.io.ktor.ktor.client.core)
