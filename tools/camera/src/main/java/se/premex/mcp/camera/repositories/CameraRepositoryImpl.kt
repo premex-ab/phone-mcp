@@ -6,6 +6,7 @@ import android.hardware.camera2.CameraDevice
 import android.hardware.camera2.CameraManager
 import android.hardware.camera2.CameraCaptureSession
 import android.hardware.camera2.CaptureRequest
+import android.hardware.camera2.CaptureResult
 import android.hardware.camera2.TotalCaptureResult
 import android.hardware.camera2.params.StreamConfigurationMap
 import android.media.ImageReader
@@ -151,6 +152,7 @@ class CameraRepositoryImpl(
 
             // Use the ImageReader to save the captured image
             val imageSavedSemaphore = Semaphore(0)
+            val focusLockSemaphore = Semaphore(0)
 
             imageReader.setOnImageAvailableListener({ reader ->
                 val image = reader.acquireLatestImage()
@@ -297,7 +299,43 @@ class CameraRepositoryImpl(
                 }
             }
 
-            // Capture the photo
+            // Create a preview surface and capture session
+            val previewBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW).apply {
+                addTarget(imageReader.surface)
+
+                // Set up autofocus
+                set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_AUTO)
+                // Trigger auto-focus
+                set(CaptureRequest.CONTROL_AF_TRIGGER, CaptureRequest.CONTROL_AF_TRIGGER_START)
+            }
+
+            // Run autofocus sequence first, then take picture
+            captureSession.capture(previewBuilder.build(), object : CameraCaptureSession.CaptureCallback() {
+                override fun onCaptureCompleted(
+                    session: CameraCaptureSession,
+                    request: CaptureRequest,
+                    result: TotalCaptureResult
+                ) {
+                    super.onCaptureCompleted(session, request, result)
+
+                    // Check if auto-focus sequence is done and locked
+                    val afState = result.get(CaptureResult.CONTROL_AF_STATE)
+                    if (afState == CaptureResult.CONTROL_AF_STATE_FOCUSED_LOCKED ||
+                        afState == CaptureResult.CONTROL_AF_STATE_PASSIVE_FOCUSED) {
+                        // Autofocus completed successfully
+                        focusLockSemaphore.release()
+                    } else if (afState == CaptureResult.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED ||
+                               afState == CaptureResult.CONTROL_AF_STATE_PASSIVE_UNFOCUSED) {
+                        // Couldn't focus but we'll take the picture anyway
+                        focusLockSemaphore.release()
+                    }
+                }
+            }, cameraHandler)
+
+            // Wait for focus to be acquired (or timeout after 1 second)
+            focusLockSemaphore.tryAcquire(1000, TimeUnit.MILLISECONDS)
+
+            // Now capture the photo with established focus
             captureSession.capture(captureBuilder.build(), object : CameraCaptureSession.CaptureCallback() {
                 override fun onCaptureCompleted(
                     session: CameraCaptureSession,
