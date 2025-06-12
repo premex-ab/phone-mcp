@@ -7,10 +7,11 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
+import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.sensor.repositories.SensorRepository
 import se.premex.mcp.sensor.repositories.SensorRepositoryImpl
+import se.premex.mcp.sensor.configurator.SensorToolConfiguratorImpl
 import se.premex.mcp.sensor.tool.SensorTool
-import se.premex.mcp.core.tool.McpTool
 import javax.inject.Singleton
 
 
@@ -21,14 +22,10 @@ object SensorToolModule {
     @Provides
     @Singleton
     @IntoSet
-    fun provideSensorTool(contactsRepository: SensorRepository): McpTool {
-        return SensorTool(contactsRepository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideSensorSender(@ApplicationContext context: Context): SensorRepository {
-        return SensorRepositoryImpl(context)
+    fun provideSensorTool(@ApplicationContext context: Context): McpTool {
+        val sensorRepository: SensorRepository = SensorRepositoryImpl(context)
+        val sensorToolConfigurator = SensorToolConfiguratorImpl(sensorRepository)
+        return SensorTool(sensorToolConfigurator)
     }
 
 }

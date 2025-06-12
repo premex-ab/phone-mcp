@@ -1,18 +1,19 @@
 package se.premex.mcp.sensor.tool
 
 import io.modelcontextprotocol.kotlin.sdk.server.Server
-import se.premex.mcp.sensor.repositories.SensorRepository
-import se.premex.mcp.sensor.serverconfigurator.appendSensorTools
 import se.premex.mcp.core.tool.McpTool
+import se.premex.mcp.sensor.configurator.SensorToolConfiguratorImpl
 
-class SensorTool(val sensorRepository: SensorRepository) : McpTool {
+class SensorTool(
+    val censorToolConfigurator: SensorToolConfiguratorImpl
+) : McpTool {
     override val id: String = "sensor"
     override val name: String = "Sensors"
     override val enabledByDefault: Boolean = true
     override val disclaim: String? = null
 
     override fun configure(server: Server) {
-        appendSensorTools(server, sensorRepository)
+        censorToolConfigurator.configure(server)
     }
 
     override fun requiredPermissions(): Set<String> {

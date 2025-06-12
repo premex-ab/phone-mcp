@@ -1,4 +1,4 @@
-package se.premex.adserver.mcp.ads
+package se.premex.mcp.sms
 
 import io.modelcontextprotocol.kotlin.sdk.CallToolResult
 import io.modelcontextprotocol.kotlin.sdk.TextContent
@@ -8,7 +8,6 @@ import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
 import kotlinx.serialization.json.putJsonObject
-import se.premex.mcp.sms.SmsSender
 
 /**
  * Registers an SMS sending tool to a Model Context Protocol server.

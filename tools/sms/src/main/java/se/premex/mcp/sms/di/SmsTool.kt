@@ -8,7 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
 import io.modelcontextprotocol.kotlin.sdk.server.Server
-import se.premex.adserver.mcp.ads.appendSmsTools
+import se.premex.mcp.sms.appendSmsTools
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.sms.SmsSender
 import se.premex.mcp.sms.SmsSenderImpl
