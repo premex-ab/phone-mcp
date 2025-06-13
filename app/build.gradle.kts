@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.hilt.android)
     id("com.github.triplet.play") version "3.12.1"
+    alias(libs.plugins.firebase.crashlytics)
 }
 
 play {
@@ -59,7 +60,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            manifestPlaceholders["crashlyticsCollectionEnabled"] = true
         }
+        debug {
+            manifestPlaceholders["crashlyticsCollectionEnabled"] = false
+        }
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -81,6 +87,7 @@ dependencies {
     // Add the dependency for the Analytics library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 
     // DataStore for persisting authentication token
     implementation(libs.androidx.datastore.preferences)

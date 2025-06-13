@@ -28,6 +28,7 @@ firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 
 
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -75,3 +76,4 @@ org-jetbrains-kotlin-plugin-serialization = "org.jetbrains.kotlin.plugin.seriali
 android-library = { id = "com.android.library", version.ref = "agp" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+firebase-crashlytics = "com.google.firebase.crashlytics:3.0.4"
