@@ -5,7 +5,8 @@ import io.modelcontextprotocol.kotlin.sdk.CallToolResult
 import io.modelcontextprotocol.kotlin.sdk.TextContent
 import io.modelcontextprotocol.kotlin.sdk.Tool
 import io.modelcontextprotocol.kotlin.sdk.server.Server
-import kotlinx.serialization.json.*
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.externaltools.configurator.ExternalToolsConfigurator
 import javax.inject.Inject
@@ -36,59 +37,52 @@ class ExternalToolsTool @Inject constructor(
     }
 
     override fun requiredPermissions(): Set<String> {
-        return setOf("android.permission.READ_CONTENT_PROVIDER")
+        return setOf()
     }
 
     /**
      * Registers a management tool with the MCP server for tool discovery operations
      */
     private fun registerManagementTool(server: Server) {
-        server.addTool(
-            name = "external_tools_discovery",
-            description = """
-                Tool that allows discovery of MCP tools exposed by other applications via content providers.
-                You can list all currently discovered external tools.
-            """.trimIndent(),
-            inputSchema = Tool.Input(
-                properties = buildJsonObject {
-                    putJsonObject("action") {
-                        put("type", "string")
-                        put("description", "Action to perform: 'list' to show all currently discovered tools")
-                    }
-                },
-                required = listOf("action")
-            )
-        ) { request ->
-            val action = request.arguments["action"]?.jsonPrimitive?.content
-                ?: return@addTool CallToolResult(
-                    content = listOf(TextContent("Missing required 'action' parameter"))
+        val tools = externalToolsConfigurator.getRegisteredTools()
+        tools.forEach { toolInfo ->
+            server.addTool(
+                name = toolInfo.toolName,
+                description = toolInfo.description,
+                inputSchema = parseInputSchema(toolInfo.inputSchemaJson, toolInfo.requiredFields),
+            ) { request ->
+                Log.d(TAG, "Handling request for management tool: ${toolInfo.toolName}")
+
+                val result: String = try {
+                    val response = externalToolsConfigurator.handleExternalToolRequest(
+                        authority = toolInfo.authority,
+                        toolName = toolInfo.toolName,
+                        arguments = request.arguments
+                    )
+
+
+                    response
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error executing external tool ${toolInfo.toolName}", e)
+                    "Error executing tool: ${e.message ?: "Unknown error"}"
+                }
+
+                CallToolResult(
+                    content = listOf(
+                        TextContent(result)
+                    )
                 )
-
-            val result = when (action) {
-                "list" -> {
-                    val tools = externalToolsConfigurator.getRegisteredTools()
-                    if (tools.isEmpty()) {
-                        "No external tools are currently discovered"
-                    } else {
-                        val toolInfoLines = tools.joinToString("\n\n") { toolInfo ->
-                            """
-                            Tool: ${toolInfo.toolName}
-                            Description: ${toolInfo.description}
-                            Provider Authority: ${toolInfo.authority}
-                            Required Parameters: ${toolInfo.requiredFields.joinToString(", ")}
-                            """.trimIndent()
-                        }
-                        "Discovered external tools:\n\n$toolInfoLines"
-                    }
-                }
-                else -> {
-                    "Invalid action: $action. Valid actions are 'list'."
-                }
             }
-
-            CallToolResult(
-                content = listOf(TextContent(result))
-            )
         }
     }
+
+    /**
+     * Parse the input schema JSON string into a Tool.Input object
+     */
+    private fun parseInputSchema(schema: String, required: List<String>): Tool.Input {
+        val json = Json.decodeFromString<JsonObject>(schema)
+
+        return Tool.Input(properties = json, required = required)
+    }
 }
+

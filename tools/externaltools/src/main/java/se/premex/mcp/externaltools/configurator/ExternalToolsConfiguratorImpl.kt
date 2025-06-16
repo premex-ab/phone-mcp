@@ -82,12 +82,15 @@ class ExternalToolsConfiguratorImpl @Inject constructor(
      */
     private fun discoverExternalTools(): List<ExternalToolInfo> {
         val tools = mutableListOf<ExternalToolInfo>()
-        val packageManager = context.packageManager
 
-        // Get all content providers registered on the device
-        val resolveInfoList = packageManager.queryIntentContentProviders(
-            Intent(Intent.ACTION_VIEW).setType(MIME_TYPE_MCP_TOOL), 0
+
+        val intent = Intent("se.premex.MCP_PROVIDER")
+
+        val resolveInfoList = context.packageManager.queryIntentContentProviders(
+            intent,
+            PackageManager.MATCH_ALL
         )
+
 
         for (resolveInfo in resolveInfoList) {
             val providerInfo = resolveInfo.providerInfo ?: continue
@@ -159,7 +162,7 @@ class ExternalToolsConfiguratorImpl @Inject constructor(
         )
     }
 
-    private fun handleExternalToolRequest(
+    override fun handleExternalToolRequest(
         authority: String,
         toolName: String,
         arguments: Map<String, JsonElement>

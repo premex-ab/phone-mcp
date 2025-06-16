@@ -1,6 +1,7 @@
 package se.premex.mcp.externaltools.configurator
 
 import io.modelcontextprotocol.kotlin.sdk.server.Server
+import kotlinx.serialization.json.JsonElement
 import se.premex.mcp.externaltools.repositories.ExternalToolInfo
 
 /**
@@ -18,4 +19,10 @@ interface ExternalToolsConfigurator {
      * @return List of ExternalToolInfo objects containing all data needed to register tools with the server
      */
     fun getRegisteredTools(): List<ExternalToolInfo>
+
+    fun handleExternalToolRequest(
+        authority: String,
+        toolName: String,
+        arguments: Map<String, JsonElement>
+    ): String
 }

@@ -108,6 +108,17 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val intent = Intent("se.premex.MCP_PROVIDER")
+
+        val resolveInfoList = packageManager.queryIntentContentProviders(
+            intent,
+            PackageManager.MATCH_ALL
+        )
+
+        resolveInfoList.toString()
+
+
         enableEdgeToEdge()
         setContent {
                 val toolStates by toolService.toolEnabledStates.collectAsState()
