@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Permission to read content providers from other applications -->
+    <uses-permission android:name="android.permission.READ_CONTENT_PROVIDER" />
+</manifest>
+

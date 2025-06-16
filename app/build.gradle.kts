@@ -115,6 +115,7 @@ dependencies {
     implementation(project(":tools:contacts"))
     implementation(project(":tools:sensor"))
     implementation(project(":tools:camera"))
+    implementation(project(":tools:externaltools"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
