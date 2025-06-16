@@ -62,8 +62,7 @@ import kotlin.collections.set
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    // Service status flag
-    private var isServerRunning = mutableStateOf(false)
+
 
     // Add dialog state for tool warnings
     private var showToolWarningDialog = mutableStateOf(false)
@@ -121,7 +120,7 @@ class MainActivity : ComponentActivity() {
                 MCPServerTheme {
                     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                         McpServerControl(
-                            isRunning = isServerRunning.value,
+                            isRunning = McpServerService.isRunning.value,
                             onToggleServer = { shouldStart ->
                                 // Check permissions only when trying to start the service
                                 if (shouldStart) {
@@ -223,10 +222,8 @@ class MainActivity : ComponentActivity() {
             } else {
                 startService(serviceIntent)
             }
-            isServerRunning.value = true
         } else {
             stopService(serviceIntent)
-            isServerRunning.value = false
         }
     }
 

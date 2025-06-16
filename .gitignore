@@ -18,4 +18,4 @@ local.properties
 .kotlin
 byggappen-dev-b151ea2d4990.json
 keystore.properties
-keystore.jks
+app/keystore.jks

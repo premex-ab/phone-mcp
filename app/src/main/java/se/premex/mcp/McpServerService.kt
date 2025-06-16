@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import androidx.core.app.NotificationCompat
 import dagger.hilt.android.AndroidEntryPoint
 import io.ktor.http.HttpHeaders
@@ -49,6 +50,7 @@ import kotlin.collections.set
 @AndroidEntryPoint
 class McpServerService : Service() {
     companion object {
+        var isRunning = mutableStateOf(false)
         private const val TAG = "McpServerService"
         private const val NOTIFICATION_ID = 1001
 
@@ -82,7 +84,9 @@ class McpServerService : Service() {
     lateinit var authRepository: AuthRepository
 
     override fun onCreate() {
+        isRunning.value = true
         super.onCreate()
+
         Log.i(TAG, "$LOG_PREFIX_LIFECYCLE: Service onCreate started")
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         Log.d(TAG, "$LOG_PREFIX_LIFECYCLE: NotificationManager initialized")
@@ -148,6 +152,7 @@ class McpServerService : Service() {
         serviceJob.cancel()
         super.onDestroy()
         Log.i(TAG, "$LOG_PREFIX_LIFECYCLE: Service destroyed")
+        isRunning.value = false
     }
 
     override fun onBind(intent: Intent?): IBinder? {
