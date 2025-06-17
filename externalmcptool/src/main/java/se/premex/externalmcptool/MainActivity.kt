@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
 
 
 
-        val intent = Intent("se.premex.MCP_PROVIDER")
+        val intent = Intent("se.premex.mcp.MCP_PROVIDER")
 
         val resolveInfoList = packageManager.queryIntentContentProviders(
             intent,

@@ -84,7 +84,7 @@ class ExternalToolsConfiguratorImpl @Inject constructor(
         val tools = mutableListOf<ExternalToolInfo>()
 
 
-        val intent = Intent("se.premex.MCP_PROVIDER")
+        val intent = Intent("se.premex.mcp.MCP_PROVIDER")
 
         val resolveInfoList = context.packageManager.queryIntentContentProviders(
             intent,
