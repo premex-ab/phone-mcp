@@ -1,8 +1,10 @@
 package se.premex.mcp
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
@@ -58,11 +60,9 @@ import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.di.ToolService
 import se.premex.mcp.ui.theme.MCPServerTheme
 import javax.inject.Inject
-import kotlin.collections.set
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
 
     // Add dialog state for tool warnings
     private var showToolWarningDialog = mutableStateOf(false)
@@ -109,62 +109,72 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+/*
+        val intent = Intent("se.premex.mcp.MCP_PROVIDER")
+
+        val resolveInfoList = packageManager.queryIntentContentProviders(
+            intent,
+            PackageManager.MATCH_ALL
+        )
+
+        resolveInfoList.toString()
+*/
         enableEdgeToEdge()
         setContent {
-                val toolStates by toolService.toolEnabledStates.collectAsState()
+            val toolStates by toolService.toolEnabledStates.collectAsState()
 
-                // Extract the auth token from the instructions string
-                // The format is "Please use the token 'XXXXXX' to authenticate your connection."
-                val authInstructions = authRepository.getConnectionInstructions()
-                val authToken = authInstructions.substringAfter("'").substringBefore("'")
+            // Extract the auth token from the instructions string
+            // The format is "Please use the token 'XXXXXX' to authenticate your connection."
+            val authInstructions = authRepository.getConnectionInstructions()
+            val authToken = authInstructions.substringAfter("'").substringBefore("'")
 
-                MCPServerTheme {
-                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                        McpServerControl(
-                            isRunning = McpServerService.isRunning.value,
-                            onToggleServer = { shouldStart ->
-                                // Check permissions only when trying to start the service
-                                if (shouldStart) {
-                                    checkRequiredPermissions()
-                                } else {
-                                    // No permission needed to stop the service
-                                    toggleService(false)
+            MCPServerTheme {
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    McpServerControl(
+                        isRunning = McpServerService.isRunning.value,
+                        onToggleServer = { shouldStart ->
+                            // Check permissions only when trying to start the service
+                            if (shouldStart) {
+                                checkRequiredPermissions()
+                            } else {
+                                // No permission needed to stop the service
+                                toggleService(false)
+                            }
+                        },
+                        modifier = Modifier.padding(innerPadding),
+                        getConnectionUrl = { getConnectionUrl() },
+                        tools = toolService.tools.toList(),
+                        toolEnabledStates = toolStates,
+                        onToggleTool = { tool ->
+                            handleToolToggle(tool)
+                        },
+                        authToken = authToken
+                    )
+
+                    // Show warning dialog if needed
+                    if (showToolWarningDialog.value && currentToolRequiringWarning != null) {
+                        ToolWarningDialog(
+                            tool = currentToolRequiringWarning!!,
+                            onDismiss = {
+                                // Cancel enabling the tool
+                                showToolWarningDialog.value = false
+                                currentToolRequiringWarning = null
+                            },
+                            onConfirm = {
+                                // User confirmed, enable the tool
+                                showToolWarningDialog.value = false
+                                currentToolRequiringWarning?.let { tool ->
+                                    toolService.toggleToolEnabled(tool.id)
                                 }
-                            },
-                            modifier = Modifier.padding(innerPadding),
-                            getConnectionUrl = { getConnectionUrl() },
-                            tools = toolService.tools.toList(),
-                            toolEnabledStates = toolStates,
-                            onToggleTool = { tool ->
-                                handleToolToggle(tool)
-                            },
-                            authToken = authToken
+                                currentToolRequiringWarning = null
+                            }
                         )
-
-                        // Show warning dialog if needed
-                        if (showToolWarningDialog.value && currentToolRequiringWarning != null) {
-                            ToolWarningDialog(
-                                tool = currentToolRequiringWarning!!,
-                                onDismiss = {
-                                    // Cancel enabling the tool
-                                    showToolWarningDialog.value = false
-                                    currentToolRequiringWarning = null
-                                },
-                                onConfirm = {
-                                    // User confirmed, enable the tool
-                                    showToolWarningDialog.value = false
-                                    currentToolRequiringWarning?.let { tool ->
-                                        toolService.toggleToolEnabled(tool.id)
-                                    }
-                                    currentToolRequiringWarning = null
-                                }
-                            )
-                        }
-
-
                     }
+
+
                 }
             }
+        }
     }
 
     private fun checkRequiredPermissions() {
