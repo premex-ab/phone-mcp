@@ -117,6 +117,7 @@ dependencies {
     implementation(project(":tools:camera"))
     implementation(project(":tools:externaltools"))
     implementation(project(":mcp-provider"))
+    implementation(project(":tools:screenshot"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

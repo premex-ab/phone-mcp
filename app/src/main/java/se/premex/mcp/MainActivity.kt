@@ -1,10 +1,9 @@
 package se.premex.mcp
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
+import android.media.projection.MediaProjectionManager
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
@@ -14,6 +13,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -58,6 +58,7 @@ import io.modelcontextprotocol.kotlin.sdk.server.Server
 import se.premex.mcp.auth.AuthRepository
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.di.ToolService
+import se.premex.mcp.screenshot.MyMediaProjectionService
 import se.premex.mcp.ui.theme.MCPServerTheme
 import javax.inject.Inject
 
@@ -73,6 +74,22 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var authRepository: AuthRepository
+
+    val startMediaProjection = registerForActivityResult(
+        StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            startService(
+                MyMediaProjectionService.getStartIntent(
+                    this,
+                    result.resultCode,
+                    result.data!!
+                )
+            );
+
+        }
+    }
+
 
     private val requestMultiplePermissionsLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -109,16 +126,18 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-/*
-        val intent = Intent("se.premex.mcp.MCP_PROVIDER")
+        val mediaProjectionManager = getSystemService(MediaProjectionManager::class.java)
+        startMediaProjection.launch(mediaProjectionManager.createScreenCaptureIntent())
+        /*
+                val intent = Intent("se.premex.mcp.MCP_PROVIDER")
 
-        val resolveInfoList = packageManager.queryIntentContentProviders(
-            intent,
-            PackageManager.MATCH_ALL
-        )
+                val resolveInfoList = packageManager.queryIntentContentProviders(
+                    intent,
+                    PackageManager.MATCH_ALL
+                )
 
-        resolveInfoList.toString()
-*/
+                resolveInfoList.toString()
+        */
         enableEdgeToEdge()
         setContent {
             val toolStates by toolService.toolEnabledStates.collectAsState()
