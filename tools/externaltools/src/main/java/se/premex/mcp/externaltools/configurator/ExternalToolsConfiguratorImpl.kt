@@ -18,6 +18,7 @@ import se.premex.mcp.externaltools.repositories.ExternalToolInfo
 import se.premex.mcp.externaltools.repositories.ExternalToolRepository
 import javax.inject.Inject
 import javax.inject.Singleton
+import androidx.core.net.toUri
 
 private const val TAG = "ExternalToolsConfigImpl"
 
@@ -131,7 +132,7 @@ class ExternalToolsConfiguratorImpl @Inject constructor(
 
     private fun getToolInfoFromProvider(authority: String): ExternalToolInfo? {
         val contentResolver = context.contentResolver
-        val uri = Uri.parse("content://$authority")
+        val uri = "content://$authority".toUri()
 
         val result = try {
             contentResolver.call(uri, METHOD_GET_TOOL_INFO, null, null)
@@ -168,7 +169,7 @@ class ExternalToolsConfiguratorImpl @Inject constructor(
         arguments: Map<String, JsonElement>
     ): String {
         val contentResolver = context.contentResolver
-        val uri = Uri.parse("content://$authority")
+        val uri = "content://$authority".toUri()
 
         // Convert arguments to Bundle
         val args = Bundle().apply {

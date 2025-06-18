@@ -16,6 +16,9 @@ import org.json.JSONObject
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
+import se.premex.mcp.provider.ToolInfo
+import se.premex.mcp.provider.ToolInput
+import se.premex.mcp.provider.Tools
 
 @RunWith(AndroidJUnit4::class)
 class ExternalToolProviderTest {
@@ -24,20 +27,15 @@ class ExternalToolProviderTest {
         const val METHOD_GET_TOOL_INFO = "get_tool_info"
 
         // Bundle keys from MCP Tool protocol
-        const val KEY_TOOL_NAME = "tool_name"
-        const val KEY_TOOL_DESCRIPTION = "tool_description"
-        const val KEY_TOOL_INPUT_SCHEMA = "tool_input_schema"
-        const val KEY_TOOL_INPUT_REQUIRED = "tool_input_required"
+        const val KEY_TOOL = "tool"
         const val KEY_SUCCESS = "success"
-        const val KEY_ERROR_MESSAGE = "error_message"
 
         // External provider action
         const val MCP_PROVIDER_ACTION = "se.premex.mcp.MCP_PROVIDER"
 
         // Expected values for the CalculatorToolProvider
-        const val EXPECTED_CALCULATOR_AUTHORITY = "se.premex.externalmcptool.calculator"
+        const val EXPECTED_CALCULATOR_AUTHORITY = "se.premex.externalmcptool.authorities.McpProvider"
         const val EXPECTED_TOOL_NAME = "calculator"
-        const val EXPECTED_MIME_TYPE = "application/vnd.mcp.tool"
     }
 
     @Test
@@ -59,25 +57,38 @@ class ExternalToolProviderTest {
 
         // Step 3: Validate the configuration settings
         Assert.assertTrue("Query was not successful", toolInfo.getBoolean(KEY_SUCCESS))
-        Assert.assertEquals("Incorrect tool name", EXPECTED_TOOL_NAME, toolInfo.getString(KEY_TOOL_NAME))
+
+
+        val toolJson = toolInfo.getString(KEY_TOOL)!!
+        val tools = Json.decodeFromString<Tools>(toolJson)
+        val tool = tools.tools[EXPECTED_TOOL_NAME]!!
+
+        Assert.assertNotNull(tool)
 
         // Validate tool description is present
-        Assert.assertNotNull("Tool description should be present", toolInfo.getString(KEY_TOOL_DESCRIPTION))
+        Assert.assertNotNull("Tool description should be present", tool.description)
 
         // Validate input schema
-        val inputSchemaStr = toolInfo.getString(KEY_TOOL_INPUT_SCHEMA)!!
-        val inputSchema = JSONObject(inputSchemaStr)
-        Assert.assertTrue("Input schema should contain 'operation' parameter", inputSchema.has("operation"))
-        Assert.assertTrue("Input schema should contain 'a' parameter", inputSchema.has("a"))
-        Assert.assertTrue("Input schema should contain 'b' parameter", inputSchema.has("b"))
+        val inputSchemaStr = tool.inputs
+        val expectation = listOf(
+            ToolInput.StringInput(
+                name = "operation",
+                description = "The operation to perform (add, subtract, multiply, divide, power)",
+                required = true
+            ),
+            ToolInput.StringInput(
+                name = "a",
+                description = "First operand",
+                required = true
+            ),
+            ToolInput.StringInput(
+                name = "b",
+                description = "Second operand",
+                required = true
+            )
+        )
 
-        // Validate required inputs
-        val requiredInputs = toolInfo.getStringArray(KEY_TOOL_INPUT_REQUIRED)
-        Assert.assertNotNull("Required inputs should be present", requiredInputs)
-        Assert.assertEquals("Expected 3 required inputs", 3, requiredInputs?.size)
-        Assert.assertTrue("'operation' should be required", requiredInputs?.contains("operation") == true)
-        Assert.assertTrue("'a' should be required", requiredInputs?.contains("a") == true)
-        Assert.assertTrue("'b' should be required", requiredInputs?.contains("b") == true)
+        Assert.assertEquals("inputSchemaStr should match expectation", inputSchemaStr, expectation)
     }
 
     /**

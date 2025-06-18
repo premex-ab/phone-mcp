@@ -3,19 +3,6 @@
 
 
 
-    <permission
-        android:name="se.premex.mcp.ACCESS_PROVIDER"
-        android:protectionLevel="normal" />
-    <uses-permission android:name="se.premex.mcp.ACCESS_PROVIDER" />
-
-
-    <queries>
-        <!-- Used to build the list of installed providers -->
-        <intent>
-            <action android:name="se.premex.mcp.MCP_PROVIDER" />
-        </intent>
-    </queries>
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -34,16 +21,17 @@
             </intent-filter>
         </activity>
 
-        <!-- Calculator MCP Tool Provider -->
+
         <provider
-            android:name=".providers.CalculatorToolProvider"
-            android:authorities="se.premex.externalmcptool.calculator"
+            android:name=".MyMcpProvider"
+            android:authorities="${applicationId}.authorities.McpProvider"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="se.premex.mcp.MCP_PROVIDER" />
             </intent-filter>
         </provider>
+
     </application>
 
 </manifest>
