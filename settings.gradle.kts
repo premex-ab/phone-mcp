@@ -22,8 +22,12 @@ dependencyResolutionManagement {
 rootProject.name = "MCP server"
 include(":app")
 include(":tools:sms")
+include(":tools:smsintent")
 include(":tools:ads")
+include(":tools:externaltools")
 include(":tools:contacts")
 include(":tools:sensor")
 include(":tools:camera")
 include(":core")
+include(":externalmcptool")
+include(":mcp-provider")

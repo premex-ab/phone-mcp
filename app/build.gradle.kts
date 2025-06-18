@@ -44,8 +44,8 @@ android {
         applicationId = "se.premex.mcp"
         minSdk = 24
         targetSdk = 36
-        versionCode = 4
-        versionName = "0.3.0"
+        versionCode = 5
+        versionName = "0.4.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -109,11 +109,14 @@ dependencies {
     implementation(libs.io.ktor.ktor.server.cors)
     implementation(libs.io.ktor.ktor.client.content.negotiation)
     implementation(libs.io.ktor.ktor.serialization.kotlinx.json)
-    implementation(project(":tools:sms"))
+    //implementation(project(":tools:sms"))
+    implementation(project(":tools:smsintent"))
     implementation(project(":tools:ads"))
     implementation(project(":tools:contacts"))
     implementation(project(":tools:sensor"))
     implementation(project(":tools:camera"))
+    implementation(project(":tools:externaltools"))
+    implementation(project(":mcp-provider"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

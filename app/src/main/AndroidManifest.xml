@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
+<!--    <uses-permission android:name="com.google.android.apps.mcp.api.ACCESS_PROVIDER" />-->
+    <uses-permission android:name="se.premex.mcp.ACCESS_PROVIDER" />
     <application
         android:name=".McpServerApplication"
         android:allowBackup="true"
