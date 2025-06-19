@@ -1,38 +1,56 @@
 package se.premex.mcp.screenshot.configurator
 
+import android.graphics.Bitmap
+import io.modelcontextprotocol.kotlin.sdk.CallToolResult
+import io.modelcontextprotocol.kotlin.sdk.ImageContent
+import io.modelcontextprotocol.kotlin.sdk.TextContent
 import io.modelcontextprotocol.kotlin.sdk.server.Server
-import se.premex.mcp.screenshot.repositories.ScreenshotRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import se.premex.mcp.screenshot.repositories.BitmapStorage
+import java.io.ByteArrayOutputStream
+import java.util.Base64
 
 class ScreenshotToolConfiguratorImpl(
-    private val screenshotRepository: ScreenshotRepository
+    private val bitmapStorage: BitmapStorage
 ) : ScreenshotToolConfigurator {
 
     private val scope = CoroutineScope(Dispatchers.IO)
 
     override fun configure(server: Server) {
-        /*
-        // Define an action for capturing screenshots
-        server.defineAction("captureScreenshot") { _, response ->
-            scope.launch {
-                try {
-                    val screenshot = screenshotRepository.captureScreenshot()
-                    response.succeed(
-                        mapOf(
-                            "timestamp" to screenshot.timestamp,
-                            "width" to screenshot.width,
-                            "height" to screenshot.height,
-                            "format" to screenshot.format,
-                            "base64Image" to screenshot.base64Image
-                        )
-                    )
-                } catch (e: Exception) {
-                    response.fail("Failed to capture screenshot: ${e.message}")
+        server.addTool(
+            name = "phone_take_screenshot",
+            description = """
+                gets the phone screenshot and returns it as an image.
+            """.trimIndent(),
+
+            ) { request ->
+
+            try {
+
+                val bitmap: Bitmap = bitmapStorage.retrieve()!!
+
+                val bytes: ByteArray = ByteArrayOutputStream().use { stream ->
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+                    stream.toByteArray()
                 }
+
+                return@addTool CallToolResult(
+                    content = listOf(
+                        ImageContent(
+                            data = Base64.getEncoder().encodeToString(bytes),
+                            mimeType = "image/jpeg"
+                        ),
+                        TextContent("Photo captured successfully.")
+                    )
+                )
+            } catch (e: Exception) {
+                CallToolResult(
+                    content = listOf(
+                        TextContent("Error taking photo: ${e.message}")
+                    )
+                )
             }
         }
-         */
     }
 }

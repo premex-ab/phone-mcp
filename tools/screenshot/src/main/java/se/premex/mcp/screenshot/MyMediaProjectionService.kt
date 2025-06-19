@@ -24,16 +24,22 @@ import android.util.Log
 import android.view.Display
 import android.view.OrientationEventListener
 import android.view.WindowManager
+import androidx.core.graphics.createBitmap
 import androidx.core.util.Pair
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.runBlocking
+import se.premex.mcp.screenshot.repositories.BitmapStorage
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.nio.ByteBuffer
+import javax.inject.Inject
 
 
+@AndroidEntryPoint
 class MyMediaProjectionService : Service() {
     private var mMediaProjection: MediaProjection? = null
-    private var mStoreDir: String? = null
+
     private var mImageReader: ImageReader? = null
     private var mHandler: Handler? = null
     private var mDisplay: Display? = null
@@ -48,49 +54,28 @@ class MyMediaProjectionService : Service() {
 
     private val mediaProjectionStopCallback = MediaProjectionStopCallback()
 
+    @Inject
+     lateinit var bitmapStorage: BitmapStorage
+
     private inner class ImageAvailableListener : ImageReader.OnImageAvailableListener {
         override fun onImageAvailable(reader: ImageReader?) {
-            var fos: FileOutputStream? = null
-            var bitmap: Bitmap? = null
             try {
                 mImageReader!!.acquireLatestImage().use { image ->
                     if (image != null) {
-                        val planes: Array<Plane?> = image.getPlanes()
-                        val buffer: ByteBuffer = planes[0]!!.getBuffer()
-                        val pixelStride: Int = planes[0]!!.getPixelStride()
-                        val rowStride: Int = planes[0]!!.getRowStride()
+                        val planes: Array<Plane?> = image.planes
+                        val buffer: ByteBuffer = planes[0]!!.buffer
+                        val pixelStride: Int = planes[0]!!.pixelStride
+                        val rowStride: Int = planes[0]!!.rowStride
                         val rowPadding = rowStride - pixelStride * mWidth
 
-                        // create bitmap
-                        bitmap = Bitmap.createBitmap(
-                            mWidth + rowPadding / pixelStride,
-                            mHeight,
-                            Bitmap.Config.ARGB_8888
-                        )
-                        bitmap.copyPixelsFromBuffer(buffer)
+                        runBlocking {
+                            bitmapStorage.store(buffer, mWidth, mHeight, rowPadding, pixelStride)
+                        }
 
-                        // write bitmap to a file
-                        fos = FileOutputStream(mStoreDir + "/myscreen_" + IMAGES_PRODUCED + ".png")
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
-
-                        IMAGES_PRODUCED++
-                        Log.e(TAG, "captured image: " + IMAGES_PRODUCED)
                     }
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-            } finally {
-                if (fos != null) {
-                    try {
-                        fos.close()
-                    } catch (ioe: IOException) {
-                        ioe.printStackTrace()
-                    }
-                }
-
-                if (bitmap != null) {
-                    bitmap.recycle()
-                }
             }
         }
     }
@@ -125,7 +110,7 @@ class MyMediaProjectionService : Service() {
                 if (mOrientationChangeCallback != null) mOrientationChangeCallback!!.disable()
                 mMediaProjection!!.unregisterCallback(this@MediaProjectionStopCallback)
                 // Stop the foreground service and remove notification
-                stopForeground(true)
+                stopForeground(STOP_FOREGROUND_REMOVE)
             }
         }
     }
@@ -138,24 +123,7 @@ class MyMediaProjectionService : Service() {
         super.onCreate()
 
         // Initialize notification manager
-        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        // create store dir
-        val externalFilesDir = getExternalFilesDir(null)
-        if (externalFilesDir != null) {
-            mStoreDir = externalFilesDir.getAbsolutePath() + "/screenshots/"
-            val storeDirectory = File(mStoreDir)
-            if (!storeDirectory.exists()) {
-                val success = storeDirectory.mkdirs()
-                if (!success) {
-                    Log.e(TAG, "failed to create file storage directory.")
-                    stopSelf()
-                }
-            }
-        } else {
-            Log.e(TAG, "failed to create file storage directory, getExternalFilesDir is null.")
-            stopSelf()
-        }
+        notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
         // start capture handling thread
         object : Thread() {
@@ -242,6 +210,7 @@ class MyMediaProjectionService : Service() {
             }
         }
     }
+
     @SuppressLint("WrongConstant")
     private fun createVirtualDisplay() {
         // get width and height
@@ -253,7 +222,7 @@ class MyMediaProjectionService : Service() {
         mVirtualDisplay = mMediaProjection!!.createVirtualDisplay(
             SCREENCAP_NAME, mWidth, mHeight,
             mDensity,
-            virtualDisplayFlags, mImageReader!!.getSurface(), cb, mHandler
+            virtualDisplayFlags, mImageReader!!.surface, cb, mHandler
         )
 
 
@@ -272,7 +241,6 @@ class MyMediaProjectionService : Service() {
         private const val STOP = "STOP"
         private const val SCREENCAP_NAME = "screencap"
 
-        private var IMAGES_PRODUCED = 0
 
         fun getStartIntent(context: Context?, resultCode: Int, data: Intent?): Intent {
             val intent = Intent(context, MyMediaProjectionService::class.java)

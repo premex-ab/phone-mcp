@@ -21,16 +21,14 @@ import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
+import androidx.core.graphics.createBitmap
 
 class ScreenshotRepositoryImpl(
     private val context: Context,
-    private val mediaProjection: MediaProjection? = null
 ) : ScreenshotRepository {
 
-    override suspend fun captureScreenshot(): ScreenshotInfo = withContext(Dispatchers.IO) {
-        if (mediaProjection == null) {
-            throw IllegalStateException("MediaProjection permission not granted")
-        }
+    override suspend fun captureScreenshot(mediaProjection: MediaProjection): ScreenshotInfo = withContext(Dispatchers.IO) {
+
 
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val metrics = DisplayMetrics()
@@ -68,10 +66,7 @@ class ScreenshotRepositoryImpl(
                             val rowStride = planes[0].rowStride
                             val rowPadding = rowStride - pixelStride * width
 
-                            bitmap = Bitmap.createBitmap(
-                                width + rowPadding / pixelStride, height,
-                                Bitmap.Config.ARGB_8888
-                            )
+                            bitmap = createBitmap(width + rowPadding / pixelStride, height)
                             bitmap.copyPixelsFromBuffer(buffer)
 
                             // Convert bitmap to base64 string

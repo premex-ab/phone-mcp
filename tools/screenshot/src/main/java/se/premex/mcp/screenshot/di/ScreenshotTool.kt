@@ -9,9 +9,12 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
 import se.premex.mcp.core.tool.McpTool
+import se.premex.mcp.screenshot.configurator.ScreenshotToolConfiguratorImpl
+import se.premex.mcp.screenshot.repositories.BitmapStorage
+import se.premex.mcp.screenshot.repositories.DiskBitmapStorage
+import se.premex.mcp.screenshot.repositories.InMemoryBitmapStorage
 import se.premex.mcp.screenshot.repositories.ScreenshotRepository
 import se.premex.mcp.screenshot.repositories.ScreenshotRepositoryImpl
-import se.premex.mcp.screenshot.configurator.ScreenshotToolConfiguratorImpl
 import se.premex.mcp.screenshot.tool.ScreenshotTool
 import javax.inject.Singleton
 
@@ -24,25 +27,19 @@ object ScreenshotToolModule {
     @IntoSet
     fun provideScreenshotTool(
         @ApplicationContext context: Context,
-        mediaProjection: MediaProjection?
+        bitmapStorage: BitmapStorage,
     ): McpTool {
-        val screenshotRepository: ScreenshotRepository = ScreenshotRepositoryImpl(context, mediaProjection)
-        val screenshotToolConfigurator = ScreenshotToolConfiguratorImpl(screenshotRepository)
+        val screenshotRepository: ScreenshotRepository =
+            ScreenshotRepositoryImpl(context)
+        val screenshotToolConfigurator = ScreenshotToolConfiguratorImpl(bitmapStorage)
         return ScreenshotTool(screenshotToolConfigurator)
     }
 
-    // Note: MediaProjection is typically obtained from user permission dialog
-    // This is a placeholder - in a real implementation we would need to handle
-    // requesting and storing the MediaProjection permission
     @Provides
     @Singleton
-    fun provideMediaProjection(): MediaProjection? {
-        // In a real implementation, this would come from the result of
-        // startActivityForResult with MediaProjection permission request
-        return null
+    fun provideBitmapStorage(@ApplicationContext context: Context): BitmapStorage {
+        return InMemoryBitmapStorage()
+        //return DiskBitmapStorage(context)
     }
 }
 
-class media() {
-
-}
