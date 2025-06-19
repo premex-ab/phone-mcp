@@ -118,6 +118,7 @@ dependencies {
     implementation(project(":tools:externaltools"))
     implementation(project(":mcp-provider"))
     implementation(project(":tools:screenshot"))
+    implementation(project(":tools:input"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
