@@ -95,7 +95,9 @@ class MainActivity : ComponentActivity() {
     }
 
     fun startInputService() {
-        inputRepository.startAccessibilityServiceIfAlreadyRunning()
+        if (!inputRepository.isAccessibilityServiceRunning()) {
+            inputRepository.startAccessibilityServiceIfAlreadyRunning()
+        }
     }
 
     private val requestMultiplePermissionsLauncher = registerForActivityResult(
