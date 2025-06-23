@@ -42,7 +42,7 @@ class InMemoryBitmapStorage() : BitmapStorage {
             // store the latest bitmap in memory
             latestBitmap = bitmap
 
-            Log.e("InMemoryBitmapStorage", "Stored bitmap of size: ${bitmap.byteCount} bytes")
+            //Log.e("InMemoryBitmapStorage", "Stored bitmap of size: ${bitmap.byteCount} bytes")
         } catch (e: Exception) {
             Log.e("InMemoryBitmapStorage", "Error storing bitmap: ${e.message}")
         }

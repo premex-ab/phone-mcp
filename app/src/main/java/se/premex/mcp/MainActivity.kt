@@ -12,8 +12,8 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -58,7 +58,7 @@ import io.modelcontextprotocol.kotlin.sdk.server.Server
 import se.premex.mcp.auth.AuthRepository
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.di.ToolService
-import se.premex.mcp.screenshot.MyMediaProjectionService
+import se.premex.mcp.screenshot.tool.mediaRecordPermissionLauncher
 import se.premex.mcp.ui.theme.MCPServerTheme
 import javax.inject.Inject
 
@@ -75,21 +75,14 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var authRepository: AuthRepository
 
-    val startMediaProjection = registerForActivityResult(
-        StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            startService(
-                MyMediaProjectionService.getStartIntent(
-                    this,
-                    result.resultCode,
-                    result.data!!
-                )
-            );
+    @Inject
+    lateinit var mediaProjectionManager: MediaProjectionManager
 
-        }
+    val startMediaProjection: ActivityResultLauncher<Intent> = mediaRecordPermissionLauncher()
+
+    fun mediaPermissionsPlease() {
+        startMediaProjection.launch(mediaProjectionManager.createScreenCaptureIntent())
     }
-
 
     private val requestMultiplePermissionsLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -126,8 +119,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val mediaProjectionManager = getSystemService(MediaProjectionManager::class.java)
-        startMediaProjection.launch(mediaProjectionManager.createScreenCaptureIntent())
         /*
                 val intent = Intent("se.premex.mcp.MCP_PROVIDER")
 
@@ -150,6 +141,7 @@ class MainActivity : ComponentActivity() {
             MCPServerTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     McpServerControl(
+                        mediaPermissionsPlease = { mediaPermissionsPlease() },
                         isRunning = McpServerService.isRunning.value,
                         onToggleServer = { shouldStart ->
                             // Check permissions only when trying to start the service
@@ -309,6 +301,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun McpServerControl(
+    mediaPermissionsPlease: () -> Unit,
     isRunning: Boolean,
     onToggleServer: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
@@ -402,7 +395,12 @@ fun McpServerControl(
 
                     Checkbox(
                         checked = toolEnabledStates[tool.id] == true,
-                        onCheckedChange = { onToggleTool(tool) }
+                        onCheckedChange = {
+                            if (tool.id == "screenshot") {
+                                mediaPermissionsPlease()
+                            }
+                            onToggleTool(tool)
+                        }
                     )
                 }
 
@@ -510,6 +508,7 @@ private fun Instructions(getConnectionUrl: () -> String, authToken: String = "YT
 fun McpServerControlPreview() {
     MCPServerTheme {
         McpServerControl(
+            mediaPermissionsPlease = {},
             isRunning = true,
             onToggleServer = {},
             getConnectionUrl = { "http://192.168.1.1:3001/sse" },

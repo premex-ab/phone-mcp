@@ -18,6 +18,6 @@ class InputTool @Inject constructor(
     }
 
     override fun requiredPermissions(): Set<String> {
-        return setOf(android.Manifest.permission.SYSTEM_ALERT_WINDOW)
+        return setOf() // android.Manifest.permission.SYSTEM_ALERT_WINDOW
     }
 }
