@@ -21,9 +21,9 @@ class InputToolConfiguratorImpl @Inject constructor(
     }
 
     private fun setupClickFunctionality(server: Server) {
-
-
         server.addTool(
+
+
             name = "click_on_phone_screen",
             description = """
                 performs a click on the phone screen at the specified coordinates.
@@ -31,7 +31,7 @@ class InputToolConfiguratorImpl @Inject constructor(
             inputSchema = Tool.Input(
                 properties = buildJsonObject {
                     putJsonObject("x") {
-                        put("type", "int")
+                        put("type", "integer")
                         put(
                             "description",
                             "x coordinate of the click position on the phone screen"

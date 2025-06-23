@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="accessibility_service_description">Allows the app to perform clicks on other apps and the system UI. Required for remote control functionality.</string>
+</resources>
+

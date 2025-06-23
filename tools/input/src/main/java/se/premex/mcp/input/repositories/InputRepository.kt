@@ -15,3 +15,4 @@ interface InputRepository {
      */
     fun getInputInfo(): InputInfo
 }
+
