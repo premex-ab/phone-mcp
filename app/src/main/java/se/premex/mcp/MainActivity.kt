@@ -88,16 +88,20 @@ class MainActivity : ComponentActivity() {
 
     val startMediaProjection: ActivityResultLauncher<Intent> = mediaRecordPermissionLauncher()
 
-    fun mediaPermissionsPlease() {
+    fun mediaPermissionsPlease(): Boolean {
         if (!screenshotRepository.isServiceRunning()) {
             startMediaProjection.launch(mediaProjectionManager.createScreenCaptureIntent())
+            return false
         }
+        return true
     }
 
-    fun startInputService() {
+    fun startInputService(): Boolean {
         if (!inputRepository.isAccessibilityServiceRunning()) {
             inputRepository.startAccessibilityServiceIfAlreadyRunning()
+            return false
         }
+        return true
     }
 
     private val requestMultiplePermissionsLauncher = registerForActivityResult(
@@ -157,8 +161,6 @@ class MainActivity : ComponentActivity() {
             MCPServerTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     McpServerControl(
-                        mediaPermissionsPlease = { mediaPermissionsPlease() },
-                        startInputService = { startInputService() },
                         isRunning = McpServerService.isRunning.value,
                         onToggleServer = { shouldStart ->
                             // Check permissions only when trying to start the service
@@ -203,6 +205,19 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    private fun startRequiredToolServices(): Boolean {
+        var allStarted = true
+        // If screenshot tool is enabled, start media projection
+        if (toolService.toolEnabledStates.value["screenshot"] == true) {
+            allStarted = allStarted && mediaPermissionsPlease()
+        }
+        // If input tool is enabled, start accessibility service
+        if (toolService.toolEnabledStates.value["input"] == true) {
+            allStarted = allStarted && startInputService()
+        }
+        return allStarted
     }
 
     private fun checkRequiredPermissions() {
@@ -255,6 +270,11 @@ class MainActivity : ComponentActivity() {
         val serviceIntent = Intent(this, McpServerService::class.java)
 
         if (start) {
+            // Only start the service if all required tool services are running
+            if (!startRequiredToolServices()) {
+                // Optionally, show a message to the user here
+                return
+            }
             // Start service (no need to pass tool states anymore, they're loaded from DataStore)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(serviceIntent)
@@ -318,8 +338,6 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun McpServerControl(
-    mediaPermissionsPlease: () -> Unit,
-    startInputService: () -> Unit,
     isRunning: Boolean,
     onToggleServer: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
@@ -414,13 +432,9 @@ fun McpServerControl(
                     Checkbox(
                         checked = toolEnabledStates[tool.id] == true,
                         onCheckedChange = { isChecked ->
-                            if (isChecked && tool.id == "screenshot") {
-                                mediaPermissionsPlease()
-                            } else if (isChecked && tool.id == "input") {
-                                startInputService()
-                            }
                             onToggleTool(tool)
-                        }
+                        },
+                        enabled = !isRunning // Disable toggle when service is running
                     )
                 }
 
@@ -528,7 +542,6 @@ private fun Instructions(getConnectionUrl: () -> String, authToken: String = "YT
 fun McpServerControlPreview() {
     MCPServerTheme {
         McpServerControl(
-            mediaPermissionsPlease = {},
             isRunning = true,
             onToggleServer = {},
             getConnectionUrl = { "http://192.168.1.1:3001/sse" },
@@ -541,7 +554,6 @@ fun McpServerControlPreview() {
                 "ads" to false
             ),
             onToggleTool = {},
-            startInputService = {},
         )
     }
 }

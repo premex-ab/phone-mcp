@@ -11,6 +11,8 @@ import dagger.multibindings.IntoSet
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.screenshot.configurator.ScreenshotToolConfiguratorImpl
 import se.premex.mcp.screenshot.repositories.BitmapStorage
+import se.premex.mcp.screenshot.repositories.DisplayInfoRepository
+import se.premex.mcp.screenshot.repositories.DisplayInfoRepositoryImpl
 import se.premex.mcp.screenshot.repositories.InMemoryBitmapStorage
 import se.premex.mcp.screenshot.repositories.ScreenshotRepository
 import se.premex.mcp.screenshot.repositories.ScreenshotRepositoryImpl
@@ -26,9 +28,10 @@ object ScreenshotToolModule {
     @IntoSet
     fun provideScreenshotTool(
         bitmapStorage: BitmapStorage,
+        displayInfoRepository: DisplayInfoRepository,
         mediaProjectionManager: MediaProjectionManager,
     ): McpTool {
-        val screenshotToolConfigurator = ScreenshotToolConfiguratorImpl(bitmapStorage)
+        val screenshotToolConfigurator = ScreenshotToolConfiguratorImpl(bitmapStorage, displayInfoRepository)
         return ScreenshotTool(screenshotToolConfigurator, mediaProjectionManager)
     }
 
@@ -37,8 +40,15 @@ object ScreenshotToolModule {
     fun provideBitmapStorage(@ApplicationContext context: Context): BitmapStorage {
         return InMemoryBitmapStorage()
         //return DiskBitmapStorage(context)
-    }   @Provides
+    }
 
+    @Provides
+    @Singleton
+    fun provideDisplayInfoRepository(@ApplicationContext context: Context): DisplayInfoRepository {
+        return DisplayInfoRepositoryImpl(context)
+    }
+
+    @Provides
     @Singleton
     fun provideScreenshotRepository(): ScreenshotRepository {
         return ScreenshotRepositoryImpl()
@@ -47,7 +57,6 @@ object ScreenshotToolModule {
     @Provides
     @Singleton
     fun provideMediaProjectionManager(@ApplicationContext context: Context): MediaProjectionManager {
-        return  context.getSystemService(MediaProjectionManager::class.java)
+        return context.getSystemService(MediaProjectionManager::class.java)
     }
 }
-
