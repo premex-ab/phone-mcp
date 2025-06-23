@@ -58,6 +58,8 @@ import io.modelcontextprotocol.kotlin.sdk.server.Server
 import se.premex.mcp.auth.AuthRepository
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.di.ToolService
+import se.premex.mcp.input.repositories.InputRepository
+import se.premex.mcp.screenshot.repositories.ScreenshotRepository
 import se.premex.mcp.screenshot.tool.mediaRecordPermissionLauncher
 import se.premex.mcp.ui.theme.MCPServerTheme
 import javax.inject.Inject
@@ -78,10 +80,22 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var mediaProjectionManager: MediaProjectionManager
 
+    @Inject
+    lateinit var inputRepository: InputRepository
+
+    @Inject
+    lateinit var screenshotRepository: ScreenshotRepository
+
     val startMediaProjection: ActivityResultLauncher<Intent> = mediaRecordPermissionLauncher()
 
     fun mediaPermissionsPlease() {
-        startMediaProjection.launch(mediaProjectionManager.createScreenCaptureIntent())
+        if (!screenshotRepository.isServiceRunning()) {
+            startMediaProjection.launch(mediaProjectionManager.createScreenCaptureIntent())
+        }
+    }
+
+    fun startInputService() {
+        inputRepository.startAccessibilityServiceIfAlreadyRunning()
     }
 
     private val requestMultiplePermissionsLauncher = registerForActivityResult(
@@ -142,6 +156,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     McpServerControl(
                         mediaPermissionsPlease = { mediaPermissionsPlease() },
+                        startInputService = { startInputService() },
                         isRunning = McpServerService.isRunning.value,
                         onToggleServer = { shouldStart ->
                             // Check permissions only when trying to start the service
@@ -159,7 +174,7 @@ class MainActivity : ComponentActivity() {
                         onToggleTool = { tool ->
                             handleToolToggle(tool)
                         },
-                        authToken = authToken
+                        authToken = authToken,
                     )
 
                     // Show warning dialog if needed
@@ -302,6 +317,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun McpServerControl(
     mediaPermissionsPlease: () -> Unit,
+    startInputService: () -> Unit,
     isRunning: Boolean,
     onToggleServer: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
@@ -395,9 +411,11 @@ fun McpServerControl(
 
                     Checkbox(
                         checked = toolEnabledStates[tool.id] == true,
-                        onCheckedChange = {
-                            if (tool.id == "screenshot") {
+                        onCheckedChange = { isChecked ->
+                            if (isChecked && tool.id == "screenshot") {
                                 mediaPermissionsPlease()
+                            } else if (isChecked && tool.id == "input") {
+                                startInputService()
                             }
                             onToggleTool(tool)
                         }
@@ -520,7 +538,8 @@ fun McpServerControlPreview() {
                 "sms" to true,
                 "ads" to false
             ),
-            onToggleTool = {}
+            onToggleTool = {},
+            startInputService = {},
         )
     }
 }

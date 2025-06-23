@@ -38,6 +38,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MyMediaProjectionService : Service() {
+
+
+
     private var mMediaProjection: MediaProjection? = null
 
     private var mImageReader: ImageReader? = null
@@ -122,6 +125,8 @@ class MyMediaProjectionService : Service() {
     override fun onCreate() {
         super.onCreate()
 
+        instance = this
+
         // Initialize notification manager
         notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
@@ -133,6 +138,11 @@ class MyMediaProjectionService : Service() {
                 Looper.loop()
             }
         }.start()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        instance = null
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
@@ -267,5 +277,10 @@ class MyMediaProjectionService : Service() {
 
         private val virtualDisplayFlags: Int
             get() = DisplayManager.VIRTUAL_DISPLAY_FLAG_OWN_CONTENT_ONLY or DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC
+
+        private var instance: MyMediaProjectionService? = null
+
+        fun getInstance(): MyMediaProjectionService? = instance
+
     }
 }

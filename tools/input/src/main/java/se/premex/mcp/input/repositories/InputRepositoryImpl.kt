@@ -63,5 +63,18 @@ class InputRepositoryImpl @Inject constructor(
     override fun getInputInfo(): InputInfo {
         return inputInfo
     }
+
+    override fun startAccessibilityServiceIfAlreadyRunning() {
+        if (isAccessibilityServiceRunning() == false) {
+            val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            context.startActivity(intent)
+        }
+    }
+
+    override fun isAccessibilityServiceRunning(): Boolean {
+        val accessibilityService = InputAccessibilityService.getInstance()
+        return accessibilityService != null
+    }
 }
 

@@ -14,5 +14,8 @@ interface InputRepository {
      * @return InputInfo containing details about the last input operation
      */
     fun getInputInfo(): InputInfo
+
+    fun startAccessibilityServiceIfAlreadyRunning()
+    fun isAccessibilityServiceRunning(): Boolean
 }
 
