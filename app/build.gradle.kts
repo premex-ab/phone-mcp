@@ -1,4 +1,3 @@
-import com.android.tools.r8.internal.`in`
 import java.util.Properties
 import java.io.FileInputStream
 
@@ -8,69 +7,78 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.hilt.android)
-    id("com.github.triplet.play") version "3.12.1"
+    alias(libs.plugins.play.publisher)
 }
 
-play {
-    serviceAccountCredentials.set(file("byggappen-dev-b151ea2d4990.json"))
-    defaultToAppBundles.set(true)
+// Get version from gradle property or fallback to default
+val versionNameName = project.findProperty("versionNameName")?.toString() ?: "0.4.0"
+val versionNameCode = (project.findProperty("versionNameCode")?.toString()?.toIntOrNull() ?: 5)
+
+// Configure Play Store publishing only if credentials file exists
+val playCredentialsFile = file("byggappen-dev-b151ea2d4990.json")
+if (playCredentialsFile.exists()) {
+    play {
+        serviceAccountCredentials.set(playCredentialsFile)
+        defaultToAppBundles.set(true)
+    }
 }
 
-
-// Create a variable called keystorePropertiesFile, and initialize it to your
-// keystore.properties file, in the rootProject folder.
+// Load keystore properties for release builds (optional for debug)
 val keystorePropertiesFile = rootProject.file("keystore.properties")
-
-// Initialize a new Properties() object called keystoreProperties.
 val keystoreProperties = Properties()
-
-// Load your keystore.properties file into the keystoreProperties object.
-keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+}
 
 android {
     namespace = "se.premex.mcp"
     compileSdk = 36
 
     signingConfigs {
-        create("config") {
-            keyAlias = keystoreProperties["keyAlias"] as String
-            keyPassword = keystoreProperties["keyPassword"] as String
-            storeFile = file(keystoreProperties["storeFile"] as String)
-            storePassword = keystoreProperties["storePassword"] as String
+        if (keystorePropertiesFile.exists()) {
+            create("config") {
+                keyAlias = keystoreProperties["keyAlias"] as String
+                keyPassword = keystoreProperties["keyPassword"] as String
+                storeFile = rootProject.file(keystoreProperties["storeFile"] as String)
+                storePassword = keystoreProperties["storePassword"] as String
+            }
         }
     }
 
     defaultConfig {
         applicationId = "se.premex.mcp"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 36
-        versionCode = 5
-        versionName = "0.4.0"
+        versionCode = versionNameCode
+        versionName = versionNameName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+        debug {
+            // Debug builds work without google-services.json
+            // Firebase will be disabled if google-services.json is missing
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            signingConfig = signingConfigs.getByName("config")
+            if (keystorePropertiesFile.exists()) {
+                signingConfig = signingConfigs.getByName("config")
+            }
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
     buildFeatures {
         compose = true
     }
+}
+
+kotlin {
+    jvmToolchain(21)
 }
 
 dependencies {

@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:externalmcptool/src/main/java/se/premex/externalmcptool/ui/theme/Theme.kt
 package se.premex.externalmcptool.ui.theme
-========
-package se.premex.mcp.ui.theme
->>>>>>>> 77eca3c (Refactor package structure and update build configuration for MCP):app/src/main/java/se/premex/mcp/ui/theme/Theme.kt
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

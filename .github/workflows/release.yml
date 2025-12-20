@@ -1,0 +1,74 @@
+name: Release Build
+
+on:
+  push:
+    tags:
+      - 'v*' # Triggers on tags like v1.0.0, v0.4.0, etc.
+
+jobs:
+  release:
+    environment: release
+    runs-on: tart
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v5
+
+    - name: Decode and setup keystore
+      run: |
+        echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/keystore.jks
+        echo "${{ secrets.PLAY_STORE_PUBLISHER_BASE64 }}" | base64 --decode > app/byggappen-dev-b151ea2d4990.json
+
+    - name: Create keystore.properties
+      run: |
+        echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > keystore.properties
+        echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> keystore.properties
+        echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> keystore.properties
+        echo "storeFile=app/keystore.jks" >> keystore.properties
+
+
+    - name: Extract version from tag
+      id: version_info
+      run: |
+        TAG_NAME="${GITHUB_REF#refs/tags/}"
+        VERSION_NAME="${TAG_NAME#v}"
+        echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_OUTPUT
+        echo "VERSION_CODE=${{ github.run_number }}" >> $GITHUB_OUTPUT
+
+    - name: Build release APK
+      run: ./gradlew assembleRelease --stacktrace -PversionNameName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionNameCode=${{ github.run_number }}
+
+    - name: Build release AAB (App Bundle)
+      run: ./gradlew bundleRelease --stacktrace -PversionNameName=${{ steps.version_info.outputs.VERSION_NAME }} -PgitVersionCode=${{ github.run_number }}
+
+    - name: Publish release
+      run: ./gradlew publishReleaseBundle --stacktrace -PversionNameName=${{ steps.version_info.outputs.VERSION_NAME }} -PgitVersionCode=${{ github.run_number }}
+
+    - name: Upload Release Assets
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          app/build/outputs/apk/release/app-release.apk
+          app/build/outputs/bundle/release/app-release.aab
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: release-outputs
+        path: |
+          app/build/outputs/apk/release/
+          app/build/outputs/bundle/release/
+          app/build/outputs/mapping/release/
+        retention-days: 30
+
