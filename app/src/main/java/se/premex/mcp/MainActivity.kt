@@ -1,10 +1,8 @@
 package se.premex.mcp
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
@@ -19,10 +17,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -109,16 +110,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-/*
-        val intent = Intent("se.premex.mcp.MCP_PROVIDER")
-
-        val resolveInfoList = packageManager.queryIntentContentProviders(
-            intent,
-            PackageManager.MATCH_ALL
-        )
-
-        resolveInfoList.toString()
-*/
         enableEdgeToEdge()
         setContent {
             val toolStates by toolService.toolEnabledStates.collectAsState()
@@ -129,7 +120,9 @@ class MainActivity : ComponentActivity() {
             val authToken = authInstructions.substringAfter("'").substringBefore("'")
 
             MCPServerTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                ) { innerPadding ->
                     McpServerControl(
                         isRunning = McpServerService.isRunning.value,
                         onToggleServer = { shouldStart ->
@@ -299,10 +292,17 @@ fun McpServerControl(
     onToggleTool: (McpTool) -> Unit,
     authToken: String = "YTpi"
 ) {
+    val safeDrawingPadding = WindowInsets.safeDrawing.asPaddingValues()
+
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(
+                start = 16.dp + safeDrawingPadding.calculateLeftPadding(androidx.compose.ui.unit.LayoutDirection.Ltr),
+                end = 16.dp + safeDrawingPadding.calculateRightPadding(androidx.compose.ui.unit.LayoutDirection.Ltr),
+                top = 16.dp + safeDrawingPadding.calculateTopPadding(),
+                bottom = 16.dp + safeDrawingPadding.calculateBottomPadding()
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
