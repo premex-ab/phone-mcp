@@ -1,0 +1,94 @@
+# This workflow automatically updates Gradle wrapper to the latest version
+# across all Gradle projects in this repository.
+name: "Update Gradle Wrapper"
+
+on:
+  schedule:
+    # Run every day at 6:00 AM UTC (weekly)
+    - cron: '0 6 * * *'
+  workflow_dispatch: # Allow manual triggering
+
+concurrency:
+  group: update-gradle-wrapper
+  cancel-in-progress: true
+
+jobs:
+  update-gradle-wrapper:
+    runs-on: tart
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/create-github-app-token@v2
+        id: generate-token
+        with:
+          app-id: ${{ secrets.PREMEX_POT_APP_ID }}
+          private-key: ${{ secrets.PREMEX_POT_APP_SECRET }}
+
+      - name: Check out code
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update Gradle Wrapper
+        id: update-wrapper
+        uses: premex-ab/actions/update-gradle-wrapper@v1
+
+      - name: Check for changes
+        id: changes
+        run: |
+          echo "Checking for changes in wrapper files..."
+          git status
+          if git diff --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "✅ No changes detected - Gradle wrapper is already up to date"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "📝 Changes detected in the following files:"
+            git diff --name-only
+            echo ""
+            echo "📋 Change summary:"
+            git diff --stat
+          fi
+
+      - name: Create Pull Request
+        if: steps.changes.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
+          commit-message: "chore: update Gradle wrapper to latest version"
+          title: "🔄 Update Gradle Wrapper"
+          body: |
+            ## 🎯 Automated Gradle Wrapper Update
+            
+            This PR updates the Gradle wrapper to the latest version across all projects in the repository.
+            
+            ### 📋 Projects Updated
+            - ✅ Root project (`./gradlew`)
+            - ✅ Library project (`./library/gradlew`)
+            - ✅ Plugin project (`./plugin/gradlew`)
+            
+            ### 🤖 Automation Details
+            - Triggered by: Weekly scheduled workflow
+            - Generated: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            - Branch: `update-gradle-wrapper`
+            
+            ### ✅ What to do next
+            1. Review the changes in the wrapper files
+            2. Verify that the CI builds pass
+            3. Merge this PR to complete the update
+            
+            ---
+            *This PR was automatically created by the Update Gradle Wrapper workflow.*
+          branch: update-gradle-wrapper
+          delete-branch: true
+          draft: false
+
+      - name: Summary
+        run: |
+          if [[ "${{ steps.changes.outputs.changed }}" == "true" ]]; then
+            echo "✅ Gradle wrapper updated and PR created"
+          else
+            echo "ℹ️  No updates needed - Gradle wrapper is already up to date"
+          fi
