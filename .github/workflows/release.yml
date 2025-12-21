@@ -49,10 +49,10 @@ jobs:
       run: ./gradlew assembleRelease --stacktrace -PversionNameName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionNameCode=${{ github.run_number }}
 
     - name: Build release AAB (App Bundle)
-      run: ./gradlew bundleRelease --stacktrace -PversionNameName=${{ steps.version_info.outputs.VERSION_NAME }} -PgitVersionCode=${{ github.run_number }}
+      run: ./gradlew bundleRelease --stacktrace -PversionNameName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionCode=${{ github.run_number }}
 
     - name: Publish release
-      run: ./gradlew publishReleaseBundle --stacktrace -PversionNameName=${{ steps.version_info.outputs.VERSION_NAME }} -PgitVersionCode=${{ github.run_number }}
+      run: ./gradlew publishReleaseBundle --stacktrace -PversionNameName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionCode=${{ github.run_number }}
 
     - name: Upload Release Assets
       uses: softprops/action-gh-release@v1
