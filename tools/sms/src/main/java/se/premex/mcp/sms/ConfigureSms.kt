@@ -1,9 +1,9 @@
 package se.premex.mcp.sms
 
-import io.modelcontextprotocol.kotlin.sdk.CallToolResult
-import io.modelcontextprotocol.kotlin.sdk.TextContent
-import io.modelcontextprotocol.kotlin.sdk.Tool
 import io.modelcontextprotocol.kotlin.sdk.server.Server
+import io.modelcontextprotocol.kotlin.sdk.types.CallToolResult
+import io.modelcontextprotocol.kotlin.sdk.types.TextContent
+import io.modelcontextprotocol.kotlin.sdk.types.ToolSchema
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
@@ -30,12 +30,29 @@ fun appendSmsTools(
 ) {
 
     // Register a tool to fetch weather alerts by state
+    buildJsonObject {
+        putJsonObject("phoneNumber") {
+            put("type", "string")
+            put(
+                "description",
+                "Phone number to sent text message to, in E.164 format (e.g., +1234567890)."
+            )
+        }
+        putJsonObject("message") {
+            put("type", "string")
+            put(
+                "description",
+                "Message to be sent in the text message."
+            )
+        }
+    }
+    listOf("phoneNumber", "message")
     server.addTool(
         name = "send_sms",
         description = """
             Tool that can send sms to a phone number
         """.trimIndent(),
-        inputSchema = Tool.Input(
+        inputSchema = ToolSchema(
             properties = buildJsonObject {
                 putJsonObject("phoneNumber") {
                     put("type", "string")
@@ -56,12 +73,12 @@ fun appendSmsTools(
         )
     )
     { request ->
-        val phoneNumber = request.arguments["phoneNumber"]?.jsonPrimitive?.content
+        val phoneNumber = request.arguments?.get("phoneNumber")?.jsonPrimitive?.content
             ?: return@addTool CallToolResult(
                 content = listOf(TextContent("The 'phoneNumber' parameter is required."))
             )
 
-        val message = request.arguments["message"]?.jsonPrimitive?.content
+        val message = request.arguments?.get("message")?.jsonPrimitive?.content
             ?: return@addTool CallToolResult(
                 content = listOf(TextContent("The 'message' parameter is required."))
             )

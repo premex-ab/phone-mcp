@@ -1,10 +1,10 @@
 package se.premex.mcp.camera.configurator
 
-import io.modelcontextprotocol.kotlin.sdk.CallToolResult
-import io.modelcontextprotocol.kotlin.sdk.ImageContent
-import io.modelcontextprotocol.kotlin.sdk.TextContent
-import io.modelcontextprotocol.kotlin.sdk.Tool
 import io.modelcontextprotocol.kotlin.sdk.server.Server
+import io.modelcontextprotocol.kotlin.sdk.types.CallToolResult
+import io.modelcontextprotocol.kotlin.sdk.types.ImageContent
+import io.modelcontextprotocol.kotlin.sdk.types.TextContent
+import io.modelcontextprotocol.kotlin.sdk.types.ToolSchema
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -70,7 +70,7 @@ class CameraToolConfiguratorImpl(
                 - zoom_level: Digital zoom level (1.0 = no zoom, higher values = more zoom)
                 - picture_size: Desired image resolution in format "WIDTHxHEIGHT" (e.g. "4032x3024")
             """.trimIndent(),
-            inputSchema = Tool.Input(
+            inputSchema = ToolSchema(
                 properties = buildJsonObject {
                     putJsonObject("camera_id") {
                         put("type", "string")
@@ -124,13 +124,15 @@ class CameraToolConfiguratorImpl(
                 }
             )
         ) { request ->
-            val cameraId = request.arguments["camera_id"]?.jsonPrimitive?.content
-            val quality = request.arguments["quality"]?.jsonPrimitive?.content?.toIntOrNull() ?: 80
-            val flashMode = request.arguments["flash_mode"]?.jsonPrimitive?.content
-            val focusMode = request.arguments["focus_mode"]?.jsonPrimitive?.content
-            val whiteBalance = request.arguments["white_balance"]?.jsonPrimitive?.content
-            val zoomLevel = request.arguments["zoom_level"]?.jsonPrimitive?.content?.toFloatOrNull()
-            val pictureSize = request.arguments["picture_size"]?.jsonPrimitive?.content
+            val cameraId = request.arguments?.get("camera_id")?.jsonPrimitive?.content
+            val quality =
+                request.arguments?.get("quality")?.jsonPrimitive?.content?.toIntOrNull() ?: 80
+            val flashMode = request.arguments?.get("flash_mode")?.jsonPrimitive?.content
+            val focusMode = request.arguments?.get("focus_mode")?.jsonPrimitive?.content
+            val whiteBalance = request.arguments?.get("white_balance")?.jsonPrimitive?.content
+            val zoomLevel =
+                request.arguments?.get("zoom_level")?.jsonPrimitive?.content?.toFloatOrNull()
+            val pictureSize = request.arguments?.get("picture_size")?.jsonPrimitive?.content
 
             try {
                 // Quality should be between 1-100

@@ -1,24 +1,25 @@
 package se.premex.mcp.externaltools.configurator
 
-import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.pm.ProviderInfo
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import androidx.core.net.toUri
 import dagger.hilt.android.qualifiers.ApplicationContext
-import io.modelcontextprotocol.kotlin.sdk.CallToolResult
-import io.modelcontextprotocol.kotlin.sdk.TextContent
-import io.modelcontextprotocol.kotlin.sdk.Tool
 import io.modelcontextprotocol.kotlin.sdk.server.Server
-import kotlinx.serialization.json.*
+import io.modelcontextprotocol.kotlin.sdk.types.CallToolResult
+import io.modelcontextprotocol.kotlin.sdk.types.TextContent
+import io.modelcontextprotocol.kotlin.sdk.types.ToolSchema
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.jsonObject
 import se.premex.mcp.externaltools.repositories.ExternalToolInfo
 import se.premex.mcp.externaltools.repositories.ExternalToolRepository
 import javax.inject.Inject
 import javax.inject.Singleton
-import androidx.core.net.toUri
 
 private const val TAG = "ExternalToolsConfigImpl"
 
@@ -65,13 +66,19 @@ class ExternalToolsConfiguratorImpl @Inject constructor(
                     inputSchema = createInputSchema(toolInfo)
                 ) { request ->
                     // Handle the request by forwarding it to the content provider
-                    val response = handleExternalToolRequest(toolInfo.authority, toolInfo.toolName, request.arguments)
+                    val response = handleExternalToolRequest(
+                        toolInfo.authority,
+                        toolInfo.toolName,
+                        request.arguments ?: buildJsonObject { })
                     CallToolResult(
                         content = listOf(TextContent(response))
                     )
                 }
 
-                Log.d(TAG, "Successfully registered external tool: ${toolInfo.toolName} from ${toolInfo.authority}")
+                Log.d(
+                    TAG,
+                    "Successfully registered external tool: ${toolInfo.toolName} from ${toolInfo.authority}"
+                )
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to register tool from ${toolInfo.authority}", e)
             }
@@ -114,21 +121,15 @@ class ExternalToolsConfiguratorImpl @Inject constructor(
         return discoverExternalTools()
     }
 
-    private fun createInputSchema(toolInfo: ExternalToolInfo): Tool.Input {
-        // Parse the stored schema into a JsonObject
-        val jsonParser = Json { ignoreUnknownKeys = true }
-        val properties = try {
+    private fun createInputSchema(toolInfo: ExternalToolInfo) = ToolSchema(
+        properties = try {
+            val jsonParser = Json { ignoreUnknownKeys = true }
             jsonParser.parseToJsonElement(toolInfo.inputSchemaJson).jsonObject
         } catch (e: Exception) {
-            // If parsing fails, create an empty schema
             buildJsonObject {}
-        }
-
-        return Tool.Input(
-            properties = properties,
-            required = toolInfo.requiredFields
-        )
-    }
+        },
+        required = toolInfo.requiredFields
+    )
 
     private fun getToolInfoFromProvider(authority: String): ExternalToolInfo? {
         val contentResolver = context.contentResolver
@@ -200,7 +201,8 @@ class ExternalToolsConfiguratorImpl @Inject constructor(
 
         val success = result.getBoolean(KEY_SUCCESS, false)
         return if (success) {
-            result.getString(KEY_TOOL_RESULT) ?: "Tool executed successfully but no result was returned"
+            result.getString(KEY_TOOL_RESULT)
+                ?: "Tool executed successfully but no result was returned"
         } else {
             "Failed to execute tool: ${result.getString(KEY_ERROR_MESSAGE) ?: "Unknown error"}"
         }

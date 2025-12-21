@@ -1,9 +1,9 @@
 package se.premex.mcp.contacts.serverconfigurator
 
-import io.modelcontextprotocol.kotlin.sdk.CallToolResult
-import io.modelcontextprotocol.kotlin.sdk.TextContent
-import io.modelcontextprotocol.kotlin.sdk.Tool
 import io.modelcontextprotocol.kotlin.sdk.server.Server
+import io.modelcontextprotocol.kotlin.sdk.types.CallToolResult
+import io.modelcontextprotocol.kotlin.sdk.types.TextContent
+import io.modelcontextprotocol.kotlin.sdk.types.ToolSchema
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
@@ -23,7 +23,7 @@ internal fun appendContactsTools(
         description = """
             Retrieve phone number(s) from contacts on the android device.
         """.trimIndent(),
-        inputSchema = Tool.Input(
+        inputSchema = ToolSchema(
             properties = buildJsonObject {
                 putJsonObject("name") {
                     put("type", "string")
@@ -37,7 +37,7 @@ internal fun appendContactsTools(
         )
     )
     { request ->
-        val phoneNumber = request.arguments["name"]?.jsonPrimitive?.content
+        val phoneNumber = request.arguments?.get("name")?.jsonPrimitive?.content
             ?: return@addTool CallToolResult(
                 content = listOf(TextContent("The 'name' parameter is required."))
             )

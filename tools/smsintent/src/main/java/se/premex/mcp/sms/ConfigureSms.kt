@@ -1,9 +1,9 @@
 package se.premex.mcp.sms
 
-import io.modelcontextprotocol.kotlin.sdk.CallToolResult
-import io.modelcontextprotocol.kotlin.sdk.TextContent
-import io.modelcontextprotocol.kotlin.sdk.Tool
 import io.modelcontextprotocol.kotlin.sdk.server.Server
+import io.modelcontextprotocol.kotlin.sdk.types.CallToolResult
+import io.modelcontextprotocol.kotlin.sdk.types.TextContent
+import io.modelcontextprotocol.kotlin.sdk.types.ToolSchema
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
@@ -35,7 +35,7 @@ fun appendSmsTools(
         description = """
             Tool that can send sms to a phone number. this will prepare an sms and make a vnd.android-dir/mms-sms intent that can be used to send the sms.
         """.trimIndent(),
-        inputSchema = Tool.Input(
+        inputSchema = ToolSchema(
             properties = buildJsonObject {
                 putJsonObject("phoneNumber") {
                     put("type", "string")
@@ -56,12 +56,12 @@ fun appendSmsTools(
         )
     )
     { request ->
-        val phoneNumber = request.arguments["phoneNumber"]?.jsonPrimitive?.content
+        val phoneNumber = request.arguments?.get("phoneNumber")?.jsonPrimitive?.content
             ?: return@addTool CallToolResult(
                 content = listOf(TextContent("The 'phoneNumber' parameter is required."))
             )
 
-        val message = request.arguments["message"]?.jsonPrimitive?.content
+        val message = request.arguments?.get("message")?.jsonPrimitive?.content
             ?: return@addTool CallToolResult(
                 content = listOf(TextContent("The 'message' parameter is required."))
             )

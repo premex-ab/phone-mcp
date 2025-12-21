@@ -1,10 +1,10 @@
 package se.premex.mcp.externaltools.tool
 
 import android.util.Log
-import io.modelcontextprotocol.kotlin.sdk.CallToolResult
-import io.modelcontextprotocol.kotlin.sdk.TextContent
-import io.modelcontextprotocol.kotlin.sdk.Tool
 import io.modelcontextprotocol.kotlin.sdk.server.Server
+import io.modelcontextprotocol.kotlin.sdk.types.CallToolResult
+import io.modelcontextprotocol.kotlin.sdk.types.TextContent
+import io.modelcontextprotocol.kotlin.sdk.types.ToolSchema
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import se.premex.mcp.core.tool.McpTool
@@ -57,7 +57,7 @@ class ExternalToolsTool @Inject constructor(
                     val response = externalToolsConfigurator.handleExternalToolRequest(
                         authority = toolInfo.authority,
                         toolName = toolInfo.toolName,
-                        arguments = request.arguments
+                        arguments = request.arguments ?: emptyMap()
                     )
 
 
@@ -79,10 +79,8 @@ class ExternalToolsTool @Inject constructor(
     /**
      * Parse the input schema JSON string into a Tool.Input object
      */
-    private fun parseInputSchema(schema: String, required: List<String>): Tool.Input {
-        val json = Json.decodeFromString<JsonObject>(schema)
-
-        return Tool.Input(properties = json, required = required)
-    }
+    private fun parseInputSchema(schema: String, required: List<String>) = ToolSchema(
+        properties = Json.decodeFromString<JsonObject>(schema),
+        required = required
+    )
 }
-
