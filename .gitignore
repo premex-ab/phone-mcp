@@ -3,12 +3,6 @@
 /local.properties
 .idea
 build
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
 .DS_Store
 /build
 /captures
@@ -16,6 +10,12 @@ build
 .cxx
 local.properties
 .kotlin
+
 byggappen-dev-b151ea2d4990.json
 keystore.properties
 app/keystore.jks
+google-services.json
+
+# Secrets directory (contains keystore and sensitive files)
+keystore.jks
+keystore.properties
