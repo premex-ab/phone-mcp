@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <permission
+        android:name="se.premex.mcp.ACCESS_PROVIDER"
+        android:protectionLevel="normal" />
+    <uses-permission android:name="se.premex.mcp.ACCESS_PROVIDER" />
+
+
+    <queries>
+        <!-- Used to build the list of installed providers -->
+        <intent>
+            <action android:name="se.premex.mcp.MCP_PROVIDER" />
+        </intent>
+    </queries>
+
+</manifest>

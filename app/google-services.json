@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "581971023473",
+    "project_id": "phone-mcp",
+    "storage_bucket": "phone-mcp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:581971023473:android:8e06bb1f93a9fc71a46dd0",
+        "android_client_info": {
+          "package_name": "se.premex.mcp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrWfwIbaoGuBZ13P9--gZIKYi-CLGUf8s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

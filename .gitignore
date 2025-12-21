@@ -1,0 +1,21 @@
+*.iml
+.gradle
+/local.properties
+.idea
+build
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+.kotlin
+
+byggappen-dev-b151ea2d4990.json
+keystore.properties
+app/keystore.jks
+google-services.json
+
+# Secrets directory (contains keystore and sensitive files)
+keystore.jks
+keystore.properties

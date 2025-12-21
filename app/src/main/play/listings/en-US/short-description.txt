@@ -1,0 +1,1 @@
+Enable AI agents to access your phone's contacts and send SMS via MCP.
