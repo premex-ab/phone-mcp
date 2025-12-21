@@ -1,1 +1,2 @@
-Phone MCP Server
+Phone MCP: AI Assistant Server
+

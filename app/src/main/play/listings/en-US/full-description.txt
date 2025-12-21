@@ -1,31 +1,86 @@
-Phone MCP turns your Android device into a server that supports the Model Context Protocol (MCP). This allows AI agents that are MCP-compatible to securely interact with selected phone capabilities.
+📱 Turn Your Phone Into an AI Assistant's Tool
 
-The app does not include or run any AI models itself. It simply enables communication between external AI systems and your phone's features — under your control.
+Phone MCP transforms your Android device into a secure server that connects AI assistants to your phone's capabilities. Built on the Model Context Protocol (MCP), it enables powerful AI interactions while keeping your data completely under your control.
 
-Current Features
-- Access to contact list (read-only)
-- Send SMS messages through the system messaging app
+Unlike AI apps that run models on your phone, Phone MCP is a lightweight bridge — it has no AI built-in. Instead, it safely exposes phone features to external MCP-compatible AI systems through a secure, permission-based interface.
 
-These actions require explicit permission from the user and are only available when actively granted.
+🔒 Complete Privacy & Security
 
-How It Works
-- Install and open Phone MCP
-- Start the MCP server from the app
-- Connect to the server from an external MCP-compatible AI agent
-- Select which features the agent is allowed to use
+Your privacy is paramount:
+• Android permission model for all actions
+• Explicit user consent required for each feature
+• Bearer token authentication for secure connections
+• Open source for complete transparency
+• All phone data access is local and device-only
+• Anonymous app usage analytics only (Firebase) - no personal data shared
 
-No action is taken without the user's involvement. All access is local and protected by Android's permission model.
+For detailed information about what data we collect and how it's used, please review our privacy policy (link available in the Play Console).
 
-Designed For
-- Developers building or testing MCP-compatible AI agents
-- Users running personal AI systems or interpreters on external machines
-- Anyone looking to extend AI interaction to their phone in a secure, structured way
+✨ Current Capabilities
 
-Privacy and Data
-- No user data is collected or shared
-- No telemetry or background analytics
-- No cloud dependencies — everything runs locally
+• 📞 Contact Management: Read and access your contact list (read-only)
+• 💬 SMS Control: Send messages through the system app (not available on play store version)
+• 💬 SMS Intent: Send SMS via Intent (no special permissions needed)
+• 📹 Camera Access: Take and capture photos
+• 📡 Sensor Data: Access accelerometer, gyroscope, and other sensors
+• 🔌 External Tools: Auto-discover and integrate MCP tools from other apps
 
-Access is always permission-based and clearly indicated
+All features are opt-in and require explicit permission before use.
 
-Note that this is an early version of Phone MCP. Future updates may include additional optional features like location access, camera, and more — all with strict opt-in controls.
+🚀 Quick Setup
+
+1. Install Phone MCP on your Android device
+2. Open the app and review available tools
+3. Enable the features you want to allow
+4. Start the MCP server
+5. Connect from your external AI agent using the provided connection details
+6. Your AI assistant now has controlled access to your phone
+
+Perfect For:
+• Developers testing MCP-compatible AI agents
+• Users running local AI systems or interpreters
+• Anyone wanting secure, permission-based AI phone control
+• Building custom AI workflows with phone automation
+
+⚙️ How It Works
+
+Phone MCP acts as a middleman:
+1. Your external AI system connects via a secure SSE connection
+2. You select which phone capabilities are available
+3. All requests are processed locally on your device
+4. Nothing happens without your permission
+
+🎯 Early Access
+
+This is an actively developed project. Upcoming features include:
+• Location services (GPS)
+• Advanced camera capabilities
+• Calendar access
+• Media library integration
+• Custom automation rules
+
+All new features will maintain our privacy-first philosophy with strict opt-in controls.
+
+💡 Requirements
+
+• Android 8.0 or higher
+• WiFi or local network connection (device and AI client on same network)
+• External MCP-compatible AI system or client
+• App runs as a foreground service with persistent notification
+
+📋 Permissions & Data
+
+This app may request the following permissions to enable specific features:
+• SEND_SMS - For SMS sending capability
+• CAMERA - For camera access
+• READ_CONTACTS - For contact management
+• And others for sensor access and device features
+
+🔗 Learn More
+
+Phone MCP is open source and available on GitHub:
+https://github.com/premex-ab/phone-mcp
+
+For documentation, examples, and contribution guidelines, visit the repository. If you encounter any issues or have feature requests, please create an issue on GitHub.
+
+Start building smarter AI interactions with complete control over your data.
