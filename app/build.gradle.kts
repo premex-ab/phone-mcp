@@ -8,7 +8,6 @@ plugins {
     alias(libs.plugins.mcp.android.application.jacoco)
     alias(libs.plugins.mcp.android.application.firebase)
     alias(libs.plugins.mcp.hilt)
-    alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.play.publisher)
 }
 
@@ -83,13 +82,6 @@ android {
             )
         }
     }
-    buildFeatures {
-        compose = true
-    }
-}
-
-kotlin {
-    jvmToolchain(21)
 }
 
 dependencies {
@@ -104,10 +96,7 @@ dependencies {
     // DataStore for persisting authentication token
     implementation(libs.androidx.datastore.preferences)
 
-
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
+    // Hilt navigation
     implementation(libs.androidx.hilt.navigation.compose)
 
     // Module dependencies

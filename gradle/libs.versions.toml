@@ -114,6 +114,7 @@ mcp-android-application-jacoco = { id = "mcp.android.application.jacoco" }
 mcp-android-feature-impl = { id = "mcp.android.feature.impl" }
 mcp-android-feature-api = { id = "mcp.android.feature.api" }
 mcp-android-library = { id = "mcp.android.library" }
+mcp-android-tool = { id = "mcp.android.tool" }
 mcp-android-library-compose = { id = "mcp.android.library.compose" }
 mcp-android-library-jacoco = { id = "mcp.android.library.jacoco" }
 mcp-android-lint = { id = "mcp.android.lint" }

@@ -61,6 +61,10 @@ gradlePlugin {
             id = libs.plugins.mcp.android.library.asProvider().get().pluginId
             implementationClass = "AndroidLibraryConventionPlugin"
         }
+        register("androidTool") {
+            id = libs.plugins.mcp.android.tool.get().pluginId
+            implementationClass = "McpAndroidToolConventionPlugin"
+        }
         register("androidFeatureImpl") {
             id = libs.plugins.mcp.android.feature.impl.get().pluginId
             implementationClass = "AndroidFeatureImplConventionPlugin"
