@@ -55,7 +55,7 @@ jobs:
       run: ./gradlew publishReleaseBundle --stacktrace -PversionName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionCode=${{ steps.version_info.outputs.VERSION_CODE }}
 
     - name: Upload Release Assets
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         files: |
           app/build/outputs/apk/release/app-release.apk
