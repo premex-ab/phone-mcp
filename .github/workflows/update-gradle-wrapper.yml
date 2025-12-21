@@ -62,12 +62,7 @@ jobs:
           body: |
             ## 🎯 Automated Gradle Wrapper Update
             
-            This PR updates the Gradle wrapper to the latest version across all projects in the repository.
-            
-            ### 📋 Projects Updated
-            - ✅ Root project (`./gradlew`)
-            - ✅ Library project (`./library/gradlew`)
-            - ✅ Plugin project (`./plugin/gradlew`)
+            This PR updates the Gradle wrapper to the latest version.
             
             ### 🤖 Automation Details
             - Triggered by: Weekly scheduled workflow
