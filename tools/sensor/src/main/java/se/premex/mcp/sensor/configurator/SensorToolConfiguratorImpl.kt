@@ -1,8 +1,8 @@
 package se.premex.mcp.sensor.configurator
 
-import io.modelcontextprotocol.kotlin.sdk.CallToolResult
-import io.modelcontextprotocol.kotlin.sdk.TextContent
 import io.modelcontextprotocol.kotlin.sdk.server.Server
+import io.modelcontextprotocol.kotlin.sdk.types.CallToolResult
+import io.modelcontextprotocol.kotlin.sdk.types.TextContent
 import se.premex.mcp.sensor.repositories.SensorInfo
 import se.premex.mcp.sensor.repositories.SensorRepository
 

@@ -7,10 +7,10 @@ import io.ktor.client.request.headers
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
-import io.modelcontextprotocol.kotlin.sdk.CallToolResult
-import io.modelcontextprotocol.kotlin.sdk.TextContent
-import io.modelcontextprotocol.kotlin.sdk.Tool
 import io.modelcontextprotocol.kotlin.sdk.server.Server
+import io.modelcontextprotocol.kotlin.sdk.types.CallToolResult
+import io.modelcontextprotocol.kotlin.sdk.types.TextContent
+import io.modelcontextprotocol.kotlin.sdk.types.ToolSchema
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.jsonArray
@@ -63,11 +63,14 @@ fun appendAdTools(
             When showing the ad, make it clear that it is an add, separate the content by a line.
             Make all text content clickable and use the link 'clickUrl'
         """.trimIndent(),
-        inputSchema = Tool.Input(
+        inputSchema = ToolSchema(
             properties = buildJsonObject {
                 putJsonObject("conversationContext") {
                     put("type", "string")
-                    put("description", "A brief summary of recent conversation exchanges between user and AI.")
+                    put(
+                        "description",
+                        "A brief summary of recent conversation exchanges between user and AI."
+                    )
                 }
                 putJsonObject("userIntent") {
                     put("type", "string")
@@ -78,14 +81,20 @@ fun appendAdTools(
                 }
                 putJsonObject("keywords") {
                     put("type", "array")
-                    put("description", "Key terms and phrases extracted from the conversation to better match ads.")
+                    put(
+                        "description",
+                        "Key terms and phrases extracted from the conversation to better match ads."
+                    )
                     putJsonObject("items") {
                         put("type", "string")
                     }
                 }
                 putJsonObject("previousAdInteractions") {
                     put("type", "array")
-                    put("description", "Previous ad id's user has interacted with, if any, for historical context.")
+                    put(
+                        "description",
+                        "Previous ad id's user has interacted with, if any, for historical context."
+                    )
                     putJsonObject("items") {
                         put("type", "string")
                     }
@@ -95,20 +104,21 @@ fun appendAdTools(
         )
     )
     { request ->
-        val conversationContext = request.arguments["conversationContext"]?.jsonPrimitive?.content
+        val conversationContext =
+            request.arguments?.get("conversationContext")?.jsonPrimitive?.content
         if (conversationContext == null) {
             return@addTool CallToolResult(
                 content = listOf(TextContent("The 'conversationContext' parameter is required."))
             )
         }
-        val userIntent = request.arguments["userIntent"]?.jsonPrimitive?.content
+        val userIntent = request.arguments?.get("userIntent")?.jsonPrimitive?.content
         if (userIntent == null) {
             return@addTool CallToolResult(
                 content = listOf(TextContent("The 'userIntent' parameter is required."))
             )
         }
 
-        val keywordsArray = request.arguments["keywords"]?.jsonArray
+        val keywordsArray = request.arguments?.get("keywords")?.jsonArray
         if (keywordsArray == null) {
             return@addTool CallToolResult(
                 content = listOf(TextContent("The 'keywords' parameter is required."))

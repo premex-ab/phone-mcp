@@ -144,8 +144,8 @@ Create `{Toolname}ToolConfiguratorImpl.kt` in the `configurator` directory:
 ```kotlin
 package se.premex.mcp.{your_tool_name}.configurator
 
-import io.modelcontextprotocol.kotlin.sdk.CallToolResult
-import io.modelcontextprotocol.kotlin.sdk.TextContent
+import io.modelcontextprotocol.kotlin.sdk.types.CallToolResult
+import io.modelcontextprotocol.kotlin.sdk.types.TextContent
 import io.modelcontextprotocol.kotlin.sdk.server.Server
 import se.premex.mcp.{your_tool_name}.repositories.{Toolname}Repository
 

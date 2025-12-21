@@ -295,6 +295,7 @@ class McpServerService : Service() {
 
     private fun runSseMcpServerWithPlainConfiguration(port: Int): EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration> {
         val servers = ConcurrentMap<String, Server>()
+        val transports = ConcurrentMap<String, SseServerTransport>()
         Log.i(TAG, "$LOG_PREFIX_SERVER: Starting SSE server on port $port")
         Log.d(TAG, "$LOG_PREFIX_SERVER: Use inspector to connect to http://localhost:$port/sse")
 
@@ -339,6 +340,7 @@ class McpServerService : Service() {
                             val server = configureServer()
 
                             servers[transport.sessionId] = server
+                            transports[transport.sessionId] = transport
                             Log.d(
                                 TAG,
                                 "$LOG_PREFIX_SERVER: Added server for session ${transport.sessionId}"
@@ -350,6 +352,7 @@ class McpServerService : Service() {
                                     "$LOG_PREFIX_SERVER: Server closed for session ${transport.sessionId}"
                                 )
                                 servers.remove(transport.sessionId)
+                                transports.remove(transport.sessionId)
                                 Log.d(
                                     TAG,
                                     "$LOG_PREFIX_SERVER: Removed server for session ${transport.sessionId}"
@@ -387,7 +390,7 @@ class McpServerService : Service() {
 
                         Log.d(TAG, "$LOG_PREFIX_TRANSPORT: Received message for session $sessionId")
 
-                        val transport = servers[sessionId]?.transport as? SseServerTransport
+                        val transport = transports[sessionId]
                         if (transport == null) {
                             Log.w(TAG, "$LOG_PREFIX_TRANSPORT: Session not found: $sessionId")
                             call.respond(HttpStatusCode.NotFound, "Session not found")
