@@ -19,3 +19,4 @@ google-services.json
 # Secrets directory (contains keystore and sensitive files)
 keystore.jks
 keystore.properties
+google-services.json

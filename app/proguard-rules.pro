@@ -23,3 +23,14 @@
 # Rules for missing classes in R8 minification (ktor?)
 -dontwarn java.lang.management.ManagementFactory
 -dontwarn java.lang.management.RuntimeMXBean
+
+# Firebase Performance and Protobuf rules
+-keep class com.google.protobuf.** { *; }
+-keep interface com.google.protobuf.** { *; }
+-keep class com.google.firebase.perf.** { *; }
+-dontwarn com.google.protobuf.**
+-dontwarn com.google.firebase.perf.**
+
+# Keep Crashlytics
+-keep class com.google.firebase.crashlytics.** { *; }
+-keep class com.google.firebase.analytics.** { *; }
