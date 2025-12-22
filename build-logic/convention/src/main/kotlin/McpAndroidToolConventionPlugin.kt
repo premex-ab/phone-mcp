@@ -1,20 +1,14 @@
-import com.android.build.api.dsl.LibraryExtension
 import com.google.samples.apps.mcp.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.withType
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 /**
  * Convention plugin for MCP Tool modules.
  *
  * Applies standard configuration for all tool libraries:
- * - Android library setup
- * - Kotlin and KSP plugins
+ * - Android library setup (via mcp.android.library)
  * - Hilt dependency injection
  * - Common MCP SDK and Ktor dependencies
  * - Standard testing dependencies
@@ -22,36 +16,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 class McpAndroidToolConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            apply(plugin = "com.android.library")
-            apply(plugin = "org.jetbrains.kotlin.android")
-            apply(plugin = "mcp.android.lint")
+            // Apply base library configuration (compileSdk, minSdk, jvmToolchain, flavors, etc.)
+            apply(plugin = "mcp.android.library")
             apply(plugin = "mcp.hilt")
 
-            extensions.configure<LibraryExtension> {
-                compileSdk = 36
-
-                defaultConfig {
-                    minSdk = 26
-                    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-                }
-
-                buildTypes {
-                    release {
-                        isMinifyEnabled = false
-                        proguardFiles(
-                            getDefaultProguardFile("proguard-android-optimize.txt"),
-                            "proguard-rules.pro"
-                        )
-                    }
-                }
-            }
-
-            // Configure Kotlin JVM toolchain
-            tasks.withType<KotlinCompile>().configureEach {
-                compilerOptions {
-                    jvmTarget.set(JvmTarget.JVM_21)
-                }
-            }
 
             dependencies {
                 // Module dependencies

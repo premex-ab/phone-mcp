@@ -1,6 +1,5 @@
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
-import com.google.samples.apps.mcp.configureFlavors
 import com.google.samples.apps.mcp.configureGradleManagedDevices
 import com.google.samples.apps.mcp.configureKotlinAndroid
 import com.google.samples.apps.mcp.disableUnnecessaryAndroidTests
@@ -11,6 +10,16 @@ import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 
+/**
+ * Android library convention plugin.
+ *
+ * Provides:
+ * - compileSdk = 36, minSdk = 24
+ * - jvmToolchain(21)
+ * - Managed test devices
+ * - Tracing support
+ * - Resource prefix enforcement
+ */
 class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
@@ -25,7 +34,6 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 defaultConfig.targetSdk = 36
                 defaultConfig.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 testOptions.animationsDisabled = true
-                configureFlavors(this)
                 configureGradleManagedDevices(this)
                 // The resource prefix is derived from the module name,
                 // so resources inside ":core:module1" must be prefixed with "core_module1_"

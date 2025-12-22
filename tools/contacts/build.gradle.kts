@@ -6,7 +6,4 @@ android {
     namespace = "se.premex.mcp.contacts"
 }
 
-kotlin {
-    jvmToolchain(21)
-}
 

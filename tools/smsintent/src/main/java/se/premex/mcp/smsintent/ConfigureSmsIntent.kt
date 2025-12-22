@@ -1,4 +1,4 @@
-package se.premex.mcp.sms
+package se.premex.mcp.smsintent
 
 import io.modelcontextprotocol.kotlin.sdk.server.Server
 import io.modelcontextprotocol.kotlin.sdk.types.CallToolResult
@@ -24,7 +24,7 @@ import kotlinx.serialization.json.putJsonObject
  *
  * @return None. The function registers the tool with the server directly.
  */
-fun appendSmsTools(
+fun appendSmsIntentTools(
     server: Server,
     smsSender: SmsIntentSender,
 ) {

@@ -49,21 +49,34 @@ jobs:
         echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_OUTPUT
         echo "VERSION_CODE=${{ github.run_number }}" >> $GITHUB_OUTPUT
 
-    - name: Build release APK
-      run: ./gradlew assembleRelease --stacktrace -PversionName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionCode=${{ steps.version_info.outputs.VERSION_CODE }} -PenableFirebase=true
+    - name: Build Full Release
+      run: ./gradlew assembleFullRelease --stacktrace -PversionName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionCode=${{ steps.version_info.outputs.VERSION_CODE }} -PenableFirebase=true
 
-    - name: Build release AAB (App Bundle)
-      run: ./gradlew bundleRelease --stacktrace -PversionName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionCode=${{ steps.version_info.outputs.VERSION_CODE }} -PenableFirebase=true
+    - name: Build Play Release AAB
+      run: ./gradlew bundlePlayRelease --stacktrace -PversionName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionCode=${{ steps.version_info.outputs.VERSION_CODE }} -PenableFirebase=true
 
-    - name: Publish release
-      run: ./gradlew publishReleaseBundle --stacktrace -PversionName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionCode=${{ steps.version_info.outputs.VERSION_CODE }} -PenableFirebase=true
+    - name: Publish Play Release to Google Play Store
+      run: ./gradlew publishPlayReleaseBundle --stacktrace -PversionName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionCode=${{ steps.version_info.outputs.VERSION_CODE }} -PenableFirebase=true
 
-    - name: Upload Release Assets
+    - name: Upload Release Assets to GitHub
       uses: softprops/action-gh-release@v2
       with:
         files: |
-          app/build/outputs/apk/release/app-release.apk
-          app/build/outputs/bundle/release/app-release.aab
+          app/build/outputs/apk/full/release/app-full-release.apk
+        body: |
+          ## MCP Server Release ${{ steps.version_info.outputs.VERSION_NAME }}
+          
+          ### Full Build (Direct Distribution)
+          - **Package**: `se.premex.mcp.full`
+          - **Features**: Full feature set
+          - **Format**: APK
+          - **Distribution**: GitHub Releases, F-Droid, direct downloads
+          
+          ### Play Store Build
+          - **Package**: `se.premex.mcp`
+          - **Features**: Play store compliant features
+          - **Format**: AAB (App Bundle)
+          - **Distribution**: Google Play Store
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v6
@@ -71,8 +84,10 @@ jobs:
       with:
         name: release-outputs
         path: |
-          app/build/outputs/apk/release/
-          app/build/outputs/bundle/release/
-          app/build/outputs/mapping/release/
+          app/build/outputs/apk/full/release/
+          app/build/outputs/apk/play/release/
+          app/build/outputs/bundle/playRelease/
+          app/build/outputs/mapping/playRelease/
+          app/build/outputs/mapping/fullRelease/
         retention-days: 30
 

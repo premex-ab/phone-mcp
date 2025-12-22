@@ -6,8 +6,5 @@ android {
     namespace = "se.premex.mcp.sensor"
 }
 
-kotlin {
-    jvmToolchain(21)
-}
 
 

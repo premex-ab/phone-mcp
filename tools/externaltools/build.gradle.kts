@@ -1,5 +1,3 @@
-@file:Suppress("UnstableApiUsage")
-
 plugins {
     alias(libs.plugins.mcp.android.tool)
 }
@@ -7,8 +5,3 @@ plugins {
 android {
     namespace = "se.premex.mcp.externaltools"
 }
-
-kotlin {
-    jvmToolchain(21)
-}
-

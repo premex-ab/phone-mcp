@@ -5,9 +5,3 @@ plugins {
 android {
     namespace = "se.premex.mcp.smsintent"
 }
-
-kotlin {
-    jvmToolchain(21)
-}
-
-

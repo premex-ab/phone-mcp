@@ -6,8 +6,5 @@ android {
     namespace = "se.premex.mcp.sms"
 }
 
-kotlin {
-    jvmToolchain(21)
-}
 
 

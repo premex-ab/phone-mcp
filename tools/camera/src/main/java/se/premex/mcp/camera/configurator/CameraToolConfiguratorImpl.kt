@@ -13,7 +13,7 @@ import kotlinx.serialization.json.putJsonObject
 import se.premex.mcp.camera.repositories.CameraInfo
 import se.premex.mcp.camera.repositories.CameraRepository
 import java.io.File
-import java.util.Base64
+import android.util.Base64
 
 class CameraToolConfiguratorImpl(
     private val cameraRepository: CameraRepository,
@@ -170,7 +170,7 @@ class CameraToolConfiguratorImpl(
                 return@addTool CallToolResult(
                     content = listOf(
                         ImageContent(
-                            data = Base64.getEncoder().encodeToString(photoBytes),
+                            data = Base64.encodeToString(photoBytes, Base64.DEFAULT),
                             mimeType = "image/jpeg"
                         ),
                         TextContent("Photo captured successfully.")

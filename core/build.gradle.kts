@@ -1,10 +1,5 @@
 plugins {
-    id("java-library")
-    id("org.jetbrains.kotlin.jvm")
-}
-
-kotlin {
-    jvmToolchain(21)
+    alias(libs.plugins.mcp.jvm.library)
 }
 
 dependencies {
