@@ -6,9 +6,6 @@ android {
     namespace = "se.premex.mcp.camera"
 }
 
-kotlin {
-    jvmToolchain(21)
-}
 
 dependencies {
     // Lifecycle process for lifecycle-aware operations

@@ -7,13 +7,13 @@ import com.android.build.api.dsl.ProductFlavor
 
 @Suppress("EnumEntryName")
 enum class FlavorDimension {
-    contentType
+    distribution
 }
 
 @Suppress("EnumEntryName")
 enum class McpFlavor(val dimension: FlavorDimension, val applicationIdSuffix: String? = null) {
-    demo(FlavorDimension.contentType, applicationIdSuffix = ".demo"),
-    prod(FlavorDimension.contentType),
+    play(FlavorDimension.distribution),
+    full(FlavorDimension.distribution, applicationIdSuffix = ".full"),
 }
 
 fun configureFlavors(

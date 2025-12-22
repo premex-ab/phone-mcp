@@ -46,60 +46,30 @@ Create a `build.gradle.kts` file in your module directory with the following con
 
 ```kotlin
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.ksp)
-    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.mcp.android.tool)
 }
 
 android {
     namespace = "se.premex.mcp.{your_tool_name}"
-    compileSdk = 36
-
-    defaultConfig {
-        minSdk = 26
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
 }
 
 dependencies {
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-
-    // Module dependencies
-    implementation(project(":core"))
-
-    api(libs.io.modelcontextprotocol.kotlin.sdk)
-    implementation(libs.io.ktor.ktor.client.core)
-    implementation(libs.io.ktor.ktor.client.cio)
-    implementation(libs.io.ktor.ktor.client.content.negotiation)
-    implementation(libs.io.ktor.ktor.serialization.kotlinx.json)
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    // Add any additional dependencies specific to your tool
+    // Example: Camera, Sensors, etc.
 }
 ```
+
+**Note:** The `mcp.android.tool` convention plugin automatically configures:
+- compileSdk = 36, minSdk = 24
+- Kotlin JVM toolchain 21 (with foojay auto-download)
+- Hilt dependency injection (both implementation and KSP processor)
+- Core module dependency (`:core`)
+- MCP SDK and Ktor client libraries
+- Standard Android libraries (core-ktx, appcompat, material)
+- Test dependencies (junit, espresso)
+- Test instrumentation runner
+
+You only need to add tool-specific dependencies that aren't already provided.
 
 ### 3. Create the Directory Structure
 

@@ -140,39 +140,28 @@ Standard configuration for all tool modules:
 
 ```kotlin
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.ksp)
-    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.mcp.android.tool)
 }
 
 android {
     namespace = "se.premex.mcp.{tool_name}"
-    compileSdk = 36
-    defaultConfig { minSdk = 26 }
-}
-
-kotlin {
-    jvmToolchain(21)
 }
 
 dependencies {
-    // Hilt for dependency injection
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-    
-    // Core module
-    implementation(project(":core"))
-    
-    // MCP SDK
-    api(libs.io.modelcontextprotocol.kotlin.sdk)
-    
-    // Ktor for HTTP/SSE
-    implementation(libs.io.ktor.ktor.client.core)
-    implementation(libs.io.ktor.ktor.client.cio)
-    // ... other standard dependencies
+    // Additional dependencies beyond what the convention plugin provides
+    // Example: Lifecycle for lifecycle-aware operations
+    implementation(libs.androidx.lifecycle.process)
 }
 ```
+
+**Note**: The `mcp.android.tool` convention plugin automatically provides:
+- compileSdk = 36, minSdk = 24
+- Kotlin JVM toolchain 21 (with foojay auto-download)
+- Hilt dependency injection setup
+- Core MCP SDK and Ktor dependencies
+- Standard Android libraries (core-ktx, appcompat, material)
+- Test dependencies (junit, espresso)
+- No need for manual `defaultConfig`, `kotlin { jvmToolchain }`, or `compileOptions` blocks
 
 #### 2. `AndroidManifest.xml`
 Minimal manifest, mainly for permissions:
@@ -307,7 +296,7 @@ server.addTool(
 - **Material Design**: Material 3
 
 ### Android
-- **Min SDK**: 26 (Android 8.0)
+- **Min SDK**: 24 (Android 7.0)
 - **Target/Compile SDK**: 36
 - **Camera**: CameraX library
 - **Lifecycle**: Lifecycle Process for app state
@@ -428,34 +417,34 @@ try {
 }
 ```
 
-## File Locations Reference
+### Backwards Compatibility (API 24+)
+When using APIs introduced after API 24, always use version checks:
 
-- **Tool modules**: `/tools/{toolname}/`
-- **Core interface**: `/core/src/main/java/se/premex/mcp/core/tool/McpTool.kt`
-- **Main service**: `/app/src/main/java/se/premex/mcp/McpServerService.kt`
-- **Tool service**: `/app/src/main/java/se/premex/mcp/di/ToolService.kt`
-- **Dependencies**: `/gradle/libs.versions.toml`
-- **Module registration**: `/settings.gradle.kts`
+```kotlin
+// NotificationChannel (API 26+)
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    val channel = NotificationChannel(...)
+    notificationManager.createNotificationChannel(channel)
+}
 
-## Troubleshooting
+// SmsManager.getDefault() vs context.getSystemService (API 31+)
+val smsManager = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+    context.getSystemService(SmsManager::class.java)
+} else {
+    @Suppress("DEPRECATION")
+    SmsManager.getDefault()
+}
+```
 
-### Tool Not Appearing in App
-- Check `@IntoSet` annotation in Hilt module
-- Verify module is included in `settings.gradle.kts`
-- Check Hilt module is annotated with `@InstallIn(SingletonComponent::class)`
-- Rebuild project to regenerate Hilt components
+**Key APIs to check**:
+- **API 26 (O)**: NotificationChannel, NotificationManager.IMPORTANCE_*
+- **API 31 (S)**: SmsManager from system service
+- **API 33 (TIRAMISU)**: POST_NOTIFICATIONS permission
 
-### MCP Tool Not Registered
-- Verify `configure()` is called in `McpTool` implementation
-- Check `server.addTool()` is invoked with correct parameters
-- Review server logs for registration errors
-- Ensure tool is enabled in app UI
+**Safe to use (available in API 23+)**:
+- `PendingIntent.FLAG_IMMUTABLE`
+- `PendingIntent.FLAG_UPDATE_CURRENT`
 
-### Permission Errors
-- Declare permissions in module's `AndroidManifest.xml`
-- Return correct permissions from `requiredPermissions()`
-- Check permission is granted before executing tool logic
-- Handle permission denial gracefully
 
 ---
 

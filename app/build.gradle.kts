@@ -42,7 +42,6 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "se.premex.mcp"
-    compileSdk = 36
 
     signingConfigs {
         if (keystorePropertiesFile.exists()) {
@@ -57,8 +56,6 @@ android {
 
     defaultConfig {
         applicationId = "se.premex.mcp"
-        minSdk = 26
-        targetSdk = 36
         versionCode = appVersionCode
         versionName = appVersionName
 
@@ -118,7 +115,10 @@ dependencies {
     implementation(libs.io.ktor.ktor.server.cors)
     implementation(libs.io.ktor.ktor.client.content.negotiation)
     implementation(libs.io.ktor.ktor.serialization.kotlinx.json)
-    //implementation(project(":tools:sms"))
+
+    // SMS tool - only for full builds (requires SMS permission)
+    "fullImplementation"(project(":tools:sms"))
+
     implementation(project(":tools:smsintent"))
     implementation(project(":tools:ads"))
     implementation(project(":tools:contacts"))

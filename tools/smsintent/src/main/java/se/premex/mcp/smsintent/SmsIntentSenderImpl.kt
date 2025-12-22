@@ -1,5 +1,6 @@
-package se.premex.mcp.sms
+package se.premex.mcp.smsintent
 
+import android.R
 import android.app.ActivityManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -99,7 +100,7 @@ class SmsIntentSenderImpl @Inject constructor(
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setContentTitle("Send SMS")
             .setContentText("Tap to send SMS to $phoneNumber")
-            .setSmallIcon(android.R.drawable.ic_dialog_email)
+            .setSmallIcon(R.drawable.ic_dialog_email)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)

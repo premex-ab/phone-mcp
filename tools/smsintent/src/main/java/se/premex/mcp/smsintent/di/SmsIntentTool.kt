@@ -1,4 +1,4 @@
-package se.premex.mcp.sms.di
+package se.premex.mcp.smsintent.di
 
 import android.Manifest
 import android.content.Context
@@ -11,9 +11,9 @@ import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
 import io.modelcontextprotocol.kotlin.sdk.server.Server
 import se.premex.mcp.core.tool.McpTool
-import se.premex.mcp.sms.SmsIntentSender
-import se.premex.mcp.sms.SmsIntentSenderImpl
-import se.premex.mcp.sms.appendSmsTools
+import se.premex.mcp.smsintent.SmsIntentSender
+import se.premex.mcp.smsintent.SmsIntentSenderImpl
+import se.premex.mcp.smsintent.appendSmsIntentTools
 import javax.inject.Singleton
 
 class SmsIntentTool(val smsIntentSender: SmsIntentSender) : McpTool {
@@ -33,7 +33,7 @@ class SmsIntentTool(val smsIntentSender: SmsIntentSender) : McpTool {
                 "We do not store the content of your messages, but connected AI services may process this information according to their privacy policies."
 
     override fun configure(server: Server) {
-        appendSmsTools(server, smsIntentSender)
+        appendSmsIntentTools(server, smsIntentSender)
     }
 
     override fun requiredPermissions(): Set<String> {
@@ -47,18 +47,18 @@ class SmsIntentTool(val smsIntentSender: SmsIntentSender) : McpTool {
 
 @Module
 @InstallIn(SingletonComponent::class)
-object SmsToolModule {
+object SmsIntentToolModule {
 
     @Provides
     @Singleton
     @IntoSet
-    fun provideSmsTool(smsSender: SmsIntentSender): McpTool {
+    fun provideSmsIntentTool(smsSender: SmsIntentSender): McpTool {
         return SmsIntentTool(smsSender)
     }
 
     @Provides
     @Singleton
-    fun provideSmsSender(@ApplicationContext context: Context): SmsIntentSender {
+    fun provideSmsIntentSender(@ApplicationContext context: Context): SmsIntentSender {
         return SmsIntentSenderImpl(context)
     }
 
