@@ -26,7 +26,7 @@ firebaseCrashlyticsPlugin = "3.0.6"
 firebasePerfPlugin = "2.0.2"
 googleServicesPlugin = "4.4.2"
 uiTestJunit4 = "1.6.12"
-truth = "1.4.2"
+truth = "1.4.5"
 androidxLint = "31.0.0-alpha03"
 jacoco = "0.8.12"
 
