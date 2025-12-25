@@ -1,1 +1,2 @@
-Enable AI agents to access your phone's contacts and send SMS via MCP.
+MCP server for AI assistants. Secure, local, permission-based phone access.
+

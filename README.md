@@ -114,7 +114,7 @@ Individual modules implementing specific device capabilities, each following a s
 | **UI** | Jetpack Compose + Material 3 |
 | **Database** | DataStore (Preferences) |
 | **Camera** | CameraX |
-| **Min SDK** | 26 (Android 8.0) |
+| **Min SDK** | 24 (Android 7.0) |
 | **Target SDK** | 36 |
 
 ## Development
