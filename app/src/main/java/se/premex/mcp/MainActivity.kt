@@ -30,17 +30,21 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -49,16 +53,23 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.modelcontextprotocol.kotlin.sdk.server.Server
 import se.premex.mcp.auth.AuthRepository
 import se.premex.mcp.core.tool.McpTool
+import se.premex.mcp.data.ServerPreferencesRepository
 import se.premex.mcp.di.ToolService
+import se.premex.mcp.ui.SettingsScreen
 import se.premex.mcp.ui.theme.MCPServerTheme
 import javax.inject.Inject
 
@@ -75,6 +86,9 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var authRepository: AuthRepository
 
+    @Inject
+    lateinit var serverPreferencesRepository: ServerPreferencesRepository
+
     private val requestMultiplePermissionsLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissionsResult ->
@@ -85,7 +99,7 @@ class MainActivity : ComponentActivity() {
             // Some permissions denied - inform the user
             Toast.makeText(
                 this,
-                "All permissions are required to run the MCP server service",
+                getString(R.string.all_permissions_are_required_to_run_the_mcp_server_service),
                 Toast.LENGTH_LONG
             ).show()
         }
@@ -101,7 +115,7 @@ class MainActivity : ComponentActivity() {
             // Permission denied - inform the user that the service cannot be started
             Toast.makeText(
                 this,
-                "permission is required to run the MCP server service",
+                getString(R.string.permission_is_required_to_run_the_mcp_server_service),
                 Toast.LENGTH_LONG
             ).show()
         }
@@ -113,6 +127,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val toolStates by toolService.toolEnabledStates.collectAsState()
+            val serverConfig by serverPreferencesRepository.getServerConfig().collectAsState(
+                initial = se.premex.mcp.data.ServerConfig()
+            )
 
             // Extract the auth token from the instructions string
             // The format is "Please use the token 'XXXXXX' to authenticate your connection."
@@ -120,51 +137,61 @@ class MainActivity : ComponentActivity() {
             val authToken = authInstructions.substringAfter("'").substringBefore("'")
 
             MCPServerTheme {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                ) { innerPadding ->
-                    McpServerControl(
-                        isRunning = McpServerService.isRunning.value,
-                        onToggleServer = { shouldStart ->
-                            // Check permissions only when trying to start the service
-                            if (shouldStart) {
-                                checkRequiredPermissions()
-                            } else {
-                                // No permission needed to stop the service
-                                toggleService(false)
-                            }
-                        },
-                        modifier = Modifier.padding(innerPadding),
-                        getConnectionUrl = { getConnectionUrl() },
-                        tools = toolService.tools.toList(),
-                        toolEnabledStates = toolStates,
-                        onToggleTool = { tool ->
-                            handleToolToggle(tool)
-                        },
-                        authToken = authToken
-                    )
+                val navController = rememberNavController()
 
-                    // Show warning dialog if needed
-                    if (showToolWarningDialog.value && currentToolRequiringWarning != null) {
-                        ToolWarningDialog(
-                            tool = currentToolRequiringWarning!!,
-                            onDismiss = {
-                                // Cancel enabling the tool
-                                showToolWarningDialog.value = false
-                                currentToolRequiringWarning = null
-                            },
-                            onConfirm = {
-                                // User confirmed, enable the tool
-                                showToolWarningDialog.value = false
-                                currentToolRequiringWarning?.let { tool ->
-                                    toolService.toggleToolEnabled(tool.id)
+                NavHost(navController = navController, startDestination = "home") {
+                    composable("home") {
+                        HomeScreen(
+                            navController = navController,
+                            isRunning = McpServerService.isRunning.value,
+                            onToggleServer = { shouldStart ->
+                                // Check permissions only when trying to start the service
+                                if (shouldStart) {
+                                    checkRequiredPermissions()
+                                } else {
+                                    // No permission needed to stop the service
+                                    toggleService(false)
                                 }
-                                currentToolRequiringWarning = null
+                            },
+                            getConnectionUrl = { getConnectionUrl() },
+                            tools = toolService.tools.toList(),
+                            toolEnabledStates = toolStates,
+                            onToggleTool = { tool ->
+                                handleToolToggle(tool)
+                            },
+                            authToken = authToken
+                        )
+
+                        // Show warning dialog if needed
+                        if (showToolWarningDialog.value && currentToolRequiringWarning != null) {
+                            ToolWarningDialog(
+                                tool = currentToolRequiringWarning!!,
+                                onDismiss = {
+                                    // Cancel enabling the tool
+                                    showToolWarningDialog.value = false
+                                    currentToolRequiringWarning = null
+                                },
+                                onConfirm = {
+                                    // User confirmed, enable the tool
+                                    showToolWarningDialog.value = false
+                                    currentToolRequiringWarning?.let { tool ->
+                                        toolService.toggleToolEnabled(tool.id)
+                                    }
+                                    currentToolRequiringWarning = null
+                                }
+                            )
+                        }
+                    }
+
+                    composable("settings") {
+                        SettingsScreen(
+                            serverConfig = serverConfig,
+                            onNavigateBack = { navController.popBackStack() },
+                            onSaveSettings = { host: String, port: Int ->
+                                serverPreferencesRepository.updateServerConfig(host, port)
                             }
                         )
                     }
-
-
                 }
             }
         }
@@ -265,18 +292,60 @@ class MainActivity : ComponentActivity() {
     ) {
         AlertDialog(
             onDismissRequest = onDismiss,
-            title = { Text("Warning for ${tool.name}") },
-            text = { Text(tool.disclaim ?: "No description available.") },
+            title = { Text(stringResource(R.string.warning_for, tool.name)) },
+            text = { Text(tool.disclaim ?: stringResource(R.string.no_description_available)) },
             confirmButton = {
                 TextButton(onClick = onConfirm) {
-                    Text("OK")
+                    Text(stringResource(R.string.ok))
                 }
             },
             dismissButton = {
                 Button(onClick = onDismiss) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             }
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomeScreen(
+    navController: NavController,
+    isRunning: Boolean,
+    onToggleServer: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+    getConnectionUrl: () -> String,
+    tools: List<McpTool>,
+    toolEnabledStates: Map<String, Boolean>,
+    onToggleTool: (McpTool) -> Unit,
+    authToken: String = "YTpi"
+) {
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(R.string.mcp_server)) },
+                actions = {
+                    IconButton(onClick = { navController.navigate("settings") }) {
+                        Icon(
+                            imageVector = Icons.Filled.Settings,
+                            contentDescription = stringResource(R.string.settings)
+                        )
+                    }
+                }
+            )
+        }
+    ) { innerPadding ->
+        McpServerControl(
+            isRunning = isRunning,
+            onToggleServer = onToggleServer,
+            modifier = modifier.padding(innerPadding),
+            getConnectionUrl = getConnectionUrl,
+            tools = tools,
+            toolEnabledStates = toolEnabledStates,
+            onToggleTool = onToggleTool,
+            authToken = authToken
         )
     }
 }
@@ -308,7 +377,7 @@ fun McpServerControl(
     ) {
         item {
             Text(
-                text = "MCP Server Control",
+                text = stringResource(R.string.mcp_server_control),
                 style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold
@@ -327,12 +396,12 @@ fun McpServerControl(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Server Status:",
+                        text = stringResource(R.string.server_status),
                         style = MaterialTheme.typography.bodyLarge
                     )
 
                     Text(
-                        text = if (isRunning) "RUNNING" else "STOPPED",
+                        text = if (isRunning) stringResource(R.string.running) else stringResource(R.string.stopped),
                         style = MaterialTheme.typography.headlineSmall,
                         color = if (isRunning) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error,
                         fontWeight = FontWeight.Bold
@@ -346,7 +415,7 @@ fun McpServerControl(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "Toggle Server",
+                            text = stringResource(R.string.toggle_server),
                             style = MaterialTheme.typography.bodyLarge
                         )
 
@@ -410,7 +479,7 @@ private fun Instructions(getConnectionUrl: () -> String, authToken: String = "YT
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = "Connection URL:",
+                    text = stringResource(R.string.connection_url),
                     style = MaterialTheme.typography.bodyLarge
                 )
 
@@ -423,7 +492,9 @@ private fun Instructions(getConnectionUrl: () -> String, authToken: String = "YT
             // Clickable icon to expand/collapse client config
             Icon(
                 imageVector = if (configExpanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
-                contentDescription = if (configExpanded) "Collapse client configuration" else "Expand client configuration",
+                contentDescription = if (configExpanded) stringResource(R.string.collapse_client_configuration) else stringResource(
+                    R.string.expand_client_configuration
+                ),
                 modifier = Modifier
                     .size(24.dp)
                     .clickable { configExpanded = !configExpanded }
@@ -444,7 +515,7 @@ private fun Instructions(getConnectionUrl: () -> String, authToken: String = "YT
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "MCP Client Configuration",
+                        text = stringResource(R.string.mcp_client_configuration),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )

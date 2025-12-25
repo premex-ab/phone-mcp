@@ -1,3 +1,34 @@
 <resources>
     <string name="app_name">MCP server</string>
+    <string name="server_settings_help_text">• 0.0.0.0: Server listens on all network interfaces (recommended)\n• 127.0.0.1: Server only accessible from this device (local only)\n• Port: Change the server port if 3001 is already in use\n• Settings take effect after restarting the server</string>
+    <string name="configuration_info">Configuration Info</string>
+    <string name="valid_port_range_1_65535">Valid port range: 1 - 65535</string>
+    <string name="server_port">Server Port</string>
+    <string name="toggle_dropdown">Toggle dropdown</string>
+    <string name="host">Host</string>
+    <string name="server_host">Server Host</string>
+    <string name="server_settings">Server Settings</string>
+    <string name="all_interfaces">All Interfaces</string>
+    <string name="localhost_only">Localhost Only</string>
+    <string name="port_number">Port Number</string>
+    <string name="save_settings">Save Settings</string>
+    <string name="all_permissions_are_required_to_run_the_mcp_server_service">All permissions are required to run the MCP server service</string>
+    <string name="permission_is_required_to_run_the_mcp_server_service">permission is required to run the MCP server service</string>
+    <string name="no_description_available">No description available.</string>
+    <string name="warning_for">Warning for %1$s</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="mcp_server">MCP Server</string>
+    <string name="mcp_server_control">MCP Server Control</string>
+    <string name="server_status">Server Status:</string>
+    <string name="running">RUNNING</string>
+    <string name="stopped">STOPPED</string>
+    <string name="toggle_server">Toggle Server</string>
+    <string name="connection_url">Connection URL:</string>
+    <string name="collapse_client_configuration">Collapse client configuration</string>
+    <string name="expand_client_configuration">Expand client configuration</string>
+    <string name="mcp_client_configuration">MCP Client Configuration</string>
+    <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">Invalid port number. Please enter a value between 1 and 65535.</string>
+    <string name="back">Back</string>
+    <string name="settings">Settings</string>
 </resources>
