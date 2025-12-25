@@ -39,10 +39,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.auth.AuthRepository
 import se.premex.mcp.data.ToolPreferencesRepository
+import se.premex.mcp.data.ServerPreferencesRepository
 import se.premex.mcp.di.ToolService
 import javax.inject.Inject
 import kotlin.collections.set
@@ -76,6 +76,9 @@ class McpServerService : Service() {
 
     @Inject
     lateinit var toolPreferencesRepository: ToolPreferencesRepository
+
+    @Inject
+    lateinit var serverPreferencesRepository: ServerPreferencesRepository
 
     @Inject
     lateinit var availableTools: Set<@JvmSuppressWildcards McpTool>
@@ -123,15 +126,14 @@ class McpServerService : Service() {
             "$LOG_PREFIX_LIFECYCLE: onStartCommand called with startId=$startId, flags=$flags"
         )
 
-        // Load tool states from the repository
-        runBlocking {
-            toolStates = toolPreferencesRepository.getToolEnabledStates().first()
-            Log.d(TAG, "$LOG_PREFIX_TOOLS: Loaded tool states from repository: $toolStates")
-        }
-
         // Launch server initialization in a background coroutine
         Log.d(TAG, "$LOG_PREFIX_SERVER: Launching server initialization in background coroutine")
         serviceScope.launch {
+            // Load tool states from the repository (suspend) before starting server
+            toolStates = toolPreferencesRepository.getToolEnabledStates().first()
+            Log.d(TAG, "$LOG_PREFIX_TOOLS: Loaded tool states from repository: $toolStates")
+
+            // Call suspend startMcpServer within coroutine scope
             startMcpServer()
         }
 
@@ -160,13 +162,16 @@ class McpServerService : Service() {
         return null
     }
 
-    private fun startMcpServer() {
+    private suspend fun startMcpServer() {
         Log.i(TAG, "$LOG_PREFIX_SERVER: Attempting to start MCP server")
         try {
-            // Always bind to all interfaces (0.0.0.0)
-            Log.d(TAG, "$LOG_PREFIX_SERVER: Starting server on all interfaces (0.0.0.0)")
-            startServerWithHost("0.0.0.0", 3001)
-            Log.i(TAG, "$LOG_PREFIX_SERVER: Successfully started server on all interfaces")
+            val serverConfig = serverPreferencesRepository.getServerConfig().first()
+            Log.d(
+                TAG,
+                "$LOG_PREFIX_SERVER: Loaded server config - host: ${serverConfig.host}, port: ${serverConfig.port}"
+            )
+            startServerWithHost(serverConfig.host, serverConfig.port)
+            Log.i(TAG, "$LOG_PREFIX_SERVER: Successfully started server")
         } catch (e: Exception) {
             val errorMessage = "Failed to start server: ${e.message}"
             Log.e(TAG, "$LOG_PREFIX_SERVER: Failed to start server", e)
@@ -178,7 +183,7 @@ class McpServerService : Service() {
         Log.d(TAG, "$LOG_PREFIX_SERVER: Configuring server on $host:$port")
 
         try {
-            server = runSseMcpServerWithPlainConfiguration(port)
+            server = runSseMcpServerWithPlainConfiguration(host = host, port = port)
 
             // Get WiFi IP address to show in notification
             val wifiIp = NetworkUtils.getWifiIpAddress(this)
@@ -293,26 +298,36 @@ class McpServerService : Service() {
     }
 
 
-    private fun runSseMcpServerWithPlainConfiguration(port: Int): EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration> {
+    private fun runSseMcpServerWithPlainConfiguration(
+        host: String,
+        port: Int
+    ): EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration> {
         val servers = ConcurrentMap<String, Server>()
         val transports = ConcurrentMap<String, SseServerTransport>()
         Log.i(TAG, "$LOG_PREFIX_SERVER: Starting SSE server on port $port")
         Log.d(TAG, "$LOG_PREFIX_SERVER: Use inspector to connect to http://localhost:$port/sse")
 
         val server: EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration> =
-            embeddedServer(CIO, host = "0.0.0.0", port = port) {
+            embeddedServer(CIO, host = host, port = port) {
                 Log.d(TAG, "$LOG_PREFIX_SERVER: Configuring server authentication and routes")
 
                 authentication {
                     bearer(name = "bearer-auth") {
                         realm = "Ktor Server"
                         authenticate { tokenCredential ->
-                            val authResult = authRepository.validateBearerToken(tokenCredential.token)
+                            val authResult =
+                                authRepository.validateBearerToken(tokenCredential.token)
                             if (authResult.isAuthenticated) {
-                                Log.d(TAG, "$LOG_PREFIX_SERVER: Authentication successful. User ID: ${authResult.userId}")
+                                Log.d(
+                                    TAG,
+                                    "$LOG_PREFIX_SERVER: Authentication successful. User ID: ${authResult.userId}"
+                                )
                                 authResult.userId?.let { UserIdPrincipal(it) }
                             } else {
-                                Log.d(TAG, "$LOG_PREFIX_SERVER: Authentication failed: ${authResult.message}")
+                                Log.d(
+                                    TAG,
+                                    "$LOG_PREFIX_SERVER: Authentication failed: ${authResult.message}"
+                                )
                                 null
                             }
                         }

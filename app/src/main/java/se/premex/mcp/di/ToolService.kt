@@ -1,7 +1,6 @@
 package se.premex.mcp.di
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,9 +17,9 @@ import javax.inject.Singleton
 @Singleton
 class ToolService @Inject constructor(
     private val availableTools: Set<@JvmSuppressWildcards McpTool>,
-    private val toolPreferencesRepository: ToolPreferencesRepository
+    private val toolPreferencesRepository: ToolPreferencesRepository,
+    @AppCoroutineScope private val appScope: CoroutineScope,
 ) {
-    private val serviceScope = CoroutineScope(Dispatchers.IO)
     private val _toolEnabledStates = MutableStateFlow(
         availableTools.associate { it.id to it.enabledByDefault }
     )
@@ -32,7 +31,7 @@ class ToolService @Inject constructor(
 
     init {
         // Load saved tool states from DataStore
-        serviceScope.launch {
+        appScope.launch {
             val savedToolStates = toolPreferencesRepository.getToolEnabledStates().first()
 
             // Merge saved states with defaults for any new tools
@@ -48,7 +47,7 @@ class ToolService @Inject constructor(
         }
 
         // Set up collection of tool state changes to persist them
-        serviceScope.launch {
+        appScope.launch {
             toolEnabledStates.collect { states ->
                 toolPreferencesRepository.updateAllToolStates(states)
             }
