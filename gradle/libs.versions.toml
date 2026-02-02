@@ -9,18 +9,18 @@ espressoCore = "3.7.0"
 lifecycleRuntimeKtx = "2.10.0"
 activityCompose = "1.12.2"
 composeBom = "2025.12.01"
-ktorVersion = "3.3.3"
-mcpVersion = "0.8.1"
+ktorVersion = "3.4.0"
+mcpVersion = "0.8.3"
 slf4jVersion = "2.0.17"
 appcompat = "1.7.1"
 material = "1.13.0"
-hiltVersion = "2.57.2"
+hiltVersion = "2.59"
 hiltComposeVersion = "1.3.0"
-ksp = "2.3.4"
+ksp = "2.3.5"
 updateCompose = "1.3.1"
 cameraxVersion = "1.5.2"
 lifecycleProcess = "2.10.0"
-playPublisher = "3.13.0"
+playPublisher = "4.0.0"
 androidTools = "31.13.1"
 firebaseCrashlyticsPlugin = "3.0.6"
 firebasePerfPlugin = "2.0.2"
@@ -76,7 +76,7 @@ androidx-camera-view = { group = "androidx.camera", name = "camera-view", versio
 androidx-camera-extensions = { group = "androidx.camera", name = "camera-extensions", version.ref = "cameraxVersion" }
 kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2"
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycleProcess" }
-org-jetbrains-kotlinx-kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0"
+org-jetbrains-kotlinx-kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.10.0"
 kotlin-metadata-jvm = { module = "org.jetbrains.kotlin:kotlin-metadata-jvm", version.ref = "kotlin" }
 android-gradleApiPlugin = { group = "com.android.tools.build", name = "gradle-api", version.ref = "agp" }
 android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
