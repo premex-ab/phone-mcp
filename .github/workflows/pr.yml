@@ -43,4 +43,13 @@ jobs:
           app/build/outputs/
           app/build/reports/
         retention-days: 7
-
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    if: always()
+    needs:
+      - build
+    steps:
+      - name: Check results
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: exit 1
