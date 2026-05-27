@@ -29,8 +29,8 @@ import io.ktor.server.routing.routing
 import io.ktor.server.sse.SSE
 import io.ktor.server.sse.sse
 import io.ktor.util.collections.ConcurrentMap
-import io.modelcontextprotocol.kotlin.sdk.Implementation
-import io.modelcontextprotocol.kotlin.sdk.ServerCapabilities
+import io.modelcontextprotocol.kotlin.sdk.types.Implementation
+import io.modelcontextprotocol.kotlin.sdk.types.ServerCapabilities
 import io.modelcontextprotocol.kotlin.sdk.server.Server
 import io.modelcontextprotocol.kotlin.sdk.server.ServerOptions
 import io.modelcontextprotocol.kotlin.sdk.server.SseServerTransport
@@ -378,7 +378,7 @@ class McpServerService : Service() {
                                 TAG,
                                 "$LOG_PREFIX_SERVER: Connecting server to transport for session ${transport.sessionId}"
                             )
-                            server.connect(transport)
+                            server.createSession(transport)
                             Log.i(
                                 TAG,
                                 "$LOG_PREFIX_SERVER: Server successfully connected to transport"
