@@ -33,7 +33,7 @@ object AppFunctionSchemaMapper {
                             })
                         }
                     }
-                    if (param.description.isNotEmpty()) {
+                    if (param.description != null) {
                         put("description", JsonPrimitive(param.description))
                     }
                 })

@@ -10,7 +10,7 @@ package se.premex.mcp.core.tool
 data class AppFunctionParameterSpec(
     val name: String,
     val type: ParameterType,
-    val description: String,
+    val description: String?,
     val required: Boolean,
 ) {
     /**
