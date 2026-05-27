@@ -1,8 +1,10 @@
 package se.premex.mcp.appfunctions.configurator
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.appfunctions.AppFunctionException
 import androidx.appfunctions.AppFunctionManager
 import androidx.appfunctions.AppFunctionSearchSpec
@@ -55,13 +57,19 @@ class AppFunctionsConfiguratorImpl @Inject constructor(
     @ApplicationContext private val context: Context,
 ) : AppFunctionsConfigurator {
 
+    // SDK guard is at runtime; lint cannot see the if (SDK_INT >= 36) guard on the callee
+    @SuppressLint("NewApi")
     override fun configureTools(server: Server) {
         // AppFunctions requires Android 16 (API 36)
-        if (Build.VERSION.SDK_INT < 36) {
+        if (Build.VERSION.SDK_INT >= 36) {
+            configureToolsApi36(server)
+        } else {
             Log.i(TAG, "AppFunctions unavailable on SDK < 36 (current=${Build.VERSION.SDK_INT}), skipping")
-            return
         }
+    }
 
+    @RequiresApi(36)
+    private fun configureToolsApi36(server: Server) {
         // API renamed: was context.getSystemService(AppFunctionManager::class.java)
         //              now AppFunctionManager.getInstance(context) in alpha09
         val manager = try {
@@ -107,6 +115,7 @@ class AppFunctionsConfiguratorImpl @Inject constructor(
      * not Flow<List<AppFunctionMetadata>> as the sample skeleton assumed. Each
      * AppFunctionPackageMetadata wraps a packageName + a list of AppFunctionMetadata.
      */
+    @RequiresApi(36)
     private fun discoverAppFunctions(manager: AppFunctionManager): List<DiscoveredFunction> {
         return try {
             runBlocking {
@@ -133,6 +142,7 @@ class AppFunctionsConfiguratorImpl @Inject constructor(
         }
     }
 
+    @RequiresApi(36)
     private fun toDiscoveredFunction(
         packageName: String,
         meta: AppFunctionMetadata,
@@ -176,6 +186,7 @@ class AppFunctionsConfiguratorImpl @Inject constructor(
      * AppFunctionArrayTypeMetadata is only mapped to STRING_ARRAY when its itemType is a string.
      * Other array element types throw to trigger the "skip this function" path in discoverAppFunctions.
      */
+    @RequiresApi(36)
     private fun mapPlatformDataType(
         dataType: AppFunctionDataTypeMetadata,
     ): AppFunctionParameterSpec.ParameterType {
@@ -211,6 +222,7 @@ class AppFunctionsConfiguratorImpl @Inject constructor(
      * constructor (the String/String constructor is @PublishedApi internal in alpha09).
      * The response is a sealed interface: ExecuteAppFunctionResponse.Success / .Error.
      */
+    @RequiresApi(36)
     private suspend fun invokeAppFunction(
         manager: AppFunctionManager,
         discovered: DiscoveredFunction,
@@ -258,6 +270,7 @@ class AppFunctionsConfiguratorImpl @Inject constructor(
      * Builder(List<AppFunctionParameterMetadata>, AppFunctionComponentsMetadata) constructor
      * so the builder knows the schema, then dispatch each value to the matching typed setter.
      */
+    @RequiresApi(36)
     private fun buildAppFunctionData(
         discovered: DiscoveredFunction,
         arguments: Map<String, JsonElement>,
