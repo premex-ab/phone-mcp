@@ -43,6 +43,10 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace = "se.premex.mcp"
 
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
+
     signingConfigs {
         if (keystorePropertiesFile.exists()) {
             create("config") {

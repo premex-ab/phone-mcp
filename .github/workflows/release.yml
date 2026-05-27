@@ -22,7 +22,7 @@ jobs:
         cache: gradle
 
     - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v5
+      uses: gradle/actions/setup-gradle@v6
 
     - name: Decode and setup keystore
       run: |
@@ -59,7 +59,7 @@ jobs:
       run: ./gradlew publishPlayReleaseBundle --stacktrace -PversionName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionCode=${{ steps.version_info.outputs.VERSION_CODE }} -PenableFirebase=true
 
     - name: Upload Release Assets to GitHub
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       with:
         files: |
           app/build/outputs/apk/full/release/app-full-release.apk
