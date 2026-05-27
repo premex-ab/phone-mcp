@@ -24,7 +24,12 @@ data class AppFunctionMetadataInfo(
         fun mcpToolNameFor(packageName: String, functionId: String): String {
             val sanitized = "appfn__${packageName}__${functionId}"
                 .replace(Regex("[^A-Za-z0-9_]"), "_")
-            return sanitized
+            if (sanitized.length <= 64) return sanitized
+            val digest = java.security.MessageDigest.getInstance("SHA-256")
+                .digest(sanitized.toByteArray(Charsets.UTF_8))
+                .take(4)
+                .joinToString("") { "%02x".format(it) }
+            return sanitized.take(55) + "_" + digest
         }
     }
 }

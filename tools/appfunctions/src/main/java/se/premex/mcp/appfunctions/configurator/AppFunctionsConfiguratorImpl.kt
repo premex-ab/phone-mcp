@@ -331,10 +331,16 @@ class AppFunctionsConfiguratorImpl @Inject constructor(
                         }
                     }
                     AppFunctionParameterSpec.ParameterType.STRING_ARRAY -> {
-                        val list = (value as? JsonArray)
-                            ?.mapNotNull { (it as? JsonPrimitive)?.content }
-                            ?: emptyList()
-                        builder.setStringList(key, list)
+                        val jsonArray = value as? JsonArray
+                        if (jsonArray != null) {
+                            builder.setStringList(key, jsonArray.mapNotNull { (it as? JsonPrimitive)?.content })
+                        } else if (spec.required) {
+                            throw IllegalArgumentException(
+                                "Required parameter '$key' is not a JSON array: $value",
+                            )
+                        } else {
+                            builder.setStringList(key, emptyList())
+                        }
                     }
                 }
                 else ->
