@@ -17,7 +17,7 @@ enum class McpFlavor(val dimension: FlavorDimension, val applicationIdSuffix: St
 }
 
 fun configureFlavors(
-    commonExtension: CommonExtension<*, *, *, *, *, *>,
+    commonExtension: CommonExtension,
     flavorConfigurationBlock: ProductFlavor.(flavor: McpFlavor) -> Unit = {},
 ) {
     commonExtension.apply {
@@ -25,15 +25,13 @@ fun configureFlavors(
             flavorDimensions += flavorDimension.name
         }
 
-        productFlavors {
-            McpFlavor.entries.forEach { mcpFlavor ->
-                register(mcpFlavor.name) {
-                    dimension = mcpFlavor.dimension.name
-                    flavorConfigurationBlock(this, mcpFlavor)
-                    if (this@apply is ApplicationExtension && this is ApplicationProductFlavor) {
-                        if (mcpFlavor.applicationIdSuffix != null) {
-                            applicationIdSuffix = mcpFlavor.applicationIdSuffix
-                        }
+        McpFlavor.entries.forEach { mcpFlavor ->
+            productFlavors.register(mcpFlavor.name) {
+                dimension = mcpFlavor.dimension.name
+                flavorConfigurationBlock(this, mcpFlavor)
+                if (commonExtension is ApplicationExtension && this is ApplicationProductFlavor) {
+                    if (mcpFlavor.applicationIdSuffix != null) {
+                        applicationIdSuffix = mcpFlavor.applicationIdSuffix
                     }
                 }
             }
