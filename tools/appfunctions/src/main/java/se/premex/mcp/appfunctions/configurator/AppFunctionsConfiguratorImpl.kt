@@ -82,8 +82,8 @@ class AppFunctionsConfiguratorImpl @Inject constructor(
                 "${discovered.map { it.info.packageName }.toSet().size} packages",
         )
 
-        discovered.forEach { discovered ->
-            val info = discovered.info
+        discovered.forEach { fn ->
+            val info = fn.info
             try {
                 val schema = AppFunctionSchemaMapper.toMcpToolSchema(info.parameters)
                 server.addTool(
@@ -91,7 +91,7 @@ class AppFunctionsConfiguratorImpl @Inject constructor(
                     description = info.description,
                     inputSchema = schema,
                 ) { request ->
-                    invokeAppFunction(manager, discovered, request.arguments ?: emptyMap())
+                    invokeAppFunction(manager, fn, request.arguments ?: emptyMap())
                 }
                 Log.d(TAG, "Registered ${info.mcpToolName} from ${info.packageName}")
             } catch (e: Exception) {
@@ -128,7 +128,7 @@ class AppFunctionsConfiguratorImpl @Inject constructor(
                     }
             }
         } catch (e: Exception) {
-            Log.w(TAG, "AppFunction discovery failed", e)
+            Log.e(TAG, "AppFunction discovery failed", e)
             emptyList()
         }
     }
@@ -211,22 +211,20 @@ class AppFunctionsConfiguratorImpl @Inject constructor(
      * constructor (the String/String constructor is @PublishedApi internal in alpha09).
      * The response is a sealed interface: ExecuteAppFunctionResponse.Success / .Error.
      */
-    private fun invokeAppFunction(
+    private suspend fun invokeAppFunction(
         manager: AppFunctionManager,
         discovered: DiscoveredFunction,
         arguments: Map<String, JsonElement>,
     ): CallToolResult {
         val info = discovered.info
         return try {
-            val response = runBlocking {
-                val functionParams = buildAppFunctionData(discovered, arguments)
-                val request = ExecuteAppFunctionRequest(
-                    targetPackageName = info.packageName,
-                    functionIdentifier = info.functionId,
-                    functionParameters = functionParams,
-                )
-                manager.executeAppFunction(request)
-            }
+            val functionParams = buildAppFunctionData(discovered, arguments)
+            val request = ExecuteAppFunctionRequest(
+                targetPackageName = info.packageName,
+                functionIdentifier = info.functionId,
+                functionParameters = functionParams,
+            )
+            val response = manager.executeAppFunction(request)
             when (response) {
                 is androidx.appfunctions.ExecuteAppFunctionResponse.Success ->
                     CallToolResult(content = listOf(TextContent(response.returnValue.toString())))
@@ -281,19 +279,43 @@ class AppFunctionsConfiguratorImpl @Inject constructor(
                         builder.setString(key, (value as? JsonPrimitive)?.content ?: value.toString())
                     AppFunctionParameterSpec.ParameterType.INTEGER -> {
                         val int = (value as? JsonPrimitive)?.intOrNull
-                        if (int != null) builder.setInt(key, int)
+                        if (int != null) {
+                            builder.setInt(key, int)
+                        } else if (spec.required) {
+                            throw IllegalArgumentException(
+                                "Required parameter '$key' could not be coerced to INTEGER: $value",
+                            )
+                        }
                     }
                     AppFunctionParameterSpec.ParameterType.LONG -> {
                         val long = (value as? JsonPrimitive)?.longOrNull
-                        if (long != null) builder.setLong(key, long)
+                        if (long != null) {
+                            builder.setLong(key, long)
+                        } else if (spec.required) {
+                            throw IllegalArgumentException(
+                                "Required parameter '$key' could not be coerced to LONG: $value",
+                            )
+                        }
                     }
                     AppFunctionParameterSpec.ParameterType.BOOLEAN -> {
                         val bool = (value as? JsonPrimitive)?.booleanOrNull
-                        if (bool != null) builder.setBoolean(key, bool)
+                        if (bool != null) {
+                            builder.setBoolean(key, bool)
+                        } else if (spec.required) {
+                            throw IllegalArgumentException(
+                                "Required parameter '$key' could not be coerced to BOOLEAN: $value",
+                            )
+                        }
                     }
                     AppFunctionParameterSpec.ParameterType.NUMBER -> {
                         val d = (value as? JsonPrimitive)?.doubleOrNull
-                        if (d != null) builder.setDouble(key, d)
+                        if (d != null) {
+                            builder.setDouble(key, d)
+                        } else if (spec.required) {
+                            throw IllegalArgumentException(
+                                "Required parameter '$key' could not be coerced to NUMBER: $value",
+                            )
+                        }
                     }
                     AppFunctionParameterSpec.ParameterType.STRING_ARRAY -> {
                         val list = (value as? JsonArray)
