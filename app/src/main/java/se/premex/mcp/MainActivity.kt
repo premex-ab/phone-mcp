@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Settings
@@ -53,7 +54,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -468,10 +472,38 @@ private fun Instructions(getConnectionUrl: () -> String, authToken: String = "YT
     // State for tracking if client configuration section is expanded
     var configExpanded by remember { mutableStateOf(false) }
 
+    val clipboardManager = LocalClipboardManager.current
+    val context = LocalContext.current
+    val copiedMessage = stringResource(R.string.copied_to_clipboard)
+    val copyToClipboard: (String) -> Unit = { value ->
+        clipboardManager.setText(AnnotatedString(value))
+        Toast.makeText(context, copiedMessage, Toast.LENGTH_SHORT).show()
+    }
+
+    val clientConfig = """
+            {
+                "mcpServers": {
+                    "phone": {
+                        "command": "npx",
+                        "args": [
+                            "mcp-remote",
+                            "${getConnectionUrl().removePrefix("ws://")}",
+                            "--header",
+                            "Authorization: Bearer ${'\$'}{AUTH_TOKEN}",
+                            "--allow-http"
+                        ],
+                        "env": {
+                            "AUTH_TOKEN": "$authToken"
+                        }
+                    }
+                }
+            }
+            """.trimIndent()
+
     Column {
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Connection URL row with expand/collapse icon
+        // Connection URL row with copy button
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -489,22 +521,84 @@ private fun Instructions(getConnectionUrl: () -> String, authToken: String = "YT
                 )
             }
 
-            // Clickable icon to expand/collapse client config
+            IconButton(onClick = { copyToClipboard(getConnectionUrl()) }) {
+                Icon(
+                    imageVector = Icons.Filled.ContentCopy,
+                    contentDescription = stringResource(R.string.copy_connection_url)
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Auth token row with copy button
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = stringResource(R.string.auth_token),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+
+                Text(
+                    text = authToken,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+
+            IconButton(onClick = { copyToClipboard(authToken) }) {
+                Icon(
+                    imageVector = Icons.Filled.ContentCopy,
+                    contentDescription = stringResource(R.string.copy_auth_token)
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // How to connect steps
+        Text(
+            text = stringResource(R.string.how_to_connect),
+            style = MaterialTheme.typography.titleSmall,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = stringResource(R.string.connect_steps),
+            style = MaterialTheme.typography.bodySmall
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Client configuration header with expand/collapse icon
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { configExpanded = !configExpanded },
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = stringResource(R.string.mcp_client_configuration),
+                style = MaterialTheme.typography.bodyLarge
+            )
+
             Icon(
                 imageVector = if (configExpanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
                 contentDescription = if (configExpanded) stringResource(R.string.collapse_client_configuration) else stringResource(
                     R.string.expand_client_configuration
                 ),
-                modifier = Modifier
-                    .size(24.dp)
-                    .clickable { configExpanded = !configExpanded }
+                modifier = Modifier.size(24.dp)
             )
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
-
         // Client configuration instructions - only show when expanded
         if (configExpanded) {
+            Spacer(modifier = Modifier.height(8.dp))
+
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(
@@ -514,13 +608,6 @@ private fun Instructions(getConnectionUrl: () -> String, authToken: String = "YT
                 Column(
                     modifier = Modifier.padding(16.dp)
                 ) {
-                    Text(
-                        text = stringResource(R.string.mcp_client_configuration),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(
@@ -528,28 +615,24 @@ private fun Instructions(getConnectionUrl: () -> String, authToken: String = "YT
                         )
                     ) {
                         Text(
-                            text = """
-                                    {
-                                        "mcpServers": {
-                                            "phone": {
-                                                "command": "npx",
-                                                "args": [
-                                                    "mcp-remote", 
-                                                    "${getConnectionUrl().removePrefix("ws://")}",
-                                                    "--header",
-                                                    "Authorization: Bearer ${'\$'}{AUTH_TOKEN}",
-                                                    "--allow-http"
-                                                ],
-                                                "env": {
-                                                    "AUTH_TOKEN": "$authToken"
-                                                }
-                                            }
-                                        }
-                                    }
-                                    """.trimIndent(),
+                            text = clientConfig,
                             style = MaterialTheme.typography.bodySmall,
                             modifier = Modifier.padding(8.dp)
                         )
+                    }
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Button(
+                        onClick = { copyToClipboard(clientConfig) },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.ContentCopy,
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Text(text = " " + stringResource(R.string.copy_configuration))
                     }
                 }
             }
