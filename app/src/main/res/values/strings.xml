@@ -39,6 +39,9 @@
     <string name="connection_test_failure">Could not reach the server at %1$s. Make sure the server is running and that Host is set to 0.0.0.0 in Settings.</string>
     <string name="scan_configuration">Or scan with another device to transfer the configuration:</string>
     <string name="qr_code_description">QR code containing the MCP client configuration</string>
+    <string name="onboarding_title">Welcome to Phone MCP</string>
+    <string name="onboarding_body">Phone MCP turns this phone into a server that AI assistants (MCP clients) can connect to. The app has no AI built in — you connect your own, for example Claude Desktop.\n\n1. Enable the tools you want to expose.\n2. Start the server with the toggle.\n3. On a computer on the same Wi-Fi network, copy the client configuration into your MCP client.\n\nUse the Test connection button any time to verify the server is reachable.</string>
+    <string name="get_started">Get started</string>
     <string name="collapse_client_configuration">Collapse client configuration</string>
     <string name="expand_client_configuration">Expand client configuration</string>
     <string name="mcp_client_configuration">MCP Client Configuration</string>

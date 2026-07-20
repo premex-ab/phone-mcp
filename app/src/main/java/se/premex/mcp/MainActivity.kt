@@ -143,6 +143,8 @@ class MainActivity : ComponentActivity() {
             val serverConfig by serverPreferencesRepository.getServerConfig().collectAsState(
                 initial = se.premex.mcp.data.ServerConfig()
             )
+            val onboardingCompleted by serverPreferencesRepository.isOnboardingCompleted()
+                .collectAsState(initial = true)
 
             // Extract the auth token from the instructions string
             // The format is "Please use the token 'XXXXXX' to authenticate your connection."
@@ -175,6 +177,13 @@ class MainActivity : ComponentActivity() {
                             },
                             authToken = authToken
                         )
+
+                        // First-run onboarding explaining what the app is and how to connect
+                        if (!onboardingCompleted) {
+                            OnboardingDialog(
+                                onDismiss = { serverPreferencesRepository.setOnboardingCompleted() }
+                            )
+                        }
 
                         // Show warning dialog if needed
                         if (showToolWarningDialog.value && currentToolRequiringWarning != null) {
@@ -294,6 +303,20 @@ class MainActivity : ComponentActivity() {
             // No warning needed, just enable the tool
             toolService.toggleToolEnabled(tool.id)
         }
+    }
+
+    @Composable
+    private fun OnboardingDialog(onDismiss: () -> Unit) {
+        AlertDialog(
+            onDismissRequest = onDismiss,
+            title = { Text(stringResource(R.string.onboarding_title)) },
+            text = { Text(stringResource(R.string.onboarding_body)) },
+            confirmButton = {
+                Button(onClick = onDismiss) {
+                    Text(stringResource(R.string.get_started))
+                }
+            }
+        )
     }
 
     // Composable function for the warning dialog
