@@ -49,8 +49,12 @@ jobs:
         echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_OUTPUT
         echo "VERSION_CODE=${{ github.run_number }}" >> $GITHUB_OUTPUT
 
+    # The full flavor targets F-Droid and direct distribution, where Google
+    # services are not allowed; it is built without Firebase. The Firebase
+    # project also has no client registered for the se.premex.mcp.full
+    # application id, so enabling Firebase here fails processGoogleServices.
     - name: Build Full Release
-      run: ./gradlew assembleFullRelease --stacktrace -PversionName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionCode=${{ steps.version_info.outputs.VERSION_CODE }} -PenableFirebase=true
+      run: ./gradlew assembleFullRelease --stacktrace -PversionName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionCode=${{ steps.version_info.outputs.VERSION_CODE }}
 
     - name: Build Play Release AAB
       run: ./gradlew bundlePlayRelease --stacktrace -PversionName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionCode=${{ steps.version_info.outputs.VERSION_CODE }} -PenableFirebase=true
