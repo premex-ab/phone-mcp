@@ -37,6 +37,7 @@ import io.modelcontextprotocol.kotlin.sdk.ServerCapabilities
 import io.modelcontextprotocol.kotlin.sdk.server.Server
 import io.modelcontextprotocol.kotlin.sdk.server.ServerOptions
 import io.modelcontextprotocol.kotlin.sdk.server.SseServerTransport
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -428,6 +429,7 @@ class McpServerService : Service() {
                                 "$LOG_PREFIX_SERVER: Added server for session ${transport.sessionId}"
                             )
 
+                            val sessionClosed = CompletableDeferred<Unit>()
                             server.onClose {
                                 Log.i(
                                     TAG,
@@ -439,6 +441,7 @@ class McpServerService : Service() {
                                     TAG,
                                     "$LOG_PREFIX_SERVER: Removed server for session ${transport.sessionId}"
                                 )
+                                sessionClosed.complete(Unit)
                             }
 
                             Log.d(
@@ -454,6 +457,11 @@ class McpServerService : Service() {
                             // Remember that a client has connected at least once,
                             // used to time the in-app review prompt
                             serverPreferencesRepository.markClientConnected()
+
+                            // Keep this handler suspended for the lifetime of the MCP
+                            // session. Returning would close the underlying SSE stream,
+                            // leaving clients unable to receive any responses.
+                            sessionClosed.await()
                         }
                     }
 
