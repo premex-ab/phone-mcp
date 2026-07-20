@@ -9,4 +9,16 @@
         future Android releases.
     -->
     <uses-permission android:name="android.permission.EXECUTE_APP_FUNCTIONS" />
+
+    <!--
+        Package visibility (Android 11+): without this declaration,
+        observeAppFunctions silently filters out functions from apps this
+        app cannot see, so third-party AppFunction providers would never
+        be discovered.
+    -->
+    <queries>
+        <intent>
+            <action android:name="android.app.appfunctions.AppFunctionService" />
+        </intent>
+    </queries>
 </manifest>
