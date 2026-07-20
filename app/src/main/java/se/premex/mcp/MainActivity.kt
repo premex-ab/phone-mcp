@@ -3,10 +3,8 @@ package se.premex.mcp
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
-import android.text.format.Formatter
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -51,6 +49,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -69,6 +68,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.modelcontextprotocol.kotlin.sdk.server.Server
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.net.HttpURLConnection
+import java.net.URL
 import se.premex.mcp.auth.AuthRepository
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.data.ServerPreferencesRepository
@@ -157,7 +161,8 @@ class MainActivity : ComponentActivity() {
                                     toggleService(false)
                                 }
                             },
-                            getConnectionUrl = { getConnectionUrl() },
+                            getConnectionUrl = { getConnectionUrl(serverConfig.port) },
+                            isOnWifi = { NetworkUtils.getWifiIpAddress(this@MainActivity) != null },
                             tools = toolService.tools.toList(),
                             toolEnabledStates = toolStates,
                             onToggleTool = { tool ->
@@ -262,10 +267,9 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun getConnectionUrl(): String {
-        val wifiManager = applicationContext.getSystemService(WIFI_SERVICE) as WifiManager
-        val ipAddress = Formatter.formatIpAddress(wifiManager.connectionInfo.ipAddress)
-        return "http://$ipAddress:3001/sse"
+    private fun getConnectionUrl(port: Int): String {
+        val ipAddress = NetworkUtils.getWifiIpAddress(this) ?: "0.0.0.0"
+        return "http://$ipAddress:$port/sse"
     }
 
     // Function to handle tool toggle with warning dialog if needed
@@ -323,7 +327,8 @@ fun HomeScreen(
     tools: List<McpTool>,
     toolEnabledStates: Map<String, Boolean>,
     onToggleTool: (McpTool) -> Unit,
-    authToken: String = "YTpi"
+    authToken: String = "YTpi",
+    isOnWifi: () -> Boolean = { true }
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -349,7 +354,8 @@ fun HomeScreen(
             tools = tools,
             toolEnabledStates = toolEnabledStates,
             onToggleTool = onToggleTool,
-            authToken = authToken
+            authToken = authToken,
+            isOnWifi = isOnWifi
         )
     }
 }
@@ -363,7 +369,8 @@ fun McpServerControl(
     tools: List<McpTool>,
     toolEnabledStates: Map<String, Boolean>,
     onToggleTool: (McpTool) -> Unit,
-    authToken: String = "YTpi"
+    authToken: String = "YTpi",
+    isOnWifi: () -> Boolean = { true }
 ) {
     val safeDrawingPadding = WindowInsets.safeDrawing.asPaddingValues()
 
@@ -434,6 +441,8 @@ fun McpServerControl(
                     if (isRunning) {
                         Instructions(getConnectionUrl, authToken)
                         Spacer(modifier = Modifier.height(16.dp))
+                        ConnectionDiagnostics(getConnectionUrl, isOnWifi)
+                        Spacer(modifier = Modifier.height(16.dp))
                     }
                 }
             }
@@ -463,6 +472,72 @@ fun McpServerControl(
             }
 
             Spacer(modifier = Modifier.height(16.dp))
+        }
+    }
+}
+
+@Composable
+private fun ConnectionDiagnostics(getConnectionUrl: () -> String, isOnWifi: () -> Boolean) {
+    val scope = rememberCoroutineScope()
+    var testing by remember { mutableStateOf(false) }
+    var testSucceeded by remember { mutableStateOf<Boolean?>(null) }
+
+    val healthUrl = getConnectionUrl().removeSuffix("/sse") + "/health"
+
+    Column(modifier = Modifier.fillMaxWidth()) {
+        if (!isOnWifi()) {
+            Text(
+                text = stringResource(R.string.not_on_wifi_warning),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+
+        Button(
+            onClick = {
+                testing = true
+                testSucceeded = null
+                scope.launch {
+                    testSucceeded = withContext(Dispatchers.IO) {
+                        try {
+                            val connection =
+                                URL(healthUrl).openConnection() as HttpURLConnection
+                            connection.connectTimeout = 3000
+                            connection.readTimeout = 3000
+                            try {
+                                connection.responseCode == HttpURLConnection.HTTP_OK
+                            } finally {
+                                connection.disconnect()
+                            }
+                        } catch (e: Exception) {
+                            false
+                        }
+                    }
+                    testing = false
+                }
+            },
+            enabled = !testing,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = if (testing) stringResource(R.string.testing_connection)
+                else stringResource(R.string.test_connection)
+            )
+        }
+
+        testSucceeded?.let { succeeded ->
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = if (succeeded) {
+                    stringResource(R.string.connection_test_success, healthUrl)
+                } else {
+                    stringResource(R.string.connection_test_failure, healthUrl)
+                },
+                style = MaterialTheme.typography.bodySmall,
+                color = if (succeeded) MaterialTheme.colorScheme.primary
+                else MaterialTheme.colorScheme.error
+            )
         }
     }
 }

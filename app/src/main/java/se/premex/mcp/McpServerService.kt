@@ -24,6 +24,8 @@ import io.ktor.server.engine.EmbeddedServer
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.response.respond
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
 import io.ktor.server.sse.SSE
@@ -343,6 +345,12 @@ class McpServerService : Service() {
                 }
 
                 routing {
+                    // Unauthenticated health check so users can verify reachability
+                    // from a browser on another device before configuring a client
+                    get("/health") {
+                        call.respondText("ok")
+                    }
+
                     authenticate("bearer-auth") {
                         sse("/sse") {
                             Log.d(TAG, "$LOG_PREFIX_TRANSPORT: New SSE connection established")

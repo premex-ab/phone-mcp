@@ -32,6 +32,11 @@
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="how_to_connect">How to connect</string>
     <string name="connect_steps">1. Make sure your computer is on the same Wi-Fi network as this phone.\n2. Copy the client configuration below into your MCP client (for example Claude Desktop).\n3. Restart the client — the phone tools will appear automatically.</string>
+    <string name="not_on_wifi_warning">Not connected to Wi-Fi. The server can only be reached from devices on the same Wi-Fi network — connect this phone to Wi-Fi first.</string>
+    <string name="test_connection">Test connection</string>
+    <string name="testing_connection">Testing connection…</string>
+    <string name="connection_test_success">Server is reachable at %1$s. If your MCP client still can\'t connect, verify your computer is on the same Wi-Fi — you can open %1$s in its browser to check.</string>
+    <string name="connection_test_failure">Could not reach the server at %1$s. Make sure the server is running and that Host is set to 0.0.0.0 in Settings.</string>
     <string name="collapse_client_configuration">Collapse client configuration</string>
     <string name="expand_client_configuration">Expand client configuration</string>
     <string name="mcp_client_configuration">MCP Client Configuration</string>
