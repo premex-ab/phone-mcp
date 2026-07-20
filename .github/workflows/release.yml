@@ -59,8 +59,18 @@ jobs:
     - name: Build Play Release AAB
       run: ./gradlew bundlePlayRelease --stacktrace -PversionName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionCode=${{ steps.version_info.outputs.VERSION_CODE }} -PenableFirebase=true
 
+    # Gradle Play Publisher 4.0.0 misdetects release variants as debuggable
+    # under AGP 9.2 (it reads AGP-internal APIs) and therefore never creates
+    # its publish tasks. Upload the bundle with the Play Developer API action
+    # instead (pinned to a commit SHA), using the same service account and
+    # the internal track, which was also Gradle Play Publisher's default.
     - name: Publish Play Release to Google Play Store
-      run: ./gradlew publishPlayReleaseBundle --stacktrace -PversionName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionCode=${{ steps.version_info.outputs.VERSION_CODE }} -PenableFirebase=true
+      uses: r0adkll/upload-google-play@e738b9dd8f2476ea806d921b64aacd24f34515a5 # v1.1.5
+      with:
+        serviceAccountJson: app/byggappen-dev-b151ea2d4990.json
+        packageName: se.premex.mcp
+        releaseFiles: app/build/outputs/bundle/playRelease/app-play-release.aab
+        track: internal
 
     - name: Upload Release Assets to GitHub
       uses: softprops/action-gh-release@v3
