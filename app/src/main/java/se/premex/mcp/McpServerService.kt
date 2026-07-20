@@ -11,6 +11,7 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.app.NotificationCompat
 import dagger.hilt.android.AndroidEntryPoint
+import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.install
@@ -24,6 +25,8 @@ import io.ktor.server.engine.EmbeddedServer
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.response.respond
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
 import io.ktor.server.sse.SSE
@@ -34,6 +37,7 @@ import io.modelcontextprotocol.kotlin.sdk.types.ServerCapabilities
 import io.modelcontextprotocol.kotlin.sdk.server.Server
 import io.modelcontextprotocol.kotlin.sdk.server.ServerOptions
 import io.modelcontextprotocol.kotlin.sdk.server.SseServerTransport
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -298,6 +302,56 @@ class McpServerService : Service() {
     }
 
 
+    private fun setupPageHtml(requestHost: String): String {
+        val config = """
+            {
+                "mcpServers": {
+                    "phone": {
+                        "command": "npx",
+                        "args": [
+                            "mcp-remote",
+                            "http://$requestHost/sse",
+                            "--header",
+                            "Authorization: Bearer ${'$'}{AUTH_TOKEN}",
+                            "--allow-http"
+                        ],
+                        "env": {
+                            "AUTH_TOKEN": "<token from the Phone MCP app>"
+                        }
+                    }
+                }
+            }
+        """.trimIndent()
+
+        return """
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <title>Phone MCP</title>
+                <style>
+                    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem; }
+                    pre { background: #f4f4f4; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+                    button { padding: 0.5rem 1rem; }
+                </style>
+            </head>
+            <body>
+                <h1>✅ Phone MCP is reachable</h1>
+                <p>Your device can reach the MCP server running on the phone.</p>
+                <h2>Connect your MCP client</h2>
+                <ol>
+                    <li>Copy the configuration below into your MCP client (for example Claude Desktop).</li>
+                    <li>Replace the token placeholder with the auth token shown in the Phone MCP app.</li>
+                    <li>Restart the client — the phone tools will appear automatically.</li>
+                </ol>
+                <pre id="config">$config</pre>
+                <button onclick="navigator.clipboard.writeText(document.getElementById('config').innerText)">Copy configuration</button>
+            </body>
+            </html>
+        """.trimIndent()
+    }
+
     private fun runSseMcpServerWithPlainConfiguration(
         host: String,
         port: Int
@@ -343,6 +397,20 @@ class McpServerService : Service() {
                 }
 
                 routing {
+                    // Unauthenticated health check so users can verify reachability
+                    // from a browser on another device before configuring a client
+                    get("/health") {
+                        call.respondText("ok")
+                    }
+
+                    // Setup page for browsers on the same network. Deliberately does
+                    // NOT include the auth token — the user reads it from the app.
+                    get("/") {
+                        val requestHost =
+                            call.request.headers[HttpHeaders.Host] ?: "PHONE_IP:$port"
+                        call.respondText(setupPageHtml(requestHost), ContentType.Text.Html)
+                    }
+
                     authenticate("bearer-auth") {
                         sse("/sse") {
                             Log.d(TAG, "$LOG_PREFIX_TRANSPORT: New SSE connection established")
@@ -361,6 +429,7 @@ class McpServerService : Service() {
                                 "$LOG_PREFIX_SERVER: Added server for session ${transport.sessionId}"
                             )
 
+                            val sessionClosed = CompletableDeferred<Unit>()
                             server.onClose {
                                 Log.i(
                                     TAG,
@@ -372,6 +441,7 @@ class McpServerService : Service() {
                                     TAG,
                                     "$LOG_PREFIX_SERVER: Removed server for session ${transport.sessionId}"
                                 )
+                                sessionClosed.complete(Unit)
                             }
 
                             Log.d(
@@ -383,6 +453,15 @@ class McpServerService : Service() {
                                 TAG,
                                 "$LOG_PREFIX_SERVER: Server successfully connected to transport"
                             )
+
+                            // Remember that a client has connected at least once,
+                            // used to time the in-app review prompt
+                            serverPreferencesRepository.markClientConnected()
+
+                            // Keep this handler suspended for the lifetime of the MCP
+                            // session. Returning would close the underlying SSE stream,
+                            // leaving clients unable to receive any responses.
+                            sessionClosed.await()
                         }
                     }
 

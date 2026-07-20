@@ -122,12 +122,14 @@ dependencies {
 
     // SMS tool - only for full builds (requires SMS permission)
     "fullImplementation"(project(":tools:sms"))
+    "playImplementation"(libs.play.review)
 
     implementation(project(":tools:smsintent"))
     implementation(project(":tools:ads"))
     implementation(project(":tools:contacts"))
     implementation(project(":tools:sensor"))
     implementation(project(":tools:camera"))
+    implementation(project(":tools:location"))
     implementation(project(":tools:externaltools"))
     implementation(project(":mcp-provider"))
 
@@ -140,6 +142,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.zxing.core)
     ksp(libs.kotlin.metadata.jvm)
 
     testImplementation(libs.junit)
