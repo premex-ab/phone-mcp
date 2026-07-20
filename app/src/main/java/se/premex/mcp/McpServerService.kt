@@ -450,6 +450,10 @@ class McpServerService : Service() {
                                 TAG,
                                 "$LOG_PREFIX_SERVER: Server successfully connected to transport"
                             )
+
+                            // Remember that a client has connected at least once,
+                            // used to time the in-app review prompt
+                            serverPreferencesRepository.markClientConnected()
                         }
                     }
 

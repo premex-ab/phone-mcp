@@ -118,6 +118,7 @@ dependencies {
 
     // SMS tool - only for full builds (requires SMS permission)
     "fullImplementation"(project(":tools:sms"))
+    "playImplementation"(libs.play.review)
 
     implementation(project(":tools:smsintent"))
     implementation(project(":tools:ads"))

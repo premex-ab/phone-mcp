@@ -47,6 +47,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -82,6 +83,7 @@ import se.premex.mcp.auth.AuthRepository
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.data.ServerPreferencesRepository
 import se.premex.mcp.di.ToolService
+import se.premex.mcp.review.ReviewPrompter
 import se.premex.mcp.ui.SettingsScreen
 import se.premex.mcp.ui.theme.MCPServerTheme
 import javax.inject.Inject
@@ -145,6 +147,20 @@ class MainActivity : ComponentActivity() {
             )
             val onboardingCompleted by serverPreferencesRepository.isOnboardingCompleted()
                 .collectAsState(initial = true)
+            val hasClientConnected by serverPreferencesRepository.hasClientConnected()
+                .collectAsState(initial = false)
+            val reviewPrompted by serverPreferencesRepository.isReviewPrompted()
+                .collectAsState(initial = true)
+
+            // Ask for a Play Store review once, after the user has had their
+            // first successful MCP client connection — the moment the app has
+            // proven its value
+            LaunchedEffect(hasClientConnected, reviewPrompted) {
+                if (hasClientConnected && !reviewPrompted) {
+                    serverPreferencesRepository.markReviewPrompted()
+                    ReviewPrompter.requestReview(this@MainActivity)
+                }
+            }
 
             // Extract the auth token from the instructions string
             // The format is "Please use the token 'XXXXXX' to authenticate your connection."
