@@ -124,6 +124,7 @@ dependencies {
     implementation(project(":tools:contacts"))
     implementation(project(":tools:sensor"))
     implementation(project(":tools:camera"))
+    implementation(project(":tools:location"))
     implementation(project(":tools:externaltools"))
     implementation(project(":mcp-provider"))
 
