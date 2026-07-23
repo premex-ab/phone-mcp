@@ -28,7 +28,6 @@
 -keep class com.google.protobuf.** { *; }
 -keep interface com.google.protobuf.** { *; }
 -keep class com.google.firebase.perf.** { *; }
--dontwarn com.google.protobuf.**
 -dontwarn com.google.firebase.perf.**
 
 # Keep Crashlytics
