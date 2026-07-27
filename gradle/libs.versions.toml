@@ -50,7 +50,7 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
-zxing-core = { group = "com.google.zxing", name = "core", version = "3.5.3" }
+zxing-core = { group = "com.google.zxing", name = "core", version = "3.5.4" }
 play-review = { group = "com.google.android.play", name = "review-ktx", version = "2.0.2" }
 io-ktor-ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktorVersion" }
 io-ktor-ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktorVersion" }
