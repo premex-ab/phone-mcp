@@ -34,6 +34,8 @@ class RemoteAccessViewModel @Inject constructor(
         private set
     var error by mutableStateOf<String?>(null)
         private set
+    var pairedClients by mutableStateOf<List<PairedClientInfo>>(emptyList())
+        private set
 
     fun setEnabled(enabled: Boolean) {
         viewModelScope.launch {
@@ -53,6 +55,42 @@ class RemoteAccessViewModel @Inject constructor(
                     repository.saveDevice(deviceId, deviceSecret)
                 }
                 repository.setEnabled(true)
+            } catch (e: Exception) {
+                error = e.message ?: "Could not reach the relay"
+            } finally {
+                busy = false
+            }
+        }
+    }
+
+    /** Best-effort refresh of the paired clients list; keeps the old list on failure. */
+    fun refreshPairedClients() {
+        viewModelScope.launch {
+            val current = repository.config().first()
+            val deviceId = current.deviceId ?: return@launch
+            val deviceSecret = current.deviceSecret ?: return@launch
+            try {
+                pairedClients = withContext(Dispatchers.IO) {
+                    RelayApi.listClients(current.relayUrl, deviceId, deviceSecret)
+                }
+            } catch (_: Exception) {
+                // informational section — stale data beats an error banner
+            }
+        }
+    }
+
+    fun revokeClient(clientId: String) {
+        viewModelScope.launch {
+            val current = repository.config().first()
+            val deviceId = current.deviceId ?: return@launch
+            val deviceSecret = current.deviceSecret ?: return@launch
+            error = null
+            busy = true
+            try {
+                withContext(Dispatchers.IO) {
+                    RelayApi.revokeClient(current.relayUrl, deviceId, deviceSecret, clientId)
+                }
+                pairedClients = pairedClients.filterNot { it.clientId == clientId }
             } catch (e: Exception) {
                 error = e.message ?: "Could not reach the relay"
             } finally {

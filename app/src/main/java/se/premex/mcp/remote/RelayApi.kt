@@ -4,6 +4,12 @@ import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
 
+/** An MCP client currently authorized for this device. */
+data class PairedClientInfo(
+    val clientId: String,
+    val name: String?,
+)
+
 /** Small HTTP client for the relay's device API (registration + pairing codes). */
 object RelayApi {
 
@@ -31,15 +37,52 @@ object RelayApi {
         return json.getString("code") to json.optLong("expiresInSeconds", 600L)
     }
 
-    private fun post(url: String, body: String, headers: Map<String, String>): String {
+    /** Clients that currently hold live tokens for this device. */
+    fun listClients(relayUrl: String, deviceId: String, deviceSecret: String): List<PairedClientInfo> {
+        val response = request(
+            method = "GET",
+            url = "$relayUrl/api/devices/$deviceId/clients",
+            body = null,
+            headers = mapOf("X-Device-Secret" to deviceSecret),
+        )
+        val clients = JSONObject(response).getJSONArray("clients")
+        return buildList {
+            for (i in 0 until clients.length()) {
+                val client = clients.getJSONObject(i)
+                add(
+                    PairedClientInfo(
+                        clientId = client.getString("clientId"),
+                        name = client.optString("name").takeIf { it.isNotEmpty() && it != "null" },
+                    )
+                )
+            }
+        }
+    }
+
+    /** Revoke every token binding this client to this device. */
+    fun revokeClient(relayUrl: String, deviceId: String, deviceSecret: String, clientId: String) {
+        request(
+            method = "DELETE",
+            url = "$relayUrl/api/devices/$deviceId/clients/$clientId",
+            body = null,
+            headers = mapOf("X-Device-Secret" to deviceSecret),
+        )
+    }
+
+    private fun post(url: String, body: String, headers: Map<String, String>): String =
+        request("POST", url, body, headers)
+
+    private fun request(method: String, url: String, body: String?, headers: Map<String, String>): String {
         val connection = URL(url).openConnection() as HttpURLConnection
         try {
-            connection.requestMethod = "POST"
+            connection.requestMethod = method
             connection.connectTimeout = 10_000
             connection.readTimeout = 15_000
             headers.forEach { (key, value) -> connection.setRequestProperty(key, value) }
-            connection.doOutput = true
-            connection.outputStream.use { it.write(body.toByteArray()) }
+            if (body != null) {
+                connection.doOutput = true
+                connection.outputStream.use { it.write(body.toByteArray()) }
+            }
 
             val status = connection.responseCode
             val text = (if (status < 400) connection.inputStream else connection.errorStream)

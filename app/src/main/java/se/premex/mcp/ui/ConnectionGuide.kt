@@ -23,6 +23,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -38,6 +39,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -129,6 +131,10 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
     val config by viewModel.config.collectAsState()
     val tunnelConnected by viewModel.tunnelConnected.collectAsState()
     val context = LocalContext.current
+
+    LaunchedEffect(config.enabled) {
+        if (config.enabled) viewModel.refreshPairedClients()
+    }
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
@@ -226,6 +232,53 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(R.string.paired_clients_title),
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.weight(1f)
+                )
+                IconButton(onClick = { viewModel.refreshPairedClients() }) {
+                    Icon(
+                        imageVector = Icons.Filled.Refresh,
+                        contentDescription = stringResource(R.string.refresh_paired_clients)
+                    )
+                }
+            }
+
+            if (viewModel.pairedClients.isEmpty()) {
+                Text(
+                    text = stringResource(R.string.paired_clients_empty),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            } else {
+                viewModel.pairedClients.forEach { client ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = client.name ?: client.clientId,
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.weight(1f)
+                        )
+                        TextButton(
+                            onClick = { viewModel.revokeClient(client.clientId) },
+                            enabled = !viewModel.busy
+                        ) {
+                            Text(stringResource(R.string.revoke))
+                        }
+                    }
+                }
             }
         }
 
