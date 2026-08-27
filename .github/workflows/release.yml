@@ -64,6 +64,15 @@ jobs:
     # its publish tasks. Upload the bundle with the Play Developer API action
     # instead (pinned to a commit SHA), using the same service account and
     # the internal track, which was also Gradle Play Publisher's default.
+    # Keep the signed bundle downloadable from the run page — needed e.g.
+    # for manual Console uploads when a new permission declaration gates the
+    # API publish, and as a general escape hatch when the publish step fails.
+    - name: Upload Play bundle as workflow artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-play-release-aab
+        path: app/build/outputs/bundle/playRelease/app-play-release.aab
+
     - name: Publish Play Release to Google Play Store
       uses: r0adkll/upload-google-play@e738b9dd8f2476ea806d921b64aacd24f34515a5 # v1.1.5
       with:
