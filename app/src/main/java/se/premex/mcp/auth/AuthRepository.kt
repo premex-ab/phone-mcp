@@ -94,4 +94,7 @@ class AuthRepository @Inject constructor(
     fun getConnectionInstructions(): String {
         return connectionInstructions
     }
+
+    /** The current local auth token, e.g. for the remote tunnel's forwarded requests. */
+    fun currentToken(): String = authToken
 }

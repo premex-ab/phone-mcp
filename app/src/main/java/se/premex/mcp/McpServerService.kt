@@ -41,13 +41,23 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.auth.AuthRepository
 import se.premex.mcp.data.ToolPreferencesRepository
 import se.premex.mcp.data.ServerPreferencesRepository
 import se.premex.mcp.di.ToolService
+import se.premex.mcp.remote.RemoteAccessRepository
+import se.premex.mcp.remote.TunnelClient
+import se.premex.mcp.remote.TunnelStatusRepository
+import java.net.BindException
+import java.net.InetAddress
+import java.net.InetSocketAddress
+import java.net.ServerSocket
 import javax.inject.Inject
 import kotlin.collections.set
 
@@ -57,6 +67,7 @@ class McpServerService : Service() {
         var isRunning = mutableStateOf(false)
         private const val TAG = "McpServerService"
         private const val NOTIFICATION_ID = 1001
+        private const val ERROR_NOTIFICATION_ID = 1002
 
         // Log tag prefixes for better filtering
         private const val LOG_PREFIX_LIFECYCLE = "Lifecycle"
@@ -89,6 +100,16 @@ class McpServerService : Service() {
 
     @Inject
     lateinit var authRepository: AuthRepository
+
+    @Inject
+    lateinit var remoteAccessRepository: RemoteAccessRepository
+
+    @Inject
+    lateinit var tunnelStatusRepository: TunnelStatusRepository
+
+    private var tunnelClient: TunnelClient? = null
+    private var tunnelStatusJob: Job? = null
+    private var remoteAccessObserverStarted = false
 
     override fun onCreate() {
         isRunning.value = true
@@ -154,6 +175,10 @@ class McpServerService : Service() {
             Log.e(TAG, "$LOG_PREFIX_SERVER: Error stopping server", e)
         }
 
+        tunnelClient?.stop()
+        tunnelClient = null
+        tunnelStatusRepository.update(null)
+
         Log.d(TAG, "$LOG_PREFIX_LIFECYCLE: Cancelling service job")
         serviceJob.cancel()
         super.onDestroy()
@@ -168,18 +193,103 @@ class McpServerService : Service() {
 
     private suspend fun startMcpServer() {
         Log.i(TAG, "$LOG_PREFIX_SERVER: Attempting to start MCP server")
+        val serverConfig = serverPreferencesRepository.getServerConfig().first()
         try {
-            val serverConfig = serverPreferencesRepository.getServerConfig().first()
             Log.d(
                 TAG,
                 "$LOG_PREFIX_SERVER: Loaded server config - host: ${serverConfig.host}, port: ${serverConfig.port}"
             )
             startServerWithHost(serverConfig.host, serverConfig.port)
             Log.i(TAG, "$LOG_PREFIX_SERVER: Successfully started server")
+            observeRemoteAccess(serverConfig.port)
         } catch (e: Exception) {
-            val errorMessage = "Failed to start server: ${e.message}"
             Log.e(TAG, "$LOG_PREFIX_SERVER: Failed to start server", e)
-            updateNotification("MCP Server Error", errorMessage)
+            val errorMessage = if (e is BindException) {
+                "Port ${serverConfig.port} is already in use — is another MCP server " +
+                    "app running? Stop it, or change the port in Settings, and start again."
+            } else {
+                "Failed to start server: ${e.message}"
+            }
+            // The foreground notification disappears with the service, so post the
+            // error on its own id — and stop instead of lingering half-started
+            // (START_STICKY would otherwise retry into the same failure forever).
+            postStartupFailureNotification(errorMessage)
+            stopSelf()
+        }
+    }
+
+    private fun postStartupFailureNotification(message: String) {
+        val notification = NotificationCompat.Builder(this, McpServerApplication.CHANNEL_ID)
+            .setContentTitle("MCP Server Error")
+            .setContentText(message)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(message))
+            .setSmallIcon(android.R.drawable.ic_dialog_alert)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_ERROR)
+            .setAutoCancel(true)
+            .build()
+        notificationManager?.notify(ERROR_NOTIFICATION_ID, notification)
+    }
+
+    /**
+     * Fail fast, inside our try/catch, if the port is taken. Ktor's CIO engine
+     * binds asynchronously after start(wait = false), so its BindException
+     * surfaces as an UNCAUGHT coroutine exception and kills the whole app —
+     * seen in practice when two builds of this app raced for port 3001.
+     */
+    private fun ensurePortAvailable(host: String, port: Int) {
+        val address = if (host == "0.0.0.0") {
+            InetSocketAddress(port)
+        } else {
+            InetSocketAddress(InetAddress.getByName(host), port)
+        }
+        ServerSocket().use { probe ->
+            probe.reuseAddress = true
+            probe.bind(address)
+        }
+    }
+
+    /**
+     * Starts/stops the phonemcp.ai tunnel to follow the Remote access setting,
+     * so toggling it in Settings takes effect without restarting the server.
+     */
+    private fun observeRemoteAccess(localPort: Int) {
+        if (remoteAccessObserverStarted) return
+        remoteAccessObserverStarted = true
+        serviceScope.launch {
+            remoteAccessRepository.config().collect { config ->
+                val current = tunnelClient
+                if (config.enabled && config.registered) {
+                    val unchanged = current != null &&
+                            current.relayUrl == config.relayUrl &&
+                            current.deviceId == config.deviceId
+                    if (!unchanged) {
+                        current?.stop()
+                        Log.i(TAG, "$LOG_PREFIX_SERVER: Starting remote tunnel to ${config.relayUrl}")
+                        tunnelClient = TunnelClient(
+                            relayUrl = config.relayUrl,
+                            deviceId = config.deviceId!!,
+                            deviceSecret = config.deviceSecret!!,
+                            localPort = localPort,
+                            localAuthToken = authRepository.currentToken(),
+                            scope = serviceScope,
+                        ).also { client ->
+                            client.start()
+                            tunnelStatusJob?.cancel()
+                            tunnelStatusJob = serviceScope.launch {
+                                client.connected.collect { tunnelStatusRepository.update(it) }
+                            }
+                        }
+                    }
+                } else if (current != null) {
+                    Log.i(TAG, "$LOG_PREFIX_SERVER: Stopping remote tunnel")
+                    current.stop()
+                    tunnelClient = null
+                    tunnelStatusJob?.cancel()
+                    tunnelStatusJob = null
+                    tunnelStatusRepository.update(null)
+                }
+            }
         }
     }
 
@@ -187,6 +297,7 @@ class McpServerService : Service() {
         Log.d(TAG, "$LOG_PREFIX_SERVER: Configuring server on $host:$port")
 
         try {
+            ensurePortAvailable(host, port)
             server = runSseMcpServerWithPlainConfiguration(host = host, port = port)
 
             // Get WiFi IP address to show in notification
