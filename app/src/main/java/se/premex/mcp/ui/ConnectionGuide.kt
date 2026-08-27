@@ -14,16 +14,23 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -31,6 +38,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -44,6 +53,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.net.HttpURLConnection
+import java.net.URL
 import se.premex.mcp.R
 import se.premex.mcp.remote.RemoteAccessConfig
 import se.premex.mcp.remote.RemoteAccessViewModel
@@ -65,6 +79,7 @@ fun ConnectionGuide(
     connectionUrl: String,
     authToken: String,
     modifier: Modifier = Modifier,
+    isOnWifi: () -> Boolean = { true },
 ) {
     var mode by rememberSaveable { mutableStateOf(ConnectionMode.REMOTE) }
 
@@ -77,17 +92,17 @@ fun ConnectionGuide(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            FilterChip(
+        SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+            SegmentedButton(
                 selected = mode == ConnectionMode.REMOTE,
                 onClick = { mode = ConnectionMode.REMOTE },
-                label = { Text(stringResource(R.string.connection_mode_remote)) }
-            )
-            FilterChip(
+                shape = SegmentedButtonDefaults.itemShape(index = 0, count = 2),
+            ) { Text(stringResource(R.string.connection_mode_remote)) }
+            SegmentedButton(
                 selected = mode == ConnectionMode.LOCAL,
                 onClick = { mode = ConnectionMode.LOCAL },
-                label = { Text(stringResource(R.string.connection_mode_local)) }
-            )
+                shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2),
+            ) { Text(stringResource(R.string.connection_mode_local)) }
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -95,19 +110,12 @@ fun ConnectionGuide(
         when (mode) {
             // hiltViewModel is unavailable when rendering @Preview compositions
             ConnectionMode.REMOTE ->
-                if (LocalInspectionMode.current) LocalGuide(connectionUrl, authToken)
+                if (LocalInspectionMode.current) LocalGuide(connectionUrl, authToken, isOnWifi)
                 else RemoteGuide()
 
-            ConnectionMode.LOCAL -> LocalGuide(connectionUrl, authToken)
+            ConnectionMode.LOCAL -> LocalGuide(connectionUrl, authToken, isOnWifi)
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = stringResource(R.string.tools_connect_note),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
     }
 }
 
@@ -205,6 +213,7 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
 private fun LocalGuide(
     connectionUrl: String,
     authToken: String,
+    isOnWifi: () -> Boolean = { true },
 ) {
     val context = LocalContext.current
     var selectedClient by rememberSaveable { mutableStateOf(McpClient.CLAUDE_CODE) }
@@ -248,6 +257,77 @@ private fun LocalGuide(
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        ConnectionDiagnostics(connectionUrl = connectionUrl, isOnWifi = isOnWifi)
+    }
+}
+
+/** Local-only: ping the server's /health endpoint from this phone's Wi-Fi address. */
+@Composable
+private fun ConnectionDiagnostics(connectionUrl: String, isOnWifi: () -> Boolean) {
+    val scope = rememberCoroutineScope()
+    var testing by remember { mutableStateOf(false) }
+    var testSucceeded by remember { mutableStateOf<Boolean?>(null) }
+
+    val healthUrl = connectionUrl.removeSuffix("/sse") + "/health"
+
+    Column(modifier = Modifier.fillMaxWidth()) {
+        if (!isOnWifi()) {
+            Text(
+                text = stringResource(R.string.not_on_wifi_warning),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+
+        OutlinedButton(
+            onClick = {
+                testing = true
+                testSucceeded = null
+                scope.launch {
+                    testSucceeded = withContext(Dispatchers.IO) {
+                        try {
+                            val connection =
+                                URL(healthUrl).openConnection() as HttpURLConnection
+                            connection.connectTimeout = 3000
+                            connection.readTimeout = 3000
+                            try {
+                                connection.responseCode == HttpURLConnection.HTTP_OK
+                            } finally {
+                                connection.disconnect()
+                            }
+                        } catch (e: Exception) {
+                            false
+                        }
+                    }
+                    testing = false
+                }
+            },
+            enabled = !testing,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = if (testing) stringResource(R.string.testing_connection)
+                else stringResource(R.string.test_connection)
+            )
+        }
+
+        testSucceeded?.let { succeeded ->
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = if (succeeded) {
+                    stringResource(R.string.connection_test_success, healthUrl)
+                } else {
+                    stringResource(R.string.connection_test_failure, healthUrl)
+                },
+                style = MaterialTheme.typography.bodySmall,
+                color = if (succeeded) MaterialTheme.colorScheme.tertiary
+                else MaterialTheme.colorScheme.error
+            )
+        }
     }
 }
 
@@ -258,7 +338,16 @@ private fun ClientChips(selected: McpClient, onSelect: (McpClient) -> Unit) {
             FilterChip(
                 selected = selected == client,
                 onClick = { onSelect(client) },
-                label = { Text(stringResource(client.title)) }
+                label = { Text(stringResource(client.title)) },
+                leadingIcon = if (selected == client) {
+                    {
+                        Icon(
+                            imageVector = Icons.Filled.Check,
+                            contentDescription = null,
+                            modifier = Modifier.size(FilterChipDefaults.IconSize)
+                        )
+                    }
+                } else null
             )
         }
     }
@@ -375,7 +464,8 @@ private fun CodeBlock(
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+            contentColor = MaterialTheme.colorScheme.onSurfaceVariant
         )
     ) {
         Column {

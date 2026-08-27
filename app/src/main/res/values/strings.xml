@@ -19,11 +19,6 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="mcp_server">MCP Server</string>
-    <string name="mcp_server_control">MCP Server Control</string>
-    <string name="server_status">Server Status:</string>
-    <string name="running">RUNNING</string>
-    <string name="stopped">STOPPED</string>
-    <string name="toggle_server">Toggle Server</string>
     <string name="connection_url">URL:</string>
     <string name="access_token">Token:</string>
     <string name="connect_your_ai_client">Connect your AI client</string>
@@ -42,6 +37,10 @@
     <string name="remote_access_title">Remote access (phonemcp.ai)</string>
     <string name="remote_access_description">Reach this phone from anywhere through a secure tunnel. Traffic passes through the relay server, and every tool stays opt-in on this phone.</string>
     <string name="remote_access_contacting_relay">Contacting relay…</string>
+    <string name="server_running">Server running</string>
+    <string name="server_stopped">Server stopped</string>
+    <string name="server_stopped_hint">Start the server to accept connections</string>
+    <string name="tools_title">Tools</string>
     <string name="connection_mode_remote">Remote (recommended)</string>
     <string name="connection_mode_local">Local network</string>
     <string name="enable_remote_access">Enable remote access</string>
@@ -51,7 +50,7 @@
     <string name="remote_other_instructions">Connect any MCP client that supports remote servers with OAuth 2.1. Authorize with the pairing code below:</string>
     <string name="show_pairing_code">Show pairing code</string>
     <string name="pairing_code_hint">Enter this code in the browser when connecting a new AI client. Valid for 10 minutes, single use.</string>
-    <string name="tools_connect_note">🔧 Tool changes below apply the next time a client connects.</string>
+    <string name="tools_connect_note">Changes apply the next time a client connects.</string>
     <string name="not_on_wifi_warning">Not connected to Wi-Fi. The server can only be reached from devices on the same Wi-Fi network — connect this phone to Wi-Fi first.</string>
     <string name="test_connection">Test connection</string>
     <string name="testing_connection">Testing connection…</string>
