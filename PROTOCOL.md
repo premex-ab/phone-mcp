@@ -15,8 +15,11 @@ The app side lives in
 
 | Call | Description |
 |---|---|
-| `POST /api/devices/register` `{"name": "..."}` | Returns `{"deviceId", "deviceSecret"}`. Called once, when Remote access is first enabled. |
+| `POST /api/devices/register` `{"name": "...", "trialAnchor": "..."}` | Returns `{"deviceId", "deviceSecret"}`. Called once, when Remote access is first enabled. `trialAnchor` is a SHA-256 of a device-stable identifier so re-registrations from the same phone share one free-trial window. |
 | `POST /api/devices/{deviceId}/pairing-code` with header `X-Device-Secret` | Returns `{"code", "expiresInSeconds"}`. The user enters this code in the browser during the relay's OAuth flow to bind a client to this device. |
+| `GET /api/devices/{deviceId}/clients` with header `X-Device-Secret` | Returns `{"clients": [{"clientId", "name", "expiresAt"}]}` — the MCP clients currently authorized for this device. |
+| `DELETE /api/devices/{deviceId}/clients/{clientId}` with header `X-Device-Secret` | Revokes every token binding that client to this device. |
+| `GET /api/devices/{deviceId}/entitlement` with header `X-Device-Secret` | Returns `{"status": "trial"\|"paid"\|"grace"\|"expired", "activeUntil"}`. Relayed MCP traffic answers 402 once expired; local use is never gated. |
 
 ## Tunnel (app ⇄ relay, WebSocket at `/tunnel`)
 

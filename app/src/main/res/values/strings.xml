@@ -52,6 +52,10 @@
     <string name="paired_clients_empty">None yet — pair your first client with the code above.</string>
     <string name="refresh_paired_clients">Refresh paired clients</string>
     <string name="revoke">Revoke</string>
+    <string name="remote_trial_days_left">Free trial — %1$d days left</string>
+    <string name="remote_subscription_active">Subscription active</string>
+    <string name="remote_grace">Trial ended — %1$d grace days left before remote access stops</string>
+    <string name="remote_expired">Remote access has expired. Subscriptions are coming soon.</string>
     <string name="remote_status_connected">Connected to phonemcp.ai</string>
     <string name="remote_status_connecting">Connecting to phonemcp.ai…</string>
     <string name="show_pairing_code">Pair a new AI client</string>

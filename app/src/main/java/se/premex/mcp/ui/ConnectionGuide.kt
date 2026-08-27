@@ -170,6 +170,29 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
                 }
                 Spacer(modifier = Modifier.height(8.dp))
             }
+
+            viewModel.entitlement?.let { (status, activeUntil) ->
+                val daysLeft = runCatching {
+                    java.time.Duration.between(java.time.Instant.now(), java.time.Instant.parse(activeUntil))
+                        .toDays().coerceAtLeast(0)
+                }.getOrDefault(0L)
+                val (text, color) = when (status) {
+                    "trial" -> stringResource(R.string.remote_trial_days_left, daysLeft) to
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    "paid" -> stringResource(R.string.remote_subscription_active) to
+                        MaterialTheme.colorScheme.tertiary
+                    "grace" -> stringResource(R.string.remote_grace, daysLeft) to
+                        MaterialTheme.colorScheme.error
+                    else -> stringResource(R.string.remote_expired) to
+                        MaterialTheme.colorScheme.error
+                }
+                Text(
+                    text = text,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = color
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+            }
         }
 
         if (!config.enabled) {

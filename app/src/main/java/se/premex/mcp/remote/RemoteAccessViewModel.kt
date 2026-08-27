@@ -1,12 +1,15 @@
 package se.premex.mcp.remote
 
+import android.content.Context
 import android.os.Build
+import android.provider.Settings
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -20,6 +23,7 @@ import javax.inject.Inject
 class RemoteAccessViewModel @Inject constructor(
     private val repository: RemoteAccessRepository,
     tunnelStatusRepository: TunnelStatusRepository,
+    @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
     val config: StateFlow<RemoteAccessConfig> = repository.config()
@@ -37,6 +41,10 @@ class RemoteAccessViewModel @Inject constructor(
     var pairedClients by mutableStateOf<List<PairedClientInfo>>(emptyList())
         private set
 
+    /** "trial"/"paid"/"grace"/"expired" to activeUntil ISO instant; null until fetched. */
+    var entitlement by mutableStateOf<Pair<String, String>?>(null)
+        private set
+
     fun setEnabled(enabled: Boolean) {
         viewModelScope.launch {
             error = null
@@ -50,7 +58,7 @@ class RemoteAccessViewModel @Inject constructor(
                 val current = repository.config().first()
                 if (!current.registered) {
                     val (deviceId, deviceSecret) = withContext(Dispatchers.IO) {
-                        RelayApi.registerDevice(current.relayUrl, Build.MODEL)
+                        RelayApi.registerDevice(current.relayUrl, Build.MODEL, trialAnchor())
                     }
                     repository.saveDevice(deviceId, deviceSecret)
                 }
@@ -62,6 +70,18 @@ class RemoteAccessViewModel @Inject constructor(
             }
         }
     }
+
+    /**
+     * Hash of a device-stable identifier: survives clear-data and reinstall,
+     * so the relay can anchor the free trial to the physical phone. Used only
+     * for trial-abuse prevention; only the hash ever leaves the device.
+     */
+    private fun trialAnchor(): String? = runCatching {
+        val androidId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+        java.security.MessageDigest.getInstance("SHA-256")
+            .digest(androidId.toByteArray())
+            .joinToString("") { "%02x".format(it) }
+    }.getOrNull()
 
     /** Best-effort refresh of the paired clients list; keeps the old list on failure. */
     fun refreshPairedClients() {
@@ -75,6 +95,13 @@ class RemoteAccessViewModel @Inject constructor(
                 }
             } catch (_: Exception) {
                 // informational section — stale data beats an error banner
+            }
+            try {
+                entitlement = withContext(Dispatchers.IO) {
+                    RelayApi.getEntitlement(current.relayUrl, deviceId, deviceSecret)
+                }
+            } catch (_: Exception) {
+                // same: informational
             }
         }
     }

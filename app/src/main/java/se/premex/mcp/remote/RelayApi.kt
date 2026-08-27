@@ -15,15 +15,31 @@ object RelayApi {
 
     class RelayException(message: String) : Exception(message)
 
-    /** Returns deviceId to deviceSecret. */
-    fun registerDevice(relayUrl: String, name: String): Pair<String, String> {
+    /**
+     * Returns deviceId to deviceSecret. [trialAnchor] is a stable hash of a
+     * hardware identifier so re-registrations from the same phone share one
+     * free-trial window.
+     */
+    fun registerDevice(relayUrl: String, name: String, trialAnchor: String?): Pair<String, String> {
         val response = post(
             url = "$relayUrl/api/devices/register",
-            body = JSONObject().put("name", name).toString(),
+            body = JSONObject().put("name", name).putOpt("trialAnchor", trialAnchor).toString(),
             headers = mapOf("Content-Type" to "application/json"),
         )
         val json = JSONObject(response)
         return json.getString("deviceId") to json.getString("deviceSecret")
+    }
+
+    /** Current remote-access entitlement: status ("trial"/"paid"/"grace"/"expired") to activeUntil ISO instant. */
+    fun getEntitlement(relayUrl: String, deviceId: String, deviceSecret: String): Pair<String, String> {
+        val response = request(
+            method = "GET",
+            url = "$relayUrl/api/devices/$deviceId/entitlement",
+            body = null,
+            headers = mapOf("X-Device-Secret" to deviceSecret),
+        )
+        val json = JSONObject(response)
+        return json.getString("status") to json.getString("activeUntil")
     }
 
     /** Returns the pairing code to its validity in seconds. */
