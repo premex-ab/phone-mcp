@@ -71,11 +71,6 @@ jobs:
         packageName: se.premex.mcp
         releaseFiles: app/build/outputs/bundle/playRelease/app-play-release.aab
         track: internal
-        # The Play API refuses to auto-submit changes for review while the
-        # app has an outstanding policy rejection. With this flag the bundle
-        # is uploaded and committed, and the release is sent for review
-        # manually from the Play Console UI.
-        changesNotSentForReview: true
 
     - name: Upload Release Assets to GitHub
       uses: softprops/action-gh-release@v3
