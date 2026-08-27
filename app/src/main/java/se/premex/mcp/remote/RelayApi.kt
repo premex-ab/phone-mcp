@@ -75,6 +75,28 @@ object RelayApi {
         }
     }
 
+    /**
+     * Submit a Play purchase token for server-side verification.
+     * Returns status to activeUntil like [getEntitlement].
+     */
+    fun submitPurchase(
+        relayUrl: String,
+        deviceId: String,
+        deviceSecret: String,
+        purchaseToken: String,
+    ): Pair<String, String> {
+        val response = post(
+            url = "$relayUrl/api/devices/$deviceId/subscription",
+            body = JSONObject().put("purchaseToken", purchaseToken).toString(),
+            headers = mapOf(
+                "Content-Type" to "application/json",
+                "X-Device-Secret" to deviceSecret,
+            ),
+        )
+        val json = JSONObject(response)
+        return json.getString("status") to json.getString("activeUntil")
+    }
+
     /** Revoke every token binding this client to this device. */
     fun revokeClient(relayUrl: String, deviceId: String, deviceSecret: String, clientId: String) {
         request(

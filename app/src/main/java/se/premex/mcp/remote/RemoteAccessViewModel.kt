@@ -23,8 +23,45 @@ import javax.inject.Inject
 class RemoteAccessViewModel @Inject constructor(
     private val repository: RemoteAccessRepository,
     tunnelStatusRepository: TunnelStatusRepository,
+    private val billingManager: BillingManager,
     @ApplicationContext private val context: Context,
 ) : ViewModel() {
+
+    /** The remote-access subscription; null when Play/billing is unavailable. */
+    val subscriptionProduct = billingManager.productDetails
+
+    init {
+        billingManager.connect()
+        // Any purchase (new, or restored after reinstall) is sent to the relay
+        // for verification; only then is it acknowledged towards Play.
+        viewModelScope.launch {
+            billingManager.pendingPurchase.collect { purchase ->
+                if (purchase != null) submitPurchase(purchase)
+            }
+        }
+    }
+
+    fun subscribe(activity: android.app.Activity) {
+        if (!billingManager.launchPurchase(activity)) {
+            error = "Google Play billing is not available on this device"
+        }
+    }
+
+    private suspend fun submitPurchase(purchase: com.android.billingclient.api.Purchase) {
+        val current = repository.config().first()
+        val deviceId = current.deviceId ?: return
+        val deviceSecret = current.deviceSecret ?: return
+        try {
+            entitlement = withContext(Dispatchers.IO) {
+                RelayApi.submitPurchase(current.relayUrl, deviceId, deviceSecret, purchase.purchaseToken)
+            }
+            billingManager.acknowledge(purchase)
+            billingManager.clearPending()
+        } catch (e: Exception) {
+            // Left pending: retried on next app start via queryExistingPurchases
+            error = e.message ?: "Could not verify the purchase"
+        }
+    }
 
     val config: StateFlow<RemoteAccessConfig> = repository.config()
         .stateIn(viewModelScope, SharingStarted.Eagerly, RemoteAccessConfig())

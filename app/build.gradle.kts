@@ -94,6 +94,9 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation(libs.firebase.analytics)
 
+    // Play Billing for the remote-access subscription
+    implementation(libs.billing.ktx)
+
     // DataStore for persisting authentication token
     implementation(libs.androidx.datastore.preferences)
 

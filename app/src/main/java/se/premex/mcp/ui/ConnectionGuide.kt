@@ -1,5 +1,6 @@
 package se.premex.mcp.ui
 
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -195,6 +196,26 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
                     color = color
                 )
                 Spacer(modifier = Modifier.height(8.dp))
+
+                // Subscribe: only when there is something to buy (Play answered)
+                // and the device is not already covered by a paid subscription
+                val product by viewModel.subscriptionProduct.collectAsState()
+                if (status != "paid") {
+                    product?.let { details ->
+                        val price = details.subscriptionOfferDetails?.firstOrNull()
+                            ?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice
+                        Button(
+                            onClick = { (context as? Activity)?.let { viewModel.subscribe(it) } },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                if (price != null) stringResource(R.string.subscribe_price, price)
+                                else stringResource(R.string.subscribe)
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+                }
             }
         }
 
