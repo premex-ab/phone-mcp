@@ -235,12 +235,20 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
         } else {
             var selectedClient by rememberSaveable { mutableStateOf(McpClient.CLAUDE_CODE) }
 
+            Text(
+                text = stringResource(R.string.add_client_title),
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
             ClientChips(selectedClient) { selectedClient = it }
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = stringResource(selectedClient.remoteInstructions),
+                text = stringResource(selectedClient.remoteStep1),
                 style = MaterialTheme.typography.bodySmall
             )
 
@@ -251,6 +259,20 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
                 code = snippet,
                 copyButtonText = stringResource(selectedClient.remoteCopyButtonText),
                 onCopy = { copyToClipboard(context, snippet) }
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = stringResource(selectedClient.remoteStep2),
+                style = MaterialTheme.typography.bodySmall
+            )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Text(
+                text = stringResource(R.string.remote_step_3),
+                style = MaterialTheme.typography.bodySmall
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -490,14 +512,16 @@ private enum class McpClient(
     @StringRes val title: Int,
     @StringRes val instructions: Int,
     @StringRes val copyButtonText: Int,
-    @StringRes val remoteInstructions: Int,
+    @StringRes val remoteStep1: Int,
+    @StringRes val remoteStep2: Int,
     @StringRes val remoteCopyButtonText: Int,
 ) {
     CLAUDE_CODE(
         title = R.string.client_claude_code,
         instructions = R.string.claude_code_instructions,
         copyButtonText = R.string.copy_command,
-        remoteInstructions = R.string.remote_claude_code_instructions,
+        remoteStep1 = R.string.remote_step_code_1,
+        remoteStep2 = R.string.remote_step_code_2,
         remoteCopyButtonText = R.string.copy_command,
     ) {
         override fun snippet(url: String, token: String): String =
@@ -511,7 +535,8 @@ private enum class McpClient(
         title = R.string.client_claude_desktop,
         instructions = R.string.claude_desktop_instructions,
         copyButtonText = R.string.copy_configuration,
-        remoteInstructions = R.string.remote_claude_desktop_instructions,
+        remoteStep1 = R.string.remote_step_desktop_1,
+        remoteStep2 = R.string.remote_step_desktop_2,
         remoteCopyButtonText = R.string.copy_url,
     ) {
         override fun snippet(url: String, token: String): String = """
@@ -537,7 +562,8 @@ private enum class McpClient(
         title = R.string.client_other,
         instructions = R.string.other_client_instructions,
         copyButtonText = R.string.copy_details,
-        remoteInstructions = R.string.remote_other_instructions,
+        remoteStep1 = R.string.remote_step_other_1,
+        remoteStep2 = R.string.remote_step_other_2,
         remoteCopyButtonText = R.string.copy_details,
     ) {
         override fun snippet(url: String, token: String): String =
