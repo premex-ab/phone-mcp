@@ -42,6 +42,13 @@
     <string name="remote_access_title">Remote access (phonemcp.ai)</string>
     <string name="remote_access_description">Reach this phone from anywhere through a secure tunnel. Traffic passes through the relay server, and every tool stays opt-in on this phone.</string>
     <string name="remote_access_contacting_relay">Contacting relay…</string>
+    <string name="connection_mode_remote">Remote (recommended)</string>
+    <string name="connection_mode_local">Local network</string>
+    <string name="enable_remote_access">Enable remote access</string>
+    <string name="copy_url">Copy URL</string>
+    <string name="remote_claude_code_instructions">Run this command in a terminal on any computer. Then, inside Claude Code, run /mcp → phone → Authenticate — your browser opens, enter the pairing code below.</string>
+    <string name="remote_claude_desktop_instructions">On your computer: Settings → Connectors → Add custom connector, and paste this URL. When the sign-in page opens in your browser, enter the pairing code below.</string>
+    <string name="remote_other_instructions">Connect any MCP client that supports remote servers with OAuth 2.1. Authorize with the pairing code below:</string>
     <string name="show_pairing_code">Show pairing code</string>
     <string name="pairing_code_hint">Enter this code in the browser when connecting a new AI client. Valid for 10 minutes, single use.</string>
     <string name="tools_connect_note">🔧 Tool changes below apply the next time a client connects.</string>
@@ -51,7 +58,13 @@
     <string name="connection_test_success">Server is reachable at %1$s. If your MCP client still can\'t connect, verify your computer is on the same Wi-Fi — you can open %1$s in its browser to check.</string>
     <string name="connection_test_failure">Could not reach the server at %1$s. Make sure the server is running and that Host is set to 0.0.0.0 in Settings.</string>
     <string name="onboarding_title">Welcome to Phone MCP</string>
-    <string name="onboarding_body">Phone MCP turns this phone into a server that AI assistants (MCP clients) can connect to. The app has no AI built in — you connect your own, for example Claude Desktop.\n\n1. Enable the tools you want to expose.\n2. Start the server with the toggle.\n3. On a computer on the same Wi-Fi network, copy the client configuration into your MCP client.\n\nUse the Test connection button any time to verify the server is reachable.</string>
+    <string name="onboarding_body">Phone MCP turns this phone into a server that AI assistants (MCP clients) can connect to. The app has no AI built in — you connect your own, for example Claude Code or Claude Desktop.
+
+1. Enable the tools you want to expose.
+2. Start the server with the toggle.
+3. Connect your AI client — remotely through phonemcp.ai (works from anywhere), or over the same Wi-Fi network.
+
+The connection guide on the main screen walks you through both.</string>
     <string name="get_started">Get started</string>
     <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">Invalid port number. Please enter a value between 1 and 65535.</string>
     <string name="back">Back</string>

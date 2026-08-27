@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
@@ -27,6 +28,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -34,17 +36,29 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import se.premex.mcp.R
+import se.premex.mcp.remote.RemoteAccessConfig
+import se.premex.mcp.remote.RemoteAccessViewModel
 import se.premex.mcp.ui.theme.MCPServerTheme
+
+private val REMOTE_SSE_URL = "${RemoteAccessConfig.RELAY_URL}/sse"
+
+/** How the MCP client reaches this phone. Remote is the recommended default. */
+private enum class ConnectionMode { REMOTE, LOCAL }
 
 /**
  * Step-by-step guide for connecting an MCP client to this server.
- * Shown on the home screen while the server is running.
+ * Shown on the home screen while the server is running. Remote (through
+ * phonemcp.ai) is the default mode; local Wi-Fi is the fallback for clients
+ * on the same network.
  */
 @Composable
 fun ConnectionGuide(
@@ -52,8 +66,7 @@ fun ConnectionGuide(
     authToken: String,
     modifier: Modifier = Modifier,
 ) {
-    var selectedClient by rememberSaveable { mutableStateOf(McpClient.CLAUDE_CODE) }
-    val context = LocalContext.current
+    var mode by rememberSaveable { mutableStateOf(ConnectionMode.REMOTE) }
 
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
@@ -64,6 +77,139 @@ fun ConnectionGuide(
 
         Spacer(modifier = Modifier.height(8.dp))
 
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            FilterChip(
+                selected = mode == ConnectionMode.REMOTE,
+                onClick = { mode = ConnectionMode.REMOTE },
+                label = { Text(stringResource(R.string.connection_mode_remote)) }
+            )
+            FilterChip(
+                selected = mode == ConnectionMode.LOCAL,
+                onClick = { mode = ConnectionMode.LOCAL },
+                label = { Text(stringResource(R.string.connection_mode_local)) }
+            )
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        when (mode) {
+            // hiltViewModel is unavailable when rendering @Preview compositions
+            ConnectionMode.REMOTE ->
+                if (LocalInspectionMode.current) LocalGuide(connectionUrl, authToken)
+                else RemoteGuide()
+
+            ConnectionMode.LOCAL -> LocalGuide(connectionUrl, authToken)
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = stringResource(R.string.tools_connect_note),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    }
+}
+
+/** Remote mode: tunnel through phonemcp.ai, authorized with a pairing code. */
+@Composable
+private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
+    val config by viewModel.config.collectAsState()
+    val context = LocalContext.current
+
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Text(
+            text = stringResource(R.string.remote_access_description),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        if (!config.enabled) {
+            Button(
+                onClick = { viewModel.setEnabled(true) },
+                enabled = !viewModel.busy,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    stringResource(
+                        if (viewModel.busy) R.string.remote_access_contacting_relay
+                        else R.string.enable_remote_access
+                    )
+                )
+            }
+        } else {
+            var selectedClient by rememberSaveable { mutableStateOf(McpClient.CLAUDE_CODE) }
+
+            ClientChips(selectedClient) { selectedClient = it }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = stringResource(selectedClient.remoteInstructions),
+                style = MaterialTheme.typography.bodySmall
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            val snippet = selectedClient.remoteSnippet()
+            CodeBlock(
+                code = snippet,
+                copyButtonText = stringResource(selectedClient.remoteCopyButtonText),
+                onCopy = { copyToClipboard(context, snippet) }
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Button(
+                onClick = { viewModel.requestPairingCode() },
+                enabled = !viewModel.busy,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(stringResource(R.string.show_pairing_code))
+            }
+
+            viewModel.pairingCode?.let { code ->
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = code,
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 6.sp,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = stringResource(R.string.pairing_code_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+
+        viewModel.error?.let { error ->
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = error,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+    }
+}
+
+/** Local mode: direct connection over the same Wi-Fi network. */
+@Composable
+private fun LocalGuide(
+    connectionUrl: String,
+    authToken: String,
+) {
+    val context = LocalContext.current
+    var selectedClient by rememberSaveable { mutableStateOf(McpClient.CLAUDE_CODE) }
+
+    Column(modifier = Modifier.fillMaxWidth()) {
         CopyableValue(
             label = stringResource(R.string.connection_url),
             value = connectionUrl,
@@ -77,15 +223,7 @@ fun ConnectionGuide(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            McpClient.entries.forEach { client ->
-                FilterChip(
-                    selected = selectedClient == client,
-                    onClick = { selectedClient = client },
-                    label = { Text(stringResource(client.title)) }
-                )
-            }
-        }
+        ClientChips(selectedClient) { selectedClient = it }
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -110,11 +248,19 @@ fun ConnectionGuide(
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        Text(
-            text = stringResource(R.string.tools_connect_note),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+    }
+}
+
+@Composable
+private fun ClientChips(selected: McpClient, onSelect: (McpClient) -> Unit) {
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        McpClient.entries.forEach { client ->
+            FilterChip(
+                selected = selected == client,
+                onClick = { onSelect(client) },
+                label = { Text(stringResource(client.title)) }
+            )
+        }
     }
 }
 
@@ -123,20 +269,29 @@ private enum class McpClient(
     @StringRes val title: Int,
     @StringRes val instructions: Int,
     @StringRes val copyButtonText: Int,
+    @StringRes val remoteInstructions: Int,
+    @StringRes val remoteCopyButtonText: Int,
 ) {
     CLAUDE_CODE(
         title = R.string.client_claude_code,
         instructions = R.string.claude_code_instructions,
         copyButtonText = R.string.copy_command,
+        remoteInstructions = R.string.remote_claude_code_instructions,
+        remoteCopyButtonText = R.string.copy_command,
     ) {
         override fun snippet(url: String, token: String): String =
             "claude mcp add --transport sse phone $url " +
                 "--header \"Authorization: Bearer $token\""
+
+        override fun remoteSnippet(): String =
+            "claude mcp add --transport sse phone $REMOTE_SSE_URL"
     },
     CLAUDE_DESKTOP(
         title = R.string.client_claude_desktop,
         instructions = R.string.claude_desktop_instructions,
         copyButtonText = R.string.copy_configuration,
+        remoteInstructions = R.string.remote_claude_desktop_instructions,
+        remoteCopyButtonText = R.string.copy_url,
     ) {
         override fun snippet(url: String, token: String): String = """
             {
@@ -154,17 +309,27 @@ private enum class McpClient(
               }
             }
         """.trimIndent()
+
+        override fun remoteSnippet(): String = REMOTE_SSE_URL
     },
     OTHER(
         title = R.string.client_other,
         instructions = R.string.other_client_instructions,
         copyButtonText = R.string.copy_details,
+        remoteInstructions = R.string.remote_other_instructions,
+        remoteCopyButtonText = R.string.copy_details,
     ) {
         override fun snippet(url: String, token: String): String =
             "URL: $url\nHeader: Authorization: Bearer $token\nTransport: SSE over HTTP"
+
+        override fun remoteSnippet(): String =
+            "URL: $REMOTE_SSE_URL\n" +
+                "Auth: OAuth 2.1 (authorization code + PKCE, dynamic registration)\n" +
+                "Transport: SSE over HTTPS"
     };
 
     abstract fun snippet(url: String, token: String): String
+    abstract fun remoteSnippet(): String
 }
 
 @Composable
