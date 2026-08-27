@@ -48,8 +48,10 @@
     <string name="remote_claude_code_instructions">Run this command in a terminal on any computer. Then, inside Claude Code, run /mcp → phone → Authenticate — your browser opens, enter the pairing code below.</string>
     <string name="remote_claude_desktop_instructions">On your computer: Settings → Connectors → Add custom connector, and paste this URL. When the sign-in page opens in your browser, enter the pairing code below.</string>
     <string name="remote_other_instructions">Connect any MCP client that supports remote servers with OAuth 2.1. Authorize with the pairing code below:</string>
-    <string name="show_pairing_code">Show pairing code</string>
-    <string name="pairing_code_hint">Enter this code in the browser when connecting a new AI client. Valid for 10 minutes, single use.</string>
+    <string name="remote_status_connected">Connected to phonemcp.ai</string>
+    <string name="remote_status_connecting">Connecting to phonemcp.ai…</string>
+    <string name="show_pairing_code">Pair a new AI client</string>
+    <string name="pairing_code_hint">Enter this code in the browser when connecting a new AI client. Valid for 10 minutes, single use. Already-paired clients reconnect automatically — no new code needed.</string>
     <string name="tools_connect_note">Changes apply the next time a client connects.</string>
     <string name="not_on_wifi_warning">Not connected to Wi-Fi. The server can only be reached from devices on the same Wi-Fi network — connect this phone to Wi-Fi first.</string>
     <string name="test_connection">Test connection</string>

@@ -19,10 +19,14 @@ import javax.inject.Inject
 @HiltViewModel
 class RemoteAccessViewModel @Inject constructor(
     private val repository: RemoteAccessRepository,
+    tunnelStatusRepository: TunnelStatusRepository,
 ) : ViewModel() {
 
     val config: StateFlow<RemoteAccessConfig> = repository.config()
         .stateIn(viewModelScope, SharingStarted.Eagerly, RemoteAccessConfig())
+
+    /** Live tunnel state: null = not running, false = connecting, true = connected. */
+    val tunnelConnected: StateFlow<Boolean?> = tunnelStatusRepository.connected
 
     var pairingCode by mutableStateOf<String?>(null)
         private set

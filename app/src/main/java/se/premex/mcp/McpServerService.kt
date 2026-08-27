@@ -53,6 +53,7 @@ import se.premex.mcp.data.ServerPreferencesRepository
 import se.premex.mcp.di.ToolService
 import se.premex.mcp.remote.RemoteAccessRepository
 import se.premex.mcp.remote.TunnelClient
+import se.premex.mcp.remote.TunnelStatusRepository
 import java.net.BindException
 import java.net.InetAddress
 import java.net.InetSocketAddress
@@ -103,7 +104,11 @@ class McpServerService : Service() {
     @Inject
     lateinit var remoteAccessRepository: RemoteAccessRepository
 
+    @Inject
+    lateinit var tunnelStatusRepository: TunnelStatusRepository
+
     private var tunnelClient: TunnelClient? = null
+    private var tunnelStatusJob: Job? = null
     private var remoteAccessObserverStarted = false
 
     override fun onCreate() {
@@ -172,6 +177,7 @@ class McpServerService : Service() {
 
         tunnelClient?.stop()
         tunnelClient = null
+        tunnelStatusRepository.update(null)
 
         Log.d(TAG, "$LOG_PREFIX_LIFECYCLE: Cancelling service job")
         serviceJob.cancel()
@@ -267,12 +273,21 @@ class McpServerService : Service() {
                             localPort = localPort,
                             localAuthToken = authRepository.currentToken(),
                             scope = serviceScope,
-                        ).also { it.start() }
+                        ).also { client ->
+                            client.start()
+                            tunnelStatusJob?.cancel()
+                            tunnelStatusJob = serviceScope.launch {
+                                client.connected.collect { tunnelStatusRepository.update(it) }
+                            }
+                        }
                     }
                 } else if (current != null) {
                     Log.i(TAG, "$LOG_PREFIX_SERVER: Stopping remote tunnel")
                     current.stop()
                     tunnelClient = null
+                    tunnelStatusJob?.cancel()
+                    tunnelStatusJob = null
+                    tunnelStatusRepository.update(null)
                 }
             }
         }

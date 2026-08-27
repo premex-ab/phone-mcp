@@ -6,8 +6,10 @@ import android.content.Context
 import android.os.Build
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,6 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ContentCopy
@@ -44,6 +47,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
@@ -123,6 +127,7 @@ fun ConnectionGuide(
 @Composable
 private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
     val config by viewModel.config.collectAsState()
+    val tunnelConnected by viewModel.tunnelConnected.collectAsState()
     val context = LocalContext.current
 
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -133,6 +138,33 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
         )
 
         Spacer(modifier = Modifier.height(8.dp))
+
+        if (config.enabled) {
+            tunnelConnected?.let { connected ->
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Box(
+                        modifier = Modifier
+                            .size(8.dp)
+                            .clip(CircleShape)
+                            .background(
+                                if (connected) MaterialTheme.colorScheme.tertiary
+                                else MaterialTheme.colorScheme.outline
+                            )
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = stringResource(
+                            if (connected) R.string.remote_status_connected
+                            else R.string.remote_status_connecting
+                        ),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = if (connected) MaterialTheme.colorScheme.tertiary
+                        else MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+        }
 
         if (!config.enabled) {
             Button(
