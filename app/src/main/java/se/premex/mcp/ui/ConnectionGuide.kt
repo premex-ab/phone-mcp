@@ -172,9 +172,12 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
             }
 
             viewModel.entitlement?.let { (status, activeUntil) ->
+                // java.time needs API 26; minSdk is 24 — parse the ISO instant by hand
                 val daysLeft = runCatching {
-                    java.time.Duration.between(java.time.Instant.now(), java.time.Instant.parse(activeUntil))
-                        .toDays().coerceAtLeast(0)
+                    val format = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", java.util.Locale.US)
+                    format.timeZone = java.util.TimeZone.getTimeZone("UTC")
+                    val end = format.parse(activeUntil.substringBefore('.').removeSuffix("Z"))!!.time
+                    ((end - System.currentTimeMillis()) / 86_400_000L).coerceAtLeast(0)
                 }.getOrDefault(0L)
                 val (text, color) = when (status) {
                     "trial" -> stringResource(R.string.remote_trial_days_left, daysLeft) to
