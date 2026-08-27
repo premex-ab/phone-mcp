@@ -21,6 +21,7 @@ A powerful, modular Android application that implements a **Server-Sent Events (
 - **📷 Camera**: Access camera and take photos
 - **👥 Contacts**: Read contacts list
 - **📡 Sensor**: Access device sensors (accelerometer, gyroscope, etc.)
+- **📁 Files**: Browse and read files on the device (requires permission)
 - **🎯 Ads**: Display ads (example tool)
 - **🔌 External Tools**: Auto-discover and integrate tools from other apps
 
@@ -42,15 +43,46 @@ A powerful, modular Android application that implements a **Server-Sent Events (
 2. **Enable tools** you want to expose:
    - Review the disclaimer for each tool
    - Toggle individual tools on/off
-3. **Start the server** - Get your authentication token
-4. **Connect** your MCP client to `http://your-device:3001/sse` with the bearer token
+3. **Start the server** — the app shows the connection URL and access token
+4. **Connect your AI client** — pick your client in the app's "Connect your AI client"
+   section and copy the ready-made command or configuration
+
+Your computer must be on the same Wi-Fi network as the phone.
 
 ### Connecting from an MCP Client
 
+**Claude Code** — run in a terminal, then start a new session:
+
 ```bash
-# Example using curl with SSE
-curl -H "Authorization: Bearer YOUR_TOKEN" \
-     http://your-device:3001/sse
+claude mcp add --transport sse phone http://<phone-ip>:3001/sse --header "Authorization: Bearer <token>"
+```
+
+**Claude Desktop** — open *Settings → Developer → Edit Config* and add this to
+`claude_desktop_config.json`, then fully restart Claude Desktop (requires Node.js).
+Note that Claude Desktop's "Add custom connector" dialog only accepts HTTPS servers,
+so use this local server configuration instead:
+
+```json
+{
+  "mcpServers": {
+    "phone": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "http://<phone-ip>:3001/sse",
+        "--header",
+        "Authorization: Bearer <token>",
+        "--allow-http"
+      ]
+    }
+  }
+}
+```
+
+**Any other MCP client** — connect with the SSE transport:
+
+```bash
+curl -H "Authorization: Bearer <token>" http://<phone-ip>:3001/sse
 ```
 
 ## Architecture
@@ -68,6 +100,7 @@ android-mcp-server/
     ├── camera/
     ├── contacts/
     ├── sensor/
+    ├── files/
     ├── smsintent/
     ├── ads/
     └── externaltools/

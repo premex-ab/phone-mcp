@@ -3,7 +3,6 @@ package se.premex.mcp
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -11,8 +10,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,13 +21,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ContentCopy
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -56,7 +49,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -70,8 +62,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.qrcode.QRCodeWriter
 import dagger.hilt.android.AndroidEntryPoint
 import io.modelcontextprotocol.kotlin.sdk.server.Server
 import kotlinx.coroutines.Dispatchers
@@ -84,6 +74,7 @@ import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.data.ServerPreferencesRepository
 import se.premex.mcp.di.ToolService
 import se.premex.mcp.review.ReviewPrompter
+import se.premex.mcp.ui.ConnectionGuide
 import se.premex.mcp.ui.SettingsScreen
 import se.premex.mcp.ui.theme.MCPServerTheme
 import javax.inject.Inject
@@ -483,7 +474,10 @@ fun McpServerControl(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     if (isRunning) {
-                        Instructions(getConnectionUrl, authToken)
+                        ConnectionGuide(
+                            connectionUrl = getConnectionUrl(),
+                            authToken = authToken
+                        )
                         Spacer(modifier = Modifier.height(16.dp))
                         ConnectionDiagnostics(getConnectionUrl, isOnWifi)
                         Spacer(modifier = Modifier.height(16.dp))
@@ -584,217 +578,6 @@ private fun ConnectionDiagnostics(getConnectionUrl: () -> String, isOnWifi: () -
             )
         }
     }
-}
-
-@Composable
-private fun Instructions(getConnectionUrl: () -> String, authToken: String = "YTpi") {
-    // State for tracking if client configuration section is expanded
-    var configExpanded by remember { mutableStateOf(false) }
-
-    val clipboardManager = LocalClipboardManager.current
-    val context = LocalContext.current
-    val copiedMessage = stringResource(R.string.copied_to_clipboard)
-    val copyToClipboard: (String) -> Unit = { value ->
-        clipboardManager.setText(AnnotatedString(value))
-        Toast.makeText(context, copiedMessage, Toast.LENGTH_SHORT).show()
-    }
-
-    val clientConfig = """
-            {
-                "mcpServers": {
-                    "phone": {
-                        "command": "npx",
-                        "args": [
-                            "mcp-remote",
-                            "${getConnectionUrl().removePrefix("ws://")}",
-                            "--header",
-                            "Authorization: Bearer ${'\$'}{AUTH_TOKEN}",
-                            "--allow-http"
-                        ],
-                        "env": {
-                            "AUTH_TOKEN": "$authToken"
-                        }
-                    }
-                }
-            }
-            """.trimIndent()
-
-    Column {
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Connection URL row with copy button
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = stringResource(R.string.connection_url),
-                    style = MaterialTheme.typography.bodyLarge
-                )
-
-                Text(
-                    text = getConnectionUrl(),
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-
-            IconButton(onClick = { copyToClipboard(getConnectionUrl()) }) {
-                Icon(
-                    imageVector = Icons.Filled.ContentCopy,
-                    contentDescription = stringResource(R.string.copy_connection_url)
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Auth token row with copy button
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = stringResource(R.string.auth_token),
-                    style = MaterialTheme.typography.bodyLarge
-                )
-
-                Text(
-                    text = authToken,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-
-            IconButton(onClick = { copyToClipboard(authToken) }) {
-                Icon(
-                    imageVector = Icons.Filled.ContentCopy,
-                    contentDescription = stringResource(R.string.copy_auth_token)
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // How to connect steps
-        Text(
-            text = stringResource(R.string.how_to_connect),
-            style = MaterialTheme.typography.titleSmall,
-            fontWeight = FontWeight.Bold
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = stringResource(R.string.connect_steps),
-            style = MaterialTheme.typography.bodySmall
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Client configuration header with expand/collapse icon
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { configExpanded = !configExpanded },
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = stringResource(R.string.mcp_client_configuration),
-                style = MaterialTheme.typography.bodyLarge
-            )
-
-            Icon(
-                imageVector = if (configExpanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
-                contentDescription = if (configExpanded) stringResource(R.string.collapse_client_configuration) else stringResource(
-                    R.string.expand_client_configuration
-                ),
-                modifier = Modifier.size(24.dp)
-            )
-        }
-
-        // Client configuration instructions - only show when expanded
-        if (configExpanded) {
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant
-                )
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp)
-                ) {
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surface
-                        )
-                    ) {
-                        Text(
-                            text = clientConfig,
-                            style = MaterialTheme.typography.bodySmall,
-                            modifier = Modifier.padding(8.dp)
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Button(
-                        onClick = { copyToClipboard(clientConfig) },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.ContentCopy,
-                            contentDescription = null,
-                            modifier = Modifier.size(18.dp)
-                        )
-                        Text(text = " " + stringResource(R.string.copy_configuration))
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Text(
-                        text = stringResource(R.string.scan_configuration),
-                        style = MaterialTheme.typography.bodySmall
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    QrCode(
-                        content = clientConfig,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .align(Alignment.CenterHorizontally)
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun QrCode(content: String, modifier: Modifier = Modifier) {
-    val bitmap = remember(content) {
-        val size = 512
-        val matrix = QRCodeWriter().encode(content, BarcodeFormat.QR_CODE, size, size)
-        val pixels = IntArray(size * size) { i ->
-            if (matrix.get(i % size, i / size)) {
-                android.graphics.Color.BLACK
-            } else {
-                android.graphics.Color.WHITE
-            }
-        }
-        Bitmap.createBitmap(pixels, size, size, Bitmap.Config.RGB_565)
-    }
-
-    Image(
-        bitmap = bitmap.asImageBitmap(),
-        contentDescription = stringResource(R.string.qr_code_description),
-        modifier = modifier
-    )
 }
 
 @Preview(showBackground = true)

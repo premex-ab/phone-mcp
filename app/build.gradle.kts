@@ -111,6 +111,10 @@ dependencies {
     implementation(libs.io.modelcontextprotocol.kotlin.sdk)
     implementation(libs.org.slf4j.slf4j.nop)
 
+    // Ktor client for the phonemcp.ai remote tunnel
+    implementation(libs.io.ktor.ktor.client.cio)
+    implementation(libs.io.ktor.ktor.client.websockets)
+
     // Ktor dependencies
     implementation(libs.io.ktor.ktor.server.core)
     implementation(libs.io.ktor.ktor.server.cio)
@@ -130,6 +134,7 @@ dependencies {
     implementation(project(":tools:sensor"))
     implementation(project(":tools:camera"))
     implementation(project(":tools:location"))
+    implementation(project(":tools:files"))
     implementation(project(":tools:externaltools"))
     implementation(project(":mcp-provider"))
 

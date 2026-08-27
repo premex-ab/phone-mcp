@@ -22,15 +22,18 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,11 +41,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import se.premex.mcp.R
 import se.premex.mcp.data.ServerConfig
+import se.premex.mcp.remote.RemoteAccessViewModel
 
 /**
  * Settings screen for configuring server host and port
@@ -214,6 +221,91 @@ fun SettingsScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(stringResource(R.string.save_settings))
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
+            HorizontalDivider()
+            Spacer(modifier = Modifier.height(24.dp))
+
+            RemoteAccessSection()
+        }
+    }
+}
+
+@Composable
+private fun RemoteAccessSection(viewModel: RemoteAccessViewModel = hiltViewModel()) {
+    val config by viewModel.config.collectAsState()
+
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Text(
+            text = stringResource(R.string.remote_access_title),
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = stringResource(R.string.remote_access_description),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.weight(1f)
+            )
+            Switch(
+                checked = config.enabled,
+                onCheckedChange = { viewModel.setEnabled(it) },
+                enabled = !viewModel.busy
+            )
+        }
+
+        if (viewModel.busy) {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = stringResource(R.string.remote_access_contacting_relay),
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+
+        viewModel.error?.let { error ->
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = error,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+
+        if (config.enabled) {
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = { viewModel.requestPairingCode() },
+                enabled = !viewModel.busy,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(stringResource(R.string.show_pairing_code))
+            }
+
+            viewModel.pairingCode?.let { code ->
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = code,
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 6.sp,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = stringResource(R.string.pairing_code_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         }
     }
