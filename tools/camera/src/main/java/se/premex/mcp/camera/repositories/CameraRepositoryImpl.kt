@@ -13,8 +13,9 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ProcessLifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
@@ -282,6 +283,24 @@ class CameraRepositoryImpl(
     /**
      * Bind use cases to camera provider and get camera instance
      */
+    /**
+     * CameraX unbinds its use cases as soon as the bound LifecycleOwner stops,
+     * and ProcessLifecycleOwner stops the moment the app leaves the foreground —
+     * which made every background capture fail with "Not bound to a valid
+     * Camera" (issue #72). The MCP server runs as a camera-type foreground
+     * service, so background capture is legal; this owner stays RESUMED for as
+     * long as the use case needs it, independent of UI state.
+     */
+    private class CaptureLifecycleOwner : LifecycleOwner {
+        private val registry = LifecycleRegistry(this)
+        override val lifecycle: Lifecycle get() = registry
+
+        /** Main thread only. */
+        fun activate() {
+            registry.currentState = Lifecycle.State.RESUMED
+        }
+    }
+
     private suspend fun bindUseCases(
         cameraProvider: ProcessCameraProvider,
         cameraSelector: CameraSelector,
@@ -291,9 +310,11 @@ class CameraRepositoryImpl(
             // Unbind any existing use cases
             cameraProvider.unbindAll()
 
+            val owner = CaptureLifecycleOwner().apply { activate() }
+
             // Bind use cases to camera and return the camera instance
             cameraProvider.bindToLifecycle(
-                ProcessLifecycleOwner.get(),
+                owner,
                 cameraSelector,
                 imageCapture
             )
