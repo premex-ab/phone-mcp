@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_contacts_name">Odczyt kontaktów</string>
+    <string name="tools_contacts_disclaimer">OSTRZEŻENIE O PRYWATNOŚCI: włączenie dostępu do kontaktów\n\nWłączając to narzędzie, udzielasz tej aplikacji i wszystkim połączonym usługom AI uprawnień do:\n• Odczytywania listy kontaktów, w tym imion i nazwisk, numerów telefonów i innych danych osobowych\n• Przetwarzania tych danych osobowych umożliwiających identyfikację (PII) w celu odpowiadania na Twoje żądania\n\nPrzyjmujesz do wiadomości, że:\n• Masz niezbędną zgodę osób znajdujących się na Twojej liście kontaktów\n• Odpowiadasz za to, aby podłączane usługi AI były zgodne z obowiązującymi przepisami o ochronie prywatności\n• Możesz w każdej chwili cofnąć dostęp, wyłączając to narzędzie\n\nNie przechowujemy danych Twoich kontaktów, ale połączone usługi AI mogą przetwarzać te informacje zgodnie ze swoimi politykami prywatności.</string>
+</resources>

@@ -1,5 +1,7 @@
 package se.premex.mcp.sensor.tool
 
+import se.premex.mcp.sensor.R
+
 import io.modelcontextprotocol.kotlin.sdk.server.Server
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.sensor.configurator.SensorToolConfiguratorImpl
@@ -9,6 +11,7 @@ class SensorTool(
 ) : McpTool {
     override val id: String = "sensor"
     override val name: String = "Sensors"
+    override val nameRes: Int = R.string.tools_sensor_name
     override val enabledByDefault: Boolean = true
     override val disclaim: String? = null
 

@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_sms_name">Gửi SMS</string>
+    <string name="tools_sms_disclaimer">CẢNH BÁO VỀ QUYỀN RIÊNG TƯ VÀ CHI PHÍ: Bật quyền truy cập SMS\n\nKhi bật công cụ này, bạn cấp cho ứng dụng này và mọi dịch vụ AI được kết nối quyền:\n• Gửi tin nhắn SMS từ thiết bị của bạn đến bất kỳ số điện thoại nào\n• Truy cập lịch sử SMS của bạn để đưa ra phản hồi phù hợp với ngữ cảnh\n• Có thể phát sinh cước phí từ nhà mạng di động của bạn\n\nBạn xác nhận rằng:\n• Bạn chịu trách nhiệm về mọi tin nhắn được gửi đi và các chi phí liên quan\n• Bạn chịu trách nhiệm đảm bảo mọi dịch vụ AI mà bạn kết nối sẽ không lạm dụng khả năng này\n• Bạn có thể thu hồi quyền truy cập bất cứ lúc nào bằng cách tắt công cụ này\n\nChúng tôi không lưu trữ nội dung tin nhắn của bạn, nhưng các dịch vụ AI được kết nối có thể xử lý thông tin này theo chính sách quyền riêng tư của họ.</string>
+</resources>

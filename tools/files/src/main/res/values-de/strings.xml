@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_files_name">Dateizugriff</string>
+    <string name="tools_files_disclaimer">DATENSCHUTZWARNUNG: Aktivierung des Dateizugriffs\n\nMit der Aktivierung dieses Tools erlaubst du dieser App und allen verbundenen KI-Diensten:\n• Dateien und Ordner im geteilten Speicher dieses Geräts zu durchsuchen\n• Den Inhalt von Dateien zu lesen, einschließlich Fotos, Dokumenten und Downloads\n\nDu bestätigst, dass:\n• Dateien auf deinem Gerät sensible persönliche Informationen enthalten können\n• Verbundene KI-Dienste Dateiinhalte gemäß ihren Datenschutzrichtlinien verarbeiten können\n• Auf Android 13+ der Zugriff auf den geteilten Speicher auf Mediendateien (Bilder, Videos, Audio) beschränkt ist\n• Du den Zugriff jederzeit widerrufen kannst, indem du dieses Tool deaktivierst\n\nWir speichern deine Dateien nicht, aber verbundene KI-Dienste können diese Informationen gemäß ihren Datenschutzrichtlinien verarbeiten.</string>
+</resources>

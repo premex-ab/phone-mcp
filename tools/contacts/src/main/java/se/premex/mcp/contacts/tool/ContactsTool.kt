@@ -1,5 +1,7 @@
 package se.premex.mcp.contacts.tool
 
+import se.premex.mcp.contacts.R
+
 import io.modelcontextprotocol.kotlin.sdk.server.Server
 import se.premex.mcp.contacts.repositories.ContactsRepository
 import se.premex.mcp.contacts.serverconfigurator.appendContactsTools
@@ -8,7 +10,10 @@ import se.premex.mcp.core.tool.McpTool
 class ContactsTool(val contactsRepository: ContactsRepository) : McpTool {
     override val id: String = "contacts"
     override val name: String = "Read contacts"
+    override val nameRes: Int = R.string.tools_contacts_name
     override val enabledByDefault: Boolean = false
+    override val disclaimRes: Int = R.string.tools_contacts_disclaimer
+
     override val disclaim: String?
         get() = "PRIVACY WARNING: Enabling contacts access\n\n" +
                 "By enabling this tool, you grant this application and any connected AI services permission to:\n" +

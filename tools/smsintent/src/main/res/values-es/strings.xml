@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_smsintent_name">Intent de envío de SMS</string>
+    <string name="tools_smsintent_disclaimer">AVISO DE PRIVACIDAD: creación de intents de SMS\n\nAl activar esta herramienta, concedes a esta aplicación y a cualquier servicio de IA conectado permiso para:\n• Preparar SMS para que los revises y envíes manualmente\n• Crear intents de envío de SMS que debes aprobar antes de enviarlos\n\nReconoces que:\n• Esta herramienta NO PUEDE enviar mensajes automáticamente sin tu aprobación\n• Siempre tendrás la revisión y la decisión finales antes de que se envíe cualquier mensaje\n• Eres responsable de los mensajes que decidas enviar y de sus costos asociados\n• Puedes revocar el acceso en cualquier momento desactivando esta herramienta\n\nNo almacenamos el contenido de tus mensajes, pero los servicios de IA conectados pueden procesar esta información según sus políticas de privacidad.</string>
+</resources>

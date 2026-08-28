@@ -1,5 +1,7 @@
 package se.premex.mcp.location.tool
 
+import se.premex.mcp.location.R
+
 import io.modelcontextprotocol.kotlin.sdk.server.Server
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.location.configurator.LocationToolConfiguratorImpl
@@ -9,7 +11,10 @@ class LocationTool(
 ) : McpTool {
     override val id: String = "location"
     override val name: String = "Location"
+    override val nameRes: Int = R.string.tools_location_name
     override val enabledByDefault: Boolean = false
+    override val disclaimRes: Int = R.string.tools_location_disclaimer
+
     override val disclaim: String?
         get() = "PRIVACY WARNING: Enabling location access\n\n" +
                 "By enabling this tool, you grant this application and any connected AI services permission to:\n" +

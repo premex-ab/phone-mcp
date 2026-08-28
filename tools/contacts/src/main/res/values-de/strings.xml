@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_contacts_name">Kontakte lesen</string>
+    <string name="tools_contacts_disclaimer">DATENSCHUTZWARNUNG: Aktivierung des Kontaktzugriffs\n\nMit der Aktivierung dieses Tools erlaubst du dieser App und allen verbundenen KI-Diensten:\n• Deine Kontaktliste zu lesen, einschließlich Namen, Telefonnummern und anderer persönlicher Informationen\n• Diese personenbezogenen Daten (PII) zur Beantwortung deiner Anfragen zu verarbeiten\n\nDu bestätigst, dass:\n• Du die erforderliche Einwilligung der Personen in deiner Kontaktliste eingeholt hast\n• Du dafür verantwortlich bist, dass die von dir verbundenen KI-Dienste die geltenden Datenschutzvorschriften einhalten\n• Du den Zugriff jederzeit widerrufen kannst, indem du dieses Tool deaktivierst\n\nWir speichern deine Kontaktdaten nicht, aber verbundene KI-Dienste können diese Informationen gemäß ihren Datenschutzrichtlinien verarbeiten.</string>
+</resources>

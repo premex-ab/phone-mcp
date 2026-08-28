@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_files_name">Přístup k souborům</string>
+    <string name="tools_files_disclaimer">UPOZORNĚNÍ NA OCHRANU SOUKROMÍ: povolení přístupu k souborům\n\nPovolením tohoto nástroje udělujete této aplikaci a všem připojeným AI službám oprávnění:\n• Procházet soubory a složky ve sdíleném úložišti tohoto zařízení\n• Číst obsah souborů včetně fotografií, dokumentů a stažených souborů\n\nBerete na vědomí, že:\n• Soubory ve vašem zařízení mohou obsahovat citlivé osobní údaje\n• Připojené AI služby mohou obsah souborů zpracovávat podle svých zásad ochrany soukromí\n• V systému Android 13+ je přístup ke sdílenému úložišti omezen na mediální soubory (obrázky, video, zvuk)\n• Přístup můžete kdykoli odvolat vypnutím tohoto nástroje\n\nVaše soubory neukládáme, ale připojené AI služby mohou tyto informace zpracovávat podle svých zásad ochrany soukromí.</string>
+</resources>

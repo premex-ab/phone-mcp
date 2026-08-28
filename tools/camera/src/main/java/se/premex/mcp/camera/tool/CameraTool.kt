@@ -1,5 +1,7 @@
 package se.premex.mcp.camera.tool
 
+import se.premex.mcp.camera.R
+
 import io.modelcontextprotocol.kotlin.sdk.server.Server
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.camera.configurator.CameraToolConfiguratorImpl
@@ -9,6 +11,7 @@ class CameraTool(
 ) : McpTool {
     override val id: String = "camera"
     override val name: String = "Camera"
+    override val nameRes: Int = R.string.tools_camera_name
     override val enabledByDefault: Boolean = true
     override val disclaim: String? = null
 

@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_files_name">File access</string>
+    <string name="tools_files_disclaimer">PRIVACY WARNING: Enabling file access\n\nBy enabling this tool, you grant this application and any connected AI services permission to:\n• Browse files and directories on this device\'s shared storage\n• Read the content of files, including photos, documents and downloads\n\nYou acknowledge that:\n• Files on your device may contain sensitive personal information\n• Connected AI services may process file contents according to their privacy policies\n• On Android 13+ access to shared storage is limited to media files (images, video, audio)\n• You can revoke access at any time by disabling this tool\n\nWe do not store your files, but connected AI services may process this information according to their privacy policies.</string>
+</resources>

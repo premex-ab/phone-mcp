@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_files_name">Dosya erişimi</string>
+    <string name="tools_files_disclaimer">GİZLİLİK UYARISI: Dosya erişimini etkinleştirme\n\nBu aracı etkinleştirerek bu uygulamaya ve bağlı tüm yapay zeka hizmetlerine şunlar için izin vermiş olursunuz:\n• Bu cihazın paylaşılan depolama alanındaki dosya ve klasörlere göz atma\n• Fotoğraflar, belgeler ve indirilenler dahil olmak üzere dosya içeriklerini okuma\n\nŞunları kabul edersiniz:\n• Cihazınızdaki dosyalar hassas kişisel bilgiler içerebilir\n• Bağlı yapay zeka hizmetleri dosya içeriklerini kendi gizlilik politikalarına göre işleyebilir\n• Android 13+ sürümlerinde paylaşılan depolamaya erişim medya dosyalarıyla (görüntü, video, ses) sınırlıdır\n• Bu aracı devre dışı bırakarak erişimi istediğiniz zaman iptal edebilirsiniz\n\nDosyalarınızı saklamıyoruz, ancak bağlı yapay zeka hizmetleri bu bilgileri kendi gizlilik politikalarına göre işleyebilir.</string>
+</resources>

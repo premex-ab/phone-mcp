@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_location_name">Ubicación</string>
+    <string name="tools_location_disclaimer">ADVERTENCIA DE PRIVACIDAD: activación del acceso a la ubicación\n\nAl activar esta herramienta, concedes a esta aplicación y a cualquier servicio de IA conectado permiso para:\n• Leer la posición geográfica actual de tu teléfono (GPS/red)\n\nReconoces que:\n• Los servicios de IA conectados pueden procesar tu ubicación según sus políticas de privacidad\n• Puedes revocar el acceso en cualquier momento desactivando esta herramienta\n\nNo almacenamos tu ubicación, pero los servicios de IA conectados podrían hacerlo.</string>
+</resources>

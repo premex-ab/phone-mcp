@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_sms_name">Wysyłanie SMS</string>
+    <string name="tools_sms_disclaimer">OSTRZEŻENIE O PRYWATNOŚCI I KOSZTACH: włączenie dostępu do SMS\n\nWłączając to narzędzie, udzielasz tej aplikacji i wszystkim połączonym usługom AI uprawnień do:\n• Wysyłania wiadomości SMS z Twojego urządzenia na dowolny numer telefonu\n• Dostępu do Twojej historii SMS w celu udzielania odpowiedzi kontekstowych\n• Potencjalnego naliczania opłat przez Twojego operatora komórkowego\n\nPrzyjmujesz do wiadomości, że:\n• Odpowiadasz za wszystkie wysłane wiadomości i związane z nimi koszty\n• Odpowiadasz za to, aby podłączane usługi AI nie nadużywały tej funkcji\n• Możesz w każdej chwili cofnąć dostęp, wyłączając to narzędzie\n\nNie przechowujemy treści Twoich wiadomości, ale połączone usługi AI mogą przetwarzać te informacje zgodnie ze swoimi politykami prywatności.</string>
+</resources>

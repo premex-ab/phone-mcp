@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_sms_name">Send SMS</string>
+    <string name="tools_sms_disclaimer">PERSONVERN- OG KOSTNADSADVARSEL: Aktivering av SMS-tilgang\n\nVed å aktivere dette verktøyet gir du denne appen og alle tilkoblede AI-tjenester tillatelse til å:\n• Sende SMS fra enheten din til et hvilket som helst telefonnummer\n• Få tilgang til SMS-historikken din for å gi svar med kontekst\n• Eventuelt påføre kostnader fra mobiloperatøren din\n\nDu bekrefter at:\n• Du er ansvarlig for alle meldinger som sendes, og tilhørende kostnader\n• Du er ansvarlig for at AI-tjenestene du kobler til, ikke misbruker denne funksjonen\n• Du når som helst kan trekke tilbake tilgangen ved å deaktivere dette verktøyet\n\nVi lagrer ikke innholdet i meldingene dine, men tilkoblede AI-tjenester kan behandle denne informasjonen i henhold til sine personvernerklæringer.</string>
+</resources>

@@ -1,10 +1,9 @@
-📱 Your phone, as tools for your AI
-
 Phone MCP turns your Android phone into a secure MCP server that AI assistants like Claude can connect to. Ask your AI to find a photo, read a downloaded PDF, check a sensor, snap a picture or look up a contact — while every capability stays under your control, on your device.
 
 The app contains no AI of its own. You connect the assistant you already use — Claude Code, Claude Desktop, or any client that speaks the Model Context Protocol.
 
-🌍 REMOTE ACCESS — NEW
+Remote access
+
 Reach your phone from anywhere through phonemcp.ai. Pair a new AI client in under a minute: run one command, type the pairing code the app shows you, done. Paired clients reconnect automatically.
 
 • Works from any network — no port forwarding, no VPN, no account creation
@@ -14,10 +13,12 @@ Reach your phone from anywhere through phonemcp.ai. Pair a new AI client in unde
 • See and revoke every paired AI client in the app
 • Free 30-day trial, then a small monthly or yearly subscription
 
-🏠 LOCAL NETWORK — FREE FOREVER
+Local network
+
 On your own Wi-Fi, your AI connects directly to the phone. No cloud, no subscription, no limits. This will always be free.
 
-🧰 WHAT YOUR AI CAN DO
+What your AI can do
+
 • Files — browse and read photos, downloads and documents
 • Camera — take a photo and hand it straight to the model
 • Sensors — accelerometer, gyroscope, barometer, light and more
@@ -26,13 +27,15 @@ On your own Wi-Fi, your AI connects directly to the phone. No cloud, no subscrip
 • SMS — compose messages (with your confirmation)
 • Extend it — third-party apps can expose their own MCP tools
 
-🔒 PRIVATE BY DESIGN
-• Every tool is OFF until you enable it — sensitive ones require explicit consent
+Private by design
+
+• Every tool is off until you enable it — sensitive ones require explicit consent
 • Bearer-token authentication locally, OAuth 2.1 remotely
 • Turn remote access off at any time; the tunnel closes immediately
-• We run no ads and no trackers, and never sell data
+• No ads, no trackers, and your data is never sold
 
-🧑‍💻 OPEN SOURCE
+Open source
+
 The app and its tunnel protocol are open source on GitHub — audit exactly what leaves your phone: github.com/premex-ab/phone-mcp
 
 Made in Sweden by Premex.

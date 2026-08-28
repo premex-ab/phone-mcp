@@ -1,5 +1,7 @@
 package se.premex.mcp.externaltools.tool
 
+import se.premex.mcp.externaltools.R
+
 import android.util.Log
 import io.modelcontextprotocol.kotlin.sdk.server.Server
 import io.modelcontextprotocol.kotlin.sdk.types.CallToolResult
@@ -22,6 +24,7 @@ class ExternalToolsTool @Inject constructor(
 ) : McpTool {
     override val id = "external_tools"
     override val name = "External Tools"
+    override val nameRes: Int = R.string.tools_externaltools_name
     override val enabledByDefault = true
     override val disclaim: String? = null
 

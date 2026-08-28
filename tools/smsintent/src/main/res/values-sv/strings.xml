@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_smsintent_name">Skicka SMS-intent</string>
+    <string name="tools_smsintent_disclaimer">INTEGRITETSMEDDELANDE: Skapande av SMS-intent\n\nGenom att aktivera det här verktyget ger du den här appen och alla anslutna AI-tjänster tillåtelse att:\n• Förbereda SMS som du kan granska och skicka manuellt\n• Skapa SMS-intent som du måste godkänna innan de skickas\n\nDu bekräftar att:\n• Det här verktyget INTE kan skicka meddelanden automatiskt utan ditt godkännande\n• Du alltid har den slutliga granskningen och beslutet innan ett meddelande skickas\n• Du ansvarar för alla meddelanden du väljer att skicka och tillhörande kostnader\n• Du när som helst kan återkalla åtkomsten genom att inaktivera verktyget\n\nVi lagrar inte innehållet i dina meddelanden, men anslutna AI-tjänster kan behandla informationen enligt sina integritetspolicyer.</string>
+</resources>

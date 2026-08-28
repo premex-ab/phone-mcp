@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_location_name">Poloha</string>
+    <string name="tools_location_disclaimer">UPOZORNĚNÍ NA OCHRANU SOUKROMÍ: povolení přístupu k poloze\n\nPovolením tohoto nástroje udělujete této aplikaci a všem připojeným AI službám oprávnění:\n• Číst aktuální zeměpisnou polohu vašeho telefonu (GPS/síť)\n\nBerete na vědomí, že:\n• Připojené AI služby mohou vaši polohu zpracovávat podle svých zásad ochrany soukromí\n• Přístup můžete kdykoli odvolat vypnutím tohoto nástroje\n\nVaši polohu neukládáme, ale připojené AI služby ji ukládat mohou.</string>
+</resources>

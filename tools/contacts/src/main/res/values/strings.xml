@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_contacts_name">Read contacts</string>
+    <string name="tools_contacts_disclaimer">PRIVACY WARNING: Enabling contacts access\n\nBy enabling this tool, you grant this application and any connected AI services permission to:\n• Read your contact list including names, phone numbers, and other personal information\n• Process this personal identifiable information (PII) for responding to your requests\n\nYou acknowledge that:\n• You have obtained necessary consent from individuals in your contacts list\n• You are responsible for ensuring any AI services you connect to comply with applicable privacy regulations\n• You can revoke access at any time by disabling this tool\n\nWe do not store your contacts data, but connected AI services may process this information according to their privacy policies.</string>
+</resources>

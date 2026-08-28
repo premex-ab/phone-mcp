@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_sms_name">Odesílání SMS</string>
+    <string name="tools_sms_disclaimer">UPOZORNĚNÍ NA SOUKROMÍ A NÁKLADY: povolení přístupu k SMS\n\nPovolením tohoto nástroje udělujete této aplikaci a všem připojeným AI službám oprávnění:\n• Odesílat SMS zprávy z vašeho zařízení na libovolné telefonní číslo\n• Přistupovat k vaší historii SMS pro kontextové odpovědi\n• Potenciálně způsobit poplatky u vašeho mobilního operátora\n\nBerete na vědomí, že:\n• Jste odpovědní za všechny odeslané zprávy a související náklady\n• Jste odpovědní za to, že AI služby, které připojíte, tuto funkci nezneužijí\n• Přístup můžete kdykoli odvolat vypnutím tohoto nástroje\n\nObsah vašich zpráv neukládáme, ale připojené AI služby mohou tyto informace zpracovávat podle svých zásad ochrany soukromí.</string>
+</resources>

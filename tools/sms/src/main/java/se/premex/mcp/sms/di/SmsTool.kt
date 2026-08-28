@@ -1,5 +1,7 @@
 package se.premex.mcp.sms.di
 
+import se.premex.mcp.sms.R
+
 import android.content.Context
 import dagger.Module
 import dagger.Provides
@@ -17,7 +19,10 @@ import javax.inject.Singleton
 class SmsTool(val smsSender: SmsSender) : McpTool {
     override val id: String = "sms"
     override val name: String = "Send SMS"
+    override val nameRes: Int = R.string.tools_sms_name
     override val enabledByDefault: Boolean = false
+    override val disclaimRes: Int = R.string.tools_sms_disclaimer
+
     override val disclaim: String?
         get() = "PRIVACY & COST WARNING: Enabling SMS access\n\n" +
                 "By enabling this tool, you grant this application and any connected AI services permission to:\n" +

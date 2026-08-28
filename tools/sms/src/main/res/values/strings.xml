@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_sms_name">Send SMS</string>
+    <string name="tools_sms_disclaimer">PRIVACY &amp; COST WARNING: Enabling SMS access\n\nBy enabling this tool, you grant this application and any connected AI services permission to:\n• Send SMS messages from your device to any phone number\n• Access your SMS history for contextual responses\n• Potentially incur charges from your mobile carrier\n\nYou acknowledge that:\n• You are responsible for any messages sent and associated costs\n• You are responsible for ensuring any AI services you connect to will not misuse this capability\n• You can revoke access at any time by disabling this tool\n\nWe do not store the content of your messages, but connected AI services may process this information according to their privacy policies.</string>
+</resources>

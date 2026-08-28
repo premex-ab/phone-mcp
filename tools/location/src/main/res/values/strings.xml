@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_location_name">Location</string>
+    <string name="tools_location_disclaimer">PRIVACY WARNING: Enabling location access\n\nBy enabling this tool, you grant this application and any connected AI services permission to:\n• Read your phone\'s current geographic position (GPS/network)\n\nYou acknowledge that:\n• Connected AI services may process your location according to their privacy policies\n• You can revoke access at any time by disabling this tool\n\nWe do not store your location, but connected AI services may.</string>
+</resources>

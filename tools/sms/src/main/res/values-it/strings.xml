@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_sms_name">Invio SMS</string>
+    <string name="tools_sms_disclaimer">AVVISO SU PRIVACY E COSTI: attivazione dell\'accesso agli SMS\n\nAttivando questo strumento, concedi a questa applicazione e a qualsiasi servizio AI connesso il permesso di:\n• Inviare SMS dal tuo dispositivo a qualsiasi numero di telefono\n• Accedere alla cronologia dei tuoi SMS per risposte contestuali\n• Generare potenzialmente costi da parte del tuo operatore mobile\n\nRiconosci che:\n• Sei responsabile di qualsiasi messaggio inviato e dei costi associati\n• Sei responsabile di assicurarti che i servizi AI a cui ti connetti non facciano un uso improprio di questa funzionalità\n• Puoi revocare l\'accesso in qualsiasi momento disattivando questo strumento\n\nNon memorizziamo il contenuto dei tuoi messaggi, ma i servizi AI connessi potrebbero elaborare queste informazioni secondo le loro informative sulla privacy.</string>
+</resources>

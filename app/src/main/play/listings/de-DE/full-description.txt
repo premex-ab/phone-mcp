@@ -1,10 +1,9 @@
-📱 Dein Handy, als Werkzeuge für deine KI
-
 Phone MCP macht aus deinem Android-Handy einen sicheren MCP-Server, mit dem sich KI-Assistenten wie Claude verbinden können. Bitte deine KI, ein Foto zu finden, ein heruntergeladenes PDF zu lesen, einen Sensor abzufragen, ein Bild aufzunehmen oder einen Kontakt nachzuschlagen — während jede Funktion unter deiner Kontrolle bleibt, auf deinem Gerät.
 
 Die App enthält selbst keine KI. Du verbindest den Assistenten, den du bereits nutzt — Claude Code, Claude Desktop oder jeden Client, der das Model Context Protocol spricht.
 
-🌍 FERNZUGRIFF — NEU
+Fernzugriff
+
 Erreiche dein Handy von überall über phonemcp.ai. Kopple einen neuen KI-Client in unter einer Minute: einen Befehl ausführen, den Kopplungscode aus der App eintippen, fertig. Gekoppelte Clients verbinden sich automatisch neu.
 
 • Funktioniert aus jedem Netzwerk — kein Port-Forwarding, kein VPN, kein Konto nötig
@@ -14,10 +13,12 @@ Erreiche dein Handy von überall über phonemcp.ai. Kopple einen neuen KI-Client
 • Sieh und widerrufe jeden gekoppelten KI-Client direkt in der App
 • 30 Tage kostenlos testen, danach ein kleines Monats- oder Jahresabo
 
-🏠 LOKALES NETZWERK — FÜR IMMER KOSTENLOS
+Lokales Netzwerk
+
 In deinem eigenen Wi-Fi verbindet sich deine KI direkt mit dem Handy. Keine Cloud, kein Abo, keine Limits. Das bleibt für immer kostenlos.
 
-🧰 WAS DEINE KI KANN
+Was deine KI kann
+
 • Dateien — Fotos, Downloads und Dokumente durchsuchen und lesen
 • Kamera — ein Foto aufnehmen und direkt ans Modell übergeben
 • Sensoren — Beschleunigung, Gyroskop, Barometer, Licht und mehr
@@ -26,13 +27,15 @@ In deinem eigenen Wi-Fi verbindet sich deine KI direkt mit dem Handy. Keine Clou
 • SMS — Nachrichten verfassen (mit deiner Bestätigung)
 • Erweiterbar — Drittanbieter-Apps können eigene MCP-Tools bereitstellen
 
-🔒 PRIVATSPHÄRE VON GRUND AUF
-• Jedes Tool ist AUS, bis du es aktivierst — sensible erfordern ausdrückliche Zustimmung
+Privatsphäre von Grund auf
+
+• Jedes Tool ist aus, bis du es aktivierst — sensible erfordern ausdrückliche Zustimmung
 • Bearer-Token-Authentifizierung lokal, OAuth 2.1 aus der Ferne
 • Schalte den Fernzugriff jederzeit ab; der Tunnel schließt sofort
-• Keine Werbung, keine Tracker — und wir verkaufen niemals Daten
+• Keine Werbung, keine Tracker — und deine Daten werden niemals verkauft
 
-🧑‍💻 OPEN SOURCE
+Open Source
+
 App und Tunnelprotokoll sind Open Source auf GitHub — prüfe genau, was dein Handy verlässt: github.com/premex-ab/phone-mcp
 
 Entwickelt in Schweden von Premex.

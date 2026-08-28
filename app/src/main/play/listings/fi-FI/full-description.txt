@@ -1,10 +1,9 @@
-📱 Puhelimesi, tekoälysi työkaluina
-
 Phone MCP muuttaa Android-puhelimesi turvalliseksi MCP-palvelimeksi, johon tekoälyavustajat kuten Claude voivat yhdistää. Pyydä tekoälyäsi etsimään valokuva, lukemaan ladattu PDF, tarkistamaan anturi, ottamaan kuva tai hakemaan yhteystieto — samalla jokainen toiminto pysyy sinun hallinnassasi, omalla laitteellasi.
 
 Sovellus ei itse sisällä tekoälyä. Yhdistät avustajan, jota jo käytät — Claude Code, Claude Desktop tai minkä tahansa asiakkaan, joka puhuu Model Context Protocol -protokollaa.
 
-🌍 ETÄKÄYTTÖ — UUTTA
+Etäkäyttö
+
 Tavoita puhelimesi mistä tahansa phonemcp.ai:n kautta. Parita uusi tekoälyasiakas alle minuutissa: aja yksi komento, syötä sovelluksen näyttämä parituskoodi, valmis. Paritetut asiakkaat yhdistävät automaattisesti uudelleen.
 
 • Toimii mistä tahansa verkosta — ei porttiohjauksia, ei VPN:ää, ei tilin luontia
@@ -14,10 +13,12 @@ Tavoita puhelimesi mistä tahansa phonemcp.ai:n kautta. Parita uusi tekoälyasia
 • Näe ja peru jokainen paritettu tekoälyasiakas sovelluksessa
 • Ilmainen 30 päivän kokeilu, sitten pieni kuukausi- tai vuositilaus
 
-🏠 LÄHIVERKKO — IKUISESTI ILMAINEN
+Lähiverkko
+
 Omassa Wi-Fi-verkossasi tekoälysi yhdistää suoraan puhelimeen. Ei pilveä, ei tilausta, ei rajoituksia. Tämä on aina ilmaista.
 
-🧰 MITÄ TEKOÄLYSI VOI TEHDÄ
+Mitä tekoälysi voi tehdä
+
 • Tiedostot — selaa ja lue valokuvia, latauksia ja dokumentteja
 • Kamera — ota kuva ja anna se suoraan mallille
 • Anturit — kiihtyvyysanturi, gyroskooppi, ilmanpainemittari, valo ja muut
@@ -26,13 +27,15 @@ Omassa Wi-Fi-verkossasi tekoälysi yhdistää suoraan puhelimeen. Ei pilveä, ei
 • SMS — laadi viestejä (sinun vahvistuksellasi)
 • Laajenna — kolmannen osapuolen sovellukset voivat tarjota omia MCP-työkalujaan
 
-🔒 YKSITYISYYS EDELLÄ
-• Jokainen työkalu on POIS PÄÄLTÄ, kunnes otat sen käyttöön — arkaluontoiset vaativat nimenomaisen suostumuksen
+Yksityisyys edellä
+
+• Jokainen työkalu on pois päältä, kunnes otat sen käyttöön — arkaluontoiset vaativat nimenomaisen suostumuksen
 • Bearer token -todennus paikallisesti, OAuth 2.1 etänä
 • Sammuta etäkäyttö milloin tahansa; tunneli sulkeutuu heti
-• Ei mainoksia, ei seuraimia, emmekä koskaan myy tietojasi
+• Ei mainoksia, ei seuraimia, eikä tietojasi koskaan myydä
 
-🧑‍💻 AVOIN LÄHDEKOODI
+Avoin lähdekoodi
+
 Sovellus ja sen tunneliprotokolla ovat avointa lähdekoodia GitHubissa — tarkista tarkalleen, mitä puhelimestasi lähtee: github.com/premex-ab/phone-mcp
 
 Tehty Ruotsissa, tekijänä Premex.
