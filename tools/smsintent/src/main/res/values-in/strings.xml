@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_smsintent_name">Intent Kirim SMS</string>
+    <string name="tools_smsintent_disclaimer">PEMBERITAHUAN PRIVASI: Pembuatan Intent SMS\n\nDengan mengaktifkan alat ini, Anda memberikan izin kepada aplikasi ini dan layanan AI apa pun yang terhubung untuk:\n• Menyiapkan pesan SMS untuk Anda tinjau dan kirim secara manual\n• Membuat intent pengiriman SMS yang harus Anda setujui sebelum dikirim\n\nAnda mengakui bahwa:\n• Alat ini TIDAK DAPAT mengirim pesan secara otomatis tanpa persetujuan Anda\n• Anda akan selalu memiliki tinjauan dan keputusan akhir sebelum pesan apa pun dikirim\n• Anda bertanggung jawab atas semua pesan yang Anda pilih untuk dikirim dan biaya terkaitnya\n• Anda dapat mencabut akses kapan saja dengan menonaktifkan alat ini\n\nKami tidak menyimpan isi pesan Anda, tetapi layanan AI yang terhubung dapat memproses informasi ini sesuai dengan kebijakan privasinya.</string>
+</resources>

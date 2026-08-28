@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_sms_name">傳送 SMS</string>
+    <string name="tools_sms_disclaimer">隱私權與費用警告：啟用 SMS 存取\n\n啟用此工具，即表示您授予本應用程式及任何已連接的 AI 服務下列權限：\n• 從此裝置向任何電話號碼傳送 SMS 訊息\n• 存取您的 SMS 紀錄以提供符合脈絡的回應\n• 可能產生電信業者費用\n\n您確認：\n• 您須對傳送的所有訊息及相關費用負責\n• 您有責任確保您所連接的任何 AI 服務不會濫用此功能\n• 您可以隨時停用此工具來撤銷存取權\n\n我們不會儲存您的訊息內容，但已連接的 AI 服務可能會依其隱私權政策處理這些資訊。</string>
+</resources>

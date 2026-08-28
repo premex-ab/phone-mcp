@@ -1,10 +1,9 @@
-📱 Je telefoon, als gereedschap voor je AI
-
 Phone MCP maakt van je Android-telefoon een veilige MCP-server waarmee AI-assistenten zoals Claude verbinding kunnen maken. Vraag je AI om een foto te vinden, een gedownloade PDF te lezen, een sensor uit te lezen, een foto te maken of een contact op te zoeken — terwijl elke functie onder jouw controle blijft, op je eigen toestel.
 
 De app bevat zelf geen AI. Je verbindt de assistent die je al gebruikt — Claude Code, Claude Desktop of elke client die het Model Context Protocol spreekt.
 
-🌍 TOEGANG OP AFSTAND — NIEUW
+Toegang op afstand
+
 Bereik je telefoon overal via phonemcp.ai. Koppel een nieuwe AI-client in minder dan een minuut: voer één commando uit, typ de koppelcode die de app toont, klaar. Gekoppelde clients verbinden automatisch opnieuw.
 
 • Werkt vanaf elk netwerk — geen port forwarding, geen VPN, geen account nodig
@@ -14,10 +13,12 @@ Bereik je telefoon overal via phonemcp.ai. Koppel een nieuwe AI-client in minder
 • Bekijk en herroep elke gekoppelde AI-client in de app
 • 30 dagen gratis proberen, daarna een klein maand- of jaarabonnement
 
-🏠 LOKAAL NETWERK — VOOR ALTIJD GRATIS
+Lokaal netwerk
+
 Op je eigen Wi-Fi verbindt je AI rechtstreeks met de telefoon. Geen cloud, geen abonnement, geen limieten. Dit blijft altijd gratis.
 
-🧰 WAT JE AI KAN DOEN
+Wat je AI kan doen
+
 • Bestanden — blader door en lees foto's, downloads en documenten
 • Camera — maak een foto en geef die direct aan het model
 • Sensoren — versnellingsmeter, gyroscoop, barometer, licht en meer
@@ -26,13 +27,15 @@ Op je eigen Wi-Fi verbindt je AI rechtstreeks met de telefoon. Geen cloud, geen 
 • SMS — berichten opstellen (met jouw bevestiging)
 • Uitbreidbaar — apps van derden kunnen eigen MCP-tools aanbieden
 
-🔒 PRIVACY BY DESIGN
-• Elke tool staat UIT tot jij hem inschakelt — gevoelige tools vragen expliciete toestemming
+Privacy by design
+
+• Elke tool staat uit tot jij hem inschakelt — gevoelige tools vragen expliciete toestemming
 • Bearer-token-authenticatie lokaal, OAuth 2.1 op afstand
 • Zet toegang op afstand elk moment uit; de tunnel sluit direct
-• Geen advertenties, geen trackers, en we verkopen nooit data
+• Geen advertenties, geen trackers, en je data wordt nooit verkocht
 
-🧑‍💻 OPEN SOURCE
+Open source
+
 De app en het tunnelprotocol zijn open source op GitHub — controleer precies wat je telefoon verlaat: github.com/premex-ab/phone-mcp
 
 Gemaakt in Zweden door Premex.

@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_files_name">Filåtkomst</string>
+    <string name="tools_files_disclaimer">INTEGRITETSVARNING: Aktivering av filåtkomst\n\nGenom att aktivera det här verktyget ger du den här appen och alla anslutna AI-tjänster tillåtelse att:\n• Bläddra bland filer och mappar i enhetens delade lagring\n• Läsa innehållet i filer, inklusive foton, dokument och nedladdningar\n\nDu bekräftar att:\n• Filer på din enhet kan innehålla känslig personlig information\n• Anslutna AI-tjänster kan behandla filinnehåll enligt sina integritetspolicyer\n• På Android 13+ är åtkomsten till delad lagring begränsad till mediefiler (bilder, video, ljud)\n• Du när som helst kan återkalla åtkomsten genom att inaktivera verktyget\n\nVi lagrar inte dina filer, men anslutna AI-tjänster kan behandla informationen enligt sina integritetspolicyer.</string>
+</resources>

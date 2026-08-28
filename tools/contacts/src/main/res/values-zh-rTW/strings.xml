@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_contacts_name">讀取聯絡人</string>
+    <string name="tools_contacts_disclaimer">隱私權警告：啟用聯絡人存取\n\n啟用此工具，即表示您授予本應用程式及任何已連接的 AI 服務下列權限：\n• 讀取您的聯絡人清單，包括姓名、電話號碼和其他個人資訊\n• 處理這些個人身分資訊（PII）以回應您的要求\n\n您確認：\n• 您已取得聯絡人清單中相關個人的必要同意\n• 您有責任確保您所連接的任何 AI 服務遵守適用的隱私權法規\n• 您可以隨時停用此工具來撤銷存取權\n\n我們不會儲存您的聯絡人資料，但已連接的 AI 服務可能會依其隱私權政策處理這些資訊。</string>
+</resources>

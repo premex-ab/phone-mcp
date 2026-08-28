@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_location_name">Lokasi</string>
+    <string name="tools_location_disclaimer">PERINGATAN PRIVASI: Mengaktifkan akses lokasi\n\nDengan mengaktifkan alat ini, Anda memberikan izin kepada aplikasi ini dan layanan AI apa pun yang terhubung untuk:\n• Membaca posisi geografis ponsel Anda saat ini (GPS/jaringan)\n\nAnda mengakui bahwa:\n• Layanan AI yang terhubung dapat memproses lokasi Anda sesuai dengan kebijakan privasinya\n• Anda dapat mencabut akses kapan saja dengan menonaktifkan alat ini\n\nKami tidak menyimpan lokasi Anda, tetapi layanan AI yang terhubung mungkin menyimpannya.</string>
+</resources>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_sms_name">Lähetä SMS-viestejä</string>
+    <string name="tools_sms_disclaimer">TIETOSUOJA- JA KUSTANNUSVAROITUS: SMS-käytön ottaminen käyttöön\n\nOttamalla tämän työkalun käyttöön annat tälle sovellukselle ja kaikille yhdistetyille AI-palveluille luvan:\n• Lähettää SMS-viestejä laitteestasi mihin tahansa puhelinnumeroon\n• Käyttää SMS-historiaasi vastausten taustatietona\n• Mahdollisesti aiheuttaa kuluja mobiilioperaattorisi kautta\n\nVahvistat, että:\n• Olet vastuussa kaikista lähetetyistä viesteistä ja niihin liittyvistä kuluista\n• Olet vastuussa siitä, että yhdistämäsi AI-palvelut eivät väärinkäytä tätä ominaisuutta\n• Voit peruuttaa käyttöoikeuden milloin tahansa poistamalla tämän työkalun käytöstä\n\nEmme tallenna viestiesi sisältöä, mutta yhdistetyt AI-palvelut voivat käsitellä näitä tietoja tietosuojakäytäntöjensä mukaisesti.</string>
+</resources>

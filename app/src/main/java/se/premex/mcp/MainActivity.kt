@@ -349,8 +349,19 @@ class MainActivity : ComponentActivity() {
     ) {
         AlertDialog(
             onDismissRequest = onDismiss,
-            title = { Text(stringResource(R.string.warning_for, tool.name)) },
-            text = { Text(tool.disclaim ?: stringResource(R.string.no_description_available)) },
+            title = {
+                val toolName = if (tool.nameRes != 0) stringResource(tool.nameRes) else tool.name
+                Text(stringResource(R.string.warning_for, toolName))
+            },
+            text = {
+                Text(
+                    when {
+                        tool.disclaimRes != 0 -> stringResource(tool.disclaimRes)
+                        tool.disclaim != null -> tool.disclaim!!
+                        else -> stringResource(R.string.no_description_available)
+                    }
+                )
+            },
             confirmButton = {
                 TextButton(onClick = onConfirm) {
                     Text(stringResource(R.string.ok))
@@ -481,7 +492,7 @@ fun McpServerControl(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = tool.name,
+                                text = if (tool.nameRes != 0) stringResource(tool.nameRes) else tool.name,
                                 style = MaterialTheme.typography.bodyLarge,
                                 modifier = Modifier.weight(1f)
                             )

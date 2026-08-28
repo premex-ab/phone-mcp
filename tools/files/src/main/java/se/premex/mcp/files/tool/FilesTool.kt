@@ -1,5 +1,7 @@
 package se.premex.mcp.files.tool
 
+import se.premex.mcp.files.R
+
 import android.Manifest
 import android.os.Build
 import io.modelcontextprotocol.kotlin.sdk.server.Server
@@ -11,7 +13,10 @@ class FilesTool(
 ) : McpTool {
     override val id: String = "files"
     override val name: String = "File access"
+    override val nameRes: Int = R.string.tools_files_name
     override val enabledByDefault: Boolean = false
+    override val disclaimRes: Int = R.string.tools_files_disclaimer
+
     override val disclaim: String?
         get() = "PRIVACY WARNING: Enabling file access\n\n" +
                 "By enabling this tool, you grant this application and any connected AI services permission to:\n" +

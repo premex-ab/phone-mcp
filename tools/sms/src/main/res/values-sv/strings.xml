@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_sms_name">Skicka SMS</string>
+    <string name="tools_sms_disclaimer">INTEGRITETS- OCH KOSTNADSVARNING: Aktivering av SMS-åtkomst\n\nGenom att aktivera det här verktyget ger du den här appen och alla anslutna AI-tjänster tillåtelse att:\n• Skicka SMS från din enhet till valfritt telefonnummer\n• Läsa din SMS-historik för att ge svar med sammanhang\n• Eventuellt orsaka kostnader hos din mobiloperatör\n\nDu bekräftar att:\n• Du ansvarar för alla meddelanden som skickas och tillhörande kostnader\n• Du ansvarar för att de AI-tjänster du ansluter inte missbrukar denna funktion\n• Du när som helst kan återkalla åtkomsten genom att inaktivera verktyget\n\nVi lagrar inte innehållet i dina meddelanden, men anslutna AI-tjänster kan behandla informationen enligt sina integritetspolicyer.</string>
+</resources>

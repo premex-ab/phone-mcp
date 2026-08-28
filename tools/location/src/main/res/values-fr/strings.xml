@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_location_name">Localisation</string>
+    <string name="tools_location_disclaimer">AVERTISSEMENT DE CONFIDENTIALITÉ : activation de l\'accès à la localisation\n\nEn activant cet outil, vous accordez à cette application et à tout service d\'IA connecté la permission de :\n• Lire la position géographique actuelle de votre téléphone (GPS/réseau)\n\nVous reconnaissez que :\n• Les services d\'IA connectés peuvent traiter votre localisation conformément à leur politique de confidentialité\n• Vous pouvez révoquer l\'accès à tout moment en désactivant cet outil\n\nNous ne stockons pas votre localisation, mais les services d\'IA connectés peuvent le faire.</string>
+</resources>

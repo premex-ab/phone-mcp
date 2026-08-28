@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_location_name">位置</string>
+    <string name="tools_location_disclaimer">隐私警告：启用位置访问\n\n启用此工具，即表示您授予本应用程序及任何已连接的 AI 服务以下权限：\n• 读取您手机当前的地理位置（GPS/网络）\n\n您确认：\n• 已连接的 AI 服务可能会根据其隐私政策处理您的位置信息\n• 您可以随时通过禁用此工具来撤销访问权限\n\n我们不会存储您的位置信息，但已连接的 AI 服务可能会存储。</string>
+</resources>

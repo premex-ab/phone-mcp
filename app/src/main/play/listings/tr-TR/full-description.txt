@@ -1,10 +1,9 @@
-📱 Telefonunuz, yapay zekanızın araçları olur
-
 Phone MCP, Android telefonunuzu Claude gibi yapay zeka asistanlarının bağlanabildiği güvenli bir MCP sunucusuna dönüştürür. Yapay zekanızdan bir fotoğraf bulmasını, indirdiğiniz bir PDF'i okumasını, bir sensörü kontrol etmesini, fotoğraf çekmesini veya bir kişiyi aramasını isteyin — her yetenek sizin kontrolünüzde, cihazınızda kalır.
 
 Uygulamanın kendi yapay zekası yoktur. Zaten kullandığınız asistanı bağlarsınız — Claude Code, Claude Desktop veya Model Context Protocol konuşan herhangi bir istemci.
 
-🌍 UZAKTAN ERİŞİM — YENİ
+Uzaktan erişim
+
 phonemcp.ai üzerinden telefonunuza her yerden ulaşın. Yeni bir yapay zeka istemcisini bir dakikadan kısa sürede eşleştirin: tek bir komut çalıştırın, uygulamanın gösterdiği eşleştirme kodunu girin, bitti. Eşleştirilen istemciler otomatik olarak yeniden bağlanır.
 
 • Her ağdan çalışır — port yönlendirme yok, VPN yok, hesap açma yok
@@ -14,10 +13,12 @@ phonemcp.ai üzerinden telefonunuza her yerden ulaşın. Yeni bir yapay zeka ist
 • Eşleştirilen tüm yapay zeka istemcilerini uygulamadan görün ve iptal edin
 • 30 gün ücretsiz deneme, ardından küçük bir aylık veya yıllık abonelik
 
-🏠 YEREL AĞ — SONSUZA DEK ÜCRETSİZ
+Yerel ağ
+
 Kendi Wi-Fi ağınızda yapay zekanız telefona doğrudan bağlanır. Bulut yok, abonelik yok, sınır yok. Bu her zaman ücretsiz kalacak.
 
-🧰 YAPAY ZEKANIZ NELER YAPABİLİR
+Yapay zekanız neler yapabilir
+
 • Dosyalar — fotoğraflara, indirilenlere ve belgelere göz atıp okuyun
 • Kamera — fotoğraf çekip doğrudan modele iletin
 • Sensörler — ivmeölçer, jiroskop, barometre, ışık ve daha fazlası
@@ -26,13 +27,15 @@ Kendi Wi-Fi ağınızda yapay zekanız telefona doğrudan bağlanır. Bulut yok,
 • SMS — mesaj hazırlayın (onayınızla)
 • Genişletin — üçüncü taraf uygulamalar kendi MCP araçlarını sunabilir
 
-🔒 TASARIM GEREĞİ GİZLİLİK
-• Siz etkinleştirene kadar her araç KAPALIDIR — hassas olanlar açık onay gerektirir
+Tasarım gereği gizlilik
+
+• Siz etkinleştirene kadar her araç kapalıdır — hassas olanlar açık onay gerektirir
 • Yerelde bearer token, uzaktan OAuth 2.1 kimlik doğrulaması
 • Uzaktan erişimi istediğiniz an kapatın; tünel anında kapanır
 • Reklam yok, izleyici yok; verilerinizi asla satmayız
 
-🧑‍💻 AÇIK KAYNAK
+Açık kaynak
+
 Uygulama ve tünel protokolü GitHub'da açık kaynak — telefonunuzdan tam olarak neyin çıktığını kendiniz denetleyin: github.com/premex-ab/phone-mcp
 
 İsveç'te Premex tarafından yapılmıştır.

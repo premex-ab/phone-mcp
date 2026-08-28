@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_location_name">위치</string>
+    <string name="tools_location_disclaimer">개인정보 보호 경고: 위치 접근 활성화\n\n이 도구를 활성화하면 이 애플리케이션과 연결된 모든 AI 서비스에 다음 권한을 부여하게 됩니다:\n• 휴대전화의 현재 지리적 위치 읽기(GPS/네트워크)\n\n다음 사항에 동의하는 것으로 간주됩니다:\n• 연결된 AI 서비스는 자체 개인정보처리방침에 따라 위치 정보를 처리할 수 있습니다\n• 이 도구를 비활성화하여 언제든지 접근 권한을 취소할 수 있습니다\n\n저희는 위치 정보를 저장하지 않지만, 연결된 AI 서비스는 저장할 수 있습니다.</string>
+</resources>

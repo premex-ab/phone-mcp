@@ -1,10 +1,9 @@
-📱 Din mobil, som verktyg för din AI
-
 Phone MCP förvandlar din Androidmobil till en säker MCP-server som AI-assistenter som Claude kan ansluta till. Be din AI att hitta ett foto, läsa en nedladdad PDF, kolla en sensor, ta en bild eller slå upp en kontakt — medan varje funktion stannar under din kontroll, på din enhet.
 
 Appen innehåller ingen egen AI. Du ansluter den assistent du redan använder — Claude Code, Claude Desktop eller vilken klient som helst som talar Model Context Protocol.
 
-🌍 FJÄRRÅTKOMST — NYTT
+Fjärråtkomst
+
 Nå din mobil var du än är via phonemcp.ai. Parkoppla en ny AI-klient på under en minut: kör ett kommando, skriv in parningskoden som appen visar, klart. Parkopplade klienter återansluter automatiskt.
 
 • Fungerar från alla nätverk — ingen portvidarebefordran, ingen VPN, inget konto behövs
@@ -14,10 +13,12 @@ Nå din mobil var du än är via phonemcp.ai. Parkoppla en ny AI-klient på unde
 • Se och återkalla varje parkopplad AI-klient i appen
 • Gratis 30-dagars provperiod, sedan en liten månads- eller årsprenumeration
 
-🏠 LOKALT NÄTVERK — GRATIS FÖR ALLTID
+Lokalt nätverk
+
 På ditt eget Wi-Fi ansluter din AI direkt till mobilen. Inget moln, ingen prenumeration, inga begränsningar. Detta kommer alltid att vara gratis.
 
-🧰 VAD DIN AI KAN GÖRA
+Vad din AI kan göra
+
 • Filer — bläddra bland och läs foton, nedladdningar och dokument
 • Kamera — ta ett foto och skicka det direkt till modellen
 • Sensorer — accelerometer, gyroskop, barometer, ljus med mera
@@ -26,13 +27,15 @@ På ditt eget Wi-Fi ansluter din AI direkt till mobilen. Inget moln, ingen prenu
 • SMS — skriv meddelanden (med din bekräftelse)
 • Utöka — tredjepartsappar kan exponera egna MCP-verktyg
 
-🔒 PRIVAT I GRUNDEN
-• Alla verktyg är AV tills du aktiverar dem — känsliga kräver uttryckligt samtycke
+Privat i grunden
+
+• Alla verktyg är av tills du aktiverar dem — känsliga kräver uttryckligt samtycke
 • Bearer token-autentisering lokalt, OAuth 2.1 på distans
 • Stäng av fjärråtkomsten när som helst; tunneln stängs omedelbart
-• Vi har inga annonser, inga spårare och säljer aldrig data
+• Inga annonser, inga spårare och din data säljs aldrig
 
-🧑‍💻 ÖPPEN KÄLLKOD
+Öppen källkod
+
 Appen och dess tunnelprotokoll är öppen källkod på GitHub — granska exakt vad som lämnar din mobil: github.com/premex-ab/phone-mcp
 
 Utvecklad i Sverige av Premex.

@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_location_name">Konum</string>
+    <string name="tools_location_disclaimer">GİZLİLİK UYARISI: Konum erişimini etkinleştirme\n\nBu aracı etkinleştirerek bu uygulamaya ve bağlı tüm yapay zeka hizmetlerine şunlar için izin vermiş olursunuz:\n• Telefonunuzun mevcut coğrafi konumunu okuma (GPS/ağ)\n\nŞunları kabul edersiniz:\n• Bağlı yapay zeka hizmetleri konumunuzu kendi gizlilik politikalarına göre işleyebilir\n• Bu aracı devre dışı bırakarak erişimi istediğiniz zaman iptal edebilirsiniz\n\nKonumunuzu saklamıyoruz, ancak bağlı yapay zeka hizmetleri saklayabilir.</string>
+</resources>

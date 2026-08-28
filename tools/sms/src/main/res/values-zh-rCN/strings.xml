@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_sms_name">发送 SMS</string>
+    <string name="tools_sms_disclaimer">隐私与费用警告：启用 SMS 访问\n\n启用此工具，即表示您授予本应用程序及任何已连接的 AI 服务以下权限：\n• 从本设备向任意电话号码发送 SMS 消息\n• 访问您的 SMS 记录以提供符合上下文的回复\n• 可能产生移动运营商费用\n\n您确认：\n• 您对发送的所有消息及相关费用负责\n• 您有责任确保您所连接的任何 AI 服务不会滥用此功能\n• 您可以随时通过禁用此工具来撤销访问权限\n\n我们不会存储您的消息内容，但已连接的 AI 服务可能会根据其隐私政策处理这些信息。</string>
+</resources>

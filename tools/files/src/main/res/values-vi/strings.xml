@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_files_name">Truy cập tệp</string>
+    <string name="tools_files_disclaimer">CẢNH BÁO QUYỀN RIÊNG TƯ: Bật quyền truy cập tệp\n\nKhi bật công cụ này, bạn cấp cho ứng dụng này và mọi dịch vụ AI được kết nối quyền:\n• Duyệt các tệp và thư mục trong bộ nhớ dùng chung của thiết bị này\n• Đọc nội dung tệp, bao gồm ảnh, tài liệu và các tệp đã tải xuống\n\nBạn xác nhận rằng:\n• Các tệp trên thiết bị của bạn có thể chứa thông tin cá nhân nhạy cảm\n• Các dịch vụ AI được kết nối có thể xử lý nội dung tệp theo chính sách quyền riêng tư của họ\n• Trên Android 13+, quyền truy cập bộ nhớ dùng chung chỉ giới hạn ở các tệp phương tiện (hình ảnh, video, âm thanh)\n• Bạn có thể thu hồi quyền truy cập bất cứ lúc nào bằng cách tắt công cụ này\n\nChúng tôi không lưu trữ tệp của bạn, nhưng các dịch vụ AI được kết nối có thể xử lý thông tin này theo chính sách quyền riêng tư của họ.</string>
+</resources>

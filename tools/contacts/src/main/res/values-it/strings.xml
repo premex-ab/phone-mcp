@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_contacts_name">Lettura contatti</string>
+    <string name="tools_contacts_disclaimer">AVVISO SULLA PRIVACY: attivazione dell\'accesso ai contatti\n\nAttivando questo strumento, concedi a questa applicazione e a qualsiasi servizio AI connesso il permesso di:\n• Leggere la tua lista contatti, inclusi nomi, numeri di telefono e altre informazioni personali\n• Elaborare queste informazioni personali identificabili (PII) per rispondere alle tue richieste\n\nRiconosci che:\n• Hai ottenuto il consenso necessario dalle persone presenti nella tua lista contatti\n• Sei responsabile di assicurarti che i servizi AI a cui ti connetti rispettino le normative sulla privacy applicabili\n• Puoi revocare l\'accesso in qualsiasi momento disattivando questo strumento\n\nNon memorizziamo i dati dei tuoi contatti, ma i servizi AI connessi potrebbero elaborare queste informazioni secondo le loro informative sulla privacy.</string>
+</resources>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_location_name">位置</string>
+    <string name="tools_location_disclaimer">隱私權警告：啟用位置存取\n\n啟用此工具，即表示您授予本應用程式及任何已連接的 AI 服務下列權限：\n• 讀取您手機目前的地理位置（GPS/網路）\n\n您確認：\n• 已連接的 AI 服務可能會依其隱私權政策處理您的位置資訊\n• 您可以隨時停用此工具來撤銷存取權\n\n我們不會儲存您的位置資訊，但已連接的 AI 服務可能會儲存。</string>
+</resources>

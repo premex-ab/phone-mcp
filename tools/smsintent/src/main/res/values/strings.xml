@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_smsintent_name">Send SMS Intent</string>
+    <string name="tools_smsintent_disclaimer">PRIVACY NOTICE: SMS Intent Creation\n\nBy enabling this tool, you grant this application and any connected AI services permission to:\n• Prepare SMS messages for you to review and manually send\n• Create SMS sending intents that you must approve before sending\n\nYou acknowledge that:\n• This tool CANNOT automatically send messages without your approval\n• You will always have the final review and decision before any message is sent\n• You are responsible for any messages you choose to send and their associated costs\n• You can revoke access at any time by disabling this tool\n\nWe do not store the content of your messages, but connected AI services may process this information according to their privacy policies.</string>
+</resources>

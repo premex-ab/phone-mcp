@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_smsintent_name">Intent pro odeslání SMS</string>
+    <string name="tools_smsintent_disclaimer">OZNÁMENÍ O SOUKROMÍ: vytváření SMS intentů\n\nPovolením tohoto nástroje udělujete této aplikaci a všem připojeným AI službám oprávnění:\n• Připravovat SMS zprávy, které si prohlédnete a ručně odešlete\n• Vytvářet intenty pro odeslání SMS, které musíte před odesláním schválit\n\nBerete na vědomí, že:\n• Tento nástroj NEMŮŽE automaticky odesílat zprávy bez vašeho schválení\n• Konečná kontrola a rozhodnutí před odesláním jakékoli zprávy budou vždy na vás\n• Jste odpovědní za zprávy, které se rozhodnete odeslat, a za související náklady\n• Přístup můžete kdykoli odvolat vypnutím tohoto nástroje\n\nObsah vašich zpráv neukládáme, ale připojené AI služby mohou tyto informace zpracovávat podle svých zásad ochrany soukromí.</string>
+</resources>

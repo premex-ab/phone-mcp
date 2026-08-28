@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_contacts_name">Lue yhteystiedot</string>
+    <string name="tools_contacts_disclaimer">TIETOSUOJAVAROITUS: Yhteystietojen käytön ottaminen käyttöön\n\nOttamalla tämän työkalun käyttöön annat tälle sovellukselle ja kaikille yhdistetyille AI-palveluille luvan:\n• Lukea yhteystietoluettelosi, mukaan lukien nimet, puhelinnumerot ja muut henkilökohtaiset tiedot\n• Käsitellä näitä henkilötietoja (PII) pyyntöihisi vastaamiseksi\n\nVahvistat, että:\n• Olet hankkinut tarvittavan suostumuksen yhteystietoluettelosi henkilöiltä\n• Olet vastuussa siitä, että yhdistämäsi AI-palvelut noudattavat sovellettavia tietosuojasäännöksiä\n• Voit peruuttaa käyttöoikeuden milloin tahansa poistamalla tämän työkalun käytöstä\n\nEmme tallenna yhteystietojasi, mutta yhdistetyt AI-palvelut voivat käsitellä näitä tietoja tietosuojakäytäntöjensä mukaisesti.</string>
+</resources>

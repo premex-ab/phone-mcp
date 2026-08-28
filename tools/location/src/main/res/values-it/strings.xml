@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_location_name">Posizione</string>
+    <string name="tools_location_disclaimer">AVVISO SULLA PRIVACY: attivazione dell\'accesso alla posizione\n\nAttivando questo strumento, concedi a questa applicazione e a qualsiasi servizio AI connesso il permesso di:\n• Leggere la posizione geografica attuale del tuo telefono (GPS/rete)\n\nRiconosci che:\n• I servizi AI connessi potrebbero elaborare la tua posizione secondo le loro informative sulla privacy\n• Puoi revocare l\'accesso in qualsiasi momento disattivando questo strumento\n\nNon memorizziamo la tua posizione, ma i servizi AI connessi potrebbero farlo.</string>
+</resources>

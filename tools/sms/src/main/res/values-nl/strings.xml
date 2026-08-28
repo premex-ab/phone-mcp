@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_sms_name">SMS versturen</string>
+    <string name="tools_sms_disclaimer">PRIVACY- EN KOSTENWAARSCHUWING: SMS-toegang inschakelen\n\nDoor deze tool in te schakelen geef je deze app en alle verbonden AI-diensten toestemming om:\n• SMS-berichten vanaf je apparaat naar elk telefoonnummer te versturen\n• Je SMS-geschiedenis te raadplegen voor antwoorden met context\n• Mogelijk kosten te veroorzaken bij je mobiele provider\n\nJe erkent dat:\n• Je verantwoordelijk bent voor alle verzonden berichten en de bijbehorende kosten\n• Je er verantwoordelijk voor bent dat de AI-diensten die je verbindt deze functie niet misbruiken\n• Je de toegang op elk moment kunt intrekken door deze tool uit te schakelen\n\nWe slaan de inhoud van je berichten niet op, maar verbonden AI-diensten kunnen deze informatie verwerken volgens hun privacybeleid.</string>
+</resources>

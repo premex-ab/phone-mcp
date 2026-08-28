@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_contacts_name">Baca kontak</string>
+    <string name="tools_contacts_disclaimer">PERINGATAN PRIVASI: Mengaktifkan akses kontak\n\nDengan mengaktifkan alat ini, Anda memberikan izin kepada aplikasi ini dan layanan AI apa pun yang terhubung untuk:\n• Membaca daftar kontak Anda termasuk nama, nomor telepon, dan informasi pribadi lainnya\n• Memproses informasi identitas pribadi (PII) ini untuk menanggapi permintaan Anda\n\nAnda mengakui bahwa:\n• Anda telah memperoleh persetujuan yang diperlukan dari orang-orang dalam daftar kontak Anda\n• Anda bertanggung jawab memastikan layanan AI apa pun yang Anda hubungkan mematuhi peraturan privasi yang berlaku\n• Anda dapat mencabut akses kapan saja dengan menonaktifkan alat ini\n\nKami tidak menyimpan data kontak Anda, tetapi layanan AI yang terhubung dapat memproses informasi ini sesuai dengan kebijakan privasinya.</string>
+</resources>

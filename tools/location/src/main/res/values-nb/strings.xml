@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_location_name">Posisjon</string>
+    <string name="tools_location_disclaimer">PERSONVERNADVARSEL: Aktivering av posisjonstilgang\n\nVed å aktivere dette verktøyet gir du denne appen og alle tilkoblede AI-tjenester tillatelse til å:\n• Lese telefonens gjeldende geografiske posisjon (GPS/nettverk)\n\nDu bekrefter at:\n• Tilkoblede AI-tjenester kan behandle posisjonen din i henhold til sine personvernerklæringer\n• Du når som helst kan trekke tilbake tilgangen ved å deaktivere dette verktøyet\n\nVi lagrer ikke posisjonen din, men det kan tilkoblede AI-tjenester gjøre.</string>
+</resources>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_location_name">Locatie</string>
+    <string name="tools_location_disclaimer">PRIVACYWAARSCHUWING: Locatietoegang inschakelen\n\nDoor deze tool in te schakelen geef je deze app en alle verbonden AI-diensten toestemming om:\n• De huidige geografische positie van je telefoon te lezen (GPS/netwerk)\n\nJe erkent dat:\n• Verbonden AI-diensten je locatie kunnen verwerken volgens hun privacybeleid\n• Je de toegang op elk moment kunt intrekken door deze tool uit te schakelen\n\nWe slaan je locatie niet op, maar verbonden AI-diensten doen dat mogelijk wel.</string>
+</resources>

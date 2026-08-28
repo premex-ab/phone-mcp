@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_location_name">Plats</string>
+    <string name="tools_location_disclaimer">INTEGRITETSVARNING: Aktivering av platsåtkomst\n\nGenom att aktivera det här verktyget ger du den här appen och alla anslutna AI-tjänster tillåtelse att:\n• Läsa telefonens aktuella geografiska position (GPS/nätverk)\n\nDu bekräftar att:\n• Anslutna AI-tjänster kan behandla din plats enligt sina integritetspolicyer\n• Du när som helst kan återkalla åtkomsten genom att inaktivera verktyget\n\nVi lagrar inte din plats, men anslutna AI-tjänster kan göra det.</string>
+</resources>

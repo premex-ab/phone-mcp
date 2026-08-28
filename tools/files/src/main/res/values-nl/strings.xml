@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_files_name">Bestandstoegang</string>
+    <string name="tools_files_disclaimer">PRIVACYWAARSCHUWING: Bestandstoegang inschakelen\n\nDoor deze tool in te schakelen geef je deze app en alle verbonden AI-diensten toestemming om:\n• Bestanden en mappen in de gedeelde opslag van dit apparaat te doorzoeken\n• De inhoud van bestanden te lezen, inclusief foto\'s, documenten en downloads\n\nJe erkent dat:\n• Bestanden op je apparaat gevoelige persoonlijke informatie kunnen bevatten\n• Verbonden AI-diensten de inhoud van bestanden kunnen verwerken volgens hun privacybeleid\n• Op Android 13+ de toegang tot gedeelde opslag beperkt is tot mediabestanden (afbeeldingen, video, audio)\n• Je de toegang op elk moment kunt intrekken door deze tool uit te schakelen\n\nWe slaan je bestanden niet op, maar verbonden AI-diensten kunnen deze informatie verwerken volgens hun privacybeleid.</string>
+</resources>

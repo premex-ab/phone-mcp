@@ -1,5 +1,7 @@
 package se.premex.mcp.ads.di
 
+import se.premex.mcp.ads.R
+
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,6 +15,7 @@ import javax.inject.Singleton
 class AdsTool : McpTool {
     override val id: String = "ads"
     override val name: String = "ADS Tool"
+    override val nameRes: Int = R.string.tools_ads_name
     override val enabledByDefault: Boolean = false
     override val disclaim: String?
         get() = null

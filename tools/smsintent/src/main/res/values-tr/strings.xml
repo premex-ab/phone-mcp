@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_smsintent_name">SMS gönderme (Intent)</string>
+    <string name="tools_smsintent_disclaimer">GİZLİLİK BİLDİRİMİ: SMS Intent oluşturma\n\nBu aracı etkinleştirerek bu uygulamaya ve bağlı tüm yapay zeka hizmetlerine şunlar için izin vermiş olursunuz:\n• İncelemeniz ve elle göndermeniz için SMS mesajları hazırlama\n• Göndermeden önce onaylamanız gereken SMS gönderme intent\'leri oluşturma\n\nŞunları kabul edersiniz:\n• Bu araç, onayınız olmadan mesajları otomatik olarak GÖNDEREMEZ\n• Herhangi bir mesaj gönderilmeden önce son inceleme ve karar her zaman size aittir\n• Göndermeyi seçtiğiniz mesajlardan ve ilgili maliyetlerden siz sorumlusunuz\n• Bu aracı devre dışı bırakarak erişimi istediğiniz zaman iptal edebilirsiniz\n\nMesajlarınızın içeriğini saklamıyoruz, ancak bağlı yapay zeka hizmetleri bu bilgileri kendi gizlilik politikalarına göre işleyebilir.</string>
+</resources>

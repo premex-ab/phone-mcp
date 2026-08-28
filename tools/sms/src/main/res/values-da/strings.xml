@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_sms_name">Send SMS</string>
+    <string name="tools_sms_disclaimer">PRIVATLIVS- OG OMKOSTNINGSADVARSEL: Aktivering af SMS-adgang\n\nVed at aktivere dette værktøj giver du denne app og alle forbundne AI-tjenester tilladelse til at:\n• Sende SMS-beskeder fra din enhed til ethvert telefonnummer\n• Tilgå din SMS-historik for at give svar med kontekst\n• Muligvis medføre omkostninger hos dit mobilselskab\n\nDu anerkender, at:\n• Du er ansvarlig for alle sendte beskeder og de tilhørende omkostninger\n• Du er ansvarlig for, at de AI-tjenester, du forbinder, ikke misbruger denne funktion\n• Du til enhver tid kan tilbagekalde adgangen ved at deaktivere dette værktøj\n\nVi gemmer ikke indholdet af dine beskeder, men forbundne AI-tjenester kan behandle disse oplysninger i henhold til deres privatlivspolitikker.</string>
+</resources>

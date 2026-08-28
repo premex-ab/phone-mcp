@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_location_name">Vị trí</string>
+    <string name="tools_location_disclaimer">CẢNH BÁO QUYỀN RIÊNG TƯ: Bật quyền truy cập vị trí\n\nKhi bật công cụ này, bạn cấp cho ứng dụng này và mọi dịch vụ AI được kết nối quyền:\n• Đọc vị trí địa lý hiện tại của điện thoại (GPS/mạng)\n\nBạn xác nhận rằng:\n• Các dịch vụ AI được kết nối có thể xử lý vị trí của bạn theo chính sách quyền riêng tư của họ\n• Bạn có thể thu hồi quyền truy cập bất cứ lúc nào bằng cách tắt công cụ này\n\nChúng tôi không lưu trữ vị trí của bạn, nhưng các dịch vụ AI được kết nối có thể lưu trữ.</string>
+</resources>

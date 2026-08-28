@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_location_name">Lokalizacja</string>
+    <string name="tools_location_disclaimer">OSTRZEŻENIE O PRYWATNOŚCI: włączenie dostępu do lokalizacji\n\nWłączając to narzędzie, udzielasz tej aplikacji i wszystkim połączonym usługom AI uprawnień do:\n• Odczytywania aktualnej pozycji geograficznej Twojego telefonu (GPS/sieć)\n\nPrzyjmujesz do wiadomości, że:\n• Połączone usługi AI mogą przetwarzać Twoją lokalizację zgodnie ze swoimi politykami prywatności\n• Możesz w każdej chwili cofnąć dostęp, wyłączając to narzędzie\n\nNie przechowujemy Twojej lokalizacji, ale połączone usługi AI mogą to robić.</string>
+</resources>

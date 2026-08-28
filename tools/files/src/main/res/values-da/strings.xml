@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_files_name">Filadgang</string>
+    <string name="tools_files_disclaimer">PRIVATLIVSADVARSEL: Aktivering af filadgang\n\nVed at aktivere dette værktøj giver du denne app og alle forbundne AI-tjenester tilladelse til at:\n• Gennemse filer og mapper i enhedens delte lager\n• Læse indholdet af filer, herunder fotos, dokumenter og downloads\n\nDu anerkender, at:\n• Filer på din enhed kan indeholde følsomme personlige oplysninger\n• Forbundne AI-tjenester kan behandle filindhold i henhold til deres privatlivspolitikker\n• På Android 13+ er adgangen til delt lager begrænset til mediefiler (billeder, video, lyd)\n• Du til enhver tid kan tilbagekalde adgangen ved at deaktivere dette værktøj\n\nVi gemmer ikke dine filer, men forbundne AI-tjenester kan behandle disse oplysninger i henhold til deres privatlivspolitikker.</string>
+</resources>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_files_name">Tiedostojen käyttö</string>
+    <string name="tools_files_disclaimer">TIETOSUOJAVAROITUS: Tiedostojen käytön ottaminen käyttöön\n\nOttamalla tämän työkalun käyttöön annat tälle sovellukselle ja kaikille yhdistetyille AI-palveluille luvan:\n• Selata tämän laitteen jaetun tallennustilan tiedostoja ja kansioita\n• Lukea tiedostojen sisältöä, mukaan lukien valokuvat, asiakirjat ja lataukset\n\nVahvistat, että:\n• Laitteesi tiedostot voivat sisältää arkaluonteisia henkilökohtaisia tietoja\n• Yhdistetyt AI-palvelut voivat käsitellä tiedostojen sisältöä tietosuojakäytäntöjensä mukaisesti\n• Android 13+ -versioissa jaetun tallennustilan käyttö on rajattu mediatiedostoihin (kuvat, videot, ääni)\n• Voit peruuttaa käyttöoikeuden milloin tahansa poistamalla tämän työkalun käytöstä\n\nEmme tallenna tiedostojasi, mutta yhdistetyt AI-palvelut voivat käsitellä näitä tietoja tietosuojakäytäntöjensä mukaisesti.</string>
+</resources>

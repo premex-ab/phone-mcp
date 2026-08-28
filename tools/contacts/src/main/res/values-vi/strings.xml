@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_contacts_name">Đọc danh bạ</string>
+    <string name="tools_contacts_disclaimer">CẢNH BÁO QUYỀN RIÊNG TƯ: Bật quyền truy cập danh bạ\n\nKhi bật công cụ này, bạn cấp cho ứng dụng này và mọi dịch vụ AI được kết nối quyền:\n• Đọc danh bạ của bạn, bao gồm tên, số điện thoại và các thông tin cá nhân khác\n• Xử lý thông tin nhận dạng cá nhân (PII) này để phản hồi các yêu cầu của bạn\n\nBạn xác nhận rằng:\n• Bạn đã có được sự đồng ý cần thiết từ những người trong danh bạ của mình\n• Bạn chịu trách nhiệm đảm bảo mọi dịch vụ AI mà bạn kết nối tuân thủ các quy định hiện hành về quyền riêng tư\n• Bạn có thể thu hồi quyền truy cập bất cứ lúc nào bằng cách tắt công cụ này\n\nChúng tôi không lưu trữ dữ liệu danh bạ của bạn, nhưng các dịch vụ AI được kết nối có thể xử lý thông tin này theo chính sách quyền riêng tư của họ.</string>
+</resources>

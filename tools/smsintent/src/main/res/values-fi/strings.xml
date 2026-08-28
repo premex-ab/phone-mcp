@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_smsintent_name">Lähetä SMS-intent</string>
+    <string name="tools_smsintent_disclaimer">TIETOSUOJAILMOITUS: SMS-intentien luominen\n\nOttamalla tämän työkalun käyttöön annat tälle sovellukselle ja kaikille yhdistetyille AI-palveluille luvan:\n• Valmistella SMS-viestejä, jotka voit tarkistaa ja lähettää manuaalisesti\n• Luoda SMS-lähetysintentejä, jotka sinun on hyväksyttävä ennen lähettämistä\n\nVahvistat, että:\n• Tämä työkalu EI voi lähettää viestejä automaattisesti ilman hyväksyntääsi\n• Sinulla on aina lopullinen tarkistus ja päätös ennen viestin lähettämistä\n• Olet vastuussa kaikista viesteistä, jotka päätät lähettää, ja niihin liittyvistä kuluista\n• Voit peruuttaa käyttöoikeuden milloin tahansa poistamalla tämän työkalun käytöstä\n\nEmme tallenna viestiesi sisältöä, mutta yhdistetyt AI-palvelut voivat käsitellä näitä tietoja tietosuojakäytäntöjensä mukaisesti.</string>
+</resources>

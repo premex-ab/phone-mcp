@@ -1,10 +1,9 @@
-📱 Tu teléfono, como herramientas para tu IA
-
 Phone MCP convierte tu teléfono Android en un servidor MCP seguro al que pueden conectarse asistentes de IA como Claude. Pídele a tu IA que encuentre una foto, lea un PDF descargado, consulte un sensor, tome una foto o busque un contacto — cada función permanece bajo tu control, en tu dispositivo.
 
 La aplicación no contiene ninguna IA propia. Tú conectas el asistente que ya usas — Claude Code, Claude Desktop o cualquier cliente compatible con el Model Context Protocol.
 
-🌍 ACCESO REMOTO — NUEVO
+Acceso remoto
+
 Accede a tu teléfono desde cualquier lugar a través de phonemcp.ai. Empareja un nuevo cliente de IA en menos de un minuto: ejecuta un comando, escribe el código de emparejamiento que muestra la aplicación y listo. Los clientes emparejados se reconectan automáticamente.
 
 • Funciona desde cualquier red — sin redirección de puertos, sin VPN, sin crear cuentas
@@ -14,10 +13,12 @@ Accede a tu teléfono desde cualquier lugar a través de phonemcp.ai. Empareja u
 • Consulta y revoca cada cliente de IA emparejado desde la aplicación
 • Prueba gratuita de 30 días y luego una pequeña suscripción mensual o anual
 
-🏠 RED LOCAL — GRATIS PARA SIEMPRE
+Red local
+
 En tu propia red Wi-Fi, tu IA se conecta directamente al teléfono. Sin nube, sin suscripción, sin límites. Esto será gratis para siempre.
 
-🧰 QUÉ PUEDE HACER TU IA
+Qué puede hacer tu IA
+
 • Archivos — explorar y leer fotos, descargas y documentos
 • Cámara — tomar una foto y entregarla directamente al modelo
 • Sensores — acelerómetro, giroscopio, barómetro, luz y más
@@ -26,13 +27,15 @@ En tu propia red Wi-Fi, tu IA se conecta directamente al teléfono. Sin nube, si
 • SMS — redactar mensajes (con tu confirmación)
 • Amplíalo — otras aplicaciones pueden exponer sus propias herramientas MCP
 
-🔒 PRIVADO POR DISEÑO
-• Cada herramienta está DESACTIVADA hasta que tú la actives — las más sensibles requieren consentimiento explícito
+Privado por diseño
+
+• Cada herramienta está desactivada hasta que tú la actives — las más sensibles requieren consentimiento explícito
 • Autenticación con token Bearer en local y OAuth 2.1 en remoto
 • Desactiva el acceso remoto cuando quieras; el túnel se cierra al instante
 • Sin anuncios, sin rastreadores y nunca vendemos tus datos
 
-🧑‍💻 CÓDIGO ABIERTO
+Código abierto
+
 La aplicación y su protocolo de túnel son de código abierto en GitHub — audita exactamente qué sale de tu teléfono: github.com/premex-ab/phone-mcp
 
 Hecho en Suecia por Premex.
