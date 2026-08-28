@@ -43,6 +43,10 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace = "se.premex.mcp"
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     lint {
         baseline = file("lint-baseline.xml")
     }

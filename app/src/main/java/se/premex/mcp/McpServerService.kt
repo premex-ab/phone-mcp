@@ -254,6 +254,9 @@ class McpServerService : Service() {
      * so toggling it in Settings takes effect without restarting the server.
      */
     private fun observeRemoteAccess(localPort: Int) {
+        // Remote access is Play-exclusive; a stale enabled-flag in DataStore
+        // (e.g. data restored from a play install) must not start tunnels here
+        if (!BuildConfig.REMOTE_ACCESS) return
         if (remoteAccessObserverStarted) return
         remoteAccessObserverStarted = true
         serviceScope.launch {

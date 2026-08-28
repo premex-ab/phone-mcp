@@ -31,7 +31,9 @@ class RemoteAccessViewModel @Inject constructor(
     val subscriptionProduct = billingManager.productDetails
 
     init {
-        billingManager.connect()
+        if (se.premex.mcp.BuildConfig.REMOTE_ACCESS) {
+            billingManager.connect()
+        }
         // Any purchase (new, or restored after reinstall) is sent to the relay
         // for verification; only then is it acknowledged towards Play.
         viewModelScope.launch {
@@ -40,6 +42,9 @@ class RemoteAccessViewModel @Inject constructor(
             }
         }
     }
+
+    // (Billing wiring above is inert in non-Play builds: connect() is skipped
+    // and no purchases can ever arrive.)
 
     fun subscribe(activity: android.app.Activity, basePlanId: String? = null) {
         if (!billingManager.launchPurchase(activity, basePlanId)) {
