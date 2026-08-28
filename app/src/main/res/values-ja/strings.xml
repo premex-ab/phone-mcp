@@ -1,0 +1,90 @@
+<resources>
+    <string name="server_settings_help_text">• 0.0.0.0: サーバーはすべてのネットワークインターフェースで待ち受けます（推奨）\n• 127.0.0.1: サーバーはこの端末からのみアクセスできます（ローカルのみ）\n• ポート: 3001 が既に使用中の場合はサーバーポートを変更してください\n• 設定はサーバーの再起動後に有効になります</string>
+    <string name="configuration_info">設定情報</string>
+    <string name="valid_port_range_1_65535">有効なポート範囲: 1～65535</string>
+    <string name="server_port">サーバーポート</string>
+    <string name="toggle_dropdown">ドロップダウンを切り替え</string>
+    <string name="host">ホスト</string>
+    <string name="server_host">サーバーホスト</string>
+    <string name="server_settings">サーバー設定</string>
+    <string name="all_interfaces">すべてのインターフェース</string>
+    <string name="localhost_only">localhost のみ</string>
+    <string name="port_number">ポート番号</string>
+    <string name="save_settings">設定を保存</string>
+    <string name="all_permissions_are_required_to_run_the_mcp_server_service">MCP サーバーサービスを実行するにはすべての権限が必要です</string>
+    <string name="permission_is_required_to_run_the_mcp_server_service">権限は MCP サーバーサービスの実行に必要です</string>
+    <string name="no_description_available">説明はありません。</string>
+    <string name="warning_for">%1$s に関する警告</string>
+    <string name="ok">OK</string>
+    <string name="cancel">キャンセル</string>
+    <string name="connection_url">URL:</string>
+    <string name="access_token">トークン:</string>
+    <string name="connect_your_ai_client">AI クライアントを接続</string>
+    <string name="client_other">その他</string>
+    <string name="claude_code_instructions">お使いのコンピューターのターミナルでこのコマンドを実行し、新しい Claude Code セッションを開始してください:</string>
+    <string name="claude_desktop_instructions">コンピューターで Settings → Developer → Edit Config を開き、これを claude_desktop_config.json に追加して、Claude Desktop を完全に再起動してください。Node.js が必要です。\n\n注: 「Add custom connector」ダイアログは HTTPS サーバーのみ受け付けます — 代わりにこの設定を使用してください。</string>
+    <string name="other_client_instructions">SSE トランスポートと bearer トークンを使って任意の MCP クライアントを接続します:</string>
+    <string name="copy_command">コマンドをコピー</string>
+    <string name="copy_configuration">設定をコピー</string>
+    <string name="copy_details">詳細をコピー</string>
+    <string name="copy">%1$s をコピー</string>
+    <string name="copied_to_clipboard">クリップボードにコピーしました</string>
+    <string name="wifi_note">📶 コンピューターはこのスマートフォンと同じ Wi‑Fi ネットワークに接続されている必要があります。</string>
+    <string name="remote_access_title">リモートアクセス（phonemcp.ai）</string>
+    <string name="remote_access_description">安全なトンネルを介して、どこからでもこのスマートフォンにアクセスできます。通信はリレーサーバーを経由し、各ツールはこのスマートフォン上でオプトインのままです。</string>
+    <string name="remote_access_contacting_relay">リレーに接続中…</string>
+    <string name="server_running">サーバー実行中</string>
+    <string name="server_stopped">サーバー停止中</string>
+    <string name="server_stopped_hint">接続を受け付けるにはサーバーを起動してください</string>
+    <string name="tools_title">ツール</string>
+    <string name="connection_mode_remote">リモート</string>
+    <string name="connection_mode_local">ローカルネットワーク</string>
+    <string name="enable_remote_access">リモートアクセスを有効にする</string>
+    <string name="copy_url">URL をコピー</string>
+    <string name="paired_clients_title">ペアリング済みの AI クライアント</string>
+    <string name="paired_clients_empty">まだありません — 上のコードで最初のクライアントをペアリングしてください。</string>
+    <string name="refresh_paired_clients">ペアリング済みクライアントを更新</string>
+    <string name="revoke">取り消す</string>
+    <string name="subscribe_monthly">%1$s / 月</string>
+    <string name="subscribe_yearly">%1$s / 年</string>
+    <string name="yearly_savings">年間プランなら %1$d %% お得です。</string>
+    <string name="subscribe">定期購入する</string>
+    <string name="remote_trial_days_left">無料トライアル — 残り %1$d 日</string>
+    <string name="remote_subscription_active">サブスクリプションは有効です</string>
+    <string name="remote_grace">トライアル終了 — リモートアクセスが停止するまでの猶予期間は残り %1$d 日です</string>
+    <string name="remote_expired">リモートアクセスの期限が切れました。サブスクリプションは近日提供予定です。</string>
+    <string name="battery_hint">Android はディープスリープ中に接続を一時停止することがあります。どこからでも到達できるようにするには、アプリを電池の最適化から除外してください。</string>
+    <string name="battery_button">バックグラウンド接続を許可</string>
+    <string name="restart_after_boot_title">スマートフォンが再起動しました</string>
+    <string name="restart_after_boot_body">タップして MCP サーバーを再度起動</string>
+    <string name="remote_status_connected">phonemcp.ai に接続済み</string>
+    <string name="remote_status_connecting">phonemcp.ai に接続中…</string>
+    <string name="add_client_title">AI クライアントを追加</string>
+    <string name="remote_step_code_1">1. お使いのコンピューターのターミナルでこのコマンドを実行します:</string>
+    <string name="remote_step_code_2">2. Claude Code 内で /mcp → phone → Authenticate を実行します。ブラウザが開き、ペアリングコードの入力を求められます。</string>
+    <string name="remote_step_desktop_1">1. コンピューターで Settings → Connectors → Add custom connector を開き、この URL を貼り付けます:</string>
+    <string name="remote_step_desktop_2">2. Claude Desktop がブラウザでサインインページを開き、ペアリングコードの入力を求めます。</string>
+    <string name="remote_step_other_1">1. OAuth 2.1 でのリモートサーバーをサポートする任意の MCP クライアントを接続します:</string>
+    <string name="remote_step_other_2">2. 認可の際に、ブラウザがペアリングコードの入力を求めます。</string>
+    <string name="remote_step_3">3. ボタンをタップして、コードをブラウザに入力します:</string>
+    <string name="show_pairing_code">ペアリングコードを表示</string>
+    <string name="pairing_code_hint">有効期限は 10 分、1 回のみ使用できます。ペアリング済みのクライアントは自動的に再接続します — 新しいコードは不要です。</string>
+    <string name="tools_connect_note">変更は次回クライアントが接続したときに適用されます。</string>
+    <string name="not_on_wifi_warning">Wi-Fi に接続されていません。サーバーには同じ Wi-Fi ネットワーク上の端末からのみアクセスできます — まずこのスマートフォンを Wi-Fi に接続してください。</string>
+    <string name="test_connection">接続をテスト</string>
+    <string name="testing_connection">接続をテスト中…</string>
+    <string name="connection_test_success">サーバーは %1$s で到達可能です。MCP クライアントがまだ接続できない場合は、コンピューターが同じ Wi-Fi 上にあるか確認してください — そのブラウザで %1$s を開いて確認できます。</string>
+    <string name="connection_test_failure">%1$s のサーバーに到達できませんでした。サーバーが実行中であること、設定でホストが 0.0.0.0 に設定されていることを確認してください。</string>
+    <string name="onboarding_title">Phone MCP へようこそ</string>
+    <string name="onboarding_body">Phone MCP はこのスマートフォンを、AI アシスタント（MCP クライアント）が接続できるサーバーにします。アプリ自体に AI は組み込まれていません — Claude Code や Claude Desktop など、お使いの AI を接続します。
+
+1. 公開したいツールを有効にします。
+2. トグルでサーバーを起動します。
+3. AI クライアントを接続します — phonemcp.ai 経由のリモート接続（どこからでも利用可能）、または同じ Wi-Fi ネットワーク経由で接続します。
+
+メイン画面の接続ガイドが両方の手順を案内します。</string>
+    <string name="get_started">始める</string>
+    <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">ポート番号が無効です。1 から 65535 の間の値を入力してください。</string>
+    <string name="back">戻る</string>
+    <string name="settings">設定</string>
+</resources>

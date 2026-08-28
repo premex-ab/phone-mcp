@@ -1,0 +1,90 @@
+<resources>
+    <string name="server_settings_help_text">• 0.0.0.0: Server mendengarkan di semua antarmuka jaringan (disarankan)\n• 127.0.0.1: Server hanya dapat diakses dari perangkat ini (lokal saja)\n• Port: Ubah port server jika 3001 sudah digunakan\n• Setelan berlaku setelah server dimulai ulang</string>
+    <string name="configuration_info">Info Konfigurasi</string>
+    <string name="valid_port_range_1_65535">Rentang port yang valid: 1 - 65535</string>
+    <string name="server_port">Port Server</string>
+    <string name="toggle_dropdown">Buka/tutup dropdown</string>
+    <string name="host">Host</string>
+    <string name="server_host">Host Server</string>
+    <string name="server_settings">Setelan Server</string>
+    <string name="all_interfaces">Semua Antarmuka</string>
+    <string name="localhost_only">Hanya localhost</string>
+    <string name="port_number">Nomor Port</string>
+    <string name="save_settings">Simpan Setelan</string>
+    <string name="all_permissions_are_required_to_run_the_mcp_server_service">Semua izin diperlukan untuk menjalankan layanan server MCP</string>
+    <string name="permission_is_required_to_run_the_mcp_server_service">izin diperlukan untuk menjalankan layanan server MCP</string>
+    <string name="no_description_available">Tidak ada deskripsi.</string>
+    <string name="warning_for">Peringatan untuk %1$s</string>
+    <string name="ok">Oke</string>
+    <string name="cancel">Batal</string>
+    <string name="connection_url">URL:</string>
+    <string name="access_token">Token:</string>
+    <string name="connect_your_ai_client">Hubungkan klien AI Anda</string>
+    <string name="client_other">Lainnya</string>
+    <string name="claude_code_instructions">Jalankan perintah ini di terminal komputer Anda, lalu mulai sesi Claude Code baru:</string>
+    <string name="claude_desktop_instructions">Buka Settings → Developer → Edit Config di komputer Anda, tambahkan ini ke claude_desktop_config.json, lalu mulai ulang Claude Desktop sepenuhnya. Memerlukan Node.js.\n\nCatatan: dialog “Add custom connector” hanya menerima server HTTPS — gunakan konfigurasi ini sebagai gantinya.</string>
+    <string name="other_client_instructions">Hubungkan klien MCP apa pun menggunakan transport SSE dan token bearer:</string>
+    <string name="copy_command">Salin perintah</string>
+    <string name="copy_configuration">Salin konfigurasi</string>
+    <string name="copy_details">Salin detail</string>
+    <string name="copy">Salin %1$s</string>
+    <string name="copied_to_clipboard">Disalin ke papan klip</string>
+    <string name="wifi_note">📶 Komputer Anda harus berada di jaringan Wi‑Fi yang sama dengan ponsel ini.</string>
+    <string name="remote_access_title">Akses jarak jauh (phonemcp.ai)</string>
+    <string name="remote_access_description">Jangkau ponsel ini dari mana saja melalui tunnel yang aman. Lalu lintas melewati server relay, dan setiap alat tetap harus diaktifkan sendiri di ponsel ini.</string>
+    <string name="remote_access_contacting_relay">Menghubungi relay…</string>
+    <string name="server_running">Server berjalan</string>
+    <string name="server_stopped">Server berhenti</string>
+    <string name="server_stopped_hint">Mulai server untuk menerima koneksi</string>
+    <string name="tools_title">Alat</string>
+    <string name="connection_mode_remote">Jarak jauh</string>
+    <string name="connection_mode_local">Jaringan lokal</string>
+    <string name="enable_remote_access">Aktifkan akses jarak jauh</string>
+    <string name="copy_url">Salin URL</string>
+    <string name="paired_clients_title">Klien AI yang dipasangkan</string>
+    <string name="paired_clients_empty">Belum ada — pasangkan klien pertama Anda dengan kode di atas.</string>
+    <string name="refresh_paired_clients">Segarkan daftar klien yang dipasangkan</string>
+    <string name="revoke">Cabut</string>
+    <string name="subscribe_monthly">%1$s / bulan</string>
+    <string name="subscribe_yearly">%1$s / tahun</string>
+    <string name="yearly_savings">Paket tahunan menghemat %1$d %%.</string>
+    <string name="subscribe">Berlangganan</string>
+    <string name="remote_trial_days_left">Uji coba gratis — %1$d hari tersisa</string>
+    <string name="remote_subscription_active">Langganan aktif</string>
+    <string name="remote_grace">Uji coba berakhir — %1$d hari masa tenggang tersisa sebelum akses jarak jauh berhenti</string>
+    <string name="remote_expired">Akses jarak jauh telah berakhir. Langganan segera hadir.</string>
+    <string name="battery_hint">Android dapat menjeda koneksi saat tidur nyenyak. Kecualikan aplikasi dari pengoptimalan baterai agar tetap dapat dijangkau dari mana saja.</string>
+    <string name="battery_button">Izinkan koneksi latar belakang</string>
+    <string name="restart_after_boot_title">Ponsel dimulai ulang</string>
+    <string name="restart_after_boot_body">Ketuk untuk memulai server MCP Anda lagi</string>
+    <string name="remote_status_connected">Terhubung ke phonemcp.ai</string>
+    <string name="remote_status_connecting">Menghubungkan ke phonemcp.ai…</string>
+    <string name="add_client_title">Tambahkan klien AI</string>
+    <string name="remote_step_code_1">1. Jalankan perintah ini di terminal komputer Anda:</string>
+    <string name="remote_step_code_2">2. Di dalam Claude Code, jalankan /mcp → phone → Authenticate. Browser Anda terbuka dan meminta kode pemasangan.</string>
+    <string name="remote_step_desktop_1">1. Di komputer Anda: Settings → Connectors → Add custom connector, lalu tempel URL ini:</string>
+    <string name="remote_step_desktop_2">2. Claude Desktop membuka halaman masuk di browser Anda yang meminta kode pemasangan.</string>
+    <string name="remote_step_other_1">1. Hubungkan klien MCP apa pun yang mendukung server jarak jauh dengan OAuth 2.1:</string>
+    <string name="remote_step_other_2">2. Selama otorisasi, browser meminta kode pemasangan.</string>
+    <string name="remote_step_3">3. Ketuk tombol dan ketik kodenya di browser:</string>
+    <string name="show_pairing_code">Tampilkan kode pemasangan</string>
+    <string name="pairing_code_hint">Berlaku selama 10 menit, sekali pakai. Klien yang sudah dipasangkan terhubung kembali secara otomatis — tidak perlu kode baru.</string>
+    <string name="tools_connect_note">Perubahan berlaku saat klien terhubung berikutnya.</string>
+    <string name="not_on_wifi_warning">Tidak terhubung ke Wi-Fi. Server hanya dapat dijangkau dari perangkat di jaringan Wi-Fi yang sama — hubungkan ponsel ini ke Wi-Fi terlebih dahulu.</string>
+    <string name="test_connection">Uji koneksi</string>
+    <string name="testing_connection">Menguji koneksi…</string>
+    <string name="connection_test_success">Server dapat dijangkau di %1$s. Jika klien MCP Anda masih tidak dapat terhubung, pastikan komputer Anda berada di Wi-Fi yang sama — Anda dapat membuka %1$s di browser komputer tersebut untuk memeriksanya.</string>
+    <string name="connection_test_failure">Tidak dapat menjangkau server di %1$s. Pastikan server berjalan dan Host disetel ke 0.0.0.0 di Setelan.</string>
+    <string name="onboarding_title">Selamat datang di Phone MCP</string>
+    <string name="onboarding_body">Phone MCP mengubah ponsel ini menjadi server yang dapat dihubungi asisten AI (klien MCP). Aplikasi ini tidak memiliki AI bawaan — Anda menghubungkan AI Anda sendiri, misalnya Claude Code atau Claude Desktop.
+
+1. Aktifkan alat yang ingin Anda buka aksesnya.
+2. Mulai server dengan tombol sakelar.
+3. Hubungkan klien AI Anda — dari jarak jauh melalui phonemcp.ai (berfungsi dari mana saja), atau melalui jaringan Wi-Fi yang sama.
+
+Panduan koneksi di layar utama memandu Anda melalui keduanya.</string>
+    <string name="get_started">Mulai</string>
+    <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">Nomor port tidak valid. Masukkan nilai antara 1 dan 65535.</string>
+    <string name="back">Kembali</string>
+    <string name="settings">Setelan</string>
+</resources>

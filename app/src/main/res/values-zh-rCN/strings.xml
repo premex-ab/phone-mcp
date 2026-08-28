@@ -1,0 +1,90 @@
+<resources>
+    <string name="server_settings_help_text">• 0.0.0.0: 服务器在所有网络接口上监听（推荐）\n• 127.0.0.1: 服务器仅可从本设备访问（仅限本地）\n• 端口: 如果 3001 已被占用，请更改服务器端口\n• 设置将在服务器重启后生效</string>
+    <string name="configuration_info">配置信息</string>
+    <string name="valid_port_range_1_65535">有效端口范围: 1 - 65535</string>
+    <string name="server_port">服务器端口</string>
+    <string name="toggle_dropdown">切换下拉菜单</string>
+    <string name="host">主机</string>
+    <string name="server_host">服务器主机</string>
+    <string name="server_settings">服务器设置</string>
+    <string name="all_interfaces">所有接口</string>
+    <string name="localhost_only">仅限 localhost</string>
+    <string name="port_number">端口号</string>
+    <string name="save_settings">保存设置</string>
+    <string name="all_permissions_are_required_to_run_the_mcp_server_service">运行 MCP 服务器服务需要所有权限</string>
+    <string name="permission_is_required_to_run_the_mcp_server_service">权限是运行 MCP 服务器服务所必需的</string>
+    <string name="no_description_available">暂无说明。</string>
+    <string name="warning_for">关于 %1$s 的警告</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="connection_url">URL:</string>
+    <string name="access_token">令牌:</string>
+    <string name="connect_your_ai_client">连接您的 AI 客户端</string>
+    <string name="client_other">其他</string>
+    <string name="claude_code_instructions">在计算机的终端中运行此命令，然后开始新的 Claude Code 会话：</string>
+    <string name="claude_desktop_instructions">在计算机上打开 Settings → Developer → Edit Config，将以下内容添加到 claude_desktop_config.json，然后完全重启 Claude Desktop。需要 Node.js。\n\n注意：“Add custom connector”对话框仅接受 HTTPS 服务器 — 请改用此配置。</string>
+    <string name="other_client_instructions">使用 SSE 传输和 bearer 令牌连接任意 MCP 客户端：</string>
+    <string name="copy_command">复制命令</string>
+    <string name="copy_configuration">复制配置</string>
+    <string name="copy_details">复制详细信息</string>
+    <string name="copy">复制 %1$s</string>
+    <string name="copied_to_clipboard">已复制到剪贴板</string>
+    <string name="wifi_note">📶 您的计算机必须与本手机连接到同一 Wi‑Fi 网络。</string>
+    <string name="remote_access_title">远程访问（phonemcp.ai）</string>
+    <string name="remote_access_description">通过安全隧道随时随地访问本手机。流量经由中继服务器传输，每个工具在本手机上都需单独启用。</string>
+    <string name="remote_access_contacting_relay">正在联系中继服务器…</string>
+    <string name="server_running">服务器运行中</string>
+    <string name="server_stopped">服务器已停止</string>
+    <string name="server_stopped_hint">启动服务器以接受连接</string>
+    <string name="tools_title">工具</string>
+    <string name="connection_mode_remote">远程</string>
+    <string name="connection_mode_local">本地网络</string>
+    <string name="enable_remote_access">启用远程访问</string>
+    <string name="copy_url">复制 URL</string>
+    <string name="paired_clients_title">已配对的 AI 客户端</string>
+    <string name="paired_clients_empty">暂无 — 使用上方的配对码配对您的第一个客户端。</string>
+    <string name="refresh_paired_clients">刷新已配对的客户端</string>
+    <string name="revoke">撤销</string>
+    <string name="subscribe_monthly">%1$s / 月</string>
+    <string name="subscribe_yearly">%1$s / 年</string>
+    <string name="yearly_savings">年度方案可节省 %1$d %%。</string>
+    <string name="subscribe">订阅</string>
+    <string name="remote_trial_days_left">免费试用 — 剩余 %1$d 天</string>
+    <string name="remote_subscription_active">订阅已生效</string>
+    <string name="remote_grace">试用已结束 — 距远程访问停止还有 %1$d 天宽限期</string>
+    <string name="remote_expired">远程访问已过期。订阅功能即将推出。</string>
+    <string name="battery_hint">Android 可能会在深度休眠时暂停连接。请将本应用排除在电池优化之外，以便随时随地保持可访问。</string>
+    <string name="battery_button">允许后台连接</string>
+    <string name="restart_after_boot_title">手机已重启</string>
+    <string name="restart_after_boot_body">点按以重新启动您的 MCP 服务器</string>
+    <string name="remote_status_connected">已连接到 phonemcp.ai</string>
+    <string name="remote_status_connecting">正在连接到 phonemcp.ai…</string>
+    <string name="add_client_title">添加 AI 客户端</string>
+    <string name="remote_step_code_1">1. 在计算机的终端中运行此命令：</string>
+    <string name="remote_step_code_2">2. 在 Claude Code 中运行 /mcp → phone → Authenticate。浏览器将打开并要求输入配对码。</string>
+    <string name="remote_step_desktop_1">1. 在计算机上：Settings → Connectors → Add custom connector，然后粘贴此 URL：</string>
+    <string name="remote_step_desktop_2">2. Claude Desktop 会在浏览器中打开一个登录页面，要求输入配对码。</string>
+    <string name="remote_step_other_1">1. 连接任何支持 OAuth 2.1 远程服务器的 MCP 客户端：</string>
+    <string name="remote_step_other_2">2. 授权过程中，浏览器会要求输入配对码。</string>
+    <string name="remote_step_3">3. 点按按钮，然后在浏览器中输入配对码：</string>
+    <string name="show_pairing_code">显示配对码</string>
+    <string name="pairing_code_hint">有效期 10 分钟，仅限使用一次。已配对的客户端会自动重新连接 — 无需新配对码。</string>
+    <string name="tools_connect_note">更改将在客户端下次连接时生效。</string>
+    <string name="not_on_wifi_warning">未连接到 Wi-Fi。只有同一 Wi-Fi 网络中的设备才能访问服务器 — 请先将本手机连接到 Wi-Fi。</string>
+    <string name="test_connection">测试连接</string>
+    <string name="testing_connection">正在测试连接…</string>
+    <string name="connection_test_success">服务器可通过 %1$s 访问。如果您的 MCP 客户端仍无法连接，请确认计算机在同一 Wi-Fi 网络中 — 可在其浏览器中打开 %1$s 进行检查。</string>
+    <string name="connection_test_failure">无法通过 %1$s 访问服务器。请确认服务器正在运行，并且设置中的主机已设为 0.0.0.0。</string>
+    <string name="onboarding_title">欢迎使用 Phone MCP</string>
+    <string name="onboarding_body">Phone MCP 可将本手机变成 AI 助手（MCP 客户端）可以连接的服务器。本应用不内置任何 AI — 您需要连接自己的 AI，例如 Claude Code 或 Claude Desktop。
+
+1. 启用您想要开放的工具。
+2. 使用开关启动服务器。
+3. 连接您的 AI 客户端 — 通过 phonemcp.ai 远程连接（随时随地可用），或通过同一 Wi-Fi 网络连接。
+
+主屏幕上的连接指南会引导您完成这两种方式。</string>
+    <string name="get_started">开始使用</string>
+    <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">端口号无效。请输入 1 到 65535 之间的值。</string>
+    <string name="back">返回</string>
+    <string name="settings">设置</string>
+</resources>

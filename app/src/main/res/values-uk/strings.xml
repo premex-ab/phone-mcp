@@ -1,0 +1,90 @@
+<resources>
+    <string name="server_settings_help_text">• 0.0.0.0: сервер слухає всі мережеві інтерфейси (рекомендовано)\n• 127.0.0.1: сервер доступний лише з цього пристрою (тільки локально)\n• Порт: змініть порт сервера, якщо 3001 уже зайнятий\n• Налаштування набувають чинності після перезапуску сервера</string>
+    <string name="configuration_info">Відомості про конфігурацію</string>
+    <string name="valid_port_range_1_65535">Допустимий діапазон портів: 1–65535</string>
+    <string name="server_port">Порт сервера</string>
+    <string name="toggle_dropdown">Перемкнути розкривний список</string>
+    <string name="host">Хост</string>
+    <string name="server_host">Хост сервера</string>
+    <string name="server_settings">Налаштування сервера</string>
+    <string name="all_interfaces">Усі інтерфейси</string>
+    <string name="localhost_only">Лише localhost</string>
+    <string name="port_number">Номер порту</string>
+    <string name="save_settings">Зберегти налаштування</string>
+    <string name="all_permissions_are_required_to_run_the_mcp_server_service">Для роботи служби сервера MCP потрібні всі дозволи</string>
+    <string name="permission_is_required_to_run_the_mcp_server_service">дозвіл потрібен для роботи служби сервера MCP</string>
+    <string name="no_description_available">Опис відсутній.</string>
+    <string name="warning_for">Попередження для %1$s</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Скасувати</string>
+    <string name="connection_url">URL:</string>
+    <string name="access_token">Токен:</string>
+    <string name="connect_your_ai_client">Підключіть свій ШІ-клієнт</string>
+    <string name="client_other">Інший</string>
+    <string name="claude_code_instructions">Виконайте цю команду в терміналі на комп\'ютері, а потім почніть новий сеанс Claude Code:</string>
+    <string name="claude_desktop_instructions">Відкрийте Settings → Developer → Edit Config на комп\'ютері, додайте це до claude_desktop_config.json і повністю перезапустіть Claude Desktop. Потрібен Node.js.\n\nПримітка: діалог \"Add custom connector\" приймає лише сервери HTTPS — використайте натомість цю конфігурацію.</string>
+    <string name="other_client_instructions">Підключіть будь-який MCP-клієнт через транспорт SSE з токеном bearer:</string>
+    <string name="copy_command">Копіювати команду</string>
+    <string name="copy_configuration">Копіювати конфігурацію</string>
+    <string name="copy_details">Копіювати дані</string>
+    <string name="copy">Копіювати %1$s</string>
+    <string name="copied_to_clipboard">Скопійовано в буфер обміну</string>
+    <string name="wifi_note">📶 Комп\'ютер має бути в тій самій мережі Wi‑Fi, що й цей телефон.</string>
+    <string name="remote_access_title">Віддалений доступ (phonemcp.ai)</string>
+    <string name="remote_access_description">Отримуйте доступ до цього телефона звідусіль через захищений тунель. Трафік проходить через сервер-ретранслятор, а кожен інструмент вмикається лише вручну на цьому телефоні.</string>
+    <string name="remote_access_contacting_relay">З\'єднання з ретранслятором…</string>
+    <string name="server_running">Сервер працює</string>
+    <string name="server_stopped">Сервер зупинено</string>
+    <string name="server_stopped_hint">Запустіть сервер, щоб приймати підключення</string>
+    <string name="tools_title">Інструменти</string>
+    <string name="connection_mode_remote">Віддалено</string>
+    <string name="connection_mode_local">Локальна мережа</string>
+    <string name="enable_remote_access">Увімкнути віддалений доступ</string>
+    <string name="copy_url">Копіювати URL</string>
+    <string name="paired_clients_title">Спаровані ШІ-клієнти</string>
+    <string name="paired_clients_empty">Поки немає — спаруйте першого клієнта за допомогою коду вище.</string>
+    <string name="refresh_paired_clients">Оновити список спарованих клієнтів</string>
+    <string name="revoke">Відкликати</string>
+    <string name="subscribe_monthly">%1$s / місяць</string>
+    <string name="subscribe_yearly">%1$s / рік</string>
+    <string name="yearly_savings">Річний план заощаджує %1$d %%.</string>
+    <string name="subscribe">Оформити підписку</string>
+    <string name="remote_trial_days_left">Безкоштовний пробний період — залишилося днів: %1$d</string>
+    <string name="remote_subscription_active">Підписка активна</string>
+    <string name="remote_grace">Пробний період завершився — залишилося %1$d дн. пільгового періоду до вимкнення віддаленого доступу</string>
+    <string name="remote_expired">Термін віддаленого доступу минув. Підписки незабаром з\'являться.</string>
+    <string name="battery_hint">Android може призупиняти з\'єднання в режимі глибокого сну. Вимкніть оптимізацію батареї для застосунку, щоб телефон залишався доступним звідусіль.</string>
+    <string name="battery_button">Дозволити фонове з\'єднання</string>
+    <string name="restart_after_boot_title">Телефон перезавантажено</string>
+    <string name="restart_after_boot_body">Торкніться, щоб знову запустити сервер MCP</string>
+    <string name="remote_status_connected">Підключено до phonemcp.ai</string>
+    <string name="remote_status_connecting">Підключення до phonemcp.ai…</string>
+    <string name="add_client_title">Додати ШІ-клієнт</string>
+    <string name="remote_step_code_1">1. Виконайте цю команду в терміналі на комп\'ютері:</string>
+    <string name="remote_step_code_2">2. У Claude Code виконайте /mcp → phone → Authenticate. Відкриється браузер і запитає код парування.</string>
+    <string name="remote_step_desktop_1">1. На комп\'ютері: Settings → Connectors → Add custom connector, потім вставте цей URL:</string>
+    <string name="remote_step_desktop_2">2. Claude Desktop відкриє в браузері сторінку входу, яка запитає код парування.</string>
+    <string name="remote_step_other_1">1. Підключіть будь-який MCP-клієнт із підтримкою віддалених серверів і OAuth 2.1:</string>
+    <string name="remote_step_other_2">2. Під час авторизації браузер запитає код парування.</string>
+    <string name="remote_step_3">3. Торкніться кнопки та введіть код у браузері:</string>
+    <string name="show_pairing_code">Показати код парування</string>
+    <string name="pairing_code_hint">Дійсний 10 хвилин, одноразовий. Уже спаровані клієнти перепідключаються автоматично — новий код не потрібен.</string>
+    <string name="tools_connect_note">Зміни набудуть чинності під час наступного підключення клієнта.</string>
+    <string name="not_on_wifi_warning">Немає підключення до Wi-Fi. Сервер доступний лише пристроям у тій самій мережі Wi-Fi — спершу підключіть цей телефон до Wi-Fi.</string>
+    <string name="test_connection">Перевірити з\'єднання</string>
+    <string name="testing_connection">Перевірка з\'єднання…</string>
+    <string name="connection_test_success">Сервер доступний за адресою %1$s. Якщо MCP-клієнт усе одно не підключається, переконайтеся, що комп\'ютер у тій самій мережі Wi-Fi — для перевірки відкрийте %1$s у його браузері.</string>
+    <string name="connection_test_failure">Не вдалося з\'єднатися із сервером за адресою %1$s. Переконайтеся, що сервер запущено й що в налаштуваннях для хоста вказано 0.0.0.0.</string>
+    <string name="onboarding_title">Вітаємо у Phone MCP</string>
+    <string name="onboarding_body">Phone MCP перетворює цей телефон на сервер, до якого можуть підключатися ШІ-асистенти (MCP-клієнти). У застосунку немає вбудованого ШІ — ви підключаєте власний, наприклад Claude Code або Claude Desktop.
+
+1. Увімкніть інструменти, які хочете відкрити для доступу.
+2. Запустіть сервер перемикачем.
+3. Підключіть свій ШІ-клієнт — віддалено через phonemcp.ai (працює звідусіль) або в тій самій мережі Wi-Fi.
+
+Посібник із підключення на головному екрані проведе вас через обидва способи.</string>
+    <string name="get_started">Почати</string>
+    <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">Недопустимий номер порту. Введіть значення від 1 до 65535.</string>
+    <string name="back">Назад</string>
+    <string name="settings">Налаштування</string>
+</resources>

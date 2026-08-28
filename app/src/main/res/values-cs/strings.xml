@@ -1,0 +1,90 @@
+<resources>
+    <string name="server_settings_help_text">• 0.0.0.0: server naslouchá na všech síťových rozhraních (doporučeno)\n• 127.0.0.1: server je dostupný pouze z tohoto zařízení (jen místně)\n• Port: změňte port serveru, pokud je 3001 již obsazen\n• Nastavení se projeví po restartu serveru</string>
+    <string name="configuration_info">Informace o konfiguraci</string>
+    <string name="valid_port_range_1_65535">Platný rozsah portů: 1–65535</string>
+    <string name="server_port">Port serveru</string>
+    <string name="toggle_dropdown">Přepnout rozbalovací nabídku</string>
+    <string name="host">Hostitel</string>
+    <string name="server_host">Hostitel serveru</string>
+    <string name="server_settings">Nastavení serveru</string>
+    <string name="all_interfaces">Všechna rozhraní</string>
+    <string name="localhost_only">Pouze localhost</string>
+    <string name="port_number">Číslo portu</string>
+    <string name="save_settings">Uložit nastavení</string>
+    <string name="all_permissions_are_required_to_run_the_mcp_server_service">Ke spuštění služby serveru MCP jsou vyžadována všechna oprávnění</string>
+    <string name="permission_is_required_to_run_the_mcp_server_service">oprávnění je vyžadováno ke spuštění služby serveru MCP</string>
+    <string name="no_description_available">Popis není k dispozici.</string>
+    <string name="warning_for">Varování pro %1$s</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Zrušit</string>
+    <string name="connection_url">URL:</string>
+    <string name="access_token">Token:</string>
+    <string name="connect_your_ai_client">Připojte svého AI klienta</string>
+    <string name="client_other">Jiný</string>
+    <string name="claude_code_instructions">Spusťte tento příkaz v terminálu na svém počítači a poté zahajte novou relaci Claude Code:</string>
+    <string name="claude_desktop_instructions">Otevřete Settings → Developer → Edit Config na svém počítači, přidejte toto do claude_desktop_config.json a poté Claude Desktop zcela restartujte. Vyžaduje Node.js.\n\nPoznámka: dialog „Add custom connector“ přijímá pouze HTTPS servery — použijte místo něj tuto konfiguraci.</string>
+    <string name="other_client_instructions">Připojte libovolného MCP klienta pomocí transportu SSE a bearer tokenu:</string>
+    <string name="copy_command">Kopírovat příkaz</string>
+    <string name="copy_configuration">Kopírovat konfiguraci</string>
+    <string name="copy_details">Kopírovat údaje</string>
+    <string name="copy">Kopírovat %1$s</string>
+    <string name="copied_to_clipboard">Zkopírováno do schránky</string>
+    <string name="wifi_note">📶 Váš počítač musí být na stejné Wi‑Fi síti jako tento telefon.</string>
+    <string name="remote_access_title">Vzdálený přístup (phonemcp.ai)</string>
+    <string name="remote_access_description">Připojte se k tomuto telefonu odkudkoli přes zabezpečený tunel. Provoz prochází přes relay server a každý nástroj je nutné na tomto telefonu výslovně povolit.</string>
+    <string name="remote_access_contacting_relay">Kontaktování relay serveru…</string>
+    <string name="server_running">Server běží</string>
+    <string name="server_stopped">Server je zastaven</string>
+    <string name="server_stopped_hint">Spusťte server, aby mohl přijímat připojení</string>
+    <string name="tools_title">Nástroje</string>
+    <string name="connection_mode_remote">Vzdáleně</string>
+    <string name="connection_mode_local">Místní síť</string>
+    <string name="enable_remote_access">Povolit vzdálený přístup</string>
+    <string name="copy_url">Kopírovat URL</string>
+    <string name="paired_clients_title">Spárovaní AI klienti</string>
+    <string name="paired_clients_empty">Zatím žádní — spárujte prvního klienta pomocí kódu výše.</string>
+    <string name="refresh_paired_clients">Obnovit spárované klienty</string>
+    <string name="revoke">Odvolat</string>
+    <string name="subscribe_monthly">%1$s / měsíc</string>
+    <string name="subscribe_yearly">%1$s / rok</string>
+    <string name="yearly_savings">S ročním plánem ušetříte %1$d %%.</string>
+    <string name="subscribe">Předplatit</string>
+    <string name="remote_trial_days_left">Bezplatná zkušební doba — zbývá dní: %1$d</string>
+    <string name="remote_subscription_active">Předplatné je aktivní</string>
+    <string name="remote_grace">Zkušební doba skončila — počet dní ochranné lhůty, než se vzdálený přístup vypne: %1$d</string>
+    <string name="remote_expired">Platnost vzdáleného přístupu vypršela. Předplatná budou brzy k dispozici.</string>
+    <string name="battery_hint">Android může připojení v hlubokém spánku pozastavit. Vyjměte aplikaci z optimalizace baterie, abyste zůstali dostupní odkudkoli.</string>
+    <string name="battery_button">Povolit připojení na pozadí</string>
+    <string name="restart_after_boot_title">Telefon byl restartován</string>
+    <string name="restart_after_boot_body">Klepnutím znovu spustíte svůj MCP server</string>
+    <string name="remote_status_connected">Připojeno k phonemcp.ai</string>
+    <string name="remote_status_connecting">Připojování k phonemcp.ai…</string>
+    <string name="add_client_title">Přidat AI klienta</string>
+    <string name="remote_step_code_1">1. Spusťte tento příkaz v terminálu na svém počítači:</string>
+    <string name="remote_step_code_2">2. V Claude Code spusťte /mcp → phone → Authenticate. Otevře se prohlížeč a požádá o párovací kód.</string>
+    <string name="remote_step_desktop_1">1. Na svém počítači: Settings → Connectors → Add custom connector a vložte tuto URL:</string>
+    <string name="remote_step_desktop_2">2. Claude Desktop otevře v prohlížeči přihlašovací stránku, která požádá o párovací kód.</string>
+    <string name="remote_step_other_1">1. Připojte libovolného MCP klienta, který podporuje vzdálené servery s OAuth 2.1:</string>
+    <string name="remote_step_other_2">2. Během autorizace si prohlížeč vyžádá párovací kód.</string>
+    <string name="remote_step_3">3. Klepněte na tlačítko a zadejte kód do prohlížeče:</string>
+    <string name="show_pairing_code">Zobrazit párovací kód</string>
+    <string name="pairing_code_hint">Platí 10 minut, na jedno použití. Již spárovaní klienti se znovu připojí automaticky — nový kód není potřeba.</string>
+    <string name="tools_connect_note">Změny se projeví při příštím připojení klienta.</string>
+    <string name="not_on_wifi_warning">Nepřipojeno k Wi-Fi. Server je dostupný pouze ze zařízení na stejné Wi-Fi síti — nejprve připojte tento telefon k Wi-Fi.</string>
+    <string name="test_connection">Otestovat připojení</string>
+    <string name="testing_connection">Testování připojení…</string>
+    <string name="connection_test_success">Server je dostupný na %1$s. Pokud se váš MCP klient stále nemůže připojit, ověřte, že je počítač na stejné Wi-Fi — pro kontrolu můžete otevřít %1$s v jeho prohlížeči.</string>
+    <string name="connection_test_failure">Server na %1$s se nepodařilo kontaktovat. Zkontrolujte, že server běží a že je Hostitel v nastavení nastaven na 0.0.0.0.</string>
+    <string name="onboarding_title">Vítejte v aplikaci Phone MCP</string>
+    <string name="onboarding_body">Phone MCP promění tento telefon v server, ke kterému se mohou připojit AI asistenti (MCP klienti). Aplikace nemá žádnou vestavěnou AI — připojíte si vlastní, například Claude Code nebo Claude Desktop.
+
+1. Zapněte nástroje, které chcete zpřístupnit.
+2. Spusťte server přepínačem.
+3. Připojte svého AI klienta — vzdáleně přes phonemcp.ai (funguje odkudkoli), nebo přes stejnou Wi-Fi síť.
+
+Průvodce připojením na hlavní obrazovce vás provede oběma způsoby.</string>
+    <string name="get_started">Začít</string>
+    <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">Neplatné číslo portu. Zadejte hodnotu mezi 1 a 65535.</string>
+    <string name="back">Zpět</string>
+    <string name="settings">Nastavení</string>
+</resources>

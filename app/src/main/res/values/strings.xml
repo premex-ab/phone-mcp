@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MCP server</string>
+    <string name="app_name" translatable="false">MCP server</string>
     <string name="server_settings_help_text">• 0.0.0.0: Server listens on all network interfaces (recommended)\n• 127.0.0.1: Server only accessible from this device (local only)\n• Port: Change the server port if 3001 is already in use\n• Settings take effect after restarting the server</string>
     <string name="configuration_info">Configuration Info</string>
     <string name="valid_port_range_1_65535">Valid port range: 1 - 65535</string>
@@ -18,12 +18,12 @@
     <string name="warning_for">Warning for %1$s</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
-    <string name="mcp_server">MCP Server</string>
+    <string name="mcp_server" translatable="false">MCP Server</string>
     <string name="connection_url">URL:</string>
     <string name="access_token">Token:</string>
     <string name="connect_your_ai_client">Connect your AI client</string>
-    <string name="client_claude_code">Claude Code</string>
-    <string name="client_claude_desktop">Claude Desktop</string>
+    <string name="client_claude_code" translatable="false">Claude Code</string>
+    <string name="client_claude_desktop" translatable="false">Claude Desktop</string>
     <string name="client_other">Other</string>
     <string name="claude_code_instructions">Run this command in a terminal on your computer, then start a new Claude Code session:</string>
     <string name="claude_desktop_instructions">Open Settings → Developer → Edit Config on your computer and add this to claude_desktop_config.json, then fully restart Claude Desktop. Requires Node.js.\n\nNote: the “Add custom connector” dialog only accepts HTTPS servers — use this config instead.</string>

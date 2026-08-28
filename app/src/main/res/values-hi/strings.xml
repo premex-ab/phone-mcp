@@ -1,0 +1,90 @@
+<resources>
+    <string name="server_settings_help_text">• 0.0.0.0: सर्वर सभी नेटवर्क इंटरफ़ेस पर सुनता है (अनुशंसित)\n• 127.0.0.1: सर्वर केवल इसी डिवाइस से एक्सेस किया जा सकता है (सिर्फ़ लोकल)\n• पोर्ट: अगर 3001 पहले से उपयोग में है तो सर्वर पोर्ट बदलें\n• सेटिंग्स सर्वर को फिर से शुरू करने के बाद लागू होती हैं</string>
+    <string name="configuration_info">कॉन्फ़िगरेशन जानकारी</string>
+    <string name="valid_port_range_1_65535">मान्य पोर्ट रेंज: 1–65535</string>
+    <string name="server_port">सर्वर पोर्ट</string>
+    <string name="toggle_dropdown">ड्रॉपडाउन टॉगल करें</string>
+    <string name="host">होस्ट</string>
+    <string name="server_host">सर्वर होस्ट</string>
+    <string name="server_settings">सर्वर सेटिंग्स</string>
+    <string name="all_interfaces">सभी इंटरफ़ेस</string>
+    <string name="localhost_only">केवल localhost</string>
+    <string name="port_number">पोर्ट नंबर</string>
+    <string name="save_settings">सेटिंग्स सहेजें</string>
+    <string name="all_permissions_are_required_to_run_the_mcp_server_service">MCP सर्वर सेवा चलाने के लिए सभी अनुमतियाँ ज़रूरी हैं</string>
+    <string name="permission_is_required_to_run_the_mcp_server_service">अनुमति MCP सर्वर सेवा चलाने के लिए ज़रूरी है</string>
+    <string name="no_description_available">कोई विवरण उपलब्ध नहीं।</string>
+    <string name="warning_for">%1$s के लिए चेतावनी</string>
+    <string name="ok">ठीक है</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="connection_url">URL:</string>
+    <string name="access_token">टोकन:</string>
+    <string name="connect_your_ai_client">अपना AI क्लाइंट कनेक्ट करें</string>
+    <string name="client_other">अन्य</string>
+    <string name="claude_code_instructions">अपने कंप्यूटर के टर्मिनल में यह कमांड चलाएँ, फिर एक नया Claude Code सेशन शुरू करें:</string>
+    <string name="claude_desktop_instructions">अपने कंप्यूटर पर Settings → Developer → Edit Config खोलें, इसे claude_desktop_config.json में जोड़ें, फिर Claude Desktop को पूरी तरह रीस्टार्ट करें। Node.js ज़रूरी है।\n\nनोट: \"Add custom connector\" डायलॉग केवल HTTPS सर्वर स्वीकार करता है — इसके बजाय यह कॉन्फ़िगरेशन इस्तेमाल करें।</string>
+    <string name="other_client_instructions">SSE ट्रांसपोर्ट और bearer टोकन के साथ कोई भी MCP क्लाइंट कनेक्ट करें:</string>
+    <string name="copy_command">कमांड कॉपी करें</string>
+    <string name="copy_configuration">कॉन्फ़िगरेशन कॉपी करें</string>
+    <string name="copy_details">विवरण कॉपी करें</string>
+    <string name="copy">%1$s कॉपी करें</string>
+    <string name="copied_to_clipboard">क्लिपबोर्ड पर कॉपी किया गया</string>
+    <string name="wifi_note">📶 आपका कंप्यूटर इस फ़ोन के समान Wi‑Fi नेटवर्क पर होना चाहिए।</string>
+    <string name="remote_access_title">रिमोट एक्सेस (phonemcp.ai)</string>
+    <string name="remote_access_description">एक सुरक्षित टनल के ज़रिए इस फ़ोन तक कहीं से भी पहुँचें। ट्रैफ़िक रिले सर्वर से होकर गुज़रता है, और हर टूल इस फ़ोन पर आपकी अनुमति से ही चालू होता है।</string>
+    <string name="remote_access_contacting_relay">रिले से संपर्क किया जा रहा है…</string>
+    <string name="server_running">सर्वर चल रहा है</string>
+    <string name="server_stopped">सर्वर बंद है</string>
+    <string name="server_stopped_hint">कनेक्शन स्वीकार करने के लिए सर्वर शुरू करें</string>
+    <string name="tools_title">टूल</string>
+    <string name="connection_mode_remote">रिमोट</string>
+    <string name="connection_mode_local">लोकल नेटवर्क</string>
+    <string name="enable_remote_access">रिमोट एक्सेस चालू करें</string>
+    <string name="copy_url">URL कॉपी करें</string>
+    <string name="paired_clients_title">पेयर किए गए AI क्लाइंट</string>
+    <string name="paired_clients_empty">अभी कोई नहीं — ऊपर दिए कोड से अपना पहला क्लाइंट पेयर करें।</string>
+    <string name="refresh_paired_clients">पेयर किए गए क्लाइंट रीफ़्रेश करें</string>
+    <string name="revoke">हटाएँ</string>
+    <string name="subscribe_monthly">%1$s / महीना</string>
+    <string name="subscribe_yearly">%1$s / साल</string>
+    <string name="yearly_savings">वार्षिक प्लान से %1$d %% की बचत होती है।</string>
+    <string name="subscribe">सब्सक्राइब करें</string>
+    <string name="remote_trial_days_left">फ़्री ट्रायल — %1$d दिन बाकी</string>
+    <string name="remote_subscription_active">सब्सक्रिप्शन चालू है</string>
+    <string name="remote_grace">ट्रायल खत्म — रिमोट एक्सेस बंद होने से पहले %1$d अतिरिक्त दिन बाकी</string>
+    <string name="remote_expired">रिमोट एक्सेस की अवधि खत्म हो गई है। सब्सक्रिप्शन जल्द आ रहे हैं।</string>
+    <string name="battery_hint">डीप स्लीप में Android कनेक्शन रोक सकता है। कहीं से भी पहुँच बनाए रखने के लिए ऐप को बैटरी ऑप्टिमाइज़ेशन से छूट दें।</string>
+    <string name="battery_button">बैकग्राउंड कनेक्शन की अनुमति दें</string>
+    <string name="restart_after_boot_title">फ़ोन रीस्टार्ट हुआ</string>
+    <string name="restart_after_boot_body">अपना MCP सर्वर फिर से शुरू करने के लिए टैप करें</string>
+    <string name="remote_status_connected">phonemcp.ai से कनेक्टेड</string>
+    <string name="remote_status_connecting">phonemcp.ai से कनेक्ट हो रहा है…</string>
+    <string name="add_client_title">AI क्लाइंट जोड़ें</string>
+    <string name="remote_step_code_1">1. अपने कंप्यूटर के टर्मिनल में यह कमांड चलाएँ:</string>
+    <string name="remote_step_code_2">2. Claude Code में /mcp → phone → Authenticate चलाएँ। आपका ब्राउज़र खुलेगा और पेयरिंग कोड माँगेगा।</string>
+    <string name="remote_step_desktop_1">1. अपने कंप्यूटर पर: Settings → Connectors → Add custom connector, और यह URL पेस्ट करें:</string>
+    <string name="remote_step_desktop_2">2. Claude Desktop आपके ब्राउज़र में एक साइन-इन पेज खोलेगा जो पेयरिंग कोड माँगेगा।</string>
+    <string name="remote_step_other_1">1. OAuth 2.1 के साथ रिमोट सर्वर सपोर्ट करने वाला कोई भी MCP क्लाइंट कनेक्ट करें:</string>
+    <string name="remote_step_other_2">2. ऑथराइज़ेशन के दौरान ब्राउज़र पेयरिंग कोड माँगेगा।</string>
+    <string name="remote_step_3">3. बटन टैप करें और कोड ब्राउज़र में डालें:</string>
+    <string name="show_pairing_code">पेयरिंग कोड दिखाएँ</string>
+    <string name="pairing_code_hint">10 मिनट के लिए मान्य, एक बार उपयोग। पहले से पेयर किए गए क्लाइंट अपने आप फिर से कनेक्ट हो जाते हैं — नए कोड की ज़रूरत नहीं।</string>
+    <string name="tools_connect_note">बदलाव अगली बार क्लाइंट के कनेक्ट होने पर लागू होंगे।</string>
+    <string name="not_on_wifi_warning">Wi-Fi से कनेक्ट नहीं है। सर्वर तक केवल उसी Wi-Fi नेटवर्क के डिवाइस पहुँच सकते हैं — पहले इस फ़ोन को Wi-Fi से कनेक्ट करें।</string>
+    <string name="test_connection">कनेक्शन टेस्ट करें</string>
+    <string name="testing_connection">कनेक्शन टेस्ट हो रहा है…</string>
+    <string name="connection_test_success">सर्वर %1$s पर उपलब्ध है। अगर आपका MCP क्लाइंट फिर भी कनेक्ट नहीं हो पाता, तो जाँचें कि कंप्यूटर उसी Wi-Fi पर है — जाँचने के लिए आप उसके ब्राउज़र में %1$s खोल सकते हैं।</string>
+    <string name="connection_test_failure">%1$s पर सर्वर से संपर्क नहीं हो सका। पक्का करें कि सर्वर चल रहा है और सेटिंग्स में होस्ट 0.0.0.0 पर सेट है।</string>
+    <string name="onboarding_title">Phone MCP में आपका स्वागत है</string>
+    <string name="onboarding_body">Phone MCP इस फ़ोन को एक ऐसा सर्वर बना देता है जिससे AI असिस्टेंट (MCP क्लाइंट) कनेक्ट हो सकते हैं। ऐप में कोई AI बिल्ट-इन नहीं है — आप अपना खुद का कनेक्ट करते हैं, जैसे Claude Code या Claude Desktop.
+
+1. वे टूल चालू करें जिन्हें आप उपलब्ध कराना चाहते हैं।
+2. टॉगल से सर्वर शुरू करें।
+3. अपना AI क्लाइंट कनेक्ट करें — phonemcp.ai के ज़रिए रिमोट तरीके से (कहीं से भी काम करता है), या समान Wi-Fi नेटवर्क पर।
+
+मुख्य स्क्रीन पर मौजूद कनेक्शन गाइड दोनों तरीकों में आपकी मदद करेगी।</string>
+    <string name="get_started">शुरू करें</string>
+    <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">अमान्य पोर्ट नंबर। कृपया 1 और 65535 के बीच का मान डालें।</string>
+    <string name="back">वापस</string>
+    <string name="settings">सेटिंग्स</string>
+</resources>
