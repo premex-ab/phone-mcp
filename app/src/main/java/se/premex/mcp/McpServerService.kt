@@ -1,15 +1,20 @@
 package se.premex.mcp
 
+import android.Manifest
 import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
+import android.content.pm.PackageManager
+import android.content.pm.ServiceInfo
 import android.content.Intent
+import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.app.NotificationCompat
+import androidx.core.app.ServiceCompat
 import dagger.hilt.android.AndroidEntryPoint
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
@@ -138,11 +143,41 @@ class McpServerService : Service() {
             pendingIntent
         )
 
-        startForeground(NOTIFICATION_ID, initialNotification)
+        startInForeground(initialNotification)
         Log.i(
             TAG,
             "$LOG_PREFIX_LIFECYCLE: Service started in foreground with notification ID $NOTIFICATION_ID"
         )
+    }
+
+    /**
+     * Foreground with an explicit type mask: camera is included only when the
+     * runtime permission is granted (starting a camera-type FGS without it
+     * throws on Android 14+), with a dataSync-only fallback for starts where
+     * while-in-use types are not allowed (e.g. restored after boot). Without
+     * the camera type, the camera tool cannot capture while the app is
+     * backgrounded on API 29+ (issue #72).
+     */
+    private fun startInForeground(notification: Notification) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            var type = ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+            if (checkSelfPermission(Manifest.permission.CAMERA) ==
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                type = type or ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA
+            }
+            try {
+                ServiceCompat.startForeground(this, NOTIFICATION_ID, notification, type)
+            } catch (e: Exception) {
+                Log.w(TAG, "$LOG_PREFIX_LIFECYCLE: camera FGS type refused, dataSync only", e)
+                ServiceCompat.startForeground(
+                    this, NOTIFICATION_ID, notification,
+                    ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+                )
+            }
+        } else {
+            startForeground(NOTIFICATION_ID, notification)
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
