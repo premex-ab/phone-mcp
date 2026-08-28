@@ -114,11 +114,32 @@ class ServerPreferencesRepository @Inject constructor(
         }
     }
 
+    /**
+     * The user's intent: true between "start server" and "stop server".
+     * Read by [se.premex.mcp.BootReceiver] to bring the server back after a
+     * phone reboot — a remote-access phone must not go dark because Android
+     * restarted overnight.
+     */
+    fun serverShouldRun(): Flow<Boolean> {
+        return dataStore.data.map { preferences ->
+            preferences[SERVER_SHOULD_RUN_KEY] ?: false
+        }
+    }
+
+    fun setServerShouldRun(shouldRun: Boolean) {
+        appScope.launch {
+            dataStore.edit { preferences ->
+                preferences[SERVER_SHOULD_RUN_KEY] = shouldRun
+            }
+        }
+    }
+
     companion object {
         private val HOST_KEY = stringPreferencesKey("server_host")
         private val PORT_KEY = intPreferencesKey("server_port")
         private val ONBOARDING_COMPLETED_KEY = booleanPreferencesKey("onboarding_completed")
         private val CLIENT_CONNECTED_KEY = booleanPreferencesKey("client_connected")
         private val REVIEW_PROMPTED_KEY = booleanPreferencesKey("review_prompted")
+        private val SERVER_SHOULD_RUN_KEY = booleanPreferencesKey("server_should_run")
     }
 }

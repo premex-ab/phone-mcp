@@ -83,6 +83,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    companion object {
+        /** Set by BootReceiver's tap-to-restart notification. */
+        const val EXTRA_AUTO_START_SERVER = "auto_start_server"
+    }
+
     // Add dialog state for tool warnings
     private var showToolWarningDialog = mutableStateOf(false)
     private var currentToolRequiringWarning: McpTool? = null
@@ -130,6 +135,12 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (intent?.getBooleanExtra(EXTRA_AUTO_START_SERVER, false) == true &&
+            !McpServerService.isRunning.value
+        ) {
+            checkRequiredPermissions()
+        }
 
         enableEdgeToEdge()
         setContent {
@@ -275,6 +286,8 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun toggleService(start: Boolean) {
+        // Remember the intent so BootReceiver can restore the server after a reboot
+        serverPreferencesRepository.setServerShouldRun(start)
         val serviceIntent = Intent(this, McpServerService::class.java)
 
         if (start) {

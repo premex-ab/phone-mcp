@@ -2,6 +2,10 @@ package se.premex.mcp.ui
 
 import android.app.Activity
 import android.content.ClipData
+import android.content.Intent
+import android.net.Uri
+import android.os.PowerManager
+import android.provider.Settings
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Build
@@ -41,6 +45,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -61,6 +66,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -261,6 +268,44 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                 }
+            }
+
+            // Doze can pause the tunnel; ask for the battery exemption right
+            // where the user just chose to be reachable from anywhere
+            var ignoresBattery by remember { mutableStateOf(isIgnoringBatteryOptimizations(context)) }
+            val lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            DisposableEffect(lifecycleOwner) {
+                val observer = LifecycleEventObserver { _, event ->
+                    if (event == Lifecycle.Event.ON_RESUME) {
+                        ignoresBattery = isIgnoringBatteryOptimizations(context)
+                    }
+                }
+                lifecycleOwner.lifecycle.addObserver(observer)
+                onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+            }
+            if (!ignoresBattery) {
+                Text(
+                    text = stringResource(R.string.battery_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                OutlinedButton(
+                    onClick = {
+                        runCatching {
+                            context.startActivity(
+                                Intent(
+                                    Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
+                                    Uri.parse("package:" + context.packageName)
+                                )
+                            )
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(stringResource(R.string.battery_button))
+                }
+                Spacer(modifier = Modifier.height(8.dp))
             }
         }
 
@@ -695,6 +740,10 @@ private fun CodeBlock(
         }
     }
 }
+
+private fun isIgnoringBatteryOptimizations(context: Context): Boolean =
+    (context.getSystemService(Context.POWER_SERVICE) as PowerManager)
+        .isIgnoringBatteryOptimizations(context.packageName)
 
 private fun copyToClipboard(context: Context, text: String) {
     val clipboardManager =
