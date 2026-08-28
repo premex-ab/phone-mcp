@@ -1,0 +1,38 @@
+📱 Din telefon, som værktøjer til din AI
+
+Phone MCP forvandler din Android-telefon til en sikker MCP-server, som AI-assistenter som Claude kan forbinde til. Bed din AI om at finde et foto, læse en downloadet PDF, tjekke en sensor, tage et billede eller slå en kontakt op — mens hver eneste funktion forbliver under din kontrol, på din enhed.
+
+Appen indeholder ingen AI i sig selv. Du forbinder den assistent, du allerede bruger — Claude Code, Claude Desktop eller enhver klient, der taler Model Context Protocol.
+
+🌍 FJERNADGANG — NYT
+Nå din telefon hvor som helst via phonemcp.ai. Par en ny AI-klient på under et minut: kør én kommando, indtast parringskoden, som appen viser, færdig. Parrede klienter forbinder automatisk igen.
+
+• Virker fra ethvert netværk — ingen port forwarding, ingen VPN, ingen kontooprettelse
+• OAuth 2.1-autorisation med engangsparringskoder
+• Din telefon laver kun udgående forbindelser
+• Relæet ser aldrig din telefons lokale adgangsoplysninger
+• Se og tilbagekald enhver parret AI-klient i appen
+• Gratis 30-dages prøveperiode, derefter et lille måneds- eller årsabonnement
+
+🏠 LOKALT NETVÆRK — GRATIS FOR ALTID
+På dit eget Wi-Fi forbinder din AI direkte til telefonen. Ingen sky, intet abonnement, ingen begrænsninger. Det vil altid være gratis.
+
+🧰 HVAD DIN AI KAN
+• Filer — gennemse og læs fotos, downloads og dokumenter
+• Kamera — tag et billede og giv det direkte til modellen
+• Sensorer — accelerometer, gyroskop, barometer, lys og mere
+• Placering — hvor telefonen er lige nu
+• Kontakter — slå personer op
+• SMS — skriv beskeder (med din bekræftelse)
+• Udvid — tredjepartsapps kan tilbyde deres egne MCP-værktøjer
+
+🔒 DESIGNET TIL PRIVATLIV
+• Alle værktøjer er SLÅET FRA, indtil du aktiverer dem — følsomme kræver udtrykkeligt samtykke
+• Bearer token-godkendelse lokalt, OAuth 2.1 på afstand
+• Slå fjernadgang fra når som helst; tunnellen lukker øjeblikkeligt
+• Ingen reklamer, ingen trackere, og vi sælger aldrig data
+
+🧑‍💻 OPEN SOURCE
+Appen og dens tunnelprotokol er open source på GitHub — se præcis, hvad der forlader din telefon: github.com/premex-ab/phone-mcp
+
+Udviklet i Sverige af Premex.

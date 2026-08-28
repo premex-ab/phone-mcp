@@ -1,0 +1,38 @@
+📱 Seu celular, como ferramentas para sua IA
+
+O Phone MCP transforma seu celular Android em um servidor MCP seguro ao qual assistentes de IA como o Claude podem se conectar. Peça à sua IA para encontrar uma foto, ler um PDF baixado, consultar um sensor, tirar uma foto ou buscar um contato — cada recurso permanece sob seu controle, no seu aparelho.
+
+O app não contém nenhuma IA própria. Você conecta o assistente que já usa — Claude Code, Claude Desktop ou qualquer cliente compatível com o Model Context Protocol.
+
+🌍 ACESSO REMOTO — NOVIDADE
+Acesse seu celular de qualquer lugar através do phonemcp.ai. Pareie um novo cliente de IA em menos de um minuto: execute um comando, digite o código de pareamento exibido pelo app e pronto. Clientes pareados se reconectam automaticamente.
+
+• Funciona em qualquer rede — sem redirecionamento de portas, sem VPN, sem criar conta
+• Autorização OAuth 2.1 com códigos de pareamento de uso único
+• Seu celular só faz conexões de saída
+• O relay nunca vê as credenciais locais do seu celular
+• Veja e revogue cada cliente de IA pareado no app
+• Teste grátis de 30 dias e depois uma pequena assinatura mensal ou anual
+
+🏠 REDE LOCAL — GRÁTIS PARA SEMPRE
+Na sua própria rede Wi-Fi, sua IA se conecta diretamente ao celular. Sem nuvem, sem assinatura, sem limites. Isso será grátis para sempre.
+
+🧰 O QUE SUA IA PODE FAZER
+• Arquivos — navegar e ler fotos, downloads e documentos
+• Câmera — tirar uma foto e entregá-la diretamente ao modelo
+• Sensores — acelerômetro, giroscópio, barômetro, luz e mais
+• Localização — onde o celular está agora
+• Contatos — buscar pessoas
+• SMS — redigir mensagens (com a sua confirmação)
+• Expansível — apps de terceiros podem expor suas próprias ferramentas MCP
+
+🔒 PRIVADO POR PADRÃO
+• Toda ferramenta fica DESLIGADA até você ativá-la — as sensíveis exigem consentimento explícito
+• Autenticação com token Bearer na rede local e OAuth 2.1 no acesso remoto
+• Desligue o acesso remoto a qualquer momento; o túnel fecha imediatamente
+• Sem anúncios, sem rastreadores, e nunca vendemos seus dados
+
+🧑‍💻 CÓDIGO ABERTO
+O app e seu protocolo de túnel são de código aberto no GitHub — audite exatamente o que sai do seu celular: github.com/premex-ab/phone-mcp
+
+Feito na Suécia pela Premex.
