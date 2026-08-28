@@ -223,7 +223,7 @@ class McpServerService : Service() {
             .setContentTitle("MCP Server Error")
             .setContentText(message)
             .setStyle(NotificationCompat.BigTextStyle().bigText(message))
-            .setSmallIcon(android.R.drawable.ic_dialog_alert)
+            .setSmallIcon(R.drawable.ic_stat_server)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setCategory(NotificationCompat.CATEGORY_ERROR)
             .setAutoCancel(true)
@@ -304,21 +304,12 @@ class McpServerService : Service() {
             val wifiIp = NetworkUtils.getWifiIpAddress(this)
             Log.d(TAG, "$LOG_PREFIX_SERVER: Obtained WiFi IP address: $wifiIp")
 
-            // Get connection instructions including the authentication token
-            val authInstructions = authRepository.getConnectionInstructions()
-
-            val successMessage = if (host == "127.0.0.1") {
-                if (wifiIp != null) {
-                    "Server running on $wifiIp:$port\n$authInstructions"
-                } else {
-                    "Server running on localhost:$port (local device only)\n$authInstructions"
-                }
-            } else {
-                if (wifiIp != null) {
-                    "Server running on $wifiIp:$port\n$authInstructions"
-                } else {
-                    "Server running on $host:$port\n$authInstructions"
-                }
+            // Deliberately NO auth token here: the notification is visible on
+            // the lock screen. The token lives in the app's connection guide.
+            val successMessage = when {
+                host == "127.0.0.1" -> "Server running on localhost:$port (local device only)"
+                wifiIp != null -> "Server running on $wifiIp:$port"
+                else -> "Server running on port $port"
             }
 
             Log.i(TAG, "$LOG_PREFIX_SERVER: $successMessage")
@@ -352,7 +343,7 @@ class McpServerService : Service() {
         val builder = NotificationCompat.Builder(this, McpServerApplication.CHANNEL_ID)
             .setContentTitle(title)
             .setContentText(content)
-            .setSmallIcon(android.R.drawable.ic_dialog_info)
+            .setSmallIcon(R.drawable.ic_stat_server)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setOngoing(true)
             .setCategory(NotificationCompat.CATEGORY_SERVICE)

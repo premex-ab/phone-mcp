@@ -57,6 +57,10 @@
     <string name="remote_subscription_active">Subscription active</string>
     <string name="remote_grace">Trial ended — %1$d grace days left before remote access stops</string>
     <string name="remote_expired">Remote access has expired. Subscriptions are coming soon.</string>
+    <string name="battery_hint">Android can pause the connection in deep sleep. Exempt the app from battery optimization to stay reachable from anywhere.</string>
+    <string name="battery_button">Allow background connection</string>
+    <string name="restart_after_boot_title">Phone restarted</string>
+    <string name="restart_after_boot_body">Tap to start your MCP server again</string>
     <string name="remote_status_connected">Connected to phonemcp.ai</string>
     <string name="remote_status_connecting">Connecting to phonemcp.ai…</string>
     <string name="add_client_title">Add an AI client</string>
