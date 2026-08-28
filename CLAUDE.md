@@ -53,7 +53,7 @@ tools/{name}/
     tool/                       # McpTool implementation
 ```
 
-**Build flavors:** `full` (all features, includes `:tools:sms` via `fullImplementation`) and `play` (Play Store, no direct SMS). Combined with `debug`/`release` build types. **`full` has `applicationIdSuffix = ".full"`** — so `se.premex.mcp` (play) and `se.premex.mcp.full` can be installed side by side. Both default to port 3001, so running both servers at once fails the port preflight (by design, with an error notification).
+**Build flavors:** `full` (sideload/GitHub: includes `:tools:sms`, **no remote access**) and `play` (Play Store: remote access + Play Billing, no direct SMS). Remote is gated by `BuildConfig.REMOTE_ACCESS`, set per flavor in `build-logic` — its subscription can only be sold through Play Billing, so sideloaded builds are local-network only. Combined with `debug`/`release` build types. **`full` has `applicationIdSuffix = ".full"`** — so `se.premex.mcp` (play) and `se.premex.mcp.full` can be installed side by side. Both default to port 3001, so running both servers at once fails the port preflight (by design, with an error notification).
 
 ## Remote access (phonemcp.ai)
 

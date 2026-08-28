@@ -73,6 +73,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.net.HttpURLConnection
 import java.net.URL
+import se.premex.mcp.BuildConfig
 import se.premex.mcp.R
 import se.premex.mcp.remote.RemoteAccessConfig
 import se.premex.mcp.remote.RemoteAccessViewModel
@@ -106,6 +107,13 @@ fun ConnectionGuide(
         )
 
         Spacer(modifier = Modifier.height(8.dp))
+
+        // Remote access is Play-exclusive (its subscription can only be sold
+        // through Play Billing) — sideloaded builds are local-network only.
+        if (!BuildConfig.REMOTE_ACCESS) {
+            LocalGuide(connectionUrl, authToken, isOnWifi)
+            return@Column
+        }
 
         SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
             SegmentedButton(
