@@ -102,10 +102,15 @@ class BillingManager @Inject constructor(
         }
     }
 
-    /** Opens the Play purchase sheet. False when billing is unavailable. */
-    fun launchPurchase(activity: Activity): Boolean {
+    /**
+     * Opens the Play purchase sheet for the given base plan ("monthly"/"yearly"),
+     * falling back to the first offer. False when billing is unavailable.
+     */
+    fun launchPurchase(activity: Activity, basePlanId: String?): Boolean {
         val details = _productDetails.value ?: return false
-        val offerToken = details.subscriptionOfferDetails?.firstOrNull()?.offerToken ?: return false
+        val offers = details.subscriptionOfferDetails ?: return false
+        val offerToken = (offers.firstOrNull { it.basePlanId == basePlanId } ?: offers.firstOrNull())
+            ?.offerToken ?: return false
         val params = BillingFlowParams.newBuilder()
             .setProductDetailsParamsList(
                 listOf(
