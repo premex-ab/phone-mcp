@@ -1,0 +1,90 @@
+<resources>
+    <string name="server_settings_help_text">• 0.0.0.0: De server luistert op alle netwerkinterfaces (aanbevolen)\n• 127.0.0.1: De server is alleen bereikbaar vanaf dit apparaat (alleen lokaal)\n• Poort: Wijzig de serverpoort als 3001 al in gebruik is\n• De instellingen worden van kracht nadat de server opnieuw is gestart</string>
+    <string name="configuration_info">Configuratie-info</string>
+    <string name="valid_port_range_1_65535">Geldig poortbereik: 1–65535</string>
+    <string name="server_port">Serverpoort</string>
+    <string name="toggle_dropdown">Dropdown in-/uitklappen</string>
+    <string name="host">Host</string>
+    <string name="server_host">Serverhost</string>
+    <string name="server_settings">Serverinstellingen</string>
+    <string name="all_interfaces">Alle interfaces</string>
+    <string name="localhost_only">Alleen localhost</string>
+    <string name="port_number">Poortnummer</string>
+    <string name="save_settings">Instellingen opslaan</string>
+    <string name="all_permissions_are_required_to_run_the_mcp_server_service">Alle machtigingen zijn vereist om de MCP-serverservice uit te voeren</string>
+    <string name="permission_is_required_to_run_the_mcp_server_service">machtiging is vereist om de MCP-serverservice uit te voeren</string>
+    <string name="no_description_available">Geen beschrijving beschikbaar.</string>
+    <string name="warning_for">Waarschuwing voor %1$s</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Annuleren</string>
+    <string name="connection_url">URL:</string>
+    <string name="access_token">Token:</string>
+    <string name="connect_your_ai_client">Verbind je AI-client</string>
+    <string name="client_other">Overig</string>
+    <string name="claude_code_instructions">Voer deze opdracht uit in een terminal op je computer en start daarna een nieuwe Claude Code-sessie:</string>
+    <string name="claude_desktop_instructions">Open Settings → Developer → Edit Config op je computer, voeg dit toe aan claude_desktop_config.json en herstart Claude Desktop volledig. Vereist Node.js.\n\nLet op: het dialoogvenster “Add custom connector” accepteert alleen HTTPS-servers — gebruik in plaats daarvan deze configuratie.</string>
+    <string name="other_client_instructions">Verbind elke MCP-client via het SSE-transport en een bearer-token:</string>
+    <string name="copy_command">Opdracht kopiëren</string>
+    <string name="copy_configuration">Configuratie kopiëren</string>
+    <string name="copy_details">Gegevens kopiëren</string>
+    <string name="copy">%1$s kopiëren</string>
+    <string name="copied_to_clipboard">Gekopieerd naar klembord</string>
+    <string name="wifi_note">📶 Je computer moet op hetzelfde Wi‑Fi-netwerk zitten als deze telefoon.</string>
+    <string name="remote_access_title">Externe toegang (phonemcp.ai)</string>
+    <string name="remote_access_description">Bereik deze telefoon overal via een beveiligde tunnel. Het verkeer loopt via de relayserver, en elke tool blijft opt-in op deze telefoon.</string>
+    <string name="remote_access_contacting_relay">Relay wordt benaderd…</string>
+    <string name="server_running">Server actief</string>
+    <string name="server_stopped">Server gestopt</string>
+    <string name="server_stopped_hint">Start de server om verbindingen te accepteren</string>
+    <string name="tools_title">Tools</string>
+    <string name="connection_mode_remote">Extern</string>
+    <string name="connection_mode_local">Lokaal netwerk</string>
+    <string name="enable_remote_access">Externe toegang inschakelen</string>
+    <string name="copy_url">URL kopiëren</string>
+    <string name="paired_clients_title">Gekoppelde AI-clients</string>
+    <string name="paired_clients_empty">Nog geen — koppel je eerste client met de code hierboven.</string>
+    <string name="refresh_paired_clients">Gekoppelde clients vernieuwen</string>
+    <string name="revoke">Intrekken</string>
+    <string name="subscribe_monthly">%1$s / maand</string>
+    <string name="subscribe_yearly">%1$s / jaar</string>
+    <string name="yearly_savings">Met het jaarabonnement bespaar je %1$d %%.</string>
+    <string name="subscribe">Abonneren</string>
+    <string name="remote_trial_days_left">Gratis proefperiode — nog %1$d dagen</string>
+    <string name="remote_subscription_active">Abonnement actief</string>
+    <string name="remote_grace">Proefperiode afgelopen — nog %1$d dagen respijt voordat externe toegang stopt</string>
+    <string name="remote_expired">Externe toegang is verlopen. Abonnementen komen binnenkort.</string>
+    <string name="battery_hint">Android kan de verbinding pauzeren in diepe slaapstand. Sluit de app uit van batterijoptimalisatie om overal bereikbaar te blijven.</string>
+    <string name="battery_button">Achtergrondverbinding toestaan</string>
+    <string name="restart_after_boot_title">Telefoon opnieuw opgestart</string>
+    <string name="restart_after_boot_body">Tik om je MCP-server opnieuw te starten</string>
+    <string name="remote_status_connected">Verbonden met phonemcp.ai</string>
+    <string name="remote_status_connecting">Verbinden met phonemcp.ai…</string>
+    <string name="add_client_title">Een AI-client toevoegen</string>
+    <string name="remote_step_code_1">1. Voer deze opdracht uit in een terminal op je computer:</string>
+    <string name="remote_step_code_2">2. Voer in Claude Code /mcp → phone → Authenticate uit. Je browser opent en vraagt om een koppelcode.</string>
+    <string name="remote_step_desktop_1">1. Op je computer: Settings → Connectors → Add custom connector, en plak deze URL:</string>
+    <string name="remote_step_desktop_2">2. Claude Desktop opent een aanmeldpagina in je browser die om een koppelcode vraagt.</string>
+    <string name="remote_step_other_1">1. Verbind elke MCP-client die externe servers met OAuth 2.1 ondersteunt:</string>
+    <string name="remote_step_other_2">2. Tijdens de autorisatie vraagt de browser om een koppelcode.</string>
+    <string name="remote_step_3">3. Tik op de knop en typ de code in de browser:</string>
+    <string name="show_pairing_code">Koppelcode tonen</string>
+    <string name="pairing_code_hint">10 minuten geldig, eenmalig te gebruiken. Al gekoppelde clients maken automatisch opnieuw verbinding — geen nieuwe code nodig.</string>
+    <string name="tools_connect_note">Wijzigingen gelden vanaf de volgende keer dat een client verbinding maakt.</string>
+    <string name="not_on_wifi_warning">Niet verbonden met Wi-Fi. De server is alleen bereikbaar vanaf apparaten op hetzelfde Wi-Fi-netwerk — verbind deze telefoon eerst met Wi-Fi.</string>
+    <string name="test_connection">Verbinding testen</string>
+    <string name="testing_connection">Verbinding wordt getest…</string>
+    <string name="connection_test_success">De server is bereikbaar op %1$s. Als je MCP-client nog steeds geen verbinding kan maken, controleer dan of je computer op hetzelfde Wi-Fi zit — je kunt %1$s in de browser daarvan openen om dit te controleren.</string>
+    <string name="connection_test_failure">Kon de server niet bereiken op %1$s. Controleer of de server actief is en of Host in de instellingen op 0.0.0.0 staat.</string>
+    <string name="onboarding_title">Welkom bij Phone MCP</string>
+    <string name="onboarding_body">Phone MCP maakt van deze telefoon een server waarmee AI-assistenten (MCP-clients) verbinding kunnen maken. De app heeft zelf geen AI — je verbindt je eigen AI, bijvoorbeeld Claude Code of Claude Desktop.
+
+1. Schakel de tools in die je beschikbaar wilt stellen.
+2. Start de server met de schakelaar.
+3. Verbind je AI-client — op afstand via phonemcp.ai (werkt overal) of via hetzelfde Wi-Fi-netwerk.
+
+De verbindingsgids op het hoofdscherm leidt je door beide.</string>
+    <string name="get_started">Aan de slag</string>
+    <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">Ongeldig poortnummer. Voer een waarde in tussen 1 en 65535.</string>
+    <string name="back">Terug</string>
+    <string name="settings">Instellingen</string>
+</resources>

@@ -1,0 +1,90 @@
+<resources>
+    <string name="server_settings_help_text">• 0.0.0.0: o servidor escuta em todas as interfaces de rede (recomendado)\n• 127.0.0.1: o servidor só é acessível a partir deste dispositivo (apenas local)\n• Porta: mude a porta do servidor se a 3001 já estiver em uso\n• As configurações entram em vigor após reiniciar o servidor</string>
+    <string name="configuration_info">Informações de configuração</string>
+    <string name="valid_port_range_1_65535">Intervalo de portas válido: 1–65535</string>
+    <string name="server_port">Porta do servidor</string>
+    <string name="toggle_dropdown">Alternar menu suspenso</string>
+    <string name="host">Host</string>
+    <string name="server_host">Host do servidor</string>
+    <string name="server_settings">Configurações do servidor</string>
+    <string name="all_interfaces">Todas as interfaces</string>
+    <string name="localhost_only">Somente localhost</string>
+    <string name="port_number">Número da porta</string>
+    <string name="save_settings">Salvar configurações</string>
+    <string name="all_permissions_are_required_to_run_the_mcp_server_service">Todas as permissões são necessárias para executar o serviço do servidor MCP</string>
+    <string name="permission_is_required_to_run_the_mcp_server_service">permissão necessária para executar o serviço do servidor MCP</string>
+    <string name="no_description_available">Nenhuma descrição disponível.</string>
+    <string name="warning_for">Aviso para %1$s</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancelar</string>
+    <string name="connection_url">URL:</string>
+    <string name="access_token">Token:</string>
+    <string name="connect_your_ai_client">Conecte seu cliente de IA</string>
+    <string name="client_other">Outro</string>
+    <string name="claude_code_instructions">Execute este comando em um terminal no seu computador e depois inicie uma nova sessão do Claude Code:</string>
+    <string name="claude_desktop_instructions">Abra Settings → Developer → Edit Config no seu computador, adicione isto ao claude_desktop_config.json e reinicie o Claude Desktop por completo. Requer Node.js.\n\nObservação: a caixa de diálogo “Add custom connector” só aceita servidores HTTPS — use esta configuração em vez disso.</string>
+    <string name="other_client_instructions">Conecte qualquer cliente MCP usando o transporte SSE e um token bearer:</string>
+    <string name="copy_command">Copiar comando</string>
+    <string name="copy_configuration">Copiar configuração</string>
+    <string name="copy_details">Copiar detalhes</string>
+    <string name="copy">Copiar %1$s</string>
+    <string name="copied_to_clipboard">Copiado para a área de transferência</string>
+    <string name="wifi_note">📶 Seu computador precisa estar na mesma rede Wi‑Fi que este telefone.</string>
+    <string name="remote_access_title">Acesso remoto (phonemcp.ai)</string>
+    <string name="remote_access_description">Acesse este telefone de qualquer lugar por um túnel seguro. O tráfego passa pelo servidor de retransmissão, e cada ferramenta precisa ser ativada manualmente neste telefone.</string>
+    <string name="remote_access_contacting_relay">Contatando o servidor de retransmissão…</string>
+    <string name="server_running">Servidor em execução</string>
+    <string name="server_stopped">Servidor parado</string>
+    <string name="server_stopped_hint">Inicie o servidor para aceitar conexões</string>
+    <string name="tools_title">Ferramentas</string>
+    <string name="connection_mode_remote">Remoto</string>
+    <string name="connection_mode_local">Rede local</string>
+    <string name="enable_remote_access">Ativar acesso remoto</string>
+    <string name="copy_url">Copiar URL</string>
+    <string name="paired_clients_title">Clientes de IA pareados</string>
+    <string name="paired_clients_empty">Nenhum ainda — pareie seu primeiro cliente com o código acima.</string>
+    <string name="refresh_paired_clients">Atualizar clientes pareados</string>
+    <string name="revoke">Revogar</string>
+    <string name="subscribe_monthly">%1$s / mês</string>
+    <string name="subscribe_yearly">%1$s / ano</string>
+    <string name="yearly_savings">O plano anual economiza %1$d %%.</string>
+    <string name="subscribe">Assinar</string>
+    <string name="remote_trial_days_left">Teste grátis — %1$d dias restantes</string>
+    <string name="remote_subscription_active">Assinatura ativa</string>
+    <string name="remote_grace">O teste terminou — %1$d dias de carência antes que o acesso remoto pare</string>
+    <string name="remote_expired">O acesso remoto expirou. As assinaturas chegarão em breve.</string>
+    <string name="battery_hint">O Android pode pausar a conexão no modo de suspensão profunda. Isente o app da otimização de bateria para continuar acessível de qualquer lugar.</string>
+    <string name="battery_button">Permitir conexão em segundo plano</string>
+    <string name="restart_after_boot_title">Telefone reiniciado</string>
+    <string name="restart_after_boot_body">Toque para iniciar seu servidor MCP novamente</string>
+    <string name="remote_status_connected">Conectado a phonemcp.ai</string>
+    <string name="remote_status_connecting">Conectando a phonemcp.ai…</string>
+    <string name="add_client_title">Adicionar um cliente de IA</string>
+    <string name="remote_step_code_1">1. Execute este comando em um terminal no seu computador:</string>
+    <string name="remote_step_code_2">2. No Claude Code, execute /mcp → phone → Authenticate. Seu navegador abre e pede um código de pareamento.</string>
+    <string name="remote_step_desktop_1">1. No seu computador: Settings → Connectors → Add custom connector, e cole esta URL:</string>
+    <string name="remote_step_desktop_2">2. O Claude Desktop abre uma página de login no seu navegador que pede um código de pareamento.</string>
+    <string name="remote_step_other_1">1. Conecte qualquer cliente MCP compatível com servidores remotos com OAuth 2.1:</string>
+    <string name="remote_step_other_2">2. Durante a autorização, o navegador pede um código de pareamento.</string>
+    <string name="remote_step_3">3. Toque no botão e digite o código no navegador:</string>
+    <string name="show_pairing_code">Mostrar código de pareamento</string>
+    <string name="pairing_code_hint">Válido por 10 minutos, uso único. Clientes já pareados se reconectam automaticamente — nenhum código novo é necessário.</string>
+    <string name="tools_connect_note">As alterações se aplicam na próxima vez que um cliente se conectar.</string>
+    <string name="not_on_wifi_warning">Sem conexão Wi-Fi. O servidor só pode ser acessado por dispositivos na mesma rede Wi-Fi — conecte este telefone ao Wi-Fi primeiro.</string>
+    <string name="test_connection">Testar conexão</string>
+    <string name="testing_connection">Testando conexão…</string>
+    <string name="connection_test_success">O servidor está acessível em %1$s. Se o seu cliente MCP ainda não conseguir se conectar, verifique se o computador está na mesma rede Wi-Fi — você pode abrir %1$s no navegador dele para conferir.</string>
+    <string name="connection_test_failure">Não foi possível acessar o servidor em %1$s. Verifique se o servidor está em execução e se o Host está definido como 0.0.0.0 nas Configurações.</string>
+    <string name="onboarding_title">Boas-vindas ao Phone MCP</string>
+    <string name="onboarding_body">O Phone MCP transforma este telefone em um servidor ao qual assistentes de IA (clientes MCP) podem se conectar. O app não tem IA embutida — você conecta a sua, por exemplo Claude Code ou Claude Desktop.
+
+1. Ative as ferramentas que você quer expor.
+2. Inicie o servidor com o botão.
+3. Conecte seu cliente de IA — remotamente pelo phonemcp.ai (funciona de qualquer lugar) ou pela mesma rede Wi-Fi.
+
+O guia de conexão na tela principal orienta você nos dois casos.</string>
+    <string name="get_started">Começar</string>
+    <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">Número de porta inválido. Insira um valor entre 1 e 65535.</string>
+    <string name="back">Voltar</string>
+    <string name="settings">Configurações</string>
+</resources>

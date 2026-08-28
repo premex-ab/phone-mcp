@@ -1,0 +1,90 @@
+<resources>
+    <string name="server_settings_help_text">• 0.0.0.0: Máy chủ lắng nghe trên tất cả giao diện mạng (khuyến nghị)\n• 127.0.0.1: Máy chủ chỉ truy cập được từ thiết bị này (chỉ cục bộ)\n• Cổng: Đổi cổng máy chủ nếu 3001 đã được sử dụng\n• Cài đặt có hiệu lực sau khi khởi động lại máy chủ</string>
+    <string name="configuration_info">Thông tin cấu hình</string>
+    <string name="valid_port_range_1_65535">Phạm vi cổng hợp lệ: 1 - 65535</string>
+    <string name="server_port">Cổng máy chủ</string>
+    <string name="toggle_dropdown">Bật/tắt trình đơn thả xuống</string>
+    <string name="host">Host</string>
+    <string name="server_host">Host máy chủ</string>
+    <string name="server_settings">Cài đặt máy chủ</string>
+    <string name="all_interfaces">Tất cả giao diện</string>
+    <string name="localhost_only">Chỉ localhost</string>
+    <string name="port_number">Số cổng</string>
+    <string name="save_settings">Lưu cài đặt</string>
+    <string name="all_permissions_are_required_to_run_the_mcp_server_service">Cần tất cả các quyền để chạy dịch vụ máy chủ MCP</string>
+    <string name="permission_is_required_to_run_the_mcp_server_service">quyền là bắt buộc để chạy dịch vụ máy chủ MCP</string>
+    <string name="no_description_available">Không có mô tả.</string>
+    <string name="warning_for">Cảnh báo cho %1$s</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Hủy</string>
+    <string name="connection_url">URL:</string>
+    <string name="access_token">Token:</string>
+    <string name="connect_your_ai_client">Kết nối ứng dụng khách AI của bạn</string>
+    <string name="client_other">Khác</string>
+    <string name="claude_code_instructions">Chạy lệnh này trong terminal trên máy tính của bạn, sau đó bắt đầu một phiên Claude Code mới:</string>
+    <string name="claude_desktop_instructions">Mở Settings → Developer → Edit Config trên máy tính, thêm nội dung này vào claude_desktop_config.json, rồi khởi động lại hoàn toàn Claude Desktop. Yêu cầu Node.js.\n\nLưu ý: hộp thoại “Add custom connector” chỉ chấp nhận máy chủ HTTPS — hãy dùng cấu hình này thay thế.</string>
+    <string name="other_client_instructions">Kết nối bất kỳ ứng dụng khách MCP nào bằng giao thức truyền SSE và token bearer:</string>
+    <string name="copy_command">Sao chép lệnh</string>
+    <string name="copy_configuration">Sao chép cấu hình</string>
+    <string name="copy_details">Sao chép chi tiết</string>
+    <string name="copy">Sao chép %1$s</string>
+    <string name="copied_to_clipboard">Đã sao chép vào bảng nhớ tạm</string>
+    <string name="wifi_note">📶 Máy tính của bạn phải ở cùng mạng Wi‑Fi với điện thoại này.</string>
+    <string name="remote_access_title">Truy cập từ xa (phonemcp.ai)</string>
+    <string name="remote_access_description">Truy cập điện thoại này từ bất cứ đâu qua một đường hầm bảo mật. Lưu lượng đi qua máy chủ chuyển tiếp, và mọi công cụ vẫn phải được bật thủ công trên điện thoại này.</string>
+    <string name="remote_access_contacting_relay">Đang liên hệ máy chủ chuyển tiếp…</string>
+    <string name="server_running">Máy chủ đang chạy</string>
+    <string name="server_stopped">Máy chủ đã dừng</string>
+    <string name="server_stopped_hint">Khởi động máy chủ để chấp nhận kết nối</string>
+    <string name="tools_title">Công cụ</string>
+    <string name="connection_mode_remote">Từ xa</string>
+    <string name="connection_mode_local">Mạng cục bộ</string>
+    <string name="enable_remote_access">Bật truy cập từ xa</string>
+    <string name="copy_url">Sao chép URL</string>
+    <string name="paired_clients_title">Ứng dụng khách AI đã ghép nối</string>
+    <string name="paired_clients_empty">Chưa có — hãy ghép nối ứng dụng khách đầu tiên bằng mã ở trên.</string>
+    <string name="refresh_paired_clients">Làm mới danh sách ứng dụng khách đã ghép nối</string>
+    <string name="revoke">Thu hồi</string>
+    <string name="subscribe_monthly">%1$s / tháng</string>
+    <string name="subscribe_yearly">%1$s / năm</string>
+    <string name="yearly_savings">Gói theo năm giúp tiết kiệm %1$d %%.</string>
+    <string name="subscribe">Đăng ký</string>
+    <string name="remote_trial_days_left">Dùng thử miễn phí — còn %1$d ngày</string>
+    <string name="remote_subscription_active">Gói đăng ký đang hoạt động</string>
+    <string name="remote_grace">Đã hết thời gian dùng thử — còn %1$d ngày ân hạn trước khi truy cập từ xa dừng lại</string>
+    <string name="remote_expired">Truy cập từ xa đã hết hạn. Tính năng đăng ký sắp ra mắt.</string>
+    <string name="battery_hint">Android có thể tạm dừng kết nối khi ngủ sâu. Hãy loại trừ ứng dụng khỏi tối ưu hóa pin để luôn truy cập được từ bất cứ đâu.</string>
+    <string name="battery_button">Cho phép kết nối nền</string>
+    <string name="restart_after_boot_title">Điện thoại đã khởi động lại</string>
+    <string name="restart_after_boot_body">Nhấn để khởi động lại máy chủ MCP của bạn</string>
+    <string name="remote_status_connected">Đã kết nối với phonemcp.ai</string>
+    <string name="remote_status_connecting">Đang kết nối với phonemcp.ai…</string>
+    <string name="add_client_title">Thêm ứng dụng khách AI</string>
+    <string name="remote_step_code_1">1. Chạy lệnh này trong terminal trên máy tính của bạn:</string>
+    <string name="remote_step_code_2">2. Trong Claude Code, chạy /mcp → phone → Authenticate. Trình duyệt sẽ mở ra và yêu cầu mã ghép nối.</string>
+    <string name="remote_step_desktop_1">1. Trên máy tính của bạn: Settings → Connectors → Add custom connector, rồi dán URL này:</string>
+    <string name="remote_step_desktop_2">2. Claude Desktop mở một trang đăng nhập trong trình duyệt và yêu cầu mã ghép nối.</string>
+    <string name="remote_step_other_1">1. Kết nối bất kỳ ứng dụng khách MCP nào hỗ trợ máy chủ từ xa với OAuth 2.1:</string>
+    <string name="remote_step_other_2">2. Trong quá trình ủy quyền, trình duyệt sẽ yêu cầu mã ghép nối.</string>
+    <string name="remote_step_3">3. Nhấn nút và nhập mã vào trình duyệt:</string>
+    <string name="show_pairing_code">Hiện mã ghép nối</string>
+    <string name="pairing_code_hint">Có hiệu lực trong 10 phút, chỉ dùng một lần. Ứng dụng khách đã ghép nối sẽ tự động kết nối lại — không cần mã mới.</string>
+    <string name="tools_connect_note">Thay đổi sẽ áp dụng vào lần kết nối tiếp theo của ứng dụng khách.</string>
+    <string name="not_on_wifi_warning">Chưa kết nối Wi-Fi. Máy chủ chỉ truy cập được từ các thiết bị trong cùng mạng Wi-Fi — hãy kết nối điện thoại này với Wi-Fi trước.</string>
+    <string name="test_connection">Kiểm tra kết nối</string>
+    <string name="testing_connection">Đang kiểm tra kết nối…</string>
+    <string name="connection_test_success">Máy chủ truy cập được tại %1$s. Nếu ứng dụng khách MCP vẫn không kết nối được, hãy kiểm tra máy tính có ở cùng mạng Wi-Fi không — bạn có thể mở %1$s trong trình duyệt của máy tính để kiểm tra.</string>
+    <string name="connection_test_failure">Không thể kết nối tới máy chủ tại %1$s. Hãy đảm bảo máy chủ đang chạy và Host được đặt thành 0.0.0.0 trong Cài đặt.</string>
+    <string name="onboarding_title">Chào mừng đến với Phone MCP</string>
+    <string name="onboarding_body">Phone MCP biến điện thoại này thành một máy chủ mà các trợ lý AI (ứng dụng khách MCP) có thể kết nối tới. Ứng dụng không tích hợp sẵn AI — bạn kết nối AI của riêng mình, ví dụ Claude Code hoặc Claude Desktop.
+
+1. Bật các công cụ bạn muốn chia sẻ.
+2. Khởi động máy chủ bằng công tắc.
+3. Kết nối ứng dụng khách AI của bạn — từ xa qua phonemcp.ai (hoạt động từ bất cứ đâu), hoặc qua cùng mạng Wi-Fi.
+
+Hướng dẫn kết nối trên màn hình chính sẽ chỉ dẫn bạn cả hai cách.</string>
+    <string name="get_started">Bắt đầu</string>
+    <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">Số cổng không hợp lệ. Vui lòng nhập giá trị từ 1 đến 65535.</string>
+    <string name="back">Quay lại</string>
+    <string name="settings">Cài đặt</string>
+</resources>

@@ -1,0 +1,90 @@
+<resources>
+    <string name="server_settings_help_text">• 0.0.0.0: сервер слушает все сетевые интерфейсы (рекомендуется)\n• 127.0.0.1: сервер доступен только с этого устройства (только локально)\n• Порт: измените порт сервера, если 3001 уже занят\n• Настройки вступают в силу после перезапуска сервера</string>
+    <string name="configuration_info">Сведения о конфигурации</string>
+    <string name="valid_port_range_1_65535">Допустимый диапазон портов: 1–65535</string>
+    <string name="server_port">Порт сервера</string>
+    <string name="toggle_dropdown">Переключить раскрывающийся список</string>
+    <string name="host">Хост</string>
+    <string name="server_host">Хост сервера</string>
+    <string name="server_settings">Настройки сервера</string>
+    <string name="all_interfaces">Все интерфейсы</string>
+    <string name="localhost_only">Только localhost</string>
+    <string name="port_number">Номер порта</string>
+    <string name="save_settings">Сохранить настройки</string>
+    <string name="all_permissions_are_required_to_run_the_mcp_server_service">Для работы службы сервера MCP необходимы все разрешения</string>
+    <string name="permission_is_required_to_run_the_mcp_server_service">разрешение необходимо для работы службы сервера MCP</string>
+    <string name="no_description_available">Описание отсутствует.</string>
+    <string name="warning_for">Предупреждение для %1$s</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Отмена</string>
+    <string name="connection_url">URL:</string>
+    <string name="access_token">Токен:</string>
+    <string name="connect_your_ai_client">Подключите свой ИИ-клиент</string>
+    <string name="client_other">Другой</string>
+    <string name="claude_code_instructions">Выполните эту команду в терминале на компьютере, затем начните новый сеанс Claude Code:</string>
+    <string name="claude_desktop_instructions">Откройте Settings → Developer → Edit Config на компьютере, добавьте это в claude_desktop_config.json и полностью перезапустите Claude Desktop. Требуется Node.js.\n\nПримечание: диалог \"Add custom connector\" принимает только серверы HTTPS — используйте вместо него эту конфигурацию.</string>
+    <string name="other_client_instructions">Подключите любой MCP-клиент через транспорт SSE с токеном bearer:</string>
+    <string name="copy_command">Копировать команду</string>
+    <string name="copy_configuration">Копировать конфигурацию</string>
+    <string name="copy_details">Копировать данные</string>
+    <string name="copy">Копировать %1$s</string>
+    <string name="copied_to_clipboard">Скопировано в буфер обмена</string>
+    <string name="wifi_note">📶 Компьютер должен быть в той же сети Wi‑Fi, что и этот телефон.</string>
+    <string name="remote_access_title">Удалённый доступ (phonemcp.ai)</string>
+    <string name="remote_access_description">Подключайтесь к этому телефону откуда угодно через защищённый туннель. Трафик проходит через сервер-ретранслятор, а каждый инструмент включается только вручную на этом телефоне.</string>
+    <string name="remote_access_contacting_relay">Подключение к ретранслятору…</string>
+    <string name="server_running">Сервер работает</string>
+    <string name="server_stopped">Сервер остановлен</string>
+    <string name="server_stopped_hint">Запустите сервер, чтобы принимать подключения</string>
+    <string name="tools_title">Инструменты</string>
+    <string name="connection_mode_remote">Удалённо</string>
+    <string name="connection_mode_local">Локальная сеть</string>
+    <string name="enable_remote_access">Включить удалённый доступ</string>
+    <string name="copy_url">Копировать URL</string>
+    <string name="paired_clients_title">Сопряжённые ИИ-клиенты</string>
+    <string name="paired_clients_empty">Пока нет — сопрягите первого клиента с помощью кода выше.</string>
+    <string name="refresh_paired_clients">Обновить список сопряжённых клиентов</string>
+    <string name="revoke">Отозвать</string>
+    <string name="subscribe_monthly">%1$s / месяц</string>
+    <string name="subscribe_yearly">%1$s / год</string>
+    <string name="yearly_savings">Годовой план экономит %1$d %%.</string>
+    <string name="subscribe">Оформить подписку</string>
+    <string name="remote_trial_days_left">Бесплатный пробный период — осталось дней: %1$d</string>
+    <string name="remote_subscription_active">Подписка активна</string>
+    <string name="remote_grace">Пробный период закончился — осталось %1$d дн. льготного периода до отключения удалённого доступа</string>
+    <string name="remote_expired">Срок удалённого доступа истёк. Подписки скоро появятся.</string>
+    <string name="battery_hint">Android может приостанавливать соединение в режиме глубокого сна. Отключите оптимизацию батареи для приложения, чтобы телефон оставался доступным откуда угодно.</string>
+    <string name="battery_button">Разрешить фоновое соединение</string>
+    <string name="restart_after_boot_title">Телефон был перезагружен</string>
+    <string name="restart_after_boot_body">Нажмите, чтобы снова запустить сервер MCP</string>
+    <string name="remote_status_connected">Подключено к phonemcp.ai</string>
+    <string name="remote_status_connecting">Подключение к phonemcp.ai…</string>
+    <string name="add_client_title">Добавить ИИ-клиент</string>
+    <string name="remote_step_code_1">1. Выполните эту команду в терминале на компьютере:</string>
+    <string name="remote_step_code_2">2. В Claude Code выполните /mcp → phone → Authenticate. Откроется браузер и запросит код сопряжения.</string>
+    <string name="remote_step_desktop_1">1. На компьютере: Settings → Connectors → Add custom connector, затем вставьте этот URL:</string>
+    <string name="remote_step_desktop_2">2. Claude Desktop откроет в браузере страницу входа, которая запросит код сопряжения.</string>
+    <string name="remote_step_other_1">1. Подключите любой MCP-клиент с поддержкой удалённых серверов и OAuth 2.1:</string>
+    <string name="remote_step_other_2">2. Во время авторизации браузер запросит код сопряжения.</string>
+    <string name="remote_step_3">3. Нажмите кнопку и введите код в браузере:</string>
+    <string name="show_pairing_code">Показать код сопряжения</string>
+    <string name="pairing_code_hint">Действует 10 минут, одноразовый. Уже сопряжённые клиенты переподключаются автоматически — новый код не нужен.</string>
+    <string name="tools_connect_note">Изменения вступят в силу при следующем подключении клиента.</string>
+    <string name="not_on_wifi_warning">Нет подключения к Wi-Fi. Сервер доступен только устройствам в той же сети Wi-Fi — сначала подключите этот телефон к Wi-Fi.</string>
+    <string name="test_connection">Проверить соединение</string>
+    <string name="testing_connection">Проверка соединения…</string>
+    <string name="connection_test_success">Сервер доступен по адресу %1$s. Если MCP-клиент всё равно не подключается, убедитесь, что компьютер в той же сети Wi-Fi — для проверки откройте %1$s в его браузере.</string>
+    <string name="connection_test_failure">Не удалось подключиться к серверу по адресу %1$s. Убедитесь, что сервер запущен и что в настройках для хоста указано 0.0.0.0.</string>
+    <string name="onboarding_title">Добро пожаловать в Phone MCP</string>
+    <string name="onboarding_body">Phone MCP превращает этот телефон в сервер, к которому могут подключаться ИИ-ассистенты (MCP-клиенты). В приложении нет встроенного ИИ — вы подключаете собственный, например Claude Code или Claude Desktop.
+
+1. Включите инструменты, которые хотите открыть для доступа.
+2. Запустите сервер переключателем.
+3. Подключите свой ИИ-клиент — удалённо через phonemcp.ai (работает откуда угодно) или по той же сети Wi-Fi.
+
+Руководство по подключению на главном экране проведёт вас через оба способа.</string>
+    <string name="get_started">Начать</string>
+    <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">Недопустимый номер порта. Введите значение от 1 до 65535.</string>
+    <string name="back">Назад</string>
+    <string name="settings">Настройки</string>
+</resources>

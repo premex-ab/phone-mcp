@@ -1,0 +1,90 @@
+<resources>
+    <string name="server_settings_help_text">• 0.0.0.0: 서버가 모든 네트워크 인터페이스에서 수신 대기합니다(권장)\n• 127.0.0.1: 이 기기에서만 서버에 접근할 수 있습니다(로컬 전용)\n• 포트: 3001이 이미 사용 중이면 서버 포트를 변경하세요\n• 설정은 서버를 다시 시작한 후 적용됩니다</string>
+    <string name="configuration_info">구성 정보</string>
+    <string name="valid_port_range_1_65535">유효한 포트 범위: 1~65535</string>
+    <string name="server_port">서버 포트</string>
+    <string name="toggle_dropdown">드롭다운 전환</string>
+    <string name="host">호스트</string>
+    <string name="server_host">서버 호스트</string>
+    <string name="server_settings">서버 설정</string>
+    <string name="all_interfaces">모든 인터페이스</string>
+    <string name="localhost_only">localhost 전용</string>
+    <string name="port_number">포트 번호</string>
+    <string name="save_settings">설정 저장</string>
+    <string name="all_permissions_are_required_to_run_the_mcp_server_service">MCP 서버 서비스를 실행하려면 모든 권한이 필요합니다</string>
+    <string name="permission_is_required_to_run_the_mcp_server_service">권한이 MCP 서버 서비스 실행에 필요합니다</string>
+    <string name="no_description_available">설명이 없습니다.</string>
+    <string name="warning_for">%1$s에 대한 경고</string>
+    <string name="ok">확인</string>
+    <string name="cancel">취소</string>
+    <string name="connection_url">URL:</string>
+    <string name="access_token">토큰:</string>
+    <string name="connect_your_ai_client">AI 클라이언트 연결</string>
+    <string name="client_other">기타</string>
+    <string name="claude_code_instructions">컴퓨터의 터미널에서 이 명령을 실행한 다음 새 Claude Code 세션을 시작하세요:</string>
+    <string name="claude_desktop_instructions">컴퓨터에서 Settings → Developer → Edit Config를 열고 claude_desktop_config.json에 이 내용을 추가한 뒤 Claude Desktop을 완전히 다시 시작하세요. Node.js가 필요합니다.\n\n참고: “Add custom connector” 대화상자는 HTTPS 서버만 허용합니다 — 대신 이 구성을 사용하세요.</string>
+    <string name="other_client_instructions">SSE 전송과 bearer 토큰을 사용해 모든 MCP 클라이언트를 연결할 수 있습니다:</string>
+    <string name="copy_command">명령 복사</string>
+    <string name="copy_configuration">구성 복사</string>
+    <string name="copy_details">세부정보 복사</string>
+    <string name="copy">%1$s 복사</string>
+    <string name="copied_to_clipboard">클립보드에 복사됨</string>
+    <string name="wifi_note">📶 컴퓨터가 이 휴대전화와 같은 Wi‑Fi 네트워크에 연결되어 있어야 합니다.</string>
+    <string name="remote_access_title">원격 액세스(phonemcp.ai)</string>
+    <string name="remote_access_description">보안 터널을 통해 어디서나 이 휴대전화에 접근할 수 있습니다. 트래픽은 릴레이 서버를 거치며, 모든 도구는 이 휴대전화에서 직접 켜야만 사용됩니다.</string>
+    <string name="remote_access_contacting_relay">릴레이에 연결 중…</string>
+    <string name="server_running">서버 실행 중</string>
+    <string name="server_stopped">서버 중지됨</string>
+    <string name="server_stopped_hint">연결을 수락하려면 서버를 시작하세요</string>
+    <string name="tools_title">도구</string>
+    <string name="connection_mode_remote">원격</string>
+    <string name="connection_mode_local">로컬 네트워크</string>
+    <string name="enable_remote_access">원격 액세스 사용</string>
+    <string name="copy_url">URL 복사</string>
+    <string name="paired_clients_title">페어링된 AI 클라이언트</string>
+    <string name="paired_clients_empty">아직 없습니다 — 위의 코드로 첫 클라이언트를 페어링하세요.</string>
+    <string name="refresh_paired_clients">페어링된 클라이언트 새로고침</string>
+    <string name="revoke">철회</string>
+    <string name="subscribe_monthly">%1$s / 월</string>
+    <string name="subscribe_yearly">%1$s / 년</string>
+    <string name="yearly_savings">연간 요금제로 %1$d %% 절약됩니다.</string>
+    <string name="subscribe">구독</string>
+    <string name="remote_trial_days_left">무료 체험 — %1$d일 남음</string>
+    <string name="remote_subscription_active">구독 활성 상태</string>
+    <string name="remote_grace">체험 기간 종료 — 원격 액세스가 중지되기까지 유예 기간 %1$d일 남음</string>
+    <string name="remote_expired">원격 액세스가 만료되었습니다. 구독 기능이 곧 제공됩니다.</string>
+    <string name="battery_hint">Android는 절전 상태에서 연결을 일시 중지할 수 있습니다. 어디서나 연결 상태를 유지하려면 앱을 배터리 최적화에서 제외하세요.</string>
+    <string name="battery_button">백그라운드 연결 허용</string>
+    <string name="restart_after_boot_title">휴대전화가 다시 시작됨</string>
+    <string name="restart_after_boot_body">탭하여 MCP 서버를 다시 시작하세요</string>
+    <string name="remote_status_connected">phonemcp.ai에 연결됨</string>
+    <string name="remote_status_connecting">phonemcp.ai에 연결 중…</string>
+    <string name="add_client_title">AI 클라이언트 추가</string>
+    <string name="remote_step_code_1">1. 컴퓨터의 터미널에서 이 명령을 실행하세요:</string>
+    <string name="remote_step_code_2">2. Claude Code에서 /mcp → phone → Authenticate를 실행하세요. 브라우저가 열리고 페어링 코드를 요청합니다.</string>
+    <string name="remote_step_desktop_1">1. 컴퓨터에서 Settings → Connectors → Add custom connector를 열고 이 URL을 붙여넣으세요:</string>
+    <string name="remote_step_desktop_2">2. Claude Desktop이 브라우저에서 페어링 코드를 요청하는 로그인 페이지를 엽니다.</string>
+    <string name="remote_step_other_1">1. OAuth 2.1 기반 원격 서버를 지원하는 모든 MCP 클라이언트를 연결할 수 있습니다:</string>
+    <string name="remote_step_other_2">2. 승인 과정에서 브라우저가 페어링 코드를 요청합니다.</string>
+    <string name="remote_step_3">3. 버튼을 탭하고 브라우저에 코드를 입력하세요:</string>
+    <string name="show_pairing_code">페어링 코드 표시</string>
+    <string name="pairing_code_hint">10분 동안 1회만 사용할 수 있습니다. 이미 페어링된 클라이언트는 자동으로 다시 연결됩니다 — 새 코드가 필요 없습니다.</string>
+    <string name="tools_connect_note">변경사항은 다음에 클라이언트가 연결할 때 적용됩니다.</string>
+    <string name="not_on_wifi_warning">Wi-Fi에 연결되어 있지 않습니다. 같은 Wi-Fi 네트워크의 기기에서만 서버에 접근할 수 있습니다 — 먼저 이 휴대전화를 Wi-Fi에 연결하세요.</string>
+    <string name="test_connection">연결 테스트</string>
+    <string name="testing_connection">연결 테스트 중…</string>
+    <string name="connection_test_success">%1$s에서 서버에 접근할 수 있습니다. MCP 클라이언트가 여전히 연결되지 않으면 컴퓨터가 같은 Wi-Fi에 있는지 확인하세요 — 해당 컴퓨터의 브라우저에서 %1$s를 열어 확인할 수 있습니다.</string>
+    <string name="connection_test_failure">%1$s의 서버에 접근할 수 없습니다. 서버가 실행 중인지, 설정에서 호스트가 0.0.0.0으로 설정되어 있는지 확인하세요.</string>
+    <string name="onboarding_title">Phone MCP에 오신 것을 환영합니다</string>
+    <string name="onboarding_body">Phone MCP는 이 휴대전화를 AI 어시스턴트(MCP 클라이언트)가 연결할 수 있는 서버로 만듭니다. 앱에는 AI가 내장되어 있지 않습니다 — Claude Code나 Claude Desktop 등 자신의 AI를 직접 연결합니다.
+
+1. 노출할 도구를 활성화하세요.
+2. 토글로 서버를 시작하세요.
+3. AI 클라이언트를 연결하세요 — phonemcp.ai를 통한 원격 연결(어디서나 사용 가능) 또는 같은 Wi-Fi 네트워크를 통한 연결.
+
+메인 화면의 연결 가이드가 두 방법을 모두 안내합니다.</string>
+    <string name="get_started">시작하기</string>
+    <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">잘못된 포트 번호입니다. 1에서 65535 사이의 값을 입력하세요.</string>
+    <string name="back">뒤로</string>
+    <string name="settings">설정</string>
+</resources>

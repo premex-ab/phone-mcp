@@ -1,0 +1,90 @@
+<resources>
+    <string name="server_settings_help_text">• 0.0.0.0: Sunucu tüm ağ arayüzlerini dinler (önerilir)\n• 127.0.0.1: Sunucuya yalnızca bu cihazdan erişilebilir (yalnızca yerel)\n• Port: 3001 zaten kullanılıyorsa sunucu portunu değiştirin\n• Ayarlar, sunucu yeniden başlatıldığında geçerli olur</string>
+    <string name="configuration_info">Yapılandırma bilgisi</string>
+    <string name="valid_port_range_1_65535">Geçerli port aralığı: 1–65535</string>
+    <string name="server_port">Sunucu portu</string>
+    <string name="toggle_dropdown">Açılır menüyü aç/kapat</string>
+    <string name="host">Ana makine</string>
+    <string name="server_host">Sunucu ana makinesi</string>
+    <string name="server_settings">Sunucu ayarları</string>
+    <string name="all_interfaces">Tüm arayüzler</string>
+    <string name="localhost_only">Yalnızca localhost</string>
+    <string name="port_number">Port numarası</string>
+    <string name="save_settings">Ayarları kaydet</string>
+    <string name="all_permissions_are_required_to_run_the_mcp_server_service">MCP sunucu hizmetini çalıştırmak için tüm izinler gereklidir</string>
+    <string name="permission_is_required_to_run_the_mcp_server_service">izni MCP sunucu hizmetini çalıştırmak için gereklidir</string>
+    <string name="no_description_available">Açıklama yok.</string>
+    <string name="warning_for">%1$s için uyarı</string>
+    <string name="ok">Tamam</string>
+    <string name="cancel">İptal</string>
+    <string name="connection_url">URL:</string>
+    <string name="access_token">Token:</string>
+    <string name="connect_your_ai_client">Yapay zeka istemcinizi bağlayın</string>
+    <string name="client_other">Diğer</string>
+    <string name="claude_code_instructions">Bu komutu bilgisayarınızdaki bir terminalde çalıştırın, ardından yeni bir Claude Code oturumu başlatın:</string>
+    <string name="claude_desktop_instructions">Bilgisayarınızda Settings → Developer → Edit Config bölümünü açın, bunu claude_desktop_config.json dosyasına ekleyin ve Claude Desktop\'ı tamamen yeniden başlatın. Node.js gerektirir.\n\nNot: \"Add custom connector\" iletişim kutusu yalnızca HTTPS sunucularını kabul eder — bunun yerine bu yapılandırmayı kullanın.</string>
+    <string name="other_client_instructions">Herhangi bir MCP istemcisini SSE aktarımı ve bearer token ile bağlayın:</string>
+    <string name="copy_command">Komutu kopyala</string>
+    <string name="copy_configuration">Yapılandırmayı kopyala</string>
+    <string name="copy_details">Bilgileri kopyala</string>
+    <string name="copy">%1$s kopyala</string>
+    <string name="copied_to_clipboard">Panoya kopyalandı</string>
+    <string name="wifi_note">📶 Bilgisayarınız bu telefonla aynı Wi‑Fi ağında olmalıdır.</string>
+    <string name="remote_access_title">Uzaktan erişim (phonemcp.ai)</string>
+    <string name="remote_access_description">Bu telefona güvenli bir tünel üzerinden her yerden ulaşın. Trafik aktarma (relay) sunucusundan geçer ve her araç bu telefonda yalnızca sizin onayınızla etkinleşir.</string>
+    <string name="remote_access_contacting_relay">Aktarma sunucusuna bağlanılıyor…</string>
+    <string name="server_running">Sunucu çalışıyor</string>
+    <string name="server_stopped">Sunucu durduruldu</string>
+    <string name="server_stopped_hint">Bağlantıları kabul etmek için sunucuyu başlatın</string>
+    <string name="tools_title">Araçlar</string>
+    <string name="connection_mode_remote">Uzak</string>
+    <string name="connection_mode_local">Yerel ağ</string>
+    <string name="enable_remote_access">Uzaktan erişimi etkinleştir</string>
+    <string name="copy_url">URL\'yi kopyala</string>
+    <string name="paired_clients_title">Eşleştirilmiş yapay zeka istemcileri</string>
+    <string name="paired_clients_empty">Henüz yok — yukarıdaki kodla ilk istemcinizi eşleştirin.</string>
+    <string name="refresh_paired_clients">Eşleştirilmiş istemcileri yenile</string>
+    <string name="revoke">Kaldır</string>
+    <string name="subscribe_monthly">%1$s / ay</string>
+    <string name="subscribe_yearly">%1$s / yıl</string>
+    <string name="yearly_savings">Yıllık plan %%%1$d tasarruf sağlar.</string>
+    <string name="subscribe">Abone ol</string>
+    <string name="remote_trial_days_left">Ücretsiz deneme — %1$d gün kaldı</string>
+    <string name="remote_subscription_active">Abonelik etkin</string>
+    <string name="remote_grace">Deneme süresi bitti — uzaktan erişim durmadan önce %1$d günlük ek süre kaldı</string>
+    <string name="remote_expired">Uzaktan erişimin süresi doldu. Abonelikler çok yakında.</string>
+    <string name="battery_hint">Android, derin uykuda bağlantıyı duraklatabilir. Her yerden erişilebilir kalmak için uygulamayı pil optimizasyonundan muaf tutun.</string>
+    <string name="battery_button">Arka plan bağlantısına izin ver</string>
+    <string name="restart_after_boot_title">Telefon yeniden başlatıldı</string>
+    <string name="restart_after_boot_body">MCP sunucunuzu yeniden başlatmak için dokunun</string>
+    <string name="remote_status_connected">phonemcp.ai bağlantısı kuruldu</string>
+    <string name="remote_status_connecting">phonemcp.ai bağlantısı kuruluyor…</string>
+    <string name="add_client_title">Yapay zeka istemcisi ekle</string>
+    <string name="remote_step_code_1">1. Bu komutu bilgisayarınızdaki bir terminalde çalıştırın:</string>
+    <string name="remote_step_code_2">2. Claude Code içinde /mcp → phone → Authenticate komutunu çalıştırın. Tarayıcınız açılır ve bir eşleştirme kodu ister.</string>
+    <string name="remote_step_desktop_1">1. Bilgisayarınızda: Settings → Connectors → Add custom connector, ardından bu URL\'yi yapıştırın:</string>
+    <string name="remote_step_desktop_2">2. Claude Desktop, tarayıcınızda eşleştirme kodu isteyen bir oturum açma sayfası açar.</string>
+    <string name="remote_step_other_1">1. OAuth 2.1 ile uzak sunucuları destekleyen herhangi bir MCP istemcisini bağlayın:</string>
+    <string name="remote_step_other_2">2. Yetkilendirme sırasında tarayıcı bir eşleştirme kodu ister.</string>
+    <string name="remote_step_3">3. Düğmeye dokunun ve kodu tarayıcıya girin:</string>
+    <string name="show_pairing_code">Eşleştirme kodunu göster</string>
+    <string name="pairing_code_hint">10 dakika geçerlidir, tek kullanımlıktır. Daha önce eşleştirilmiş istemciler otomatik olarak yeniden bağlanır — yeni kod gerekmez.</string>
+    <string name="tools_connect_note">Değişiklikler, bir istemci bir sonraki bağlanışında geçerli olur.</string>
+    <string name="not_on_wifi_warning">Wi-Fi bağlantısı yok. Sunucuya yalnızca aynı Wi-Fi ağındaki cihazlardan erişilebilir — önce bu telefonu Wi-Fi\'ye bağlayın.</string>
+    <string name="test_connection">Bağlantıyı test et</string>
+    <string name="testing_connection">Bağlantı test ediliyor…</string>
+    <string name="connection_test_success">Sunucuya %1$s adresinden erişilebiliyor. MCP istemciniz yine de bağlanamıyorsa bilgisayarınızın aynı Wi-Fi ağında olduğundan emin olun — kontrol etmek için %1$s adresini bilgisayarın tarayıcısında açabilirsiniz.</string>
+    <string name="connection_test_failure">%1$s adresindeki sunucuya ulaşılamadı. Sunucunun çalıştığından ve Ayarlar\'da ana makinenin 0.0.0.0 olarak ayarlandığından emin olun.</string>
+    <string name="onboarding_title">Phone MCP\'ye hoş geldiniz</string>
+    <string name="onboarding_body">Phone MCP, bu telefonu yapay zeka asistanlarının (MCP istemcileri) bağlanabileceği bir sunucuya dönüştürür. Uygulamada yerleşik yapay zeka yoktur — kendi asistanınızı bağlarsınız, örneğin Claude Code veya Claude Desktop.
+
+1. Kullanıma açmak istediğiniz araçları etkinleştirin.
+2. Anahtarla sunucuyu başlatın.
+3. Yapay zeka istemcinizi bağlayın — phonemcp.ai üzerinden uzaktan (her yerden çalışır) veya aynı Wi-Fi ağı üzerinden.
+
+Ana ekrandaki bağlantı rehberi her iki yöntemde de size yol gösterir.</string>
+    <string name="get_started">Başlayın</string>
+    <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">Geçersiz port numarası. Lütfen 1 ile 65535 arasında bir değer girin.</string>
+    <string name="back">Geri</string>
+    <string name="settings">Ayarlar</string>
+</resources>
