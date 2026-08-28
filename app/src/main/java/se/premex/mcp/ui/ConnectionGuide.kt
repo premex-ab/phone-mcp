@@ -28,6 +28,7 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
@@ -202,16 +203,60 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
                 val product by viewModel.subscriptionProduct.collectAsState()
                 if (status != "paid") {
                     product?.let { details ->
-                        val price = details.subscriptionOfferDetails?.firstOrNull()
-                            ?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice
-                        Button(
-                            onClick = { (context as? Activity)?.let { viewModel.subscribe(it) } },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(
-                                if (price != null) stringResource(R.string.subscribe_price, price)
-                                else stringResource(R.string.subscribe)
-                            )
+                        val offers = details.subscriptionOfferDetails.orEmpty()
+                        fun pricing(basePlanId: String) = offers
+                            .firstOrNull { it.basePlanId == basePlanId }
+                            ?.pricingPhases?.pricingPhaseList?.firstOrNull()
+
+                        val monthly = pricing("monthly")
+                        val yearly = pricing("yearly")
+
+                        if (monthly != null || yearly != null) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                monthly?.let { plan ->
+                                    Button(
+                                        onClick = {
+                                            (context as? Activity)?.let { viewModel.subscribe(it, "monthly") }
+                                        },
+                                        modifier = Modifier.weight(1f)
+                                    ) {
+                                        Text(stringResource(R.string.subscribe_monthly, plan.formattedPrice))
+                                    }
+                                }
+                                yearly?.let { plan ->
+                                    FilledTonalButton(
+                                        onClick = {
+                                            (context as? Activity)?.let { viewModel.subscribe(it, "yearly") }
+                                        },
+                                        modifier = Modifier.weight(1f)
+                                    ) {
+                                        Text(stringResource(R.string.subscribe_yearly, plan.formattedPrice))
+                                    }
+                                }
+                            }
+                            if (monthly != null && yearly != null && monthly.priceAmountMicros > 0) {
+                                val savings =
+                                    (100 - yearly.priceAmountMicros * 100 / (monthly.priceAmountMicros * 12)).toInt()
+                                if (savings > 0) {
+                                    Spacer(modifier = Modifier.height(4.dp))
+                                    Text(
+                                        text = stringResource(R.string.yearly_savings, savings),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                            }
+                        } else {
+                            // Base plans with unexpected ids — keep a generic button
+                            Button(
+                                onClick = { (context as? Activity)?.let { viewModel.subscribe(it) } },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(stringResource(R.string.subscribe))
+                            }
                         }
                         Spacer(modifier = Modifier.height(8.dp))
                     }

@@ -49,8 +49,10 @@
     <string name="paired_clients_empty">None yet — pair your first client with the code above.</string>
     <string name="refresh_paired_clients">Refresh paired clients</string>
     <string name="revoke">Revoke</string>
+    <string name="subscribe_monthly">%1$s / month</string>
+    <string name="subscribe_yearly">%1$s / year</string>
+    <string name="yearly_savings">The yearly plan saves %1$d %%.</string>
     <string name="subscribe">Subscribe</string>
-    <string name="subscribe_price">Subscribe — %1$s / month</string>
     <string name="remote_trial_days_left">Free trial — %1$d days left</string>
     <string name="remote_subscription_active">Subscription active</string>
     <string name="remote_grace">Trial ended — %1$d grace days left before remote access stops</string>

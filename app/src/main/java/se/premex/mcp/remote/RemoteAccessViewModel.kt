@@ -41,8 +41,8 @@ class RemoteAccessViewModel @Inject constructor(
         }
     }
 
-    fun subscribe(activity: android.app.Activity) {
-        if (!billingManager.launchPurchase(activity)) {
+    fun subscribe(activity: android.app.Activity, basePlanId: String? = null) {
+        if (!billingManager.launchPurchase(activity, basePlanId)) {
             error = "Google Play billing is not available on this device"
         }
     }
