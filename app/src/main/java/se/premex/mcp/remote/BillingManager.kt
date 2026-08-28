@@ -82,7 +82,8 @@ class BillingManager @Inject constructor(
             .build()
         client.queryProductDetailsAsync(params) { result, details ->
             if (result.responseCode == BillingClient.BillingResponseCode.OK) {
-                _productDetails.value = details.firstOrNull()
+                // Billing 8: the callback carries a QueryProductDetailsResult
+                _productDetails.value = details.productDetailsList.firstOrNull()
             }
         }
     }
