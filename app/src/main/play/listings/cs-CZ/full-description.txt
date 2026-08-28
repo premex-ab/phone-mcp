@@ -1,0 +1,38 @@
+📱 Váš telefon jako nástroje pro vaši AI
+
+Phone MCP promění váš telefon s Androidem v zabezpečený MCP server, ke kterému se mohou připojit AI asistenti jako Claude. Požádejte svou AI, aby našla fotku, přečetla stažené PDF, zkontrolovala senzor, pořídila snímek nebo vyhledala kontakt — každá funkce přitom zůstává pod vaší kontrolou, ve vašem zařízení.
+
+Aplikace sama žádnou AI neobsahuje. Připojíte k ní asistenta, kterého už používáte — Claude Code, Claude Desktop nebo jakéhokoli klienta podporujícího Model Context Protocol.
+
+🌍 VZDÁLENÝ PŘÍSTUP — NOVINKA
+Připojte se ke svému telefonu odkudkoli přes phonemcp.ai. Nového AI klienta spárujete za necelou minutu: spusťte jeden příkaz, zadejte párovací kód zobrazený v aplikaci a je hotovo. Spárovaní klienti se znovu připojují automaticky.
+
+• Funguje z jakékoli sítě — bez přesměrování portů, bez VPN, bez zakládání účtu
+• Autorizace OAuth 2.1 s jednorázovými párovacími kódy
+• Váš telefon navazuje pouze odchozí připojení
+• Relay nikdy nevidí místní přihlašovací údaje telefonu
+• Každého spárovaného AI klienta vidíte v aplikaci a můžete ho kdykoli odvolat
+• 30 dní zdarma na vyzkoušení, poté malé měsíční nebo roční předplatné
+
+🏠 MÍSTNÍ SÍŤ — NAVŽDY ZDARMA
+Na vaší vlastní Wi-Fi se AI připojuje přímo k telefonu. Žádný cloud, žádné předplatné, žádné limity. Tohle bude vždy zdarma.
+
+🧰 CO VAŠE AI DOKÁŽE
+• Soubory — procházet a číst fotky, stažené soubory a dokumenty
+• Fotoaparát — pořídit fotku a předat ji rovnou modelu
+• Senzory — akcelerometr, gyroskop, barometr, senzor osvětlení a další
+• Poloha — kde se telefon právě nachází
+• Kontakty — vyhledávání osob
+• SMS — psaní zpráv (s vaším potvrzením)
+• Rozšiřitelnost — aplikace třetích stran mohou nabízet vlastní MCP nástroje
+
+🔒 SOUKROMÍ NA PRVNÍM MÍSTĚ
+• Každý nástroj je VYPNUTÝ, dokud ho sami nezapnete — citlivé nástroje vyžadují výslovný souhlas
+• Místně ověřování tokenem Bearer, vzdáleně OAuth 2.1
+• Vzdálený přístup můžete kdykoli vypnout; tunel se okamžitě uzavře
+• Žádné reklamy, žádné trackery a vaše data nikdy neprodáváme
+
+🧑‍💻 OPEN SOURCE
+Aplikace i její tunelový protokol jsou open source na GitHubu — sami si ověřte, co přesně váš telefon opouští: github.com/premex-ab/phone-mcp
+
+Vyrobeno ve Švédsku společností Premex.

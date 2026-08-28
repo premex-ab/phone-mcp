@@ -1,0 +1,38 @@
+📱 Điện thoại của bạn, trở thành công cụ cho AI
+
+Phone MCP biến điện thoại Android của bạn thành một máy chủ MCP an toàn mà các trợ lý AI như Claude có thể kết nối. Nhờ AI tìm một bức ảnh, đọc file PDF đã tải về, kiểm tra cảm biến, chụp ảnh hay tra danh bạ — trong khi mọi tính năng vẫn nằm dưới quyền kiểm soát của bạn, ngay trên thiết bị của bạn.
+
+Ứng dụng không chứa AI nào cả. Bạn kết nối trợ lý mình đang dùng — Claude Code, Claude Desktop, hoặc bất kỳ client nào hỗ trợ Model Context Protocol.
+
+🌍 TRUY CẬP TỪ XA — MỚI
+Kết nối tới điện thoại từ bất cứ đâu qua phonemcp.ai. Ghép nối client AI mới chỉ trong chưa đầy một phút: chạy một lệnh, nhập mã ghép nối hiển thị trong ứng dụng, xong. Các client đã ghép nối sẽ tự động kết nối lại.
+
+• Hoạt động trên mọi mạng — không cần mở cổng, không VPN, không cần tạo tài khoản
+• Ủy quyền OAuth 2.1 với mã ghép nối dùng một lần
+• Điện thoại của bạn chỉ tạo kết nối đi ra ngoài
+• Máy chủ trung chuyển không bao giờ thấy thông tin đăng nhập cục bộ của điện thoại
+• Xem và thu hồi mọi client AI đã ghép nối ngay trong ứng dụng
+• Dùng thử miễn phí 30 ngày, sau đó là gói thuê bao tháng hoặc năm với mức phí nhỏ
+
+🏠 MẠNG NỘI BỘ — MIỄN PHÍ MÃI MÃI
+Trên Wi-Fi của bạn, AI kết nối trực tiếp tới điện thoại. Không đám mây, không thuê bao, không giới hạn. Tính năng này sẽ luôn miễn phí.
+
+🧰 AI CỦA BẠN CÓ THỂ LÀM GÌ
+• Tệp — duyệt và đọc ảnh, tệp tải về và tài liệu
+• Máy ảnh — chụp ảnh và chuyển thẳng cho mô hình
+• Cảm biến — gia tốc kế, con quay hồi chuyển, khí áp kế, ánh sáng và hơn thế
+• Vị trí — điện thoại đang ở đâu ngay lúc này
+• Danh bạ — tra cứu liên hệ
+• SMS — soạn tin nhắn (có xác nhận của bạn)
+• Mở rộng — ứng dụng bên thứ ba có thể cung cấp công cụ MCP riêng
+
+🔒 RIÊNG TƯ TỪ THIẾT KẾ
+• Mọi công cụ đều TẮT cho đến khi bạn bật — công cụ nhạy cảm cần sự đồng ý rõ ràng
+• Xác thực bằng Bearer token trong mạng nội bộ, OAuth 2.1 khi từ xa
+• Tắt truy cập từ xa bất cứ lúc nào; đường hầm đóng ngay lập tức
+• Không quảng cáo, không trình theo dõi, không bao giờ bán dữ liệu
+
+🧑‍💻 MÃ NGUỒN MỞ
+Ứng dụng và giao thức đường hầm là mã nguồn mở trên GitHub — hãy tự kiểm tra chính xác những gì rời khỏi điện thoại của bạn: github.com/premex-ab/phone-mcp
+
+Được tạo ra tại Thụy Điển bởi Premex.
