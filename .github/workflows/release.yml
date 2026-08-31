@@ -68,7 +68,7 @@ jobs:
     # for manual Console uploads when a new permission declaration gates the
     # API publish, and as a general escape hatch when the publish step fails.
     - name: Upload Play bundle as workflow artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: app-play-release-aab
         path: app/build/outputs/bundle/playRelease/app-play-release.aab
