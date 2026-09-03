@@ -1,5 +1,18 @@
 <resources>
     <string name="appfunctions_app_description">承認済みのオンデバイス アシスタントを使用して、メッセージの作成や送信、連絡先の検索、写真の撮影を行います。</string>
+    <string name="appfunctions_title">オンデバイス アシスタント</string>
+    <string name="experimental">試験運用</string>
+    <string name="appfunctions_supported_description">対応する Android アシスタントは、MCP サーバーを起動せずに、選択した Phone MCP の操作を直接使用できます。</string>
+    <string name="appfunctions_unsupported_description">アシスタントからの直接アクセスには Android 16 以降が必要です。MCP サーバーは通常どおり利用できます。</string>
+    <string name="appfunctions_capabilities_play">連絡先 • カメラ • SMS 下書き</string>
+    <string name="appfunctions_capabilities_full">連絡先 • カメラ • SMS 下書き • SMS の直接送信</string>
+    <string name="how_appfunctions_work">仕組み</string>
+    <string name="appfunctions_info_available">Android AppFunctions により、対応する承認済みアシスタントがこのスマートフォン上でこれらの操作をローカルに使用できます。</string>
+    <string name="appfunctions_info_unavailable">このスマートフォンは Android AppFunctions に対応していません。Android 16 以降が必要です。</string>
+    <string name="appfunctions_info_security">どのアシスタントを承認するかは Android が決定します。これらの呼び出しでは MCP サーバーのトークンやツールスイッチは使用されません。連絡先、カメラ、通知、SMS の権限は引き続き適用されます。SMS の下書きは必ず確認してから自分で送信します。SMS の直接送信は即時に実行され、Full ビルドにのみ含まれます。</string>
+    <string name="appfunctions_info_preview">Android の試験運用プレビュー中はアシスタントの対応が限定されるため、利用可否はデバイス、アシスタント、アカウントによって異なります。</string>
+    <string name="manage_permissions">権限を管理</string>
+    <string name="close">閉じる</string>
     <string name="server_settings_help_text">• 0.0.0.0: サーバーはすべてのネットワークインターフェースで待ち受けます（推奨）\n• 127.0.0.1: サーバーはこの端末からのみアクセスできます（ローカルのみ）\n• ポート: 3001 が既に使用中の場合はサーバーポートを変更してください\n• 設定はサーバーの再起動後に有効になります</string>
     <string name="configuration_info">設定情報</string>
     <string name="valid_port_range_1_65535">有効なポート範囲: 1～65535</string>

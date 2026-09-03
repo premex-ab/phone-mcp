@@ -39,8 +39,9 @@ URL and bearer token.
   limited private preview; installing Phone MCP does not guarantee assistant access yet
 
 AppFunctions use Android's caller authorization and do not use the MCP server's token or tool
-toggles. See the [AppFunctions guide](docs/appfunctions.md) for the security model, example
-prompts, flavor differences, and ADB testing instructions.
+toggles. Open **On-device assistants** on Phone MCP's home screen for an in-app explanation, or
+see the [AppFunctions guide](docs/appfunctions.md) for the security model, example prompts,
+flavor differences, and ADB testing instructions.
 
 ## Quick Start
 

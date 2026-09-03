@@ -1,5 +1,18 @@
 <resources>
     <string name="appfunctions_app_description">Brug godkendte assistenter på enheden til at klargøre eller sende beskeder, søge i kontakter og tage billeder.</string>
+    <string name="appfunctions_title">Assistenter på enheden</string>
+    <string name="experimental">Eksperimentel</string>
+    <string name="appfunctions_supported_description">Kompatible Android-assistenter kan bruge udvalgte Phone MCP-handlinger direkte uden at starte MCP-serveren.</string>
+    <string name="appfunctions_unsupported_description">Direkte assistentadgang kræver Android 16 eller nyere. Din MCP-server fungerer fortsat normalt.</string>
+    <string name="appfunctions_capabilities_play">Kontakter • Kamera • SMS-kladder</string>
+    <string name="appfunctions_capabilities_full">Kontakter • Kamera • SMS-kladder • Direkte SMS</string>
+    <string name="how_appfunctions_work">Sådan fungerer det</string>
+    <string name="appfunctions_info_available">Android AppFunctions lader kompatible, godkendte assistenter bruge disse handlinger lokalt på telefonen.</string>
+    <string name="appfunctions_info_unavailable">Denne telefon understøtter ikke Android AppFunctions. Android 16 eller nyere er påkrævet.</string>
+    <string name="appfunctions_info_security">Android bestemmer, hvilke assistenter der er godkendt. Disse kald bruger ikke MCP-serverens token eller værktøjsknapper. Tilladelser til Kontakter, Kamera, Notifikationer og SMS gælder stadig. En forberedt SMS venter altid på din gennemgang og afsendelse; Direkte SMS sendes med det samme og findes kun i Full-versionen.</string>
+    <string name="appfunctions_info_preview">Assistentunderstøttelsen er begrænset under Androids eksperimentelle forhåndsvisning, så tilgængeligheden afhænger af enhed, assistent og konto.</string>
+    <string name="manage_permissions">Administrer tilladelser</string>
+    <string name="close">Luk</string>
     <string name="server_settings_help_text">• 0.0.0.0: Serveren lytter på alle netværksgrænseflader (anbefales)\n• 127.0.0.1: Serveren kan kun nås fra denne enhed (kun lokalt)\n• Port: Skift serverport, hvis 3001 allerede er i brug\n• Indstillingerne træder i kraft, når serveren genstartes</string>
     <string name="configuration_info">Konfigurationsinfo</string>
     <string name="valid_port_range_1_65535">Gyldigt portinterval: 1–65535</string>

@@ -39,3 +39,7 @@ AI 能做什么
 应用及其隧道协议在 GitHub 上开源——你可以亲自审计手机发出的每一个字节：github.com/premex-ab/phone-mcp
 
 由瑞典 Premex 出品。
+
+设备端助手（实验性功能）
+
+在 Android 16 及更高版本上，兼容的助手可通过 Android AppFunctions 直接使用部分 Phone MCP 操作，无需连接 MCP 服务器。助手可以搜索联系人、拍摄照片或准备短信供您审核，同时仍会应用常规 Android 权限。在 Android 实验性预览期间，助手支持仍然有限，具体可用性取决于您的设备、助手和账号。

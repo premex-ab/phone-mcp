@@ -1,5 +1,18 @@
 <resources>
     <string name="appfunctions_app_description">Usa gli assistenti autorizzati sul dispositivo per preparare o inviare messaggi, cercare contatti e scattare foto.</string>
+    <string name="appfunctions_title">Assistenti sul dispositivo</string>
+    <string name="experimental">Sperimentale</string>
+    <string name="appfunctions_supported_description">Gli assistenti Android compatibili possono usare direttamente determinate azioni di Phone MCP, senza avviare il server MCP.</string>
+    <string name="appfunctions_unsupported_description">L’accesso diretto dell’assistente richiede Android 16 o versioni successive. Il server MCP continuerà a funzionare normalmente.</string>
+    <string name="appfunctions_capabilities_play">Contatti • Fotocamera • Bozze SMS</string>
+    <string name="appfunctions_capabilities_full">Contatti • Fotocamera • Bozze SMS • SMS diretto</string>
+    <string name="how_appfunctions_work">Come funziona</string>
+    <string name="appfunctions_info_available">Android AppFunctions consente agli assistenti compatibili e autorizzati di usare queste azioni localmente sul telefono.</string>
+    <string name="appfunctions_info_unavailable">Questo telefono non supporta Android AppFunctions. È richiesto Android 16 o versione successiva.</string>
+    <string name="appfunctions_info_security">Android decide quali assistenti sono autorizzati. Queste chiamate non usano il token del server MCP né i suoi interruttori degli strumenti. Le autorizzazioni Contatti, Fotocamera, Notifiche e SMS restano valide. Un SMS preparato attende sempre la tua revisione e l’invio; l’SMS diretto viene inviato immediatamente ed è incluso solo nella versione Full.</string>
+    <string name="appfunctions_info_preview">Il supporto degli assistenti è limitato durante l’anteprima sperimentale di Android, quindi la disponibilità dipende da dispositivo, assistente e account.</string>
+    <string name="manage_permissions">Gestisci autorizzazioni</string>
+    <string name="close">Chiudi</string>
     <string name="server_settings_help_text">• 0.0.0.0: il server è in ascolto su tutte le interfacce di rete (consigliato)\n• 127.0.0.1: il server è accessibile solo da questo dispositivo (solo locale)\n• Porta: cambia la porta del server se la 3001 è già in uso\n• Le impostazioni hanno effetto dopo il riavvio del server</string>
     <string name="configuration_info">Info di configurazione</string>
     <string name="valid_port_range_1_65535">Intervallo di porte valido: 1–65535</string>

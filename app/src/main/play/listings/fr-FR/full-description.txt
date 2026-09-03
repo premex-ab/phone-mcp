@@ -39,3 +39,7 @@ Open source
 L'application et son protocole de tunnel sont open source sur GitHub — vérifiez exactement ce qui quitte votre téléphone : github.com/premex-ab/phone-mcp
 
 Conçu en Suède par Premex.
+
+Assistants sur l’appareil (expérimental)
+
+Sous Android 16 et versions ultérieures, les assistants compatibles peuvent utiliser directement certaines actions Phone MCP via Android AppFunctions, sans connexion au serveur MCP. Ils peuvent rechercher des contacts, prendre une photo ou préparer un SMS à vérifier, tandis que les autorisations Android habituelles continuent de s’appliquer. La prise en charge des assistants est limitée pendant l’aperçu expérimental d’Android et dépend de l’appareil, de l’assistant et du compte.

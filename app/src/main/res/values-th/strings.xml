@@ -1,5 +1,18 @@
 <resources>
     <string name="appfunctions_app_description">ใช้ผู้ช่วยที่ได้รับอนุญาตบนอุปกรณ์เพื่อเตรียมหรือส่งข้อความ ค้นหารายชื่อติดต่อ และถ่ายภาพ</string>
+    <string name="appfunctions_title">ผู้ช่วยบนอุปกรณ์</string>
+    <string name="experimental">ทดลองใช้</string>
+    <string name="appfunctions_supported_description">ผู้ช่วย Android ที่เข้ากันได้สามารถใช้การทำงานบางอย่างของ Phone MCP ได้โดยตรงโดยไม่ต้องเริ่มเซิร์ฟเวอร์ MCP</string>
+    <string name="appfunctions_unsupported_description">การเข้าถึงโดยตรงของผู้ช่วยต้องใช้ Android 16 หรือใหม่กว่า เซิร์ฟเวอร์ MCP ของคุณยังคงทำงานได้ตามปกติ</string>
+    <string name="appfunctions_capabilities_play">รายชื่อติดต่อ • กล้อง • ร่าง SMS</string>
+    <string name="appfunctions_capabilities_full">รายชื่อติดต่อ • กล้อง • ร่าง SMS • ส่ง SMS โดยตรง</string>
+    <string name="how_appfunctions_work">วิธีการทำงาน</string>
+    <string name="appfunctions_info_available">Android AppFunctions ช่วยให้ผู้ช่วยที่เข้ากันได้และได้รับอนุญาตใช้การทำงานเหล่านี้บนโทรศัพท์เครื่องนี้ได้โดยตรง</string>
+    <string name="appfunctions_info_unavailable">โทรศัพท์เครื่องนี้ไม่รองรับ Android AppFunctions ต้องใช้ Android 16 หรือใหม่กว่า</string>
+    <string name="appfunctions_info_security">Android เป็นผู้กำหนดว่าผู้ช่วยใดได้รับอนุญาต การเรียกเหล่านี้ไม่ใช้โทเค็นเซิร์ฟเวอร์ MCP หรือสวิตช์เครื่องมือ สิทธิ์สำหรับรายชื่อติดต่อ กล้อง การแจ้งเตือน และ SMS ยังคงมีผล SMS ที่เตรียมไว้จะรอให้คุณตรวจสอบและส่งเสมอ ส่วน SMS โดยตรงจะส่งทันทีและมีเฉพาะในรุ่น Full</string>
+    <string name="appfunctions_info_preview">การรองรับผู้ช่วยยังมีข้อจำกัดในช่วงตัวอย่างทดลองของ Android ดังนั้นความพร้อมใช้งานจึงขึ้นอยู่กับอุปกรณ์ ผู้ช่วย และบัญชีของคุณ</string>
+    <string name="manage_permissions">จัดการสิทธิ์</string>
+    <string name="close">ปิด</string>
     <string name="server_settings_help_text">• 0.0.0.0: เซิร์ฟเวอร์รับการเชื่อมต่อจากทุกอินเทอร์เฟซเครือข่าย (แนะนำ)\n• 127.0.0.1: เข้าถึงเซิร์ฟเวอร์ได้จากอุปกรณ์นี้เท่านั้น (ภายในเครื่องเท่านั้น)\n• พอร์ต: เปลี่ยนพอร์ตของเซิร์ฟเวอร์หากพอร์ต 3001 ถูกใช้งานอยู่แล้ว\n• การตั้งค่าจะมีผลหลังจากรีสตาร์ทเซิร์ฟเวอร์</string>
     <string name="configuration_info">ข้อมูลการกำหนดค่า</string>
     <string name="valid_port_range_1_65535">ช่วงพอร์ตที่ใช้ได้: 1–65535</string>

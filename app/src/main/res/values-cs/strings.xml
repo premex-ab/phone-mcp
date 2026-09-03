@@ -1,5 +1,18 @@
 <resources>
     <string name="appfunctions_app_description">Pomocí autorizovaných asistentů v zařízení můžete připravovat nebo odesílat zprávy, vyhledávat kontakty a pořizovat fotografie.</string>
+    <string name="appfunctions_title">Asistenti v zařízení</string>
+    <string name="experimental">Experimentální</string>
+    <string name="appfunctions_supported_description">Kompatibilní asistenti Android mohou používat vybrané akce Phone MCP přímo, bez spuštění serveru MCP.</string>
+    <string name="appfunctions_unsupported_description">Přímý přístup asistenta vyžaduje Android 16 nebo novější. Server MCP bude dál fungovat jako obvykle.</string>
+    <string name="appfunctions_capabilities_play">Kontakty • Fotoaparát • Koncepty SMS</string>
+    <string name="appfunctions_capabilities_full">Kontakty • Fotoaparát • Koncepty SMS • Přímé SMS</string>
+    <string name="how_appfunctions_work">Jak to funguje</string>
+    <string name="appfunctions_info_available">Android AppFunctions umožňují kompatibilním autorizovaným asistentům používat tyto akce místně v tomto telefonu.</string>
+    <string name="appfunctions_info_unavailable">Tento telefon nepodporuje Android AppFunctions. Je vyžadován Android 16 nebo novější.</string>
+    <string name="appfunctions_info_security">Android určuje, kteří asistenti jsou autorizovaní. Tato volání nepoužívají token serveru MCP ani jeho přepínače nástrojů. Oprávnění pro Kontakty, Fotoaparát, Oznámení a SMS platí i nadále. Připravená SMS vždy čeká na vaši kontrolu a odeslání; Přímá SMS se odešle okamžitě a je jen ve verzi Full.</string>
+    <string name="appfunctions_info_preview">Podpora asistentů je během experimentálního náhledu Androidu omezená, takže dostupnost závisí na zařízení, asistentovi a účtu.</string>
+    <string name="manage_permissions">Spravovat oprávnění</string>
+    <string name="close">Zavřít</string>
     <string name="server_settings_help_text">• 0.0.0.0: server naslouchá na všech síťových rozhraních (doporučeno)\n• 127.0.0.1: server je dostupný pouze z tohoto zařízení (jen místně)\n• Port: změňte port serveru, pokud je 3001 již obsazen\n• Nastavení se projeví po restartu serveru</string>
     <string name="configuration_info">Informace o konfiguraci</string>
     <string name="valid_port_range_1_65535">Platný rozsah portů: 1–65535</string>

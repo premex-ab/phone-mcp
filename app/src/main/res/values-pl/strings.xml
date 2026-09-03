@@ -1,5 +1,18 @@
 <resources>
     <string name="appfunctions_app_description">Korzystaj z autoryzowanych asystentów na urządzeniu, aby przygotowywać lub wysyłać wiadomości, wyszukiwać kontakty i robić zdjęcia.</string>
+    <string name="appfunctions_title">Asystenci na urządzeniu</string>
+    <string name="experimental">Eksperymentalne</string>
+    <string name="appfunctions_supported_description">Zgodni asystenci Androida mogą bezpośrednio korzystać z wybranych działań Phone MCP bez uruchamiania serwera MCP.</string>
+    <string name="appfunctions_unsupported_description">Bezpośredni dostęp asystenta wymaga Androida 16 lub nowszego. Serwer MCP nadal działa normalnie.</string>
+    <string name="appfunctions_capabilities_play">Kontakty • Aparat • Wersje robocze SMS</string>
+    <string name="appfunctions_capabilities_full">Kontakty • Aparat • Wersje robocze SMS • Bezpośredni SMS</string>
+    <string name="how_appfunctions_work">Jak to działa</string>
+    <string name="appfunctions_info_available">Android AppFunctions pozwala zgodnym, autoryzowanym asystentom używać tych działań lokalnie na telefonie.</string>
+    <string name="appfunctions_info_unavailable">Ten telefon nie obsługuje Android AppFunctions. Wymagany jest Android 16 lub nowszy.</string>
+    <string name="appfunctions_info_security">Android decyduje, którzy asystenci są autoryzowani. Te wywołania nie używają tokenu serwera MCP ani jego przełączników narzędzi. Uprawnienia do Kontaktów, Aparatu, Powiadomień i SMS nadal obowiązują. Przygotowany SMS zawsze czeka na Twoją kontrolę i wysłanie; Bezpośredni SMS jest wysyłany natychmiast i znajduje się tylko w wersji Full.</string>
+    <string name="appfunctions_info_preview">Obsługa asystentów jest ograniczona podczas eksperymentalnej wersji zapoznawczej Androida, więc dostępność zależy od urządzenia, asystenta i konta.</string>
+    <string name="manage_permissions">Zarządzaj uprawnieniami</string>
+    <string name="close">Zamknij</string>
     <string name="server_settings_help_text">• 0.0.0.0: Serwer nasłuchuje na wszystkich interfejsach sieciowych (zalecane)\n• 127.0.0.1: Serwer dostępny tylko z tego urządzenia (tylko lokalnie)\n• Port: Zmień port serwera, jeśli 3001 jest już zajęty\n• Ustawienia zaczną obowiązywać po ponownym uruchomieniu serwera</string>
     <string name="configuration_info">Informacje o konfiguracji</string>
     <string name="valid_port_range_1_65535">Prawidłowy zakres portów: 1–65535</string>

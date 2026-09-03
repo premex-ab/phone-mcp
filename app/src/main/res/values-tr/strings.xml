@@ -1,5 +1,18 @@
 <resources>
     <string name="appfunctions_app_description">Mesaj hazırlamak veya göndermek, kişileri aramak ve fotoğraf çekmek için cihazdaki yetkili asistanları kullanın.</string>
+    <string name="appfunctions_title">Cihazdaki asistanlar</string>
+    <string name="experimental">Deneysel</string>
+    <string name="appfunctions_supported_description">Uyumlu Android asistanları, MCP sunucusunu başlatmadan seçili Phone MCP işlemlerini doğrudan kullanabilir.</string>
+    <string name="appfunctions_unsupported_description">Doğrudan asistan erişimi Android 16 veya üzerini gerektirir. MCP sunucunuz normal şekilde çalışmaya devam eder.</string>
+    <string name="appfunctions_capabilities_play">Kişiler • Kamera • SMS taslakları</string>
+    <string name="appfunctions_capabilities_full">Kişiler • Kamera • SMS taslakları • Doğrudan SMS</string>
+    <string name="how_appfunctions_work">Nasıl çalışır</string>
+    <string name="appfunctions_info_available">Android AppFunctions, uyumlu ve yetkili asistanların bu işlemleri telefonda yerel olarak kullanmasını sağlar.</string>
+    <string name="appfunctions_info_unavailable">Bu telefon Android AppFunctions özelliğini desteklemiyor. Android 16 veya üzeri gereklidir.</string>
+    <string name="appfunctions_info_security">Hangi asistanların yetkili olduğuna Android karar verir. Bu çağrılar MCP sunucusu belirtecini veya araç anahtarlarını kullanmaz. Kişiler, Kamera, Bildirimler ve SMS izinleri geçerliliğini korur. Hazırlanan SMS her zaman inceleyip göndermeniz için bekler; Doğrudan SMS hemen gönderilir ve yalnızca Full sürümünde bulunur.</string>
+    <string name="appfunctions_info_preview">Android’in deneysel önizlemesi sırasında asistan desteği sınırlıdır; kullanılabilirlik cihazınıza, asistana ve hesaba bağlıdır.</string>
+    <string name="manage_permissions">İzinleri yönet</string>
+    <string name="close">Kapat</string>
     <string name="server_settings_help_text">• 0.0.0.0: Sunucu tüm ağ arayüzlerini dinler (önerilir)\n• 127.0.0.1: Sunucuya yalnızca bu cihazdan erişilebilir (yalnızca yerel)\n• Port: 3001 zaten kullanılıyorsa sunucu portunu değiştirin\n• Ayarlar, sunucu yeniden başlatıldığında geçerli olur</string>
     <string name="configuration_info">Yapılandırma bilgisi</string>
     <string name="valid_port_range_1_65535">Geçerli port aralığı: 1–65535</string>

@@ -1,5 +1,18 @@
 <resources>
     <string name="appfunctions_app_description">אפשר לעוזרים מורשים במכשיר להכין או לשלוח הודעות, לחפש אנשי קשר ולצלם תמונות.</string>
+    <string name="appfunctions_title">מסייעים במכשיר</string>
+    <string name="experimental">ניסיוני</string>
+    <string name="appfunctions_supported_description">מסייעי Android תואמים יכולים להשתמש ישירות בפעולות נבחרות של Phone MCP בלי להפעיל את שרת MCP.</string>
+    <string name="appfunctions_unsupported_description">גישה ישירה של מסייע דורשת Android 16 ואילך. שרת MCP ימשיך לפעול כרגיל.</string>
+    <string name="appfunctions_capabilities_play">אנשי קשר • מצלמה • טיוטות SMS</string>
+    <string name="appfunctions_capabilities_full">אנשי קשר • מצלמה • טיוטות SMS • SMS ישיר</string>
+    <string name="how_appfunctions_work">איך זה עובד</string>
+    <string name="appfunctions_info_available">Android AppFunctions מאפשר למסייעים תואמים ומורשים להשתמש בפעולות האלה באופן מקומי בטלפון.</string>
+    <string name="appfunctions_info_unavailable">הטלפון הזה אינו תומך ב-Android AppFunctions. נדרשת Android 16 ואילך.</string>
+    <string name="appfunctions_info_security">Android קובע אילו מסייעים מורשים. הקריאות האלה אינן משתמשות באסימון של שרת MCP או במתגי הכלים שלו. ההרשאות לאנשי קשר, למצלמה, להתראות ול-SMS עדיין חלות. SMS מוכן תמיד נשאר לבדיקה ולשליחה שלך; SMS ישיר נשלח מיד ונכלל רק בגרסת Full.</string>
+    <string name="appfunctions_info_preview">התמיכה במסייעים מוגבלת במהלך התצוגה המקדימה הניסיונית של Android, ולכן הזמינות תלויה במכשיר, במסייע ובחשבון.</string>
+    <string name="manage_permissions">ניהול הרשאות</string>
+    <string name="close">סגירה</string>
     <string name="server_settings_help_text">• 0.0.0.0: השרת מאזין בכל ממשקי הרשת (מומלץ)\n• 127.0.0.1: השרת נגיש רק מהמכשיר הזה (מקומי בלבד)\n• פורט: יש לשנות את פורט השרת אם 3001 כבר בשימוש\n• ההגדרות נכנסות לתוקף לאחר הפעלה מחדש של השרת</string>
     <string name="configuration_info">פרטי תצורה</string>
     <string name="valid_port_range_1_65535">טווח פורטים חוקי: 1–65535</string>

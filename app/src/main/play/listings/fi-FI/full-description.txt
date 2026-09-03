@@ -39,3 +39,7 @@ Avoin lähdekoodi
 Sovellus ja sen tunneliprotokolla ovat avointa lähdekoodia GitHubissa — tarkista tarkalleen, mitä puhelimestasi lähtee: github.com/premex-ab/phone-mcp
 
 Tehty Ruotsissa, tekijänä Premex.
+
+Laitteen avustajat (kokeellinen)
+
+Android 16:ssa ja uudemmissa yhteensopivat avustajat voivat käyttää valittuja Phone MCP -toimintoja suoraan Android AppFunctionsin kautta ilman yhteyttä MCP-palvelimeen. Ne voivat hakea yhteystietoja, ottaa valokuvan tai valmistella SMS-viestin tarkistettavaksi, ja Androidin tavalliset käyttöoikeudet ovat edelleen voimassa. Avustajien tuki on Androidin kokeellisen esikatselun aikana rajallinen ja riippuu laitteesta, avustajasta ja tilistä.

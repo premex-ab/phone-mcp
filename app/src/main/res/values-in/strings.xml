@@ -1,5 +1,18 @@
 <resources>
     <string name="appfunctions_app_description">Gunakan asisten di perangkat yang diizinkan untuk menyiapkan atau mengirim pesan, mencari kontak, dan mengambil foto.</string>
+    <string name="appfunctions_title">Asisten di perangkat</string>
+    <string name="experimental">Eksperimental</string>
+    <string name="appfunctions_supported_description">Asisten Android yang kompatibel dapat menggunakan tindakan Phone MCP tertentu secara langsung tanpa memulai server MCP.</string>
+    <string name="appfunctions_unsupported_description">Akses langsung asisten memerlukan Android 16 atau yang lebih baru. Server MCP Anda tetap berfungsi normal.</string>
+    <string name="appfunctions_capabilities_play">Kontak • Kamera • Draf SMS</string>
+    <string name="appfunctions_capabilities_full">Kontak • Kamera • Draf SMS • SMS langsung</string>
+    <string name="how_appfunctions_work">Cara kerjanya</string>
+    <string name="appfunctions_info_available">Android AppFunctions memungkinkan asisten yang kompatibel dan diizinkan menggunakan tindakan ini secara lokal di ponsel ini.</string>
+    <string name="appfunctions_info_unavailable">Ponsel ini tidak mendukung Android AppFunctions. Diperlukan Android 16 atau yang lebih baru.</string>
+    <string name="appfunctions_info_security">Android menentukan asisten mana yang diizinkan. Panggilan ini tidak menggunakan token server MCP atau sakelar alatnya. Izin Kontak, Kamera, Notifikasi, dan SMS tetap berlaku. SMS yang disiapkan selalu menunggu untuk Anda tinjau dan kirim; SMS langsung dikirim seketika dan hanya tersedia dalam build Full.</string>
+    <string name="appfunctions_info_preview">Dukungan asisten masih terbatas selama pratinjau eksperimental Android, sehingga ketersediaannya bergantung pada perangkat, asisten, dan akun Anda.</string>
+    <string name="manage_permissions">Kelola izin</string>
+    <string name="close">Tutup</string>
     <string name="server_settings_help_text">• 0.0.0.0: Server mendengarkan di semua antarmuka jaringan (disarankan)\n• 127.0.0.1: Server hanya dapat diakses dari perangkat ini (lokal saja)\n• Port: Ubah port server jika 3001 sudah digunakan\n• Setelan berlaku setelah server dimulai ulang</string>
     <string name="configuration_info">Info Konfigurasi</string>
     <string name="valid_port_range_1_65535">Rentang port yang valid: 1 - 65535</string>

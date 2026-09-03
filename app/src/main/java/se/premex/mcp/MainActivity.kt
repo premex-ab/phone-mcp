@@ -3,8 +3,10 @@ package se.premex.mcp
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -30,7 +32,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Android
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -42,6 +47,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -51,6 +57,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -462,6 +469,13 @@ fun McpServerControl(
             )
         }
 
+        item {
+            AppFunctionsDiscoveryCard(
+                isSupported = Build.VERSION.SDK_INT >= 36,
+                isFullBuild = BuildConfig.FLAVOR == "full"
+            )
+        }
+
         if (isRunning) {
             item {
                 Card(modifier = Modifier.fillMaxWidth()) {
@@ -519,6 +533,151 @@ fun McpServerControl(
             }
         }
     }
+}
+
+@Composable
+private fun AppFunctionsDiscoveryCard(
+    isSupported: Boolean,
+    isFullBuild: Boolean,
+) {
+    var showDetails by remember { mutableStateOf(false) }
+
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+        )
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Android,
+                    contentDescription = null
+                )
+                Spacer(modifier = Modifier.width(12.dp))
+                Text(
+                    text = stringResource(R.string.appfunctions_title),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.weight(1f)
+                )
+                Surface(
+                    color = MaterialTheme.colorScheme.tertiaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                    shape = CircleShape
+                ) {
+                    Text(
+                        text = stringResource(R.string.experimental),
+                        style = MaterialTheme.typography.labelMedium,
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = stringResource(
+                    if (isSupported) {
+                        R.string.appfunctions_supported_description
+                    } else {
+                        R.string.appfunctions_unsupported_description
+                    }
+                ),
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = stringResource(
+                    if (isFullBuild) {
+                        R.string.appfunctions_capabilities_full
+                    } else {
+                        R.string.appfunctions_capabilities_play
+                    }
+                ),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSecondaryContainer
+            )
+            TextButton(
+                onClick = { showDetails = true },
+                modifier = Modifier.align(Alignment.End)
+            ) {
+                Text(stringResource(R.string.how_appfunctions_work))
+            }
+        }
+    }
+
+    if (showDetails) {
+        AppFunctionsInfoDialog(
+            isSupported = isSupported,
+            isFullBuild = isFullBuild,
+            onDismiss = { showDetails = false }
+        )
+    }
+}
+
+@Composable
+private fun AppFunctionsInfoDialog(
+    isSupported: Boolean,
+    isFullBuild: Boolean,
+    onDismiss: () -> Unit,
+) {
+    val context = LocalContext.current
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.appfunctions_title)) },
+        text = {
+            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                Text(
+                    text = stringResource(
+                        if (isSupported) {
+                            R.string.appfunctions_info_available
+                        } else {
+                            R.string.appfunctions_info_unavailable
+                        }
+                    )
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = stringResource(
+                        if (isFullBuild) {
+                            R.string.appfunctions_capabilities_full
+                        } else {
+                            R.string.appfunctions_capabilities_play
+                        }
+                    ),
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(stringResource(R.string.appfunctions_info_security))
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(stringResource(R.string.appfunctions_info_preview))
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.close))
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = {
+                    context.startActivity(
+                        Intent(
+                            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                            Uri.parse("package:${context.packageName}")
+                        )
+                    )
+                }
+            ) {
+                Text(stringResource(R.string.manage_permissions))
+            }
+        }
+    )
 }
 
 /**

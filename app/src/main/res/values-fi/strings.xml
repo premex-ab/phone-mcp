@@ -1,5 +1,18 @@
 <resources>
     <string name="appfunctions_app_description">Käytä valtuutettuja laitteen avustajia viestien valmistelemiseen tai lähettämiseen, yhteystietojen hakemiseen ja valokuvien ottamiseen.</string>
+    <string name="appfunctions_title">Laitteen avustajat</string>
+    <string name="experimental">Kokeellinen</string>
+    <string name="appfunctions_supported_description">Yhteensopivat Android-avustajat voivat käyttää valittuja Phone MCP -toimintoja suoraan ilman MCP-palvelimen käynnistämistä.</string>
+    <string name="appfunctions_unsupported_description">Avustajan suora käyttö vaatii Android 16:n tai uudemman. MCP-palvelimesi toimii edelleen normaalisti.</string>
+    <string name="appfunctions_capabilities_play">Yhteystiedot • Kamera • SMS-luonnokset</string>
+    <string name="appfunctions_capabilities_full">Yhteystiedot • Kamera • SMS-luonnokset • Suora SMS</string>
+    <string name="how_appfunctions_work">Näin se toimii</string>
+    <string name="appfunctions_info_available">Android AppFunctions antaa yhteensopivien, valtuutettujen avustajien käyttää näitä toimintoja paikallisesti tässä puhelimessa.</string>
+    <string name="appfunctions_info_unavailable">Tämä puhelin ei tue Android AppFunctions -toimintoja. Android 16 tai uudempi vaaditaan.</string>
+    <string name="appfunctions_info_security">Android päättää, mitkä avustajat ovat valtuutettuja. Nämä kutsut eivät käytä MCP-palvelimen tunnistetta tai työkalukytkimiä. Yhteystietojen, Kameran, Ilmoitusten ja SMS:n käyttöoikeudet ovat edelleen voimassa. Valmisteltu SMS jää aina tarkistettavaksi ja lähetettäväksi; suora SMS lähetetään heti ja sisältyy vain Full-versioon.</string>
+    <string name="appfunctions_info_preview">Avustajien tuki on Androidin kokeellisen esikatselun aikana rajallinen, joten saatavuus riippuu laitteesta, avustajasta ja tilistä.</string>
+    <string name="manage_permissions">Hallinnoi käyttöoikeuksia</string>
+    <string name="close">Sulje</string>
     <string name="server_settings_help_text">• 0.0.0.0: Palvelin kuuntelee kaikkia verkkoliitäntöjä (suositus)\n• 127.0.0.1: Palvelin on käytettävissä vain tältä laitteelta (vain paikallinen)\n• Portti: Vaihda palvelimen porttia, jos 3001 on jo käytössä\n• Asetukset tulevat voimaan, kun palvelin käynnistetään uudelleen</string>
     <string name="configuration_info">Määritystiedot</string>
     <string name="valid_port_range_1_65535">Kelvollinen porttialue: 1–65535</string>

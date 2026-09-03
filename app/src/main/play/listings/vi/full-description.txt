@@ -39,3 +39,7 @@ Mã nguồn mở
 Ứng dụng và giao thức đường hầm là mã nguồn mở trên GitHub — hãy tự kiểm tra chính xác những gì rời khỏi điện thoại của bạn: github.com/premex-ab/phone-mcp
 
 Được tạo ra tại Thụy Điển bởi Premex.
+
+Trợ lý trên thiết bị (thử nghiệm)
+
+Trên Android 16 trở lên, trợ lý tương thích có thể dùng trực tiếp một số tác vụ Phone MCP thông qua Android AppFunctions mà không cần kết nối máy chủ MCP. Trợ lý có thể tìm kiếm danh bạ, chụp ảnh hoặc soạn SMS để bạn xem lại, trong khi các quyền Android thông thường vẫn được áp dụng. Hỗ trợ trợ lý hiện bị giới hạn trong giai đoạn xem trước thử nghiệm của Android và phụ thuộc vào thiết bị, trợ lý cùng tài khoản của bạn.

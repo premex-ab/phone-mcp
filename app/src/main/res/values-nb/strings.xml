@@ -1,5 +1,18 @@
 <resources>
     <string name="appfunctions_app_description">Bruk godkjente assistenter på enheten til å klargjøre eller sende meldinger, søke i kontakter og ta bilder.</string>
+    <string name="appfunctions_title">Assistenter på enheten</string>
+    <string name="experimental">Eksperimentell</string>
+    <string name="appfunctions_supported_description">Kompatible Android-assistenter kan bruke utvalgte Phone MCP-handlinger direkte uten å starte MCP-serveren.</string>
+    <string name="appfunctions_unsupported_description">Direkte assistenttilgang krever Android 16 eller nyere. MCP-serveren fortsetter å fungere normalt.</string>
+    <string name="appfunctions_capabilities_play">Kontakter • Kamera • SMS-utkast</string>
+    <string name="appfunctions_capabilities_full">Kontakter • Kamera • SMS-utkast • Direkte SMS</string>
+    <string name="how_appfunctions_work">Slik fungerer det</string>
+    <string name="appfunctions_info_available">Android AppFunctions lar kompatible, godkjente assistenter bruke disse handlingene lokalt på telefonen.</string>
+    <string name="appfunctions_info_unavailable">Denne telefonen støtter ikke Android AppFunctions. Android 16 eller nyere kreves.</string>
+    <string name="appfunctions_info_security">Android bestemmer hvilke assistenter som er godkjent. Disse kallene bruker ikke MCP-serverens token eller verktøybrytere. Tillatelser for Kontakter, Kamera, Varsler og SMS gjelder fortsatt. En klargjort SMS venter alltid på at du skal kontrollere og sende den; Direkte SMS sendes umiddelbart og finnes bare i Full-versjonen.</string>
+    <string name="appfunctions_info_preview">Assistentstøtten er begrenset under Androids eksperimentelle forhåndsvisning, så tilgjengeligheten avhenger av enhet, assistent og konto.</string>
+    <string name="manage_permissions">Administrer tillatelser</string>
+    <string name="close">Lukk</string>
     <string name="server_settings_help_text">• 0.0.0.0: Serveren lytter på alle nettverksgrensesnitt (anbefales)\n• 127.0.0.1: Serveren kan bare nås fra denne enheten (kun lokalt)\n• Port: Bytt serverport hvis 3001 allerede er i bruk\n• Innstillingene trer i kraft når serveren startes på nytt</string>
     <string name="configuration_info">Konfigurasjonsinfo</string>
     <string name="valid_port_range_1_65535">Gyldig portområde: 1–65535</string>

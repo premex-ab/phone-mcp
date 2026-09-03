@@ -1,5 +1,18 @@
 <resources>
     <string name="appfunctions_app_description">Use authorized on-device assistants to prepare or send messages, search contacts, and take photos.</string>
+    <string name="appfunctions_title">On-device assistants</string>
+    <string name="experimental">Experimental</string>
+    <string name="appfunctions_supported_description">Compatible Android assistants can use selected Phone MCP actions directly, without starting the MCP server.</string>
+    <string name="appfunctions_unsupported_description">Direct assistant access requires Android 16 or newer. Your MCP server continues to work normally.</string>
+    <string name="appfunctions_capabilities_play">Contacts • Camera • SMS drafts</string>
+    <string name="appfunctions_capabilities_full">Contacts • Camera • SMS drafts • Direct SMS</string>
+    <string name="how_appfunctions_work">How it works</string>
+    <string name="appfunctions_info_available">Android AppFunctions let compatible, authorized assistants use these actions locally on this phone.</string>
+    <string name="appfunctions_info_unavailable">This phone does not support Android AppFunctions. They require Android 16 or newer.</string>
+    <string name="appfunctions_info_security">Android decides which assistants are authorized. These calls do not use the MCP server token or its tool switches. Contacts, Camera, Notifications, and SMS permissions still apply. Preparing an SMS always leaves it for you to review and send; Direct SMS sends immediately and is only included in the Full build.</string>
+    <string name="appfunctions_info_preview">Assistant support is currently limited during Android’s experimental preview, so availability depends on your device, assistant, and account.</string>
+    <string name="manage_permissions">Manage permissions</string>
+    <string name="close">Close</string>
     <string name="app_name" translatable="false">MCP server</string>
     <string name="server_settings_help_text">• 0.0.0.0: Server listens on all IPv4 network interfaces\n• Select a named interface to limit access to that address (for example, a VPN)\n• 127.0.0.1: Server only accessible from this device\n• Settings take effect after restarting the server</string>
     <string name="configuration_info">Configuration Info</string>

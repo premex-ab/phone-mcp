@@ -39,3 +39,7 @@ Bygget for personvern
 Appen og tunnelprotokollen er åpen kildekode på GitHub — se nøyaktig hva som forlater telefonen din: github.com/premex-ab/phone-mcp
 
 Utviklet i Sverige av Premex.
+
+Assistenter på enheten (eksperimentell)
+
+På Android 16 og nyere kan kompatible assistenter bruke utvalgte Phone MCP-handlinger direkte via Android AppFunctions — uten tilkobling til MCP-serveren. Søk i kontakter, ta et bilde eller klargjør en SMS for gjennomgang, mens de vanlige Android-tillatelsene fortsatt gjelder. Assistentstøtten er begrenset under Androids eksperimentelle forhåndsvisning og avhenger av enhet, assistent og konto.

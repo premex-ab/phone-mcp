@@ -1,5 +1,18 @@
 <resources>
     <string name="appfunctions_app_description">Gebruik geautoriseerde assistenten op het apparaat om berichten voor te bereiden of te verzenden, contacten te zoeken en foto’s te maken.</string>
+    <string name="appfunctions_title">Assistenten op het apparaat</string>
+    <string name="experimental">Experimenteel</string>
+    <string name="appfunctions_supported_description">Compatibele Android-assistenten kunnen geselecteerde Phone MCP-acties rechtstreeks gebruiken zonder de MCP-server te starten.</string>
+    <string name="appfunctions_unsupported_description">Directe assistenttoegang vereist Android 16 of nieuwer. Je MCP-server blijft normaal werken.</string>
+    <string name="appfunctions_capabilities_play">Contacten • Camera • Sms-concepten</string>
+    <string name="appfunctions_capabilities_full">Contacten • Camera • Sms-concepten • Directe sms</string>
+    <string name="how_appfunctions_work">Zo werkt het</string>
+    <string name="appfunctions_info_available">Met Android AppFunctions kunnen compatibele, geautoriseerde assistenten deze acties lokaal op deze telefoon gebruiken.</string>
+    <string name="appfunctions_info_unavailable">Deze telefoon ondersteunt Android AppFunctions niet. Android 16 of nieuwer is vereist.</string>
+    <string name="appfunctions_info_security">Android bepaalt welke assistenten geautoriseerd zijn. Deze oproepen gebruiken niet het token van de MCP-server of de gereedschapsschakelaars. Machtigingen voor Contacten, Camera, Meldingen en Sms blijven van toepassing. Een voorbereide sms wacht altijd op jouw controle en verzending; Directe sms wordt onmiddellijk verzonden en is alleen opgenomen in de Full-versie.</string>
+    <string name="appfunctions_info_preview">Assistentondersteuning is beperkt tijdens de experimentele Android-preview. Beschikbaarheid hangt daarom af van apparaat, assistent en account.</string>
+    <string name="manage_permissions">Machtigingen beheren</string>
+    <string name="close">Sluiten</string>
     <string name="server_settings_help_text">• 0.0.0.0: De server luistert op alle netwerkinterfaces (aanbevolen)\n• 127.0.0.1: De server is alleen bereikbaar vanaf dit apparaat (alleen lokaal)\n• Poort: Wijzig de serverpoort als 3001 al in gebruik is\n• De instellingen worden van kracht nadat de server opnieuw is gestart</string>
     <string name="configuration_info">Configuratie-info</string>
     <string name="valid_port_range_1_65535">Geldig poortbereik: 1–65535</string>

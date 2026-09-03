@@ -17,6 +17,10 @@ Local network
 
 On your own Wi-Fi, your AI connects directly to the phone. No cloud, no subscription, no limits. This will always be free.
 
+On-device assistants (experimental)
+
+On Android 16 and newer, compatible assistants can use selected Phone MCP actions directly through Android AppFunctions — no MCP server connection needed. Search contacts, take a photo or prepare an SMS for review while normal Android permissions continue to apply. Assistant support is currently limited during Android's experimental preview and depends on your device, assistant and account.
+
 What your AI can do
 
 • Files — browse and read photos, downloads and documents

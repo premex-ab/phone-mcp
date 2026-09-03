@@ -31,6 +31,10 @@ system, a user can make requests such as:
 The exact wording and availability depend on the assistant. During the experimental preview,
 ADB is the reliable way to verify the integration.
 
+Phone MCP shows an **On-device assistants** card on its home screen. Open **How it works** to see
+whether the phone supports AppFunctions, which actions the installed flavor publishes, how
+authorization differs from the MCP server, and a shortcut to Android's permission settings.
+
 ## Permissions and trust model
 
 AppFunction calls do **not** pass through Phone MCP's SSE server. Consequently, the MCP bearer

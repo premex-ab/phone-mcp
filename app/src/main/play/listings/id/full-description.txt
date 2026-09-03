@@ -39,3 +39,7 @@ Sumber terbuka
 Aplikasi dan protokol terowongannya bersumber terbuka di GitHub — audit sendiri apa saja yang keluar dari ponsel Anda: github.com/premex-ab/phone-mcp
 
 Dibuat di Swedia oleh Premex.
+
+Asisten di perangkat (eksperimental)
+
+Di Android 16 dan yang lebih baru, asisten yang kompatibel dapat menggunakan tindakan Phone MCP tertentu secara langsung melalui Android AppFunctions — tanpa koneksi ke server MCP. Asisten dapat mencari kontak, mengambil foto, atau menyiapkan SMS untuk ditinjau, sementara izin Android biasa tetap berlaku. Dukungan asisten masih terbatas selama pratinjau eksperimental Android dan bergantung pada perangkat, asisten, serta akun Anda.
