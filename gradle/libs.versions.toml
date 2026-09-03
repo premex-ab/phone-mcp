@@ -1,7 +1,7 @@
 [versions]
 agp = "9.2.1"
 billing = "9.1.0"
-datastorePreferences = "1.2.0"
+datastorePreferences = "1.2.1"
 kotlin = "2.4.10"
 coreKtx = "1.17.0"
 junit = "4.13.2"
