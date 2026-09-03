@@ -33,3 +33,10 @@
 # Keep Crashlytics
 -keep class com.google.firebase.crashlytics.** { *; }
 -keep class com.google.firebase.analytics.** { *; }
+
+# AppSearch creates generated document factories by reflection. Its consumer
+# rules keep the classes, but AppFunctions 1.0.0-alpha09 also needs their
+# public no-argument constructors to survive R8 optimization.
+-keepclassmembers class ** implements androidx.appsearch.app.DocumentClassFactory {
+    public <init>();
+}
