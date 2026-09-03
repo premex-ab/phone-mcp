@@ -1,4 +1,5 @@
 <resources>
+    <string name="appfunctions_app_description">Sử dụng trợ lý được ủy quyền trên thiết bị để soạn hoặc gửi tin nhắn, tìm kiếm danh bạ và chụp ảnh.</string>
     <string name="server_settings_help_text">• 0.0.0.0: Máy chủ lắng nghe trên tất cả giao diện mạng (khuyến nghị)\n• 127.0.0.1: Máy chủ chỉ truy cập được từ thiết bị này (chỉ cục bộ)\n• Cổng: Đổi cổng máy chủ nếu 3001 đã được sử dụng\n• Cài đặt có hiệu lực sau khi khởi động lại máy chủ</string>
     <string name="configuration_info">Thông tin cấu hình</string>
     <string name="valid_port_range_1_65535">Phạm vi cổng hợp lệ: 1 - 65535</string>

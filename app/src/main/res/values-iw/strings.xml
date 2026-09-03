@@ -1,4 +1,5 @@
 <resources>
+    <string name="appfunctions_app_description">אפשר לעוזרים מורשים במכשיר להכין או לשלוח הודעות, לחפש אנשי קשר ולצלם תמונות.</string>
     <string name="server_settings_help_text">• 0.0.0.0: השרת מאזין בכל ממשקי הרשת (מומלץ)\n• 127.0.0.1: השרת נגיש רק מהמכשיר הזה (מקומי בלבד)\n• פורט: יש לשנות את פורט השרת אם 3001 כבר בשימוש\n• ההגדרות נכנסות לתוקף לאחר הפעלה מחדש של השרת</string>
     <string name="configuration_info">פרטי תצורה</string>
     <string name="valid_port_range_1_65535">טווח פורטים חוקי: 1–65535</string>

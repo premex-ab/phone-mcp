@@ -1,4 +1,5 @@
 <resources>
+    <string name="appfunctions_app_description">Use assistentes autorizados no dispositivo para preparar ou enviar mensagens, pesquisar contatos e tirar fotos.</string>
     <string name="server_settings_help_text">• 0.0.0.0: o servidor escuta em todas as interfaces de rede (recomendado)\n• 127.0.0.1: o servidor só é acessível a partir deste dispositivo (apenas local)\n• Porta: mude a porta do servidor se a 3001 já estiver em uso\n• As configurações entram em vigor após reiniciar o servidor</string>
     <string name="configuration_info">Informações de configuração</string>
     <string name="valid_port_range_1_65535">Intervalo de portas válido: 1–65535</string>

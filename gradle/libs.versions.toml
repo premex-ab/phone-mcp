@@ -20,12 +20,13 @@ hiltComposeVersion = "1.3.0"
 ksp = "2.3.11"
 updateCompose = "1.3.1"
 cameraxVersion = "1.5.2"
+androidxAppfunctions = "1.0.0-alpha09"
 lifecycleProcess = "2.10.0"
 playPublisher = "4.1.1"
-androidTools = "31.13.1"
-firebaseCrashlyticsPlugin = "3.0.6"
+androidTools = "32.2.1"
+firebaseCrashlyticsPlugin = "3.0.7"
 firebasePerfPlugin = "2.0.2"
-googleServicesPlugin = "4.4.2"
+googleServicesPlugin = "4.4.4"
 uiTestJunit4 = "1.6.12"
 truth = "1.4.5"
 androidxLint = "31.0.0-alpha03"
@@ -79,6 +80,9 @@ androidx-camera-camera2 = { group = "androidx.camera", name = "camera-camera2", 
 androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraxVersion" }
 androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraxVersion" }
 androidx-camera-extensions = { group = "androidx.camera", name = "camera-extensions", version.ref = "cameraxVersion" }
+androidx-appfunctions = { group = "androidx.appfunctions", name = "appfunctions", version.ref = "androidxAppfunctions" }
+androidx-appfunctions-service = { group = "androidx.appfunctions", name = "appfunctions-service", version.ref = "androidxAppfunctions" }
+androidx-appfunctions-compiler = { group = "androidx.appfunctions", name = "appfunctions-compiler", version.ref = "androidxAppfunctions" }
 kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0"
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycleProcess" }
 org-jetbrains-kotlinx-kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0"
@@ -122,6 +126,7 @@ mcp-android-feature-impl = { id = "mcp.android.feature.impl" }
 mcp-android-feature-api = { id = "mcp.android.feature.api" }
 mcp-android-library = { id = "mcp.android.library" }
 mcp-android-tool = { id = "mcp.android.tool" }
+mcp-android-appfunctions = { id = "mcp.android.appfunctions" }
 mcp-android-library-compose = { id = "mcp.android.library.compose" }
 mcp-android-library-jacoco = { id = "mcp.android.library.jacoco" }
 mcp-android-lint = { id = "mcp.android.lint" }

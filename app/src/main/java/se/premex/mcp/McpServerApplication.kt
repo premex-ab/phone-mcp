@@ -7,13 +7,26 @@ import dagger.hilt.android.HiltAndroidApp
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import androidx.appfunctions.service.AppFunctionConfiguration
+import se.premex.mcp.appfunctions.service.AppFunctionFactoryRegistration
+import javax.inject.Inject
 
 @HiltAndroidApp
-class McpServerApplication : Application() {
+class McpServerApplication : Application(), AppFunctionConfiguration.Provider {
     companion object {
         private const val TAG = "McpServerApplication"
         const val CHANNEL_ID = "mcp_server_channel"
     }
+
+    @Inject
+    lateinit var appFunctionFactoryRegistrations: Set<@JvmSuppressWildcards AppFunctionFactoryRegistration>
+
+    override val appFunctionConfiguration: AppFunctionConfiguration
+        get() = AppFunctionConfiguration.Builder()
+            .also { builder ->
+                appFunctionFactoryRegistrations.forEach { it.register(builder) }
+            }
+            .build()
 
     override fun onCreate() {
         super.onCreate()

@@ -16,6 +16,8 @@ import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.smsintent.SmsIntentSender
 import se.premex.mcp.smsintent.SmsIntentSenderImpl
 import se.premex.mcp.smsintent.appendSmsIntentTools
+import se.premex.mcp.smsintent.appfunctions.SmsIntentAppFunctions
+import se.premex.mcp.appfunctions.service.AppFunctionFactoryRegistration
 import javax.inject.Singleton
 
 class SmsIntentTool(val smsIntentSender: SmsIntentSender) : McpTool {
@@ -65,6 +67,15 @@ object SmsIntentToolModule {
     @Singleton
     fun provideSmsIntentSender(@ApplicationContext context: Context): SmsIntentSender {
         return SmsIntentSenderImpl(context)
+    }
+
+    @Provides
+    @Singleton
+    @IntoSet
+    fun provideSmsIntentAppFunctionFactory(
+        functions: SmsIntentAppFunctions,
+    ): AppFunctionFactoryRegistration = AppFunctionFactoryRegistration { builder ->
+        builder.addEnclosingClassFactory(SmsIntentAppFunctions::class.java) { functions }
     }
 
 }

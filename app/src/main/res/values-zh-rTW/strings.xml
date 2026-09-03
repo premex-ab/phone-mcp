@@ -1,4 +1,5 @@
 <resources>
+    <string name="appfunctions_app_description">使用獲授權的裝置端助理準備或傳送訊息、搜尋聯絡人以及拍攝相片。</string>
     <string name="server_settings_help_text">• 0.0.0.0: 伺服器在所有網路介面上監聽（建議）\n• 127.0.0.1: 伺服器僅可從此裝置存取（僅限本機）\n• 連接埠: 如果 3001 已被使用，請變更伺服器連接埠\n• 設定將在伺服器重新啟動後生效</string>
     <string name="configuration_info">設定資訊</string>
     <string name="valid_port_range_1_65535">有效連接埠範圍: 1 - 65535</string>

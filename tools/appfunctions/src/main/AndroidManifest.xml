@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
+        AppFunctions discovery uses AppFunctionManager (API 36+).
+        EXECUTE_APP_FUNCTIONS may not be granted to third-party apps for all
+        target functions — at runtime we surface per-function permission errors
+        in the tool's CallToolResult. No build-time permission declaration is
+        required by the platform, but we list it here for forward-compat with
+        future Android releases.
+    -->
+    <uses-permission android:name="android.permission.EXECUTE_APP_FUNCTIONS" />
+
+    <!--
+        Package visibility (Android 11+): without this declaration,
+        observeAppFunctions silently filters out functions from apps this
+        app cannot see, so third-party AppFunction providers would never
+        be discovered.
+    -->
+    <queries>
+        <intent>
+            <action android:name="android.app.appfunctions.AppFunctionService" />
+        </intent>
+    </queries>
+</manifest>

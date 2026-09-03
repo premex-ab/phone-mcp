@@ -1,4 +1,5 @@
 <resources>
+    <string name="appfunctions_app_description">Use authorized on-device assistants to prepare or send messages, search contacts, and take photos.</string>
     <string name="app_name" translatable="false">MCP server</string>
     <string name="server_settings_help_text">• 0.0.0.0: Server listens on all IPv4 network interfaces\n• Select a named interface to limit access to that address (for example, a VPN)\n• 127.0.0.1: Server only accessible from this device\n• Settings take effect after restarting the server</string>
     <string name="configuration_info">Configuration Info</string>

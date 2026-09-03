@@ -12,6 +12,8 @@ import se.premex.mcp.camera.repositories.CameraRepository
 import se.premex.mcp.camera.repositories.CameraRepositoryImpl
 import se.premex.mcp.camera.configurator.CameraToolConfiguratorImpl
 import se.premex.mcp.camera.tool.CameraTool
+import se.premex.mcp.camera.appfunctions.CameraAppFunctions
+import se.premex.mcp.appfunctions.service.AppFunctionFactoryRegistration
 import javax.inject.Singleton
 
 @Module
@@ -21,9 +23,26 @@ object CameraToolModule {
     @Provides
     @Singleton
     @IntoSet
-    fun provideCameraTool(@ApplicationContext context: Context): McpTool {
-        val cameraRepository: CameraRepository = CameraRepositoryImpl(context)
-        val cameraToolConfigurator = CameraToolConfiguratorImpl(cameraRepository)
-        return CameraTool(cameraToolConfigurator)
+    fun provideCameraTool(cameraToolConfigurator: CameraToolConfiguratorImpl): McpTool =
+        CameraTool(cameraToolConfigurator)
+
+    @Provides
+    @Singleton
+    fun provideCameraRepository(@ApplicationContext context: Context): CameraRepository =
+        CameraRepositoryImpl(context)
+
+    @Provides
+    @Singleton
+    fun provideCameraToolConfigurator(
+        cameraRepository: CameraRepository,
+    ): CameraToolConfiguratorImpl = CameraToolConfiguratorImpl(cameraRepository)
+
+    @Provides
+    @Singleton
+    @IntoSet
+    fun provideCameraAppFunctionFactory(
+        functions: CameraAppFunctions,
+    ): AppFunctionFactoryRegistration = AppFunctionFactoryRegistration { builder ->
+        builder.addEnclosingClassFactory(CameraAppFunctions::class.java) { functions }
     }
 }

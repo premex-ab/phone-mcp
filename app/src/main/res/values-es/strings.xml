@@ -1,4 +1,5 @@
 <resources>
+    <string name="appfunctions_app_description">Usa asistentes autorizados en el dispositivo para preparar o enviar mensajes, buscar contactos y hacer fotos.</string>
     <string name="server_settings_help_text">• 0.0.0.0: el servidor escucha en todas las interfaces de red (recomendado)\n• 127.0.0.1: el servidor solo es accesible desde este dispositivo (solo local)\n• Puerto: cambia el puerto del servidor si el 3001 ya está en uso\n• La configuración surte efecto después de reiniciar el servidor</string>
     <string name="configuration_info">Información de configuración</string>
     <string name="valid_port_range_1_65535">Rango de puertos válido: 1–65535</string>

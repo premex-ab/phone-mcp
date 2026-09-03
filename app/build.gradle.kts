@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.mcp.android.application.flavors)
     alias(libs.plugins.mcp.android.application.jacoco)
     alias(libs.plugins.mcp.android.application.firebase)
+    alias(libs.plugins.mcp.android.appfunctions)
     alias(libs.plugins.mcp.hilt)
     alias(libs.plugins.play.publisher)
 }
@@ -140,6 +141,7 @@ dependencies {
     implementation(project(":tools:contacts"))
     implementation(project(":tools:sensor"))
     implementation(project(":tools:camera"))
+    implementation(project(":tools:appfunctions"))
     implementation(project(":tools:location"))
     implementation(project(":tools:files"))
     implementation(project(":tools:externaltools"))

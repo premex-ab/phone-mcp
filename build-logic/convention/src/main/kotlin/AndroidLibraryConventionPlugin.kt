@@ -14,7 +14,7 @@ import org.gradle.kotlin.dsl.dependencies
  * Android library convention plugin.
  *
  * Provides:
- * - compileSdk = 36, minSdk = 24
+ * - compileSdk = 37, minSdk = 24
  * - jvmToolchain(21)
  * - Managed test devices
  * - Tracing support
