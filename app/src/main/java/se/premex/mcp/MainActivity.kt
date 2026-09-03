@@ -72,6 +72,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.modelcontextprotocol.kotlin.sdk.server.Server
 import se.premex.mcp.auth.AuthRepository
 import se.premex.mcp.core.tool.McpTool
+import se.premex.mcp.data.ServerConfig
 import se.premex.mcp.data.ServerPreferencesRepository
 import se.premex.mcp.di.ToolService
 import se.premex.mcp.review.ReviewPrompter
@@ -187,8 +188,13 @@ class MainActivity : ComponentActivity() {
                                     toggleService(false)
                                 }
                             },
-                            getConnectionUrl = { getConnectionUrl(serverConfig.port) },
-                            isOnWifi = { NetworkUtils.getWifiIpAddress(this@MainActivity) != null },
+                            getConnectionUrl = { getConnectionUrl(serverConfig) },
+                            isSelectedInterfaceAvailable = {
+                                serverConfig.host == "0.0.0.0" ||
+                                    serverConfig.host == "127.0.0.1" ||
+                                    NetworkUtils.getBindableNetworkAddresses()
+                                        .any { it.address == serverConfig.host }
+                            },
                             tools = toolService.tools.toList(),
                             toolEnabledStates = toolStates,
                             onToggleTool = { tool ->
@@ -302,9 +308,13 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun getConnectionUrl(port: Int): String {
-        val ipAddress = NetworkUtils.getWifiIpAddress(this) ?: "0.0.0.0"
-        return "http://$ipAddress:$port/sse"
+    private fun getConnectionUrl(serverConfig: ServerConfig): String {
+        val advertisedHost = if (serverConfig.host == "0.0.0.0") {
+            NetworkUtils.getWifiIpAddress(this) ?: serverConfig.host
+        } else {
+            serverConfig.host
+        }
+        return NetworkUtils.connectionUrl(advertisedHost, serverConfig.port)
     }
 
     // Function to handle tool toggle with warning dialog if needed
@@ -388,7 +398,7 @@ fun HomeScreen(
     toolEnabledStates: Map<String, Boolean>,
     onToggleTool: (McpTool) -> Unit,
     authToken: String = "YTpi",
-    isOnWifi: () -> Boolean = { true }
+    isSelectedInterfaceAvailable: () -> Boolean = { true }
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -415,7 +425,7 @@ fun HomeScreen(
             toolEnabledStates = toolEnabledStates,
             onToggleTool = onToggleTool,
             authToken = authToken,
-            isOnWifi = isOnWifi
+            isSelectedInterfaceAvailable = isSelectedInterfaceAvailable
         )
     }
 }
@@ -430,7 +440,7 @@ fun McpServerControl(
     toolEnabledStates: Map<String, Boolean>,
     onToggleTool: (McpTool) -> Unit,
     authToken: String = "YTpi",
-    isOnWifi: () -> Boolean = { true }
+    isSelectedInterfaceAvailable: () -> Boolean = { true }
 ) {
     val safeDrawingPadding = WindowInsets.safeDrawing.asPaddingValues()
 
@@ -459,7 +469,7 @@ fun McpServerControl(
                         ConnectionGuide(
                             connectionUrl = getConnectionUrl(),
                             authToken = authToken,
-                            isOnWifi = isOnWifi
+                            isSelectedInterfaceAvailable = isSelectedInterfaceAvailable
                         )
                     }
                 }

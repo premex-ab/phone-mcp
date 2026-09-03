@@ -1,5 +1,11 @@
 package se.premex.mcp.ui
 
+import android.net.ConnectivityManager
+import android.net.LinkProperties
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
+import android.os.Build
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,18 +37,99 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import se.premex.mcp.AddressFamily
+import se.premex.mcp.NetworkAddress
+import se.premex.mcp.NetworkUtils
 import se.premex.mcp.R
 import se.premex.mcp.data.ServerConfig
+
+private data class HostOption(
+    val host: String,
+    val label: String,
+    val detail: String
+)
+
+@Composable
+private fun rememberBindableNetworkAddresses(): List<NetworkAddress> {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    var addresses by remember { mutableStateOf(NetworkUtils.getBindableNetworkAddresses()) }
+
+    DisposableEffect(context, coroutineScope) {
+        val connectivityManager = context.applicationContext
+            .getSystemService(ConnectivityManager::class.java)
+        val networkRequest = NetworkRequest.Builder().apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                clearCapabilities()
+            } else {
+                removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED)
+                removeCapability(NetworkCapabilities.NET_CAPABILITY_TRUSTED)
+                removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN)
+            }
+        }.build()
+        var isRegistered = false
+
+        fun refreshAfter(delayMillis: Long = 0) {
+            coroutineScope.launch {
+                if (delayMillis > 0) delay(delayMillis)
+                addresses = NetworkUtils.getBindableNetworkAddresses()
+            }
+        }
+
+        val callback = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                // Link properties normally follow immediately; the delay also covers API 24–25.
+                refreshAfter(100)
+            }
+
+            override fun onLinkPropertiesChanged(
+                network: Network,
+                linkProperties: LinkProperties
+            ) {
+                refreshAfter()
+            }
+
+            override fun onLost(network: Network) {
+                // Allow NetworkInterface to reflect the removal before rescanning.
+                refreshAfter(100)
+            }
+        }
+
+        try {
+            connectivityManager.registerNetworkCallback(networkRequest, callback)
+            isRegistered = true
+        } catch (_: Exception) {
+            // Keep the initial snapshot if callbacks are unavailable on this device.
+        }
+
+        onDispose {
+            if (isRegistered) {
+                try {
+                    connectivityManager.unregisterNetworkCallback(callback)
+                } catch (_: Exception) {
+                    // The callback may already have been removed by the system.
+                }
+            }
+        }
+    }
+
+    return addresses
+}
 
 /**
  * Settings screen for configuring server host and port
@@ -54,8 +141,8 @@ fun SettingsScreen(
     onNavigateBack: () -> Unit,
     onSaveSettings: (host: String, port: Int) -> Unit
 ) {
-    var selectedHost by remember { mutableStateOf(serverConfig.host) }
-    var portInput by remember { mutableStateOf(serverConfig.port.toString()) }
+    var selectedHost by remember(serverConfig.host) { mutableStateOf(serverConfig.host) }
+    var portInput by remember(serverConfig.port) { mutableStateOf(serverConfig.port.toString()) }
     var hostDropdownExpanded by remember { mutableStateOf(false) }
 
     // Derived state for validation
@@ -63,11 +150,47 @@ fun SettingsScreen(
     val isPortValid = parsedPort != null && parsedPort in 1..65535
     val showPortError = portInput.isNotEmpty() && !isPortValid
 
-    // Predefined host options
-    val hostOptions = listOf(
-        "0.0.0.0" to stringResource(R.string.all_interfaces),
-        "127.0.0.1" to stringResource(R.string.localhost_only)
-    )
+    val networkAddresses = rememberBindableNetworkAddresses()
+    val hostOptions = buildList {
+        add(
+            HostOption(
+                host = "0.0.0.0",
+                label = stringResource(R.string.all_interfaces),
+                detail = "0.0.0.0"
+            )
+        )
+        add(
+            HostOption(
+                host = "127.0.0.1",
+                label = stringResource(R.string.localhost_only),
+                detail = "127.0.0.1"
+            )
+        )
+        networkAddresses.forEach { networkAddress ->
+            val family = when (networkAddress.addressFamily) {
+                AddressFamily.IPV4 -> stringResource(R.string.ipv4)
+                AddressFamily.IPV6 -> stringResource(R.string.ipv6)
+            }
+            add(
+                HostOption(
+                    host = networkAddress.address,
+                    label = networkAddress.interfaceLabel,
+                    detail = "${networkAddress.address} • $family"
+                )
+            )
+        }
+
+        if (none { it.host == selectedHost }) {
+            add(
+                HostOption(
+                    host = selectedHost,
+                    label = stringResource(R.string.saved_interface_unavailable),
+                    detail = selectedHost
+                )
+            )
+        }
+    }
+    val selectedOption = hostOptions.find { it.host == selectedHost }
 
     Scaffold(
         topBar = {
@@ -123,9 +246,16 @@ fun SettingsScreen(
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
-                                text = hostOptions.find { it.first == selectedHost }?.second ?: selectedHost,
+                                text = selectedOption?.label ?: selectedHost,
                                 style = MaterialTheme.typography.bodyMedium
                             )
+                            selectedOption?.let { option ->
+                                Text(
+                                    text = option.detail,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
                         }
                         Icon(
                             imageVector = if (hostDropdownExpanded) {
@@ -143,20 +273,20 @@ fun SettingsScreen(
                     onDismissRequest = { hostDropdownExpanded = false },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    hostOptions.forEach { (hostValue, hostLabel) ->
+                    hostOptions.forEach { option ->
                         DropdownMenuItem(
                             text = {
                                 Column {
-                                    Text(hostLabel, fontWeight = FontWeight.Medium)
+                                    Text(option.label, fontWeight = FontWeight.Medium)
                                     Text(
-                                        hostValue,
+                                        option.detail,
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                 }
                             },
                             onClick = {
-                                selectedHost = hostValue
+                                selectedHost = option.host
                                 hostDropdownExpanded = false
                             }
                         )

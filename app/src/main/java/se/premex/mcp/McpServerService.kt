@@ -344,10 +344,18 @@ class McpServerService : Service() {
 
             // Deliberately NO auth token here: the notification is visible on
             // the lock screen. The token lives in the app's connection guide.
-            val successMessage = when {
-                host == "127.0.0.1" -> "Server running on localhost:$port (local device only)"
-                wifiIp != null -> "Server running on $wifiIp:$port"
-                else -> "Server running on port $port"
+            val displayedHost = if (host == "0.0.0.0" && wifiIp != null) {
+                wifiIp
+            } else {
+                host
+            }
+            val displayedEndpoint = NetworkUtils.connectionUrl(displayedHost, port)
+                .removePrefix("http://")
+                .removeSuffix("/sse")
+            val successMessage = if (host == "127.0.0.1") {
+                "Server running on $displayedEndpoint (local device only)"
+            } else {
+                "Server running on $displayedEndpoint"
             }
 
             Log.i(TAG, "$LOG_PREFIX_SERVER: $successMessage")

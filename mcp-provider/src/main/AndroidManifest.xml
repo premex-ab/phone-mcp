@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <permission
-        android:name="se.premex.mcp.ACCESS_PROVIDER"
+        android:name="${applicationId}.ACCESS_PROVIDER"
         android:protectionLevel="normal" />
-    <uses-permission android:name="se.premex.mcp.ACCESS_PROVIDER" />
+    <uses-permission android:name="${applicationId}.ACCESS_PROVIDER" />
 
 
     <queries>

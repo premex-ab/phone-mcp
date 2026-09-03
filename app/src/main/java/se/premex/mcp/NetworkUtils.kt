@@ -4,8 +4,39 @@ import android.content.Context
 import android.net.wifi.WifiManager
 import android.util.Log
 import java.net.Inet4Address
+import java.net.Inet6Address
+import java.net.InetAddress
 import java.net.NetworkInterface
-import java.util.*
+import java.util.Collections
+import java.util.Locale
+
+data class NetworkAddress(
+    val interfaceName: String,
+    val interfaceDisplayName: String,
+    val address: String,
+    val addressFamily: AddressFamily
+) {
+    val interfaceLabel: String
+        get() = if (
+            interfaceDisplayName.isBlank() || interfaceDisplayName == interfaceName
+        ) {
+            interfaceName
+        } else {
+            "$interfaceDisplayName ($interfaceName)"
+        }
+}
+
+enum class AddressFamily {
+    IPV4,
+    IPV6
+}
+
+internal data class NetworkInterfaceSnapshot(
+    val name: String,
+    val displayName: String,
+    val isUp: Boolean,
+    val addresses: List<InetAddress>
+)
 
 object NetworkUtils {
     private const val TAG = "NetworkUtils"
@@ -60,5 +91,81 @@ object NetworkUtils {
         }
 
         return null
+    }
+
+    /**
+     * Returns every active, non-loopback IP address that the server can bind to.
+     * Virtual interfaces are intentionally included because Android VPNs commonly use them.
+     */
+    fun getBindableNetworkAddresses(): List<NetworkAddress> {
+        return try {
+            val snapshots = mutableListOf<NetworkInterfaceSnapshot>()
+            val interfaces = NetworkInterface.getNetworkInterfaces() ?: return emptyList()
+
+            while (interfaces.hasMoreElements()) {
+                val networkInterface = interfaces.nextElement()
+                try {
+                    snapshots += NetworkInterfaceSnapshot(
+                        name = networkInterface.name.orEmpty(),
+                        displayName = networkInterface.displayName.orEmpty(),
+                        isUp = networkInterface.isUp,
+                        addresses = Collections.list(networkInterface.inetAddresses)
+                    )
+                } catch (e: Exception) {
+                    Log.w(TAG, "Unable to inspect interface ${networkInterface.name}", e)
+                }
+            }
+
+            collectBindableNetworkAddresses(snapshots)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error enumerating network interfaces", e)
+            emptyList()
+        }
+    }
+
+    fun connectionUrl(host: String, port: Int): String {
+        val urlHost = if (host.contains(':')) {
+            "[${host.replace("%", "%25")}]"
+        } else {
+            host
+        }
+        return "http://$urlHost:$port/sse"
+    }
+
+    internal fun collectBindableNetworkAddresses(
+        interfaces: List<NetworkInterfaceSnapshot>
+    ): List<NetworkAddress> {
+        return interfaces
+            .asSequence()
+            .filter { it.isUp }
+            .flatMap { networkInterface ->
+                networkInterface.addresses.asSequence().mapNotNull { inetAddress ->
+                    if (inetAddress.isAnyLocalAddress || inetAddress.isLoopbackAddress) {
+                        return@mapNotNull null
+                    }
+
+                    val addressFamily = when (inetAddress) {
+                        is Inet4Address -> AddressFamily.IPV4
+                        is Inet6Address -> AddressFamily.IPV6
+                        else -> return@mapNotNull null
+                    }
+
+                    inetAddress.hostAddress?.let { hostAddress ->
+                        NetworkAddress(
+                            interfaceName = networkInterface.name,
+                            interfaceDisplayName = networkInterface.displayName,
+                            address = hostAddress,
+                            addressFamily = addressFamily
+                        )
+                    }
+                }
+            }
+            .distinctBy { it.interfaceName to it.address }
+            .sortedWith(
+                compareBy<NetworkAddress> { it.interfaceName }
+                    .thenBy { it.addressFamily }
+                    .thenBy { it.address }
+            )
+            .toList()
     }
 }

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">MCP server</string>
-    <string name="server_settings_help_text">• 0.0.0.0: Server listens on all network interfaces (recommended)\n• 127.0.0.1: Server only accessible from this device (local only)\n• Port: Change the server port if 3001 is already in use\n• Settings take effect after restarting the server</string>
+    <string name="server_settings_help_text">• 0.0.0.0: Server listens on all IPv4 network interfaces\n• Select a named interface to limit access to that address (for example, a VPN)\n• 127.0.0.1: Server only accessible from this device\n• Settings take effect after restarting the server</string>
     <string name="configuration_info">Configuration Info</string>
     <string name="valid_port_range_1_65535">Valid port range: 1 - 65535</string>
     <string name="server_port">Server Port</string>
@@ -8,8 +8,13 @@
     <string name="host">Host</string>
     <string name="server_host">Server Host</string>
     <string name="server_settings">Server Settings</string>
-    <string name="all_interfaces">All Interfaces</string>
+    <string name="all_interfaces">All IPv4 Interfaces</string>
     <string name="localhost_only">Localhost Only</string>
+    <string name="saved_interface_unavailable" translatable="false">Saved Address (currently unavailable)</string>
+    <string name="ipv4" translatable="false">IPv4</string>
+    <string name="ipv6" translatable="false">IPv6</string>
+    <string name="selected_interface_note" translatable="false">📶 Your computer must be able to reach the selected network interface on this phone.</string>
+    <string name="selected_interface_unavailable_warning" translatable="false">The selected network address is not currently available. Check the network connection or choose another Host in Settings.</string>
     <string name="port_number">Port Number</string>
     <string name="save_settings">Save Settings</string>
     <string name="all_permissions_are_required_to_run_the_mcp_server_service">All permissions are required to run the MCP server service</string>
