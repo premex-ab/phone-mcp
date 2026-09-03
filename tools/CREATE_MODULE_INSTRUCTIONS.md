@@ -60,7 +60,7 @@ dependencies {
 ```
 
 **Note:** The `mcp.android.tool` convention plugin automatically configures:
-- compileSdk = 36, minSdk = 24
+- compileSdk = 37, minSdk = 24
 - Kotlin JVM toolchain 21 (with foojay auto-download)
 - Hilt dependency injection (both implementation and KSP processor)
 - Core module dependency (`:core`)
