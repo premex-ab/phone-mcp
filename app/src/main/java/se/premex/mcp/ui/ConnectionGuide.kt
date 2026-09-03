@@ -95,7 +95,7 @@ fun ConnectionGuide(
     connectionUrl: String,
     authToken: String,
     modifier: Modifier = Modifier,
-    isOnWifi: () -> Boolean = { true },
+    isSelectedInterfaceAvailable: () -> Boolean = { true },
 ) {
     var mode by rememberSaveable { mutableStateOf(ConnectionMode.REMOTE) }
 
@@ -111,7 +111,7 @@ fun ConnectionGuide(
         // Remote access is Play-exclusive (its subscription can only be sold
         // through Play Billing) — sideloaded builds are local-network only.
         if (!BuildConfig.REMOTE_ACCESS) {
-            LocalGuide(connectionUrl, authToken, isOnWifi)
+            LocalGuide(connectionUrl, authToken, isSelectedInterfaceAvailable)
             return@Column
         }
 
@@ -133,10 +133,14 @@ fun ConnectionGuide(
         when (mode) {
             // hiltViewModel is unavailable when rendering @Preview compositions
             ConnectionMode.REMOTE ->
-                if (LocalInspectionMode.current) LocalGuide(connectionUrl, authToken, isOnWifi)
+                if (LocalInspectionMode.current) {
+                    LocalGuide(connectionUrl, authToken, isSelectedInterfaceAvailable)
+                }
                 else RemoteGuide()
 
-            ConnectionMode.LOCAL -> LocalGuide(connectionUrl, authToken, isOnWifi)
+            ConnectionMode.LOCAL -> {
+                LocalGuide(connectionUrl, authToken, isSelectedInterfaceAvailable)
+            }
         }
 
     }
@@ -465,7 +469,7 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
 private fun LocalGuide(
     connectionUrl: String,
     authToken: String,
-    isOnWifi: () -> Boolean = { true },
+    isSelectedInterfaceAvailable: () -> Boolean = { true },
 ) {
     val context = LocalContext.current
     var selectedClient by rememberSaveable { mutableStateOf(McpClient.CLAUDE_CODE) }
@@ -505,20 +509,26 @@ private fun LocalGuide(
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = stringResource(R.string.wifi_note),
+            text = stringResource(R.string.selected_interface_note),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        ConnectionDiagnostics(connectionUrl = connectionUrl, isOnWifi = isOnWifi)
+        ConnectionDiagnostics(
+            connectionUrl = connectionUrl,
+            isSelectedInterfaceAvailable = isSelectedInterfaceAvailable
+        )
     }
 }
 
-/** Local-only: ping the server's /health endpoint from this phone's Wi-Fi address. */
+/** Local-only: ping the server's /health endpoint through its selected interface. */
 @Composable
-private fun ConnectionDiagnostics(connectionUrl: String, isOnWifi: () -> Boolean) {
+private fun ConnectionDiagnostics(
+    connectionUrl: String,
+    isSelectedInterfaceAvailable: () -> Boolean
+) {
     val scope = rememberCoroutineScope()
     var testing by remember { mutableStateOf(false) }
     var testSucceeded by remember { mutableStateOf<Boolean?>(null) }
@@ -526,9 +536,9 @@ private fun ConnectionDiagnostics(connectionUrl: String, isOnWifi: () -> Boolean
     val healthUrl = connectionUrl.removeSuffix("/sse") + "/health"
 
     Column(modifier = Modifier.fillMaxWidth()) {
-        if (!isOnWifi()) {
+        if (!isSelectedInterfaceAvailable()) {
             Text(
-                text = stringResource(R.string.not_on_wifi_warning),
+                text = stringResource(R.string.selected_interface_unavailable_warning),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.error
             )
