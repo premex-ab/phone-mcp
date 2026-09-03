@@ -79,7 +79,7 @@ jobs:
         serviceAccountJson: app/byggappen-dev-b151ea2d4990.json
         packageName: se.premex.mcp
         releaseFiles: app/build/outputs/bundle/playRelease/app-play-release.aab
-        track: internal
+        tracks: internal
 
     - name: Upload Release Assets to GitHub
       uses: softprops/action-gh-release@v3
@@ -113,4 +113,3 @@ jobs:
           app/build/outputs/mapping/playRelease/
           app/build/outputs/mapping/fullRelease/
         retention-days: 30
-
