@@ -29,7 +29,7 @@ class SmsIntentAppFunctions @Inject constructor(
      * @throws AppFunctionPermissionRequiredException If notifications are required but unavailable.
      * @throws AppFunctionInvalidArgumentException If a required value is blank.
      */
-    @AppFunction(isDescribedByKDoc = true)
+    @AppFunction(isDescribedByKDoc = true, isEnabled = false)
     suspend fun prepareSms(
         appFunctionContext: AppFunctionContext,
         phoneNumber: String,

@@ -1,5 +1,19 @@
 <resources>
     <string name="appfunctions_app_description">Usa gli assistenti autorizzati sul dispositivo per preparare o inviare messaggi, cercare contatti e scattare foto.</string>
+    <string name="appfunctions_title">Assistenti sul dispositivo</string>
+    <string name="experimental">Sperimentale</string>
+    <string name="appfunctions_supported_description">Gli assistenti Android compatibili possono usare direttamente determinate azioni di Phone MCP, senza avviare il server MCP.</string>
+    <string name="appfunctions_unsupported_description">L’accesso diretto dell’assistente richiede Android 16 o versioni successive. Il server MCP continuerà a funzionare normalmente.</string>
+    <string name="appfunctions_capabilities_play">Contatti • Fotocamera • Bozze SMS</string>
+    <string name="appfunctions_capabilities_full">Contatti • Fotocamera • Bozze SMS • SMS diretto</string>
+    <string name="appfunctions_switches_hint">Gli interruttori degli strumenti controllano sia l’accesso MCP sia quello degli assistenti.</string>
+    <string name="how_appfunctions_work">Come funziona</string>
+    <string name="appfunctions_info_available">Android AppFunctions consente agli assistenti compatibili e autorizzati di usare queste azioni localmente sul telefono.</string>
+    <string name="appfunctions_info_unavailable">Questo telefono non supporta Android AppFunctions. È richiesto Android 16 o versione successiva.</string>
+    <string name="appfunctions_info_security">Android decide quali assistenti sono autorizzati. Queste chiamate non usano il token del server MCP. Gli interruttori controllano l’accesso tramite MCP e AppFunctions e le autorizzazioni Android restano valide. Un SMS preparato attende sempre la tua revisione e l’invio; l’SMS diretto viene inviato immediatamente ed è incluso solo nella versione Full.</string>
+    <string name="appfunctions_info_preview">Il supporto degli assistenti è limitato durante l’anteprima sperimentale di Android, quindi la disponibilità dipende da dispositivo, assistente e account.</string>
+    <string name="manage_permissions">Gestisci autorizzazioni</string>
+    <string name="close">Chiudi</string>
     <string name="server_settings_help_text">• 0.0.0.0: il server è in ascolto su tutte le interfacce di rete (consigliato)\n• 127.0.0.1: il server è accessibile solo da questo dispositivo (solo locale)\n• Porta: cambia la porta del server se la 3001 è già in uso\n• Le impostazioni hanno effetto dopo il riavvio del server</string>
     <string name="configuration_info">Info di configurazione</string>
     <string name="valid_port_range_1_65535">Intervallo di porte valido: 1–65535</string>
@@ -70,7 +84,7 @@
     <string name="remote_step_3">3. Tocca il pulsante e digita il codice nel browser:</string>
     <string name="show_pairing_code">Mostra codice di associazione</string>
     <string name="pairing_code_hint">Valido per 10 minuti, monouso. I client già associati si riconnettono automaticamente — non serve un nuovo codice.</string>
-    <string name="tools_connect_note">Le modifiche si applicano alla prossima connessione di un client.</string>
+    <string name="tools_connect_note">Le modifiche si applicano subito agli assistenti e alla prossima connessione di un client MCP.</string>
     <string name="not_on_wifi_warning">Non connesso al Wi-Fi. Il server è raggiungibile solo da dispositivi sulla stessa rete Wi-Fi — connetti prima questo telefono al Wi-Fi.</string>
     <string name="test_connection">Testa connessione</string>
     <string name="testing_connection">Test della connessione…</string>

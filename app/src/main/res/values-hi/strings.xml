@@ -1,5 +1,19 @@
 <resources>
     <string name="appfunctions_app_description">संदेश तैयार करने या भेजने, संपर्क खोजने और फ़ोटो लेने के लिए अधिकृत ऑन-डिवाइस सहायकों का उपयोग करें।</string>
+    <string name="appfunctions_title">डिवाइस पर सहायक</string>
+    <string name="experimental">प्रायोगिक</string>
+    <string name="appfunctions_supported_description">संगत Android सहायक MCP सर्वर शुरू किए बिना चुनी हुई Phone MCP कार्रवाइयों का सीधे उपयोग कर सकते हैं।</string>
+    <string name="appfunctions_unsupported_description">सहायक की सीधी पहुँच के लिए Android 16 या नया संस्करण चाहिए। आपका MCP सर्वर सामान्य रूप से काम करता रहेगा।</string>
+    <string name="appfunctions_capabilities_play">संपर्क • कैमरा • SMS ड्राफ़्ट</string>
+    <string name="appfunctions_capabilities_full">संपर्क • कैमरा • SMS ड्राफ़्ट • सीधा SMS</string>
+    <string name="appfunctions_switches_hint">नीचे दिए गए टूल स्विच MCP और सहायक, दोनों की पहुँच नियंत्रित करते हैं।</string>
+    <string name="how_appfunctions_work">यह कैसे काम करता है</string>
+    <string name="appfunctions_info_available">Android AppFunctions संगत और अधिकृत सहायकों को इस फ़ोन पर स्थानीय रूप से इन कार्रवाइयों का उपयोग करने देता है।</string>
+    <string name="appfunctions_info_unavailable">यह फ़ोन Android AppFunctions का समर्थन नहीं करता। Android 16 या नया संस्करण आवश्यक है।</string>
+    <string name="appfunctions_info_security">Android तय करता है कि कौन से सहायक अधिकृत हैं। ये कॉल MCP सर्वर टोकन का उपयोग नहीं करतीं। टूल स्विच MCP और AppFunctions दोनों की पहुँच नियंत्रित करते हैं और Android अनुमतियाँ लागू रहती हैं। तैयार किया गया SMS हमेशा आपकी समीक्षा और भेजने के लिए रहता है; सीधा SMS तुरंत भेजा जाता है और केवल Full बिल्ड में शामिल है।</string>
+    <string name="appfunctions_info_preview">Android के प्रायोगिक पूर्वावलोकन के दौरान सहायक समर्थन सीमित है, इसलिए उपलब्धता आपके डिवाइस, सहायक और खाते पर निर्भर करती है।</string>
+    <string name="manage_permissions">अनुमतियाँ प्रबंधित करें</string>
+    <string name="close">बंद करें</string>
     <string name="server_settings_help_text">• 0.0.0.0: सर्वर सभी नेटवर्क इंटरफ़ेस पर सुनता है (अनुशंसित)\n• 127.0.0.1: सर्वर केवल इसी डिवाइस से एक्सेस किया जा सकता है (सिर्फ़ लोकल)\n• पोर्ट: अगर 3001 पहले से उपयोग में है तो सर्वर पोर्ट बदलें\n• सेटिंग्स सर्वर को फिर से शुरू करने के बाद लागू होती हैं</string>
     <string name="configuration_info">कॉन्फ़िगरेशन जानकारी</string>
     <string name="valid_port_range_1_65535">मान्य पोर्ट रेंज: 1–65535</string>
@@ -70,7 +84,7 @@
     <string name="remote_step_3">3. बटन टैप करें और कोड ब्राउज़र में डालें:</string>
     <string name="show_pairing_code">पेयरिंग कोड दिखाएँ</string>
     <string name="pairing_code_hint">10 मिनट के लिए मान्य, एक बार उपयोग। पहले से पेयर किए गए क्लाइंट अपने आप फिर से कनेक्ट हो जाते हैं — नए कोड की ज़रूरत नहीं।</string>
-    <string name="tools_connect_note">बदलाव अगली बार क्लाइंट के कनेक्ट होने पर लागू होंगे।</string>
+    <string name="tools_connect_note">बदलाव सहायकों पर तुरंत और MCP क्लाइंट के अगली बार कनेक्ट होने पर लागू होते हैं।</string>
     <string name="not_on_wifi_warning">Wi-Fi से कनेक्ट नहीं है। सर्वर तक केवल उसी Wi-Fi नेटवर्क के डिवाइस पहुँच सकते हैं — पहले इस फ़ोन को Wi-Fi से कनेक्ट करें।</string>
     <string name="test_connection">कनेक्शन टेस्ट करें</string>
     <string name="testing_connection">कनेक्शन टेस्ट हो रहा है…</string>

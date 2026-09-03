@@ -9,7 +9,7 @@
 Bridge Google's [Android AppFunctions](https://developer.android.com/reference/androidx/appfunctions/package-summary) (API 36+) into this MCP server in **both** directions:
 
 - **Phase 1 — Inbound bridge.** A new `tools/appfunctions/` module discovers every `AppFunction` registered on the device by other installed apps (Maps, Calendar, Notes, etc.) and exposes each as an MCP tool on the SSE server. A remote MCP client gains gateway access to every AppFunctions-enabled app on the phone.
-- **Phase 2 — Outbound dual-publish.** Each suitable existing tool module (`tools/sms`, `tools/smsintent`, `tools/contacts`, `tools/camera`) gains a Kotlin class with `@AppFunction`-annotated `suspend` methods. The app declares itself as an AppFunctions provider so on-device agents (Gemini, Assistant, third-party agentic apps) can invoke these tools without going through the SSE endpoint.
+- **Phase 2 — Outbound dual-publish.** Each suitable first-party tool module (`tools/sms`, `tools/smsintent`, `tools/contacts`, `tools/camera`, `tools/location`, `tools/sensor`, and `tools/files`) gains a Kotlin class with `@AppFunction`-annotated `suspend` methods. The app declares itself as an AppFunctions provider so on-device agents can invoke enabled tools without going through the SSE endpoint.
 
 Both phases share infrastructure: AppFunctions Jetpack dependencies, a small shared schema mapper in `:core`, and a single runtime SDK gate (`Build.VERSION.SDK_INT >= 36`). The existing MCP server behaviour is unchanged on all SDK levels.
 
@@ -36,7 +36,7 @@ Rejected alternatives:
 │   │                                                             │   │
 │   │   ┌─── McpServerService (Ktor + SSE) ───────────────────┐   │   │
 │   │   │  Existing McpTools: sms, smsintent, camera,         │   │   │
-│   │   │  contacts, sensor, ads, externaltools               │   │   │
+│   │   │  contacts, location, sensor, files, ads, meta-tools │   │   │
 │   │   │                                                     │   │   │
 │   │   │  NEW: tools/appfunctions (Phase 1, inbound)         │   │   │
 │   │   │  ┌──────────────────────────────────────────────┐   │   │   │
@@ -56,7 +56,9 @@ Rejected alternatives:
 │   │   │ tools/smsintent ─▶ @AppFunction sendSmsViaIntent  │     │   │    Assistant calls via
 │   │   │ tools/contacts ─▶ @AppFunction listContacts(...)  │     │   │    AppFunctionManager
 │   │   │ tools/camera   ─▶ @AppFunction takePhoto(...)     │     │   │
-│   │   │ tools/sensor   ─▶ (skipped — streaming, bad fit)  │     │   │
+│   │   │ tools/location ─▶ @AppFunction getCurrentLocation │     │   │
+│   │   │ tools/sensor   ─▶ @AppFunction sensor snapshot    │     │   │
+│   │   │ tools/files    ─▶ @AppFunction list/info/read     │     │   │
 │   │   │ tools/ads      ─▶ (skipped — promo-only)          │     │   │
 │   │   └───────────────────────────────────────────────────┘     │   │
 │   │                                                             │   │
@@ -71,9 +73,9 @@ Rejected alternatives:
 
 **Skipped from Phase 2 (deliberate, documented):**
 
-- `tools/sensor` — sensor data is a continuous stream, not a one-shot call. Doesn't fit AppFunctions' suspend-function-returning-a-value model.
 - `tools/ads` — displays ads, no end-user-meaningful action to expose to agents.
 - `tools/externaltools` — already a meta-tool aggregating other apps' tools via Content Providers. Phase 1 subsumes it for AppFunctions-enabled apps.
+- `tools/appfunctions` — the inbound bridge is a dynamic meta-tool, not a first-party phone capability to republish recursively.
 
 ## Module Structure
 
@@ -116,15 +118,19 @@ tools/appfunctions/
 | `build-logic` | New convention plugin `McpAndroidAppFunctionsConventionPlugin` (id `mcp.android.appfunctions`). Applied by any tool module that publishes `@AppFunction`s — adds the dependencies + KSP arg + `compileSdk = 37` requirement in one place. |
 | `tools/sms` | Adds `SmsAppFunctions.kt` with `@AppFunction suspend fun sendSms(context: AppFunctionContext, to: String, body: String): String`. Delegates to existing `SmsSender`. Hilt-provided via the module's existing DI. |
 | `tools/smsintent` | Adds `SmsIntentAppFunctions.kt` — same shape, delegates to `SmsIntentSender`. |
-| `tools/contacts` | Adds `ContactsAppFunctions.kt` with `listContacts(...)` returning `List<ContactEntry>` (a new `@AppFunctionSerializable data class ContactEntry(...)`). |
+| `tools/contacts` | Adds `ContactsAppFunctions.kt` with `searchContacts(...)` returning typed contact results. |
 | `tools/camera` | Adds `CameraAppFunctions.kt` with `takePhoto(context, lens: String = "back"): Uri`. Returns a content `Uri` to the captured image (AppFunctions has `Uri` as a native supported type). |
+| `tools/location` | Adds `LocationAppFunctions.kt` returning a typed current-location result. |
+| `tools/sensor` | Adds `SensorAppFunctions.kt` returning a one-shot typed snapshot with latest cached readings. |
+| `tools/files` | Adds `FilesAppFunctions.kt` for root/directory listing, metadata, and reads capped at 250 KB. |
 
-`tools/sensor`, `tools/ads`, `tools/externaltools`: no changes (see Skipped section above).
+`tools/ads`, `tools/externaltools`, and the inbound `tools/appfunctions` meta-tool do not publish outbound functions (see Skipped section above).
 
 ### Wiring summary
 
 - **One `AppFunctionService`** is implicit — the Jetpack library generates and registers it from the KSP-aggregated function set across modules. No service class to write ourselves; only the `app_metadata.xml` and the manifest property to declare the app's overall purpose.
 - **`AppFunctionConfiguration.Provider`** in `McpServerApplication` collects every `@AppFunction`-containing class from each tool module via Hilt. The application uses `AppFunctionConfiguration.Builder().addEnclosingClassFactory(...)` calls — one per tool's functions class — built from injected Hilt instances.
+- **Tool-state synchronization** in `ToolService` updates Android's runtime enabled state for each generated function ID whenever the corresponding Phone MCP tool switch changes. Static metadata defaults every function to disabled until the app loads the user's saved choices.
 
 ### Shared schema mapper (in `:core`)
 
@@ -196,9 +202,9 @@ A new file `core/src/main/java/se/premex/mcp/core/tool/AppFunctionSchemaMapper.k
      (e.g. AppFunctionPermissionRequiredException for missing SEND_SMS).
 ```
 
-**Permission model:** Phase 2 functions delegate to the same repositories the existing `McpTool`s use. Runtime permissions (`SEND_SMS`, `READ_CONTACTS`, `CAMERA`) are already declared in each tool module's `AndroidManifest.xml`. If the user hasn't granted them, the underlying sender/reader throws — we wrap as `AppFunctionPermissionRequiredException` so the calling agent gets a structured error.
+**Permission model:** Phase 2 functions delegate to the same repositories the existing `McpTool`s use. Runtime permissions for SMS, contacts, camera, location, notifications, and shared media are already declared in each tool module's `AndroidManifest.xml`. If the user hasn't granted them, the function reports `AppFunctionPermissionRequiredException` so the calling agent gets a structured error.
 
-**Auth scope difference — important:** the MCP server's bearer-token gate does **not** apply to Phase 2. On-device agents invoking our `@AppFunction`s go through the platform's AppFunctions service, not our SSE endpoint. The platform decides who can call them (Gemini, Assistant, third-party assistants holding `EXECUTE_APP_FUNCTIONS`). This is by design — but it changes the trust model and must be surfaced in the app's user-facing description / disclaim text.
+**Auth scope difference — important:** the MCP server's bearer-token gate does **not** apply to Phase 2. On-device agents invoking our `@AppFunction`s go through the platform's AppFunctions service, not our SSE endpoint. The platform decides who can call them (Gemini, Assistant, third-party assistants holding `EXECUTE_APP_FUNCTIONS`). Phone MCP additionally synchronizes Android's enabled state for every function with its existing tool switch, so the user's opt-in applies to both interfaces.
 
 ## Error Handling
 
@@ -241,7 +247,10 @@ These are choices that were made via reasonable-default rather than explicit use
 - **Granularity of user control over the inbound bridge:** coarse (one toggle for the whole bridge, off by default with a disclaim). Per-app or per-function allowlists are deferrable enhancements.
 - **Discovery cadence (Phase 1):** snapshot at server start. Reactive discovery on `ACTION_PACKAGE_ADDED` deferred.
 - **Schema mapper location:** `:core` rather than a new `:core-appfunctions` module. Mapper is small.
-- **Phase 2 tool selection:** `sms`, `smsintent`, `contacts`, `camera`. `sensor`, `ads`, `externaltools` excluded with reasons documented above.
+- **Phase 2 tool selection:** `sms`, `smsintent`, `contacts`, `camera`, `location`, `sensor`, and
+  `files`. The later location and files modules were added after the original design; sensor was
+  revisited after confirming that its public MCP operation is a one-shot snapshot. `ads` and
+  dynamic meta-tools remain excluded with reasons documented above.
 
 ## Phasing
 

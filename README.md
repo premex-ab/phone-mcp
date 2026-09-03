@@ -27,20 +27,22 @@ A powerful, modular Android application that implements a **Server-Sent Events (
 
 ## On-device AppFunctions (experimental)
 
-On Android 16 and newer, Phone MCP also publishes selected capabilities as native
+On Android 16 and newer, Phone MCP also publishes its first-party capabilities as native
 [Android AppFunctions](https://developer.android.com/ai/appfunctions). Authorized on-device
 agents can use these functions locally without starting the MCP server or connecting with its
 URL and bearer token.
 
-- **Play build:** search contacts, take a photo, and prepare an SMS for user review
+- **Play build:** contacts, camera, location, sensor snapshots, bounded file access, and SMS drafts
 - **Full build:** the Play functions plus direct SMS sending
-- **Permissions:** Android's Contacts, Camera, Notifications, and SMS permissions still apply
+- **User control:** the existing tool switches enable or disable access through both MCP and AppFunctions
+- **Permissions:** Android's Contacts, Camera, Location, Storage, Notifications, and SMS permissions still apply
 - **Availability:** AppFunctions are experimental, and Gemini integration is currently a
   limited private preview; installing Phone MCP does not guarantee assistant access yet
 
-AppFunctions use Android's caller authorization and do not use the MCP server's token or tool
-toggles. See the [AppFunctions guide](docs/appfunctions.md) for the security model, example
-prompts, flavor differences, and ADB testing instructions.
+AppFunctions use Android's caller authorization and do not use the MCP server's token. Open
+**On-device assistants** on Phone MCP's home screen for an in-app explanation, or
+see the [AppFunctions guide](docs/appfunctions.md) for the security model, example prompts,
+flavor differences, and ADB testing instructions.
 
 ## Quick Start
 

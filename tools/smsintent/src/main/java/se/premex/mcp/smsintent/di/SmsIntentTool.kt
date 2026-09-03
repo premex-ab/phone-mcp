@@ -17,14 +17,16 @@ import se.premex.mcp.smsintent.SmsIntentSender
 import se.premex.mcp.smsintent.SmsIntentSenderImpl
 import se.premex.mcp.smsintent.appendSmsIntentTools
 import se.premex.mcp.smsintent.appfunctions.SmsIntentAppFunctions
+import se.premex.mcp.smsintent.appfunctions.SmsIntentAppFunctionsIds
 import se.premex.mcp.appfunctions.service.AppFunctionFactoryRegistration
 import javax.inject.Singleton
 
 class SmsIntentTool(val smsIntentSender: SmsIntentSender) : McpTool {
-    override val id: String = "sms"
+    override val id: String = "sms_intent"
     override val name: String = "Send SMS Intent"
     override val nameRes: Int = R.string.tools_smsintent_name
     override val enabledByDefault: Boolean = false
+    override val appFunctionIds: Set<String> = setOf(SmsIntentAppFunctionsIds.PREPARE_SMS_ID)
     override val disclaimRes: Int = R.string.tools_smsintent_disclaimer
 
     override val disclaim: String?

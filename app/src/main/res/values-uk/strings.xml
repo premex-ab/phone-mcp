@@ -1,5 +1,19 @@
 <resources>
     <string name="appfunctions_app_description">Використовуйте авторизованих помічників на пристрої, щоб готувати або надсилати повідомлення, шукати контакти та робити фотографії.</string>
+    <string name="appfunctions_title">Помічники на пристрої</string>
+    <string name="experimental">Експериментально</string>
+    <string name="appfunctions_supported_description">Сумісні помічники Android можуть безпосередньо використовувати вибрані дії Phone MCP без запуску сервера MCP.</string>
+    <string name="appfunctions_unsupported_description">Для прямого доступу помічника потрібен Android 16 або новіший. Сервер MCP працюватиме як зазвичай.</string>
+    <string name="appfunctions_capabilities_play">Контакти • Камера • Чернетки SMS</string>
+    <string name="appfunctions_capabilities_full">Контакти • Камера • Чернетки SMS • Пряме SMS</string>
+    <string name="appfunctions_switches_hint">Перемикачі інструментів нижче керують доступом через MCP і помічників.</string>
+    <string name="how_appfunctions_work">Як це працює</string>
+    <string name="appfunctions_info_available">Android AppFunctions дає змогу сумісним авторизованим помічникам локально використовувати ці дії на телефоні.</string>
+    <string name="appfunctions_info_unavailable">Цей телефон не підтримує Android AppFunctions. Потрібен Android 16 або новіший.</string>
+    <string name="appfunctions_info_security">Android визначає, які помічники авторизовані. Ці виклики не використовують токен сервера MCP. Перемикачі інструментів керують доступом через MCP і AppFunctions, а дозволи Android продовжують діяти. Підготовлене SMS завжди очікує на вашу перевірку та надсилання; пряме SMS надсилається негайно й доступне лише у версії Full.</string>
+    <string name="appfunctions_info_preview">Підтримка помічників обмежена під час експериментальної попередньої версії Android, тому доступність залежить від пристрою, помічника й облікового запису.</string>
+    <string name="manage_permissions">Керувати дозволами</string>
+    <string name="close">Закрити</string>
     <string name="server_settings_help_text">• 0.0.0.0: сервер слухає всі мережеві інтерфейси (рекомендовано)\n• 127.0.0.1: сервер доступний лише з цього пристрою (тільки локально)\n• Порт: змініть порт сервера, якщо 3001 уже зайнятий\n• Налаштування набувають чинності після перезапуску сервера</string>
     <string name="configuration_info">Відомості про конфігурацію</string>
     <string name="valid_port_range_1_65535">Допустимий діапазон портів: 1–65535</string>
@@ -70,7 +84,7 @@
     <string name="remote_step_3">3. Торкніться кнопки та введіть код у браузері:</string>
     <string name="show_pairing_code">Показати код парування</string>
     <string name="pairing_code_hint">Дійсний 10 хвилин, одноразовий. Уже спаровані клієнти перепідключаються автоматично — новий код не потрібен.</string>
-    <string name="tools_connect_note">Зміни набудуть чинності під час наступного підключення клієнта.</string>
+    <string name="tools_connect_note">Зміни застосовуються до помічників одразу, а до клієнта MCP — під час наступного підключення.</string>
     <string name="not_on_wifi_warning">Немає підключення до Wi-Fi. Сервер доступний лише пристроям у тій самій мережі Wi-Fi — спершу підключіть цей телефон до Wi-Fi.</string>
     <string name="test_connection">Перевірити з\'єднання</string>
     <string name="testing_connection">Перевірка з\'єднання…</string>

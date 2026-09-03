@@ -1,5 +1,19 @@
 <resources>
     <string name="appfunctions_app_description">承認済みのオンデバイス アシスタントを使用して、メッセージの作成や送信、連絡先の検索、写真の撮影を行います。</string>
+    <string name="appfunctions_title">オンデバイス アシスタント</string>
+    <string name="experimental">試験運用</string>
+    <string name="appfunctions_supported_description">対応する Android アシスタントは、MCP サーバーを起動せずに、選択した Phone MCP の操作を直接使用できます。</string>
+    <string name="appfunctions_unsupported_description">アシスタントからの直接アクセスには Android 16 以降が必要です。MCP サーバーは通常どおり利用できます。</string>
+    <string name="appfunctions_capabilities_play">連絡先 • カメラ • SMS 下書き</string>
+    <string name="appfunctions_capabilities_full">連絡先 • カメラ • SMS 下書き • SMS の直接送信</string>
+    <string name="appfunctions_switches_hint">以下のツールスイッチで、MCP とアシスタントの両方からのアクセスを制御します。</string>
+    <string name="how_appfunctions_work">仕組み</string>
+    <string name="appfunctions_info_available">Android AppFunctions により、対応する承認済みアシスタントがこのスマートフォン上でこれらの操作をローカルに使用できます。</string>
+    <string name="appfunctions_info_unavailable">このスマートフォンは Android AppFunctions に対応していません。Android 16 以降が必要です。</string>
+    <string name="appfunctions_info_security">どのアシスタントを承認するかは Android が決定します。これらの呼び出しでは MCP サーバーのトークンは使用されません。ツールスイッチは MCP と AppFunctions の両方からのアクセスを制御し、Android の権限も引き続き適用されます。SMS の下書きは必ず確認してから自分で送信します。SMS の直接送信は即時に実行され、Full ビルドにのみ含まれます。</string>
+    <string name="appfunctions_info_preview">Android の試験運用プレビュー中はアシスタントの対応が限定されるため、利用可否はデバイス、アシスタント、アカウントによって異なります。</string>
+    <string name="manage_permissions">権限を管理</string>
+    <string name="close">閉じる</string>
     <string name="server_settings_help_text">• 0.0.0.0: サーバーはすべてのネットワークインターフェースで待ち受けます（推奨）\n• 127.0.0.1: サーバーはこの端末からのみアクセスできます（ローカルのみ）\n• ポート: 3001 が既に使用中の場合はサーバーポートを変更してください\n• 設定はサーバーの再起動後に有効になります</string>
     <string name="configuration_info">設定情報</string>
     <string name="valid_port_range_1_65535">有効なポート範囲: 1～65535</string>
@@ -70,7 +84,7 @@
     <string name="remote_step_3">3. ボタンをタップして、コードをブラウザに入力します:</string>
     <string name="show_pairing_code">ペアリングコードを表示</string>
     <string name="pairing_code_hint">有効期限は 10 分、1 回のみ使用できます。ペアリング済みのクライアントは自動的に再接続します — 新しいコードは不要です。</string>
-    <string name="tools_connect_note">変更は次回クライアントが接続したときに適用されます。</string>
+    <string name="tools_connect_note">変更はアシスタントにはすぐに、MCP クライアントには次回接続時に適用されます。</string>
     <string name="not_on_wifi_warning">Wi-Fi に接続されていません。サーバーには同じ Wi-Fi ネットワーク上の端末からのみアクセスできます — まずこのスマートフォンを Wi-Fi に接続してください。</string>
     <string name="test_connection">接続をテスト</string>
     <string name="testing_connection">接続をテスト中…</string>

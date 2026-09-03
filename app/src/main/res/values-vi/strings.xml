@@ -1,5 +1,19 @@
 <resources>
     <string name="appfunctions_app_description">Sử dụng trợ lý được ủy quyền trên thiết bị để soạn hoặc gửi tin nhắn, tìm kiếm danh bạ và chụp ảnh.</string>
+    <string name="appfunctions_title">Trợ lý trên thiết bị</string>
+    <string name="experimental">Thử nghiệm</string>
+    <string name="appfunctions_supported_description">Trợ lý Android tương thích có thể dùng trực tiếp một số tác vụ Phone MCP mà không cần khởi động máy chủ MCP.</string>
+    <string name="appfunctions_unsupported_description">Quyền truy cập trực tiếp của trợ lý yêu cầu Android 16 trở lên. Máy chủ MCP vẫn hoạt động bình thường.</string>
+    <string name="appfunctions_capabilities_play">Danh bạ • Máy ảnh • Bản nháp SMS</string>
+    <string name="appfunctions_capabilities_full">Danh bạ • Máy ảnh • Bản nháp SMS • SMS trực tiếp</string>
+    <string name="appfunctions_switches_hint">Các công tắc công cụ bên dưới kiểm soát cả quyền truy cập MCP và trợ lý.</string>
+    <string name="how_appfunctions_work">Cách hoạt động</string>
+    <string name="appfunctions_info_available">Android AppFunctions cho phép trợ lý tương thích và được ủy quyền dùng các tác vụ này ngay trên điện thoại.</string>
+    <string name="appfunctions_info_unavailable">Điện thoại này không hỗ trợ Android AppFunctions. Cần Android 16 trở lên.</string>
+    <string name="appfunctions_info_security">Android quyết định trợ lý nào được ủy quyền. Các lệnh gọi này không dùng mã thông báo máy chủ MCP. Công tắc công cụ kiểm soát quyền truy cập qua cả MCP và AppFunctions, đồng thời các quyền Android vẫn được áp dụng. SMS đã soạn luôn chờ bạn xem lại và gửi; SMS trực tiếp được gửi ngay và chỉ có trong bản Full.</string>
+    <string name="appfunctions_info_preview">Hỗ trợ trợ lý hiện bị giới hạn trong giai đoạn xem trước thử nghiệm của Android, vì vậy khả năng sử dụng phụ thuộc vào thiết bị, trợ lý và tài khoản.</string>
+    <string name="manage_permissions">Quản lý quyền</string>
+    <string name="close">Đóng</string>
     <string name="server_settings_help_text">• 0.0.0.0: Máy chủ lắng nghe trên tất cả giao diện mạng (khuyến nghị)\n• 127.0.0.1: Máy chủ chỉ truy cập được từ thiết bị này (chỉ cục bộ)\n• Cổng: Đổi cổng máy chủ nếu 3001 đã được sử dụng\n• Cài đặt có hiệu lực sau khi khởi động lại máy chủ</string>
     <string name="configuration_info">Thông tin cấu hình</string>
     <string name="valid_port_range_1_65535">Phạm vi cổng hợp lệ: 1 - 65535</string>
@@ -70,7 +84,7 @@
     <string name="remote_step_3">3. Nhấn nút và nhập mã vào trình duyệt:</string>
     <string name="show_pairing_code">Hiện mã ghép nối</string>
     <string name="pairing_code_hint">Có hiệu lực trong 10 phút, chỉ dùng một lần. Ứng dụng khách đã ghép nối sẽ tự động kết nối lại — không cần mã mới.</string>
-    <string name="tools_connect_note">Thay đổi sẽ áp dụng vào lần kết nối tiếp theo của ứng dụng khách.</string>
+    <string name="tools_connect_note">Thay đổi áp dụng ngay cho trợ lý và vào lần kết nối tiếp theo của ứng dụng khách MCP.</string>
     <string name="not_on_wifi_warning">Chưa kết nối Wi-Fi. Máy chủ chỉ truy cập được từ các thiết bị trong cùng mạng Wi-Fi — hãy kết nối điện thoại này với Wi-Fi trước.</string>
     <string name="test_connection">Kiểm tra kết nối</string>
     <string name="testing_connection">Đang kiểm tra kết nối…</string>

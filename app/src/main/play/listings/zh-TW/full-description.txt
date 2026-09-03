@@ -39,3 +39,7 @@ AI 能做什麼
 應用程式與通道協定皆在 GitHub 上開源——你可以親自檢視離開手機的每一筆資料：github.com/premex-ab/phone-mcp
 
 由瑞典 Premex 打造。
+
+裝置端助理（實驗性功能）
+
+在 Android 16 及更新版本上，相容的助理可透過 Android AppFunctions 直接使用部分 Phone MCP 操作，無需連線至 MCP 伺服器。助理可以搜尋聯絡人、拍攝相片或準備簡訊供你檢查，同時仍會套用一般 Android 權限。在 Android 實驗性預覽期間，助理支援仍有限，實際可用性取決於你的裝置、助理和帳戶。

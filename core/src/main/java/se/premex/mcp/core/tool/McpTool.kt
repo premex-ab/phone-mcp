@@ -22,6 +22,15 @@ interface McpTool {
     /** Whether the tool is enabled by default */
     val enabledByDefault: Boolean
 
+    /**
+     * Android AppFunction identifiers published by this tool module.
+     *
+     * The application keeps these functions in sync with the same user-facing
+     * switch that controls MCP exposure. Tools that are not meaningful as
+     * outbound AppFunctions leave this empty.
+     */
+    val appFunctionIds: Set<String> get() = emptySet()
+
     /** Consent text shown before enabling (fallback when [disclaimRes] is 0) */
     val disclaim: String?
 

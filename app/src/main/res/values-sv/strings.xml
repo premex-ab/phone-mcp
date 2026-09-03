@@ -1,5 +1,19 @@
 <resources>
     <string name="appfunctions_app_description">Använd behöriga assistenter på enheten för att förbereda eller skicka meddelanden, söka efter kontakter och ta foton.</string>
+    <string name="appfunctions_title">Assistenter på enheten</string>
+    <string name="experimental">Experimentellt</string>
+    <string name="appfunctions_supported_description">Kompatibla Android-assistenter kan använda utvalda Phone MCP-funktioner direkt, utan att MCP-servern startas.</string>
+    <string name="appfunctions_unsupported_description">Direktåtkomst för assistenter kräver Android 16 eller senare. Din MCP-server fungerar som vanligt.</string>
+    <string name="appfunctions_capabilities_play">Kontakter • Kamera • SMS-utkast</string>
+    <string name="appfunctions_capabilities_full">Kontakter • Kamera • SMS-utkast • Skicka SMS direkt</string>
+    <string name="appfunctions_switches_hint">Verktygsreglagen nedan styr både MCP- och assistentåtkomst.</string>
+    <string name="how_appfunctions_work">Så fungerar det</string>
+    <string name="appfunctions_info_available">Android AppFunctions låter kompatibla och behöriga assistenter använda de här funktionerna lokalt på telefonen.</string>
+    <string name="appfunctions_info_unavailable">Den här telefonen stöder inte Android AppFunctions. Android 16 eller senare krävs.</string>
+    <string name="appfunctions_info_security">Android avgör vilka assistenter som är behöriga. Anropen använder inte MCP-serverns token. Verktygsreglagen styr åtkomst via både MCP och AppFunctions, och Android-behörigheter gäller fortfarande. När ett SMS förbereds lämnas det alltid till dig för granskning och sändning. Direktskickade SMS skickas omedelbart och ingår endast i Full-versionen.</string>
+    <string name="appfunctions_info_preview">Stödet för assistenter är för närvarande begränsat under Androids experimentella förhandsvisning, så tillgängligheten beror på enhet, assistent och konto.</string>
+    <string name="manage_permissions">Hantera behörigheter</string>
+    <string name="close">Stäng</string>
     <string name="server_settings_help_text">• 0.0.0.0: Servern lyssnar på alla nätverksgränssnitt (rekommenderas)\n• 127.0.0.1: Servern nås bara från den här enheten (endast lokalt)\n• Port: Byt serverport om 3001 redan används\n• Inställningarna börjar gälla när servern startas om</string>
     <string name="configuration_info">Konfigurationsinfo</string>
     <string name="valid_port_range_1_65535">Giltigt portintervall: 1–65535</string>
@@ -70,7 +84,7 @@
     <string name="remote_step_3">3. Tryck på knappen och skriv in koden i webbläsaren:</string>
     <string name="show_pairing_code">Visa parningskod</string>
     <string name="pairing_code_hint">Giltig i 10 minuter, engångsbruk. Redan parade klienter återansluter automatiskt — ingen ny kod behövs.</string>
-    <string name="tools_connect_note">Ändringar gäller nästa gång en klient ansluter.</string>
+    <string name="tools_connect_note">Ändringar gäller direkt för assistenter och nästa gång en MCP-klient ansluter.</string>
     <string name="not_on_wifi_warning">Inte ansluten till Wi-Fi. Servern kan bara nås från enheter på samma Wi-Fi-nätverk — anslut telefonen till Wi-Fi först.</string>
     <string name="test_connection">Testa anslutning</string>
     <string name="testing_connection">Testar anslutning…</string>

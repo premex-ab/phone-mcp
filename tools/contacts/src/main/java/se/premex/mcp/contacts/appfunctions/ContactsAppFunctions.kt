@@ -37,7 +37,7 @@ class ContactsAppFunctions @Inject constructor(
      * @throws AppFunctionPermissionRequiredException If contacts permission has not been granted.
      * @throws AppFunctionInvalidArgumentException If the search name is blank.
      */
-    @AppFunction(isDescribedByKDoc = true)
+    @AppFunction(isDescribedByKDoc = true, isEnabled = false)
     suspend fun searchContacts(
         appFunctionContext: AppFunctionContext,
         name: String,

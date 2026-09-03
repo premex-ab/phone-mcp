@@ -39,3 +39,7 @@ Açık kaynak
 Uygulama ve tünel protokolü GitHub'da açık kaynak — telefonunuzdan tam olarak neyin çıktığını kendiniz denetleyin: github.com/premex-ab/phone-mcp
 
 İsveç'te Premex tarafından yapılmıştır.
+
+Cihazdaki asistanlar (deneysel)
+
+Android 16 ve üzerindeki cihazlarda uyumlu asistanlar, seçili Phone MCP işlemlerini Android AppFunctions üzerinden doğrudan kullanabilir; MCP sunucusu bağlantısı gerekmez. Normal Android izinleri geçerliliğini korurken kişilerde arama yapabilir, fotoğraf çekebilir veya incelemeniz için SMS hazırlayabilirler. Android’in deneysel önizlemesi sırasında asistan desteği sınırlıdır ve cihazınıza, asistana ve hesaba bağlıdır.

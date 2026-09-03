@@ -1,5 +1,19 @@
 <resources>
     <string name="appfunctions_app_description">استخدم المساعدين المصرح لهم على الجهاز لإعداد الرسائل أو إرسالها والبحث في جهات الاتصال والتقاط الصور.</string>
+    <string name="appfunctions_title">المساعدون على الجهاز</string>
+    <string name="experimental">تجريبي</string>
+    <string name="appfunctions_supported_description">يمكن لمساعدي Android المتوافقين استخدام إجراءات محددة في Phone MCP مباشرةً دون تشغيل خادم MCP.</string>
+    <string name="appfunctions_unsupported_description">يتطلب الوصول المباشر للمساعد Android 16 أو إصدارًا أحدث. يواصل خادم MCP العمل كالمعتاد.</string>
+    <string name="appfunctions_capabilities_play">جهات الاتصال • الكاميرا • مسودات الرسائل القصيرة</string>
+    <string name="appfunctions_capabilities_full">جهات الاتصال • الكاميرا • مسودات الرسائل القصيرة • إرسال الرسائل مباشرةً</string>
+    <string name="appfunctions_switches_hint">تتحكم مفاتيح الأدوات أدناه في الوصول عبر MCP والمساعدين معًا.</string>
+    <string name="how_appfunctions_work">طريقة العمل</string>
+    <string name="appfunctions_info_available">تتيح Android AppFunctions للمساعدين المتوافقين والمصرح لهم استخدام هذه الإجراءات محليًا على هذا الهاتف.</string>
+    <string name="appfunctions_info_unavailable">لا يدعم هذا الهاتف Android AppFunctions. يلزم Android 16 أو إصدار أحدث.</string>
+    <string name="appfunctions_info_security">يحدد Android المساعدين المصرح لهم. لا تستخدم هذه الطلبات رمز خادم MCP. تتحكم مفاتيح الأدوات في الوصول عبر MCP وAppFunctions معًا، وتظل أذونات Android سارية. عند إعداد رسالة قصيرة تبقى دائمًا لمراجعتها وإرسالها بنفسك؛ أما الإرسال المباشر فيتم فورًا ويتوفر فقط في إصدار Full.</string>
+    <string name="appfunctions_info_preview">دعم المساعدين محدود حاليًا خلال معاينة Android التجريبية، لذا يعتمد التوفر على جهازك والمساعد وحسابك.</string>
+    <string name="manage_permissions">إدارة الأذونات</string>
+    <string name="close">إغلاق</string>
     <string name="server_settings_help_text">• 0.0.0.0: يستمع الخادم على جميع واجهات الشبكة (موصى به)\n• 127.0.0.1: لا يمكن الوصول إلى الخادم إلا من هذا الجهاز (محليًا فقط)\n• المنفذ: غيّر منفذ الخادم إذا كان المنفذ 3001 مستخدمًا بالفعل\n• تسري الإعدادات بعد إعادة تشغيل الخادم</string>
     <string name="configuration_info">معلومات التهيئة</string>
     <string name="valid_port_range_1_65535">نطاق المنافذ الصالح: 1 - 65535</string>
@@ -70,7 +84,7 @@
     <string name="remote_step_3">3. انقر على الزر واكتب الرمز في المتصفح:</string>
     <string name="show_pairing_code">عرض رمز الإقران</string>
     <string name="pairing_code_hint">صالح لمدة 10 دقائق ولاستخدام واحد فقط. يعيد العملاء المقترنون سابقًا الاتصال تلقائيًا — لا حاجة إلى رمز جديد.</string>
-    <string name="tools_connect_note">تسري التغييرات عند اتصال العميل في المرة التالية.</string>
+    <string name="tools_connect_note">تسري التغييرات فورًا على المساعدين وعند اتصال عميل MCP في المرة التالية.</string>
     <string name="not_on_wifi_warning">غير متصل بشبكة Wi-Fi. لا يمكن الوصول إلى الخادم إلا من أجهزة على شبكة Wi-Fi نفسها — وصّل هذا الهاتف بشبكة Wi-Fi أولًا.</string>
     <string name="test_connection">اختبار الاتصال</string>
     <string name="testing_connection">جارٍ اختبار الاتصال…</string>

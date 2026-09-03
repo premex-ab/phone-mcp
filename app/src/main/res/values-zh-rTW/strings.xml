@@ -1,5 +1,19 @@
 <resources>
     <string name="appfunctions_app_description">使用獲授權的裝置端助理準備或傳送訊息、搜尋聯絡人以及拍攝相片。</string>
+    <string name="appfunctions_title">裝置端助理</string>
+    <string name="experimental">實驗性功能</string>
+    <string name="appfunctions_supported_description">相容的 Android 助理無需啟動 MCP 伺服器，即可直接使用部分 Phone MCP 操作。</string>
+    <string name="appfunctions_unsupported_description">助理直接存取需要 Android 16 或更新版本。MCP 伺服器仍可正常運作。</string>
+    <string name="appfunctions_capabilities_play">聯絡人 • 相機 • 簡訊草稿</string>
+    <string name="appfunctions_capabilities_full">聯絡人 • 相機 • 簡訊草稿 • 直接傳送簡訊</string>
+    <string name="appfunctions_switches_hint">下方的工具開關同時控制 MCP 和助理存取。</string>
+    <string name="how_appfunctions_work">運作方式</string>
+    <string name="appfunctions_info_available">Android AppFunctions 可讓相容且獲授權的助理在這部手機上於本機使用這些操作。</string>
+    <string name="appfunctions_info_unavailable">這部手機不支援 Android AppFunctions。需要 Android 16 或更新版本。</string>
+    <string name="appfunctions_info_security">Android 會決定哪些助理獲得授權。這些呼叫不使用 MCP 伺服器權杖。工具開關同時控制透過 MCP 和 AppFunctions 的存取，Android 權限仍然適用。準備好的簡訊一律由你檢查並傳送；直接簡訊會立即傳送，且僅包含在 Full 版本中。</string>
+    <string name="appfunctions_info_preview">在 Android 實驗性預覽期間，助理支援仍有限，因此可用性取決於你的裝置、助理和帳戶。</string>
+    <string name="manage_permissions">管理權限</string>
+    <string name="close">關閉</string>
     <string name="server_settings_help_text">• 0.0.0.0: 伺服器在所有網路介面上監聽（建議）\n• 127.0.0.1: 伺服器僅可從此裝置存取（僅限本機）\n• 連接埠: 如果 3001 已被使用，請變更伺服器連接埠\n• 設定將在伺服器重新啟動後生效</string>
     <string name="configuration_info">設定資訊</string>
     <string name="valid_port_range_1_65535">有效連接埠範圍: 1 - 65535</string>
@@ -70,7 +84,7 @@
     <string name="remote_step_3">3. 輕觸按鈕，然後在瀏覽器中輸入配對碼：</string>
     <string name="show_pairing_code">顯示配對碼</string>
     <string name="pairing_code_hint">有效期 10 分鐘，僅限使用一次。已配對的用戶端會自動重新連線 — 不需要新的配對碼。</string>
-    <string name="tools_connect_note">變更將在用戶端下次連線時生效。</string>
+    <string name="tools_connect_note">變更會立即套用至助理，並在 MCP 用戶端下次連線時套用。</string>
     <string name="not_on_wifi_warning">未連線到 Wi-Fi。只有同一個 Wi-Fi 網路中的裝置才能存取伺服器 — 請先將此手機連線到 Wi-Fi。</string>
     <string name="test_connection">測試連線</string>
     <string name="testing_connection">正在測試連線…</string>

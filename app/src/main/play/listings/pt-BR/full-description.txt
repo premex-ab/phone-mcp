@@ -39,3 +39,7 @@ Código aberto
 O app e seu protocolo de túnel são de código aberto no GitHub — audite exatamente o que sai do seu celular: github.com/premex-ab/phone-mcp
 
 Feito na Suécia pela Premex.
+
+Assistentes no dispositivo (experimental)
+
+No Android 16 e versões mais recentes, assistentes compatíveis podem usar ações selecionadas do Phone MCP diretamente pelo Android AppFunctions — sem conexão com o servidor MCP. Eles podem pesquisar contatos, tirar uma foto ou preparar um SMS para revisão, enquanto as permissões normais do Android continuam válidas. O suporte a assistentes é limitado durante a prévia experimental do Android e depende do dispositivo, assistente e conta.
