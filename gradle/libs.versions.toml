@@ -1,41 +1,38 @@
 [versions]
-agp = "9.2.1"
+agp = "9.4.0"
 billing = "9.1.0"
 datastorePreferences = "1.2.1"
 kotlin = "2.4.10"
-coreKtx = "1.17.0"
+coreKtx = "1.19.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
-lifecycleRuntimeKtx = "2.10.0"
-activityCompose = "1.12.2"
-composeBom = "2025.12.01"
+lifecycleRuntimeKtx = "2.11.0"
+activityCompose = "1.13.0"
+composeBom = "2026.08.00"
 ktorVersion = "3.5.2"
 mcpVersion = "0.15.0"
 slf4jVersion = "2.0.18"
-appcompat = "1.7.1"
-material = "1.13.0"
+appcompat = "1.8.0"
+material = "1.14.0"
 hiltVersion = "2.60.1"
-hiltComposeVersion = "1.3.0"
+hiltComposeVersion = "1.4.0"
 ksp = "2.3.11"
-updateCompose = "1.3.1"
-cameraxVersion = "1.5.2"
+cameraxVersion = "1.6.2"
 androidxAppfunctions = "1.0.0-alpha09"
-lifecycleProcess = "2.10.0"
+lifecycleProcess = "2.11.0"
 playPublisher = "4.1.1"
-androidTools = "32.2.1"
-firebaseCrashlyticsPlugin = "3.0.7"
+androidTools = "32.4.0"
+firebaseCrashlyticsPlugin = "3.0.8"
 firebasePerfPlugin = "2.0.2"
-googleServicesPlugin = "4.4.4"
-uiTestJunit4 = "1.6.12"
+googleServicesPlugin = "4.5.0"
 truth = "1.4.5"
-androidxLint = "31.0.0-alpha03"
-jacoco = "0.8.12"
+jacoco = "0.8.15"
 
 [libraries]
 billing-ktx = { group = "com.android.billingclient", name = "billing-ktx", version.ref = "billing" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
-com-google-firebase-firebase-bom = "com.google.firebase:firebase-bom:34.7.0"
+com-google-firebase-firebase-bom = "com.google.firebase:firebase-bom:34.18.0"
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -71,11 +68,10 @@ org-slf4j-slf4j-nop = { module = "org.slf4j:slf4j-nop", version.ref = "slf4jVers
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
-androidx-tracing-ktx = { group = "androidx.tracing", name = "tracing-ktx", version = "1.2.0" }
+androidx-tracing-ktx = { group = "androidx.tracing", name = "tracing-ktx", version = "2.0.1" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hiltVersion" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltComposeVersion" }
-se-warting-inapp-update-compose-mui = { module = "se.warting.in-app-update:in-app-update-compose-mui", version.ref = "updateCompose" }
 androidx-camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "cameraxVersion" }
 androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraxVersion" }
 androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraxVersion" }
@@ -96,9 +92,7 @@ firebase-performance-gradlePlugin = { group = "com.google.firebase", name = "per
 google-services-gradlePlugin = { group = "com.google.gms", name = "google-services", version.ref = "googleServicesPlugin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
-androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "uiTestJunit4" }
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
-androidx-lint-gradle = { group = "androidx.lint", name = "lint-gradle", version.ref = "androidxLint" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -107,7 +101,6 @@ android-lint = { id = "com.android.lint", version.ref = "agp" }
 android-test = { id = "com.android.test", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-nl-littlerobots-version-catalog-update = "nl.littlerobots.version-catalog-update:1.1.1"
 org-jetbrains-kotlin-plugin-serialization = "org.jetbrains.kotlin.plugin.serialization:2.4.10"
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
