@@ -55,3 +55,29 @@ requiring user review.
 
 6. Invoke non-destructive functions first (`searchContacts`, `prepareSms`), then test camera
    and direct SMS only with explicit test recipients and user awareness.
+
+## Documentation and announcement
+
+- The README introduces the feature, flavor split, permissions, and experimental availability.
+- [`docs/appfunctions.md`](../../appfunctions.md) is the public usage, security, and ADB testing
+  guide.
+- [`docs/announcements/appfunctions-developer-preview.md`](../../announcements/appfunctions-developer-preview.md)
+  contains release-announcement copy. Keep the experimental/private-preview caveat until Android
+  makes end-to-end assistant access generally available.
+
+## Physical-device verification
+
+Verified on a Pixel 10 Pro XL running API 37 on 2026-09-03 with the Full debug build:
+
+- Android indexed all four functions with static and runtime metadata.
+- Contact search returned the intended permission error before permission was granted, then an
+  empty list for a deliberately nonexistent contact.
+- Camera validation rejected an invalid quality, then a real capture returned a cached JPEG
+  content URI.
+- SMS preparation opened Google Messages with an unsent test draft and returned success.
+- Direct SMS returned the intended permission error while `SEND_SMS` remained denied; no message
+  was sent.
+
+The Play APK could not replace the installed Play app during this session because the installed
+version code was newer. Play/Full function separation remains covered by generated-metadata
+tests and build verification.
