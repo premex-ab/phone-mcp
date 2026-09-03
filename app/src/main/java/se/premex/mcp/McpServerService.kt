@@ -1,16 +1,22 @@
 package se.premex.mcp
 
+import android.Manifest
 import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
+import android.content.pm.PackageManager
+import android.content.pm.ServiceInfo
 import android.content.Intent
+import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.app.NotificationCompat
+import androidx.core.app.ServiceCompat
 import dagger.hilt.android.AndroidEntryPoint
+import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.install
@@ -24,6 +30,8 @@ import io.ktor.server.engine.EmbeddedServer
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.response.respond
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
 import io.ktor.server.sse.SSE
@@ -38,13 +46,23 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.auth.AuthRepository
 import se.premex.mcp.data.ToolPreferencesRepository
 import se.premex.mcp.data.ServerPreferencesRepository
 import se.premex.mcp.di.ToolService
+import se.premex.mcp.remote.RemoteAccessRepository
+import se.premex.mcp.remote.TunnelClient
+import se.premex.mcp.remote.TunnelStatusRepository
+import java.net.BindException
+import java.net.InetAddress
+import java.net.InetSocketAddress
+import java.net.ServerSocket
 import javax.inject.Inject
 import kotlin.collections.set
 
@@ -54,6 +72,7 @@ class McpServerService : Service() {
         var isRunning = mutableStateOf(false)
         private const val TAG = "McpServerService"
         private const val NOTIFICATION_ID = 1001
+        private const val ERROR_NOTIFICATION_ID = 1002
 
         // Log tag prefixes for better filtering
         private const val LOG_PREFIX_LIFECYCLE = "Lifecycle"
@@ -87,6 +106,16 @@ class McpServerService : Service() {
     @Inject
     lateinit var authRepository: AuthRepository
 
+    @Inject
+    lateinit var remoteAccessRepository: RemoteAccessRepository
+
+    @Inject
+    lateinit var tunnelStatusRepository: TunnelStatusRepository
+
+    private var tunnelClient: TunnelClient? = null
+    private var tunnelStatusJob: Job? = null
+    private var remoteAccessObserverStarted = false
+
     override fun onCreate() {
         isRunning.value = true
         super.onCreate()
@@ -114,11 +143,41 @@ class McpServerService : Service() {
             pendingIntent
         )
 
-        startForeground(NOTIFICATION_ID, initialNotification)
+        startInForeground(initialNotification)
         Log.i(
             TAG,
             "$LOG_PREFIX_LIFECYCLE: Service started in foreground with notification ID $NOTIFICATION_ID"
         )
+    }
+
+    /**
+     * Foreground with an explicit type mask: camera is included only when the
+     * runtime permission is granted (starting a camera-type FGS without it
+     * throws on Android 14+), with a dataSync-only fallback for starts where
+     * while-in-use types are not allowed (e.g. restored after boot). Without
+     * the camera type, the camera tool cannot capture while the app is
+     * backgrounded on API 29+ (issue #72).
+     */
+    private fun startInForeground(notification: Notification) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            var type = ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+            if (checkSelfPermission(Manifest.permission.CAMERA) ==
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                type = type or ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA
+            }
+            try {
+                ServiceCompat.startForeground(this, NOTIFICATION_ID, notification, type)
+            } catch (e: Exception) {
+                Log.w(TAG, "$LOG_PREFIX_LIFECYCLE: camera FGS type refused, dataSync only", e)
+                ServiceCompat.startForeground(
+                    this, NOTIFICATION_ID, notification,
+                    ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+                )
+            }
+        } else {
+            startForeground(NOTIFICATION_ID, notification)
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -151,6 +210,10 @@ class McpServerService : Service() {
             Log.e(TAG, "$LOG_PREFIX_SERVER: Error stopping server", e)
         }
 
+        tunnelClient?.stop()
+        tunnelClient = null
+        tunnelStatusRepository.update(null)
+
         Log.d(TAG, "$LOG_PREFIX_LIFECYCLE: Cancelling service job")
         serviceJob.cancel()
         super.onDestroy()
@@ -165,18 +228,106 @@ class McpServerService : Service() {
 
     private suspend fun startMcpServer() {
         Log.i(TAG, "$LOG_PREFIX_SERVER: Attempting to start MCP server")
+        val serverConfig = serverPreferencesRepository.getServerConfig().first()
         try {
-            val serverConfig = serverPreferencesRepository.getServerConfig().first()
             Log.d(
                 TAG,
                 "$LOG_PREFIX_SERVER: Loaded server config - host: ${serverConfig.host}, port: ${serverConfig.port}"
             )
             startServerWithHost(serverConfig.host, serverConfig.port)
             Log.i(TAG, "$LOG_PREFIX_SERVER: Successfully started server")
+            observeRemoteAccess(serverConfig.port)
         } catch (e: Exception) {
-            val errorMessage = "Failed to start server: ${e.message}"
             Log.e(TAG, "$LOG_PREFIX_SERVER: Failed to start server", e)
-            updateNotification("MCP Server Error", errorMessage)
+            val errorMessage = if (e is BindException) {
+                "Port ${serverConfig.port} is already in use — is another MCP server " +
+                    "app running? Stop it, or change the port in Settings, and start again."
+            } else {
+                "Failed to start server: ${e.message}"
+            }
+            // The foreground notification disappears with the service, so post the
+            // error on its own id — and stop instead of lingering half-started
+            // (START_STICKY would otherwise retry into the same failure forever).
+            postStartupFailureNotification(errorMessage)
+            stopSelf()
+        }
+    }
+
+    private fun postStartupFailureNotification(message: String) {
+        val notification = NotificationCompat.Builder(this, McpServerApplication.CHANNEL_ID)
+            .setContentTitle("MCP Server Error")
+            .setContentText(message)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(message))
+            .setSmallIcon(R.drawable.ic_stat_server)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_ERROR)
+            .setAutoCancel(true)
+            .build()
+        notificationManager?.notify(ERROR_NOTIFICATION_ID, notification)
+    }
+
+    /**
+     * Fail fast, inside our try/catch, if the port is taken. Ktor's CIO engine
+     * binds asynchronously after start(wait = false), so its BindException
+     * surfaces as an UNCAUGHT coroutine exception and kills the whole app —
+     * seen in practice when two builds of this app raced for port 3001.
+     */
+    private fun ensurePortAvailable(host: String, port: Int) {
+        val address = if (host == "0.0.0.0") {
+            InetSocketAddress(port)
+        } else {
+            InetSocketAddress(InetAddress.getByName(host), port)
+        }
+        ServerSocket().use { probe ->
+            probe.reuseAddress = true
+            probe.bind(address)
+        }
+    }
+
+    /**
+     * Starts/stops the phonemcp.ai tunnel to follow the Remote access setting,
+     * so toggling it in Settings takes effect without restarting the server.
+     */
+    private fun observeRemoteAccess(localPort: Int) {
+        // Remote access is Play-exclusive; a stale enabled-flag in DataStore
+        // (e.g. data restored from a play install) must not start tunnels here
+        if (!BuildConfig.REMOTE_ACCESS) return
+        if (remoteAccessObserverStarted) return
+        remoteAccessObserverStarted = true
+        serviceScope.launch {
+            remoteAccessRepository.config().collect { config ->
+                val current = tunnelClient
+                if (config.enabled && config.registered) {
+                    val unchanged = current != null &&
+                            current.relayUrl == config.relayUrl &&
+                            current.deviceId == config.deviceId
+                    if (!unchanged) {
+                        current?.stop()
+                        Log.i(TAG, "$LOG_PREFIX_SERVER: Starting remote tunnel to ${config.relayUrl}")
+                        tunnelClient = TunnelClient(
+                            relayUrl = config.relayUrl,
+                            deviceId = config.deviceId!!,
+                            deviceSecret = config.deviceSecret!!,
+                            localPort = localPort,
+                            localAuthToken = authRepository.currentToken(),
+                            scope = serviceScope,
+                        ).also { client ->
+                            client.start()
+                            tunnelStatusJob?.cancel()
+                            tunnelStatusJob = serviceScope.launch {
+                                client.connected.collect { tunnelStatusRepository.update(it) }
+                            }
+                        }
+                    }
+                } else if (current != null) {
+                    Log.i(TAG, "$LOG_PREFIX_SERVER: Stopping remote tunnel")
+                    current.stop()
+                    tunnelClient = null
+                    tunnelStatusJob?.cancel()
+                    tunnelStatusJob = null
+                    tunnelStatusRepository.update(null)
+                }
+            }
         }
     }
 
@@ -184,27 +335,19 @@ class McpServerService : Service() {
         Log.d(TAG, "$LOG_PREFIX_SERVER: Configuring server on $host:$port")
 
         try {
+            ensurePortAvailable(host, port)
             server = runSseMcpServerWithPlainConfiguration(host = host, port = port)
 
             // Get WiFi IP address to show in notification
             val wifiIp = NetworkUtils.getWifiIpAddress(this)
             Log.d(TAG, "$LOG_PREFIX_SERVER: Obtained WiFi IP address: $wifiIp")
 
-            // Get connection instructions including the authentication token
-            val authInstructions = authRepository.getConnectionInstructions()
-
-            val successMessage = if (host == "127.0.0.1") {
-                if (wifiIp != null) {
-                    "Server running on $wifiIp:$port\n$authInstructions"
-                } else {
-                    "Server running on localhost:$port (local device only)\n$authInstructions"
-                }
-            } else {
-                if (wifiIp != null) {
-                    "Server running on $wifiIp:$port\n$authInstructions"
-                } else {
-                    "Server running on $host:$port\n$authInstructions"
-                }
+            // Deliberately NO auth token here: the notification is visible on
+            // the lock screen. The token lives in the app's connection guide.
+            val successMessage = when {
+                host == "127.0.0.1" -> "Server running on localhost:$port (local device only)"
+                wifiIp != null -> "Server running on $wifiIp:$port"
+                else -> "Server running on port $port"
             }
 
             Log.i(TAG, "$LOG_PREFIX_SERVER: $successMessage")
@@ -238,7 +381,7 @@ class McpServerService : Service() {
         val builder = NotificationCompat.Builder(this, McpServerApplication.CHANNEL_ID)
             .setContentTitle(title)
             .setContentText(content)
-            .setSmallIcon(android.R.drawable.ic_dialog_info)
+            .setSmallIcon(R.drawable.ic_stat_server)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setOngoing(true)
             .setCategory(NotificationCompat.CATEGORY_SERVICE)
@@ -299,6 +442,56 @@ class McpServerService : Service() {
     }
 
 
+    private fun setupPageHtml(requestHost: String): String {
+        val config = """
+            {
+                "mcpServers": {
+                    "phone": {
+                        "command": "npx",
+                        "args": [
+                            "mcp-remote",
+                            "http://$requestHost/sse",
+                            "--header",
+                            "Authorization: Bearer ${'$'}{AUTH_TOKEN}",
+                            "--allow-http"
+                        ],
+                        "env": {
+                            "AUTH_TOKEN": "<token from the Phone MCP app>"
+                        }
+                    }
+                }
+            }
+        """.trimIndent()
+
+        return """
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <title>Phone MCP</title>
+                <style>
+                    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem; }
+                    pre { background: #f4f4f4; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+                    button { padding: 0.5rem 1rem; }
+                </style>
+            </head>
+            <body>
+                <h1>✅ Phone MCP is reachable</h1>
+                <p>Your device can reach the MCP server running on the phone.</p>
+                <h2>Connect your MCP client</h2>
+                <ol>
+                    <li>Copy the configuration below into your MCP client (for example Claude Desktop).</li>
+                    <li>Replace the token placeholder with the auth token shown in the Phone MCP app.</li>
+                    <li>Restart the client — the phone tools will appear automatically.</li>
+                </ol>
+                <pre id="config">$config</pre>
+                <button onclick="navigator.clipboard.writeText(document.getElementById('config').innerText)">Copy configuration</button>
+            </body>
+            </html>
+        """.trimIndent()
+    }
+
     private fun runSseMcpServerWithPlainConfiguration(
         host: String,
         port: Int
@@ -344,6 +537,20 @@ class McpServerService : Service() {
                 }
 
                 routing {
+                    // Unauthenticated health check so users can verify reachability
+                    // from a browser on another device before configuring a client
+                    get("/health") {
+                        call.respondText("ok")
+                    }
+
+                    // Setup page for browsers on the same network. Deliberately does
+                    // NOT include the auth token — the user reads it from the app.
+                    get("/") {
+                        val requestHost =
+                            call.request.headers[HttpHeaders.Host] ?: "PHONE_IP:$port"
+                        call.respondText(setupPageHtml(requestHost), ContentType.Text.Html)
+                    }
+
                     authenticate("bearer-auth") {
                         sse("/sse") {
                             Log.d(TAG, "$LOG_PREFIX_TRANSPORT: New SSE connection established")
@@ -386,6 +593,10 @@ class McpServerService : Service() {
                                 TAG,
                                 "$LOG_PREFIX_SERVER: Server successfully connected to transport"
                             )
+
+                            // Remember that a client has connected at least once,
+                            // used to time the in-app review prompt
+                            serverPreferencesRepository.markClientConnected()
 
                             // Keep this handler suspended for the lifetime of the MCP
                             // session. Returning would close the underlying SSE stream,

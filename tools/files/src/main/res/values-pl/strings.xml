@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_files_name">Dostęp do plików</string>
+    <string name="tools_files_disclaimer">OSTRZEŻENIE O PRYWATNOŚCI: włączenie dostępu do plików\n\nWłączając to narzędzie, udzielasz tej aplikacji i wszystkim połączonym usługom AI uprawnień do:\n• Przeglądania plików i folderów we współdzielonej pamięci tego urządzenia\n• Odczytywania zawartości plików, w tym zdjęć, dokumentów i pobranych plików\n\nPrzyjmujesz do wiadomości, że:\n• Pliki na Twoim urządzeniu mogą zawierać wrażliwe dane osobowe\n• Połączone usługi AI mogą przetwarzać zawartość plików zgodnie ze swoimi politykami prywatności\n• W systemie Android 13+ dostęp do pamięci współdzielonej jest ograniczony do plików multimedialnych (obrazy, wideo, dźwięk)\n• Możesz w każdej chwili cofnąć dostęp, wyłączając to narzędzie\n\nNie przechowujemy Twoich plików, ale połączone usługi AI mogą przetwarzać te informacje zgodnie ze swoimi politykami prywatności.</string>
+</resources>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_contacts_name">读取联系人</string>
+    <string name="tools_contacts_disclaimer">隐私警告：启用联系人访问\n\n启用此工具，即表示您授予本应用程序及任何已连接的 AI 服务以下权限：\n• 读取您的联系人列表，包括姓名、电话号码和其他个人信息\n• 处理这些个人身份信息（PII）以响应您的请求\n\n您确认：\n• 您已获得联系人列表中相关个人的必要同意\n• 您有责任确保您所连接的任何 AI 服务遵守适用的隐私法规\n• 您可以随时通过禁用此工具来撤销访问权限\n\n我们不会存储您的联系人数据，但已连接的 AI 服务可能会根据其隐私政策处理这些信息。</string>
+</resources>

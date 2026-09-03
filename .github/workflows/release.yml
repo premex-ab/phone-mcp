@@ -15,14 +15,14 @@ jobs:
       uses: actions/checkout@v7
 
     - name: Set up JDK 21
-      uses: actions/setup-java@v5
+      uses: actions/setup-java@v6
       with:
         java-version: '21'
         distribution: 'temurin'
         cache: gradle
 
     - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v6
+      uses: gradle/actions/setup-gradle@v6.3.0
 
     - name: Decode and setup keystore
       run: |
@@ -49,14 +49,37 @@ jobs:
         echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_OUTPUT
         echo "VERSION_CODE=${{ github.run_number }}" >> $GITHUB_OUTPUT
 
+    # The full flavor targets F-Droid and direct distribution, where Google
+    # services are not allowed; it is built without Firebase. The Firebase
+    # project also has no client registered for the se.premex.mcp.full
+    # application id, so enabling Firebase here fails processGoogleServices.
     - name: Build Full Release
-      run: ./gradlew assembleFullRelease --stacktrace -PversionName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionCode=${{ steps.version_info.outputs.VERSION_CODE }} -PenableFirebase=true
+      run: ./gradlew assembleFullRelease --stacktrace -PversionName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionCode=${{ steps.version_info.outputs.VERSION_CODE }}
 
     - name: Build Play Release AAB
       run: ./gradlew bundlePlayRelease --stacktrace -PversionName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionCode=${{ steps.version_info.outputs.VERSION_CODE }} -PenableFirebase=true
 
+    # Gradle Play Publisher 4.0.0 misdetects release variants as debuggable
+    # under AGP 9.2 (it reads AGP-internal APIs) and therefore never creates
+    # its publish tasks. Upload the bundle with the Play Developer API action
+    # instead (pinned to a commit SHA), using the same service account and
+    # the internal track, which was also Gradle Play Publisher's default.
+    # Keep the signed bundle downloadable from the run page — needed e.g.
+    # for manual Console uploads when a new permission declaration gates the
+    # API publish, and as a general escape hatch when the publish step fails.
+    - name: Upload Play bundle as workflow artifact
+      uses: actions/upload-artifact@v7
+      with:
+        name: app-play-release-aab
+        path: app/build/outputs/bundle/playRelease/app-play-release.aab
+
     - name: Publish Play Release to Google Play Store
-      run: ./gradlew publishPlayReleaseBundle --stacktrace -PversionName=${{ steps.version_info.outputs.VERSION_NAME }} -PversionCode=${{ steps.version_info.outputs.VERSION_CODE }} -PenableFirebase=true
+      uses: r0adkll/upload-google-play@e738b9dd8f2476ea806d921b64aacd24f34515a5 # v1.1.5
+      with:
+        serviceAccountJson: app/byggappen-dev-b151ea2d4990.json
+        packageName: se.premex.mcp
+        releaseFiles: app/build/outputs/bundle/playRelease/app-play-release.aab
+        track: internal
 
     - name: Upload Release Assets to GitHub
       uses: softprops/action-gh-release@v3

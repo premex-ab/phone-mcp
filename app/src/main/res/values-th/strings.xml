@@ -1,0 +1,90 @@
+<resources>
+    <string name="server_settings_help_text">• 0.0.0.0: เซิร์ฟเวอร์รับการเชื่อมต่อจากทุกอินเทอร์เฟซเครือข่าย (แนะนำ)\n• 127.0.0.1: เข้าถึงเซิร์ฟเวอร์ได้จากอุปกรณ์นี้เท่านั้น (ภายในเครื่องเท่านั้น)\n• พอร์ต: เปลี่ยนพอร์ตของเซิร์ฟเวอร์หากพอร์ต 3001 ถูกใช้งานอยู่แล้ว\n• การตั้งค่าจะมีผลหลังจากรีสตาร์ทเซิร์ฟเวอร์</string>
+    <string name="configuration_info">ข้อมูลการกำหนดค่า</string>
+    <string name="valid_port_range_1_65535">ช่วงพอร์ตที่ใช้ได้: 1–65535</string>
+    <string name="server_port">พอร์ตเซิร์ฟเวอร์</string>
+    <string name="toggle_dropdown">สลับเมนูแบบเลื่อนลง</string>
+    <string name="host">โฮสต์</string>
+    <string name="server_host">โฮสต์เซิร์ฟเวอร์</string>
+    <string name="server_settings">การตั้งค่าเซิร์ฟเวอร์</string>
+    <string name="all_interfaces">ทุกอินเทอร์เฟซ</string>
+    <string name="localhost_only">localhost เท่านั้น</string>
+    <string name="port_number">หมายเลขพอร์ต</string>
+    <string name="save_settings">บันทึกการตั้งค่า</string>
+    <string name="all_permissions_are_required_to_run_the_mcp_server_service">ต้องมีสิทธิ์ทั้งหมดเพื่อเรียกใช้บริการเซิร์ฟเวอร์ MCP</string>
+    <string name="permission_is_required_to_run_the_mcp_server_service">จำเป็นต้องมีสิทธิ์เพื่อเรียกใช้บริการเซิร์ฟเวอร์ MCP</string>
+    <string name="no_description_available">ไม่มีคำอธิบาย</string>
+    <string name="warning_for">คำเตือนสำหรับ %1$s</string>
+    <string name="ok">ตกลง</string>
+    <string name="cancel">ยกเลิก</string>
+    <string name="connection_url">URL:</string>
+    <string name="access_token">โทเค็น:</string>
+    <string name="connect_your_ai_client">เชื่อมต่อไคลเอ็นต์ AI ของคุณ</string>
+    <string name="client_other">อื่นๆ</string>
+    <string name="claude_code_instructions">เรียกใช้คำสั่งนี้ในเทอร์มินัลบนคอมพิวเตอร์ แล้วเริ่มเซสชัน Claude Code ใหม่:</string>
+    <string name="claude_desktop_instructions">เปิด Settings → Developer → Edit Config บนคอมพิวเตอร์ แล้วเพิ่มข้อมูลนี้ลงใน claude_desktop_config.json จากนั้นรีสตาร์ท Claude Desktop ทั้งหมด ต้องมี Node.js\n\nหมายเหตุ: กล่องโต้ตอบ \"Add custom connector\" รองรับเฉพาะเซิร์ฟเวอร์ HTTPS — ให้ใช้การกำหนดค่านี้แทน</string>
+    <string name="other_client_instructions">เชื่อมต่อไคลเอ็นต์ MCP ใดก็ได้โดยใช้การรับส่งแบบ SSE และโทเค็น bearer:</string>
+    <string name="copy_command">คัดลอกคำสั่ง</string>
+    <string name="copy_configuration">คัดลอกการกำหนดค่า</string>
+    <string name="copy_details">คัดลอกรายละเอียด</string>
+    <string name="copy">คัดลอก %1$s</string>
+    <string name="copied_to_clipboard">คัดลอกไปยังคลิปบอร์ดแล้ว</string>
+    <string name="wifi_note">📶 คอมพิวเตอร์ของคุณต้องอยู่ในเครือข่าย Wi‑Fi เดียวกันกับโทรศัพท์เครื่องนี้</string>
+    <string name="remote_access_title">การเข้าถึงระยะไกล (phonemcp.ai)</string>
+    <string name="remote_access_description">เข้าถึงโทรศัพท์เครื่องนี้ได้จากทุกที่ผ่านอุโมงค์ที่ปลอดภัย การรับส่งข้อมูลจะผ่านเซิร์ฟเวอร์รีเลย์ และเครื่องมือทุกรายการจะเปิดใช้ได้ก็ต่อเมื่อคุณเลือกเปิดเองบนโทรศัพท์เครื่องนี้</string>
+    <string name="remote_access_contacting_relay">กำลังติดต่อรีเลย์…</string>
+    <string name="server_running">เซิร์ฟเวอร์กำลังทำงาน</string>
+    <string name="server_stopped">เซิร์ฟเวอร์หยุดทำงานแล้ว</string>
+    <string name="server_stopped_hint">เริ่มเซิร์ฟเวอร์เพื่อรับการเชื่อมต่อ</string>
+    <string name="tools_title">เครื่องมือ</string>
+    <string name="connection_mode_remote">ระยะไกล</string>
+    <string name="connection_mode_local">เครือข่ายท้องถิ่น</string>
+    <string name="enable_remote_access">เปิดใช้การเข้าถึงระยะไกล</string>
+    <string name="copy_url">คัดลอก URL</string>
+    <string name="paired_clients_title">ไคลเอ็นต์ AI ที่จับคู่แล้ว</string>
+    <string name="paired_clients_empty">ยังไม่มี — จับคู่ไคลเอ็นต์แรกของคุณด้วยรหัสด้านบน</string>
+    <string name="refresh_paired_clients">รีเฟรชไคลเอ็นต์ที่จับคู่แล้ว</string>
+    <string name="revoke">เพิกถอน</string>
+    <string name="subscribe_monthly">%1$s / เดือน</string>
+    <string name="subscribe_yearly">%1$s / ปี</string>
+    <string name="yearly_savings">แพ็กเกจรายปีประหยัดได้ %1$d %%</string>
+    <string name="subscribe">สมัครใช้บริการ</string>
+    <string name="remote_trial_days_left">ทดลองใช้ฟรี — เหลืออีก %1$d วัน</string>
+    <string name="remote_subscription_active">การสมัครใช้บริการใช้งานอยู่</string>
+    <string name="remote_grace">ช่วงทดลองใช้สิ้นสุดแล้ว — เหลือเวลาผ่อนผันอีก %1$d วันก่อนที่การเข้าถึงระยะไกลจะหยุดทำงาน</string>
+    <string name="remote_expired">การเข้าถึงระยะไกลหมดอายุแล้ว เร็วๆ นี้จะเปิดให้สมัครใช้บริการ</string>
+    <string name="battery_hint">Android อาจหยุดการเชื่อมต่อชั่วคราวเมื่อเครื่องเข้าสู่โหมดสลีปลึก ยกเว้นแอปนี้จากการเพิ่มประสิทธิภาพแบตเตอรี่เพื่อให้เข้าถึงได้จากทุกที่</string>
+    <string name="battery_button">อนุญาตการเชื่อมต่อในเบื้องหลัง</string>
+    <string name="restart_after_boot_title">โทรศัพท์รีสตาร์ทแล้ว</string>
+    <string name="restart_after_boot_body">แตะเพื่อเริ่มเซิร์ฟเวอร์ MCP ของคุณอีกครั้ง</string>
+    <string name="remote_status_connected">เชื่อมต่อกับ phonemcp.ai แล้ว</string>
+    <string name="remote_status_connecting">กำลังเชื่อมต่อกับ phonemcp.ai…</string>
+    <string name="add_client_title">เพิ่มไคลเอ็นต์ AI</string>
+    <string name="remote_step_code_1">1. เรียกใช้คำสั่งนี้ในเทอร์มินัลบนคอมพิวเตอร์:</string>
+    <string name="remote_step_code_2">2. ใน Claude Code ให้เรียกใช้ /mcp → phone → Authenticate เบราว์เซอร์จะเปิดขึ้นและขอรหัสจับคู่</string>
+    <string name="remote_step_desktop_1">1. บนคอมพิวเตอร์: Settings → Connectors → Add custom connector แล้ววาง URL นี้:</string>
+    <string name="remote_step_desktop_2">2. Claude Desktop จะเปิดหน้าลงชื่อเข้าใช้ในเบราว์เซอร์ซึ่งจะขอรหัสจับคู่</string>
+    <string name="remote_step_other_1">1. เชื่อมต่อไคลเอ็นต์ MCP ใดก็ได้ที่รองรับเซิร์ฟเวอร์ระยะไกลด้วย OAuth 2.1:</string>
+    <string name="remote_step_other_2">2. ระหว่างการให้สิทธิ์ เบราว์เซอร์จะขอรหัสจับคู่</string>
+    <string name="remote_step_3">3. แตะปุ่มแล้วพิมพ์รหัสลงในเบราว์เซอร์:</string>
+    <string name="show_pairing_code">แสดงรหัสจับคู่</string>
+    <string name="pairing_code_hint">ใช้ได้ 10 นาที ใช้ได้ครั้งเดียว ไคลเอ็นต์ที่จับคู่แล้วจะเชื่อมต่อใหม่โดยอัตโนมัติ — ไม่ต้องใช้รหัสใหม่</string>
+    <string name="tools_connect_note">การเปลี่ยนแปลงจะมีผลเมื่อไคลเอ็นต์เชื่อมต่อครั้งถัดไป</string>
+    <string name="not_on_wifi_warning">ไม่ได้เชื่อมต่อ Wi-Fi เซิร์ฟเวอร์เข้าถึงได้จากอุปกรณ์ในเครือข่าย Wi-Fi เดียวกันเท่านั้น — เชื่อมต่อโทรศัพท์เครื่องนี้กับ Wi-Fi ก่อน</string>
+    <string name="test_connection">ทดสอบการเชื่อมต่อ</string>
+    <string name="testing_connection">กำลังทดสอบการเชื่อมต่อ…</string>
+    <string name="connection_test_success">เข้าถึงเซิร์ฟเวอร์ได้ที่ %1$s หากไคลเอ็นต์ MCP ของคุณยังเชื่อมต่อไม่ได้ ให้ตรวจสอบว่าคอมพิวเตอร์อยู่ในเครือข่าย Wi-Fi เดียวกัน — คุณสามารถเปิด %1$s ในเบราว์เซอร์ของเครื่องนั้นเพื่อตรวจสอบได้</string>
+    <string name="connection_test_failure">ไม่สามารถเข้าถึงเซิร์ฟเวอร์ที่ %1$s ได้ ตรวจสอบว่าเซิร์ฟเวอร์กำลังทำงานอยู่ และตั้งค่าโฮสต์เป็น 0.0.0.0 ในการตั้งค่า</string>
+    <string name="onboarding_title">ยินดีต้อนรับสู่ Phone MCP</string>
+    <string name="onboarding_body">Phone MCP เปลี่ยนโทรศัพท์เครื่องนี้ให้เป็นเซิร์ฟเวอร์ที่ผู้ช่วย AI (ไคลเอ็นต์ MCP) เชื่อมต่อเข้ามาได้ แอปนี้ไม่มี AI ในตัว — คุณต้องเชื่อมต่อ AI ของคุณเอง เช่น Claude Code หรือ Claude Desktop
+
+1. เปิดใช้เครื่องมือที่ต้องการเปิดให้เข้าถึง
+2. เริ่มเซิร์ฟเวอร์ด้วยสวิตช์
+3. เชื่อมต่อไคลเอ็นต์ AI ของคุณ — จากระยะไกลผ่าน phonemcp.ai (ใช้ได้จากทุกที่) หรือผ่านเครือข่าย Wi-Fi เดียวกัน
+
+คู่มือการเชื่อมต่อในหน้าจอหลักจะแนะนำคุณทั้งสองแบบ</string>
+    <string name="get_started">เริ่มต้นใช้งาน</string>
+    <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">หมายเลขพอร์ตไม่ถูกต้อง โปรดป้อนค่าระหว่าง 1 ถึง 65535</string>
+    <string name="back">กลับ</string>
+    <string name="settings">การตั้งค่า</string>
+</resources>

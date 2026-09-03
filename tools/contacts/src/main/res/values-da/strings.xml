@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_contacts_name">Læs kontakter</string>
+    <string name="tools_contacts_disclaimer">PRIVATLIVSADVARSEL: Aktivering af kontaktadgang\n\nVed at aktivere dette værktøj giver du denne app og alle forbundne AI-tjenester tilladelse til at:\n• Læse din kontaktliste, herunder navne, telefonnumre og andre personlige oplysninger\n• Behandle disse personoplysninger (PII) for at besvare dine forespørgsler\n\nDu anerkender, at:\n• Du har indhentet det nødvendige samtykke fra personerne på din kontaktliste\n• Du er ansvarlig for, at de AI-tjenester, du forbinder, overholder gældende privatlivsregler\n• Du til enhver tid kan tilbagekalde adgangen ved at deaktivere dette værktøj\n\nVi gemmer ikke dine kontaktdata, men forbundne AI-tjenester kan behandle disse oplysninger i henhold til deres privatlivspolitikker.</string>
+</resources>

@@ -1,0 +1,90 @@
+<resources>
+    <string name="server_settings_help_text">• 0.0.0.0: השרת מאזין בכל ממשקי הרשת (מומלץ)\n• 127.0.0.1: השרת נגיש רק מהמכשיר הזה (מקומי בלבד)\n• פורט: יש לשנות את פורט השרת אם 3001 כבר בשימוש\n• ההגדרות נכנסות לתוקף לאחר הפעלה מחדש של השרת</string>
+    <string name="configuration_info">פרטי תצורה</string>
+    <string name="valid_port_range_1_65535">טווח פורטים חוקי: 1–65535</string>
+    <string name="server_port">פורט השרת</string>
+    <string name="toggle_dropdown">החלפת מצב תפריט נפתח</string>
+    <string name="host">מארח</string>
+    <string name="server_host">מארח השרת</string>
+    <string name="server_settings">הגדרות שרת</string>
+    <string name="all_interfaces">כל הממשקים</string>
+    <string name="localhost_only">localhost בלבד</string>
+    <string name="port_number">מספר פורט</string>
+    <string name="save_settings">שמירת הגדרות</string>
+    <string name="all_permissions_are_required_to_run_the_mcp_server_service">כל ההרשאות נדרשות להפעלת שירות שרת ה-MCP</string>
+    <string name="permission_is_required_to_run_the_mcp_server_service">הרשאה נדרשת להפעלת שירות שרת ה-MCP</string>
+    <string name="no_description_available">אין תיאור זמין.</string>
+    <string name="warning_for">אזהרה עבור %1$s</string>
+    <string name="ok">אישור</string>
+    <string name="cancel">ביטול</string>
+    <string name="connection_url">URL:</string>
+    <string name="access_token">אסימון:</string>
+    <string name="connect_your_ai_client">חיבור לקוח ה-AI שלך</string>
+    <string name="client_other">אחר</string>
+    <string name="claude_code_instructions">יש להריץ את הפקודה הזו בטרמינל במחשב, ואז להתחיל סשן חדש של Claude Code:</string>
+    <string name="claude_desktop_instructions">יש לפתוח את Settings → Developer → Edit Config במחשב, להוסיף את זה ל-claude_desktop_config.json ואז להפעיל מחדש את Claude Desktop לגמרי. נדרש Node.js.\n\nהערה: תיבת הדו-שיח \"Add custom connector\" מקבלת רק שרתי HTTPS — יש להשתמש בתצורה הזו במקום.</string>
+    <string name="other_client_instructions">ניתן לחבר כל לקוח MCP באמצעות תעבורת SSE ואסימון bearer:</string>
+    <string name="copy_command">העתקת הפקודה</string>
+    <string name="copy_configuration">העתקת התצורה</string>
+    <string name="copy_details">העתקת הפרטים</string>
+    <string name="copy">העתקת %1$s</string>
+    <string name="copied_to_clipboard">הועתק ללוח</string>
+    <string name="wifi_note">📶 המחשב חייב להיות מחובר לאותה רשת Wi‑Fi כמו הטלפון הזה.</string>
+    <string name="remote_access_title">גישה מרחוק (phonemcp.ai)</string>
+    <string name="remote_access_description">גישה לטלפון הזה מכל מקום דרך מנהרה מאובטחת. התעבורה עוברת דרך שרת הממסר, וכל כלי מופעל רק בהסכמה מפורשת בטלפון הזה.</string>
+    <string name="remote_access_contacting_relay">יוצר קשר עם הממסר…</string>
+    <string name="server_running">השרת פועל</string>
+    <string name="server_stopped">השרת כבוי</string>
+    <string name="server_stopped_hint">יש להפעיל את השרת כדי לקבל חיבורים</string>
+    <string name="tools_title">כלים</string>
+    <string name="connection_mode_remote">מרחוק</string>
+    <string name="connection_mode_local">רשת מקומית</string>
+    <string name="enable_remote_access">הפעלת גישה מרחוק</string>
+    <string name="copy_url">העתקת ה-URL</string>
+    <string name="paired_clients_title">לקוחות AI מצומדים</string>
+    <string name="paired_clients_empty">אין עדיין — יש לצמד את הלקוח הראשון באמצעות הקוד שלמעלה.</string>
+    <string name="refresh_paired_clients">רענון לקוחות מצומדים</string>
+    <string name="revoke">שלילת גישה</string>
+    <string name="subscribe_monthly">%1$s / חודש</string>
+    <string name="subscribe_yearly">%1$s / שנה</string>
+    <string name="yearly_savings">המסלול השנתי חוסך %1$d %%.</string>
+    <string name="subscribe">הצטרפות למינוי</string>
+    <string name="remote_trial_days_left">תקופת ניסיון בחינם — נותרו %1$d ימים</string>
+    <string name="remote_subscription_active">המינוי פעיל</string>
+    <string name="remote_grace">תקופת הניסיון הסתיימה — נותרו %1$d ימי חסד לפני שהגישה מרחוק תיפסק</string>
+    <string name="remote_expired">הגישה מרחוק פגה. מינויים יגיעו בקרוב.</string>
+    <string name="battery_hint">Android עשוי להשהות את החיבור במצב שינה עמוקה. כדי להישאר נגישים מכל מקום, יש להחריג את האפליקציה מאופטימיזציית הסוללה.</string>
+    <string name="battery_button">אישור חיבור ברקע</string>
+    <string name="restart_after_boot_title">הטלפון הופעל מחדש</string>
+    <string name="restart_after_boot_body">יש להקיש כדי להפעיל שוב את שרת ה-MCP</string>
+    <string name="remote_status_connected">מחובר אל phonemcp.ai</string>
+    <string name="remote_status_connecting">מתחבר אל phonemcp.ai…</string>
+    <string name="add_client_title">הוספת לקוח AI</string>
+    <string name="remote_step_code_1">1. יש להריץ את הפקודה הזו בטרמינל במחשב:</string>
+    <string name="remote_step_code_2">2. בתוך Claude Code, יש להריץ /mcp → phone → Authenticate. הדפדפן ייפתח ויבקש קוד צימוד.</string>
+    <string name="remote_step_desktop_1">1. במחשב: Settings → Connectors → Add custom connector, ואז יש להדביק את ה-URL הזה:</string>
+    <string name="remote_step_desktop_2">2. Claude Desktop יפתח דף התחברות בדפדפן שיבקש קוד צימוד.</string>
+    <string name="remote_step_other_1">1. ניתן לחבר כל לקוח MCP שתומך בשרתים מרוחקים עם OAuth 2.1:</string>
+    <string name="remote_step_other_2">2. במהלך ההרשאה, הדפדפן יבקש קוד צימוד.</string>
+    <string name="remote_step_3">3. יש להקיש על הכפתור ולהקליד את הקוד בדפדפן:</string>
+    <string name="show_pairing_code">הצגת קוד צימוד</string>
+    <string name="pairing_code_hint">בתוקף ל-10 דקות, לשימוש חד-פעמי. לקוחות שכבר צומדו יתחברו מחדש אוטומטית — אין צורך בקוד חדש.</string>
+    <string name="tools_connect_note">השינויים ייכנסו לתוקף בפעם הבאה שלקוח יתחבר.</string>
+    <string name="not_on_wifi_warning">אין חיבור ל-Wi-Fi. אפשר להגיע לשרת רק ממכשירים באותה רשת Wi-Fi — יש לחבר קודם את הטלפון הזה ל-Wi-Fi.</string>
+    <string name="test_connection">בדיקת חיבור</string>
+    <string name="testing_connection">בודק את החיבור…</string>
+    <string name="connection_test_success">השרת נגיש בכתובת %1$s. אם לקוח ה-MCP עדיין לא מצליח להתחבר, יש לוודא שהמחשב מחובר לאותה רשת Wi-Fi — אפשר לפתוח את %1$s בדפדפן שלו כדי לבדוק.</string>
+    <string name="connection_test_failure">לא ניתן להגיע לשרת בכתובת %1$s. יש לוודא שהשרת פועל ושהמארח מוגדר ל-0.0.0.0 בהגדרות.</string>
+    <string name="onboarding_title">ברוכים הבאים ל-Phone MCP</string>
+    <string name="onboarding_body">Phone MCP הופך את הטלפון הזה לשרת שעוזרי AI (לקוחות MCP) יכולים להתחבר אליו. באפליקציה אין AI מובנה — מחברים AI משלכם, למשל Claude Code או Claude Desktop.
+
+1. הפעילו את הכלים שאתם רוצים לחשוף.
+2. הפעילו את השרת באמצעות המתג.
+3. חברו את לקוח ה-AI שלכם — מרחוק דרך phonemcp.ai (עובד מכל מקום), או דרך אותה רשת Wi-Fi.
+
+מדריך החיבור במסך הראשי ילווה אתכם בשתי הדרכים.</string>
+    <string name="get_started">להתחלה</string>
+    <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">מספר פורט לא חוקי. יש להזין ערך בין 1 ל-65535.</string>
+    <string name="back">חזרה</string>
+    <string name="settings">הגדרות</string>
+</resources>

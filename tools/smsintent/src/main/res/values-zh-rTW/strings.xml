@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_smsintent_name">傳送 SMS Intent</string>
+    <string name="tools_smsintent_disclaimer">隱私權聲明：SMS Intent 建立\n\n啟用此工具，即表示您授予本應用程式及任何已連接的 AI 服務下列權限：\n• 準備 SMS 訊息，供您檢視並手動傳送\n• 建立 SMS 傳送 Intent，您必須先核准才會傳送\n\n您確認：\n• 此工具無法在未經您核准的情況下自動傳送訊息\n• 在任何訊息傳送之前，最終檢視與決定權始終在您手中\n• 您須對您選擇傳送的所有訊息及相關費用負責\n• 您可以隨時停用此工具來撤銷存取權\n\n我們不會儲存您的訊息內容，但已連接的 AI 服務可能會依其隱私權政策處理這些資訊。</string>
+</resources>

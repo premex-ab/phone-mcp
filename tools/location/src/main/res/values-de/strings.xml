@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_location_name">Standort</string>
+    <string name="tools_location_disclaimer">DATENSCHUTZWARNUNG: Aktivierung des Standortzugriffs\n\nMit der Aktivierung dieses Tools erlaubst du dieser App und allen verbundenen KI-Diensten:\n• Die aktuelle geografische Position deines Telefons zu lesen (GPS/Netzwerk)\n\nDu bestätigst, dass:\n• Verbundene KI-Dienste deinen Standort gemäß ihren Datenschutzrichtlinien verarbeiten können\n• Du den Zugriff jederzeit widerrufen kannst, indem du dieses Tool deaktivierst\n\nWir speichern deinen Standort nicht, aber verbundene KI-Dienste tun dies möglicherweise.</string>
+</resources>

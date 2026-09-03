@@ -1,0 +1,90 @@
+<resources>
+    <string name="server_settings_help_text">• 0.0.0.0: يستمع الخادم على جميع واجهات الشبكة (موصى به)\n• 127.0.0.1: لا يمكن الوصول إلى الخادم إلا من هذا الجهاز (محليًا فقط)\n• المنفذ: غيّر منفذ الخادم إذا كان المنفذ 3001 مستخدمًا بالفعل\n• تسري الإعدادات بعد إعادة تشغيل الخادم</string>
+    <string name="configuration_info">معلومات التهيئة</string>
+    <string name="valid_port_range_1_65535">نطاق المنافذ الصالح: 1 - 65535</string>
+    <string name="server_port">منفذ الخادم</string>
+    <string name="toggle_dropdown">تبديل القائمة المنسدلة</string>
+    <string name="host">المضيف</string>
+    <string name="server_host">مضيف الخادم</string>
+    <string name="server_settings">إعدادات الخادم</string>
+    <string name="all_interfaces">جميع الواجهات</string>
+    <string name="localhost_only">localhost فقط</string>
+    <string name="port_number">رقم المنفذ</string>
+    <string name="save_settings">حفظ الإعدادات</string>
+    <string name="all_permissions_are_required_to_run_the_mcp_server_service">جميع الأذونات مطلوبة لتشغيل خدمة خادم MCP</string>
+    <string name="permission_is_required_to_run_the_mcp_server_service">الإذن مطلوب لتشغيل خدمة خادم MCP</string>
+    <string name="no_description_available">لا يوجد وصف متاح.</string>
+    <string name="warning_for">تحذير بخصوص %1$s</string>
+    <string name="ok">حسنًا</string>
+    <string name="cancel">إلغاء</string>
+    <string name="connection_url">URL:</string>
+    <string name="access_token">الرمز المميز:</string>
+    <string name="connect_your_ai_client">وصِّل عميل الذكاء الاصطناعي الخاص بك</string>
+    <string name="client_other">غير ذلك</string>
+    <string name="claude_code_instructions">شغّل هذا الأمر في وحدة طرفية على حاسوبك، ثم ابدأ جلسة Claude Code جديدة:</string>
+    <string name="claude_desktop_instructions">افتح Settings → Developer → Edit Config على حاسوبك وأضف هذا إلى claude_desktop_config.json، ثم أعد تشغيل Claude Desktop بالكامل. يتطلب Node.js.\n\nملاحظة: لا يقبل مربع الحوار «Add custom connector» سوى خوادم HTTPS — استخدم هذه التهيئة بدلًا من ذلك.</string>
+    <string name="other_client_instructions">وصِّل أي عميل MCP باستخدام نقل SSE ورمز bearer مميز:</string>
+    <string name="copy_command">نسخ الأمر</string>
+    <string name="copy_configuration">نسخ التهيئة</string>
+    <string name="copy_details">نسخ التفاصيل</string>
+    <string name="copy">نسخ %1$s</string>
+    <string name="copied_to_clipboard">تم النسخ إلى الحافظة</string>
+    <string name="wifi_note">📶 يجب أن يكون حاسوبك متصلًا بشبكة Wi‑Fi نفسها المتصل بها هذا الهاتف.</string>
+    <string name="remote_access_title">الوصول عن بُعد (phonemcp.ai)</string>
+    <string name="remote_access_description">صِل إلى هذا الهاتف من أي مكان عبر نفق آمن. تمر حركة البيانات عبر خادم الترحيل، وتبقى كل أداة معطّلة ما لم تفعّلها على هذا الهاتف.</string>
+    <string name="remote_access_contacting_relay">جارٍ الاتصال بخادم الترحيل…</string>
+    <string name="server_running">الخادم قيد التشغيل</string>
+    <string name="server_stopped">الخادم متوقف</string>
+    <string name="server_stopped_hint">ابدأ تشغيل الخادم لقبول الاتصالات</string>
+    <string name="tools_title">الأدوات</string>
+    <string name="connection_mode_remote">عن بُعد</string>
+    <string name="connection_mode_local">الشبكة المحلية</string>
+    <string name="enable_remote_access">تفعيل الوصول عن بُعد</string>
+    <string name="copy_url">نسخ URL</string>
+    <string name="paired_clients_title">عملاء الذكاء الاصطناعي المقترنون</string>
+    <string name="paired_clients_empty">لا يوجد أي عميل بعد — أقرن عميلك الأول باستخدام الرمز أعلاه.</string>
+    <string name="refresh_paired_clients">تحديث العملاء المقترنين</string>
+    <string name="revoke">إبطال</string>
+    <string name="subscribe_monthly">%1$s / شهريًا</string>
+    <string name="subscribe_yearly">%1$s / سنويًا</string>
+    <string name="yearly_savings">توفر الخطة السنوية %1$d %%.</string>
+    <string name="subscribe">اشتراك</string>
+    <string name="remote_trial_days_left">تجربة مجانية — يتبقى %1$d يومًا</string>
+    <string name="remote_subscription_active">الاشتراك نشط</string>
+    <string name="remote_grace">انتهت الفترة التجريبية — يتبقى %1$d يومًا من المهلة قبل توقف الوصول عن بُعد</string>
+    <string name="remote_expired">انتهت صلاحية الوصول عن بُعد. الاشتراكات قادمة قريبًا.</string>
+    <string name="battery_hint">قد يوقف Android الاتصال مؤقتًا في وضع السكون العميق. استثنِ التطبيق من تحسين البطارية ليظل قابلًا للوصول من أي مكان.</string>
+    <string name="battery_button">السماح بالاتصال في الخلفية</string>
+    <string name="restart_after_boot_title">تمت إعادة تشغيل الهاتف</string>
+    <string name="restart_after_boot_body">انقر لبدء تشغيل خادم MCP من جديد</string>
+    <string name="remote_status_connected">متصل بـ phonemcp.ai</string>
+    <string name="remote_status_connecting">جارٍ الاتصال بـ phonemcp.ai…</string>
+    <string name="add_client_title">إضافة عميل ذكاء اصطناعي</string>
+    <string name="remote_step_code_1">1. شغّل هذا الأمر في وحدة طرفية على حاسوبك:</string>
+    <string name="remote_step_code_2">2. داخل Claude Code، شغّل /mcp → phone → Authenticate. سيفتح المتصفح ويطلب رمز إقران.</string>
+    <string name="remote_step_desktop_1">1. على حاسوبك: Settings → Connectors → Add custom connector، ثم الصق عنوان URL هذا:</string>
+    <string name="remote_step_desktop_2">2. يفتح Claude Desktop صفحة تسجيل دخول في متصفحك تطلب رمز إقران.</string>
+    <string name="remote_step_other_1">1. وصِّل أي عميل MCP يدعم الخوادم البعيدة عبر OAuth 2.1:</string>
+    <string name="remote_step_other_2">2. أثناء التفويض، يطلب المتصفح رمز إقران.</string>
+    <string name="remote_step_3">3. انقر على الزر واكتب الرمز في المتصفح:</string>
+    <string name="show_pairing_code">عرض رمز الإقران</string>
+    <string name="pairing_code_hint">صالح لمدة 10 دقائق ولاستخدام واحد فقط. يعيد العملاء المقترنون سابقًا الاتصال تلقائيًا — لا حاجة إلى رمز جديد.</string>
+    <string name="tools_connect_note">تسري التغييرات عند اتصال العميل في المرة التالية.</string>
+    <string name="not_on_wifi_warning">غير متصل بشبكة Wi-Fi. لا يمكن الوصول إلى الخادم إلا من أجهزة على شبكة Wi-Fi نفسها — وصّل هذا الهاتف بشبكة Wi-Fi أولًا.</string>
+    <string name="test_connection">اختبار الاتصال</string>
+    <string name="testing_connection">جارٍ اختبار الاتصال…</string>
+    <string name="connection_test_success">يمكن الوصول إلى الخادم على %1$s. إذا تعذّر على عميل MCP الاتصال رغم ذلك، فتأكد من أن حاسوبك على شبكة Wi-Fi نفسها — يمكنك فتح %1$s في متصفحه للتحقق.</string>
+    <string name="connection_test_failure">تعذّر الوصول إلى الخادم على %1$s. تأكد من أن الخادم قيد التشغيل ومن أن «المضيف» مضبوط على 0.0.0.0 في الإعدادات.</string>
+    <string name="onboarding_title">مرحبًا بك في Phone MCP</string>
+    <string name="onboarding_body">يحوّل Phone MCP هذا الهاتف إلى خادم يمكن لمساعدي الذكاء الاصطناعي (عملاء MCP) الاتصال به. لا يحتوي التطبيق على أي ذكاء اصطناعي مدمج — بل توصّل مساعدك الخاص، مثل Claude Code أو Claude Desktop.
+
+1. فعّل الأدوات التي تريد إتاحتها.
+2. ابدأ تشغيل الخادم باستخدام مفتاح التبديل.
+3. وصّل عميل الذكاء الاصطناعي — عن بُعد عبر phonemcp.ai (يعمل من أي مكان)، أو عبر شبكة Wi-Fi نفسها.
+
+سيرشدك دليل الاتصال في الشاشة الرئيسية إلى الطريقتين.</string>
+    <string name="get_started">البدء</string>
+    <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">رقم المنفذ غير صالح. يُرجى إدخال قيمة بين 1 و65535.</string>
+    <string name="back">رجوع</string>
+    <string name="settings">الإعدادات</string>
+</resources>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_smsintent_name">Intent gửi SMS</string>
+    <string name="tools_smsintent_disclaimer">THÔNG BÁO VỀ QUYỀN RIÊNG TƯ: Tạo Intent SMS\n\nKhi bật công cụ này, bạn cấp cho ứng dụng này và mọi dịch vụ AI được kết nối quyền:\n• Soạn sẵn tin nhắn SMS để bạn xem lại và tự gửi theo cách thủ công\n• Tạo intent gửi SMS mà bạn phải phê duyệt trước khi gửi\n\nBạn xác nhận rằng:\n• Công cụ này KHÔNG THỂ tự động gửi tin nhắn khi chưa có sự phê duyệt của bạn\n• Bạn luôn là người xem xét và quyết định cuối cùng trước khi bất kỳ tin nhắn nào được gửi đi\n• Bạn chịu trách nhiệm về mọi tin nhắn bạn chọn gửi và các chi phí liên quan\n• Bạn có thể thu hồi quyền truy cập bất cứ lúc nào bằng cách tắt công cụ này\n\nChúng tôi không lưu trữ nội dung tin nhắn của bạn, nhưng các dịch vụ AI được kết nối có thể xử lý thông tin này theo chính sách quyền riêng tư của họ.</string>
+</resources>

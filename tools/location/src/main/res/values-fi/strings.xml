@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_location_name">Sijainti</string>
+    <string name="tools_location_disclaimer">TIETOSUOJAVAROITUS: Sijainnin käytön ottaminen käyttöön\n\nOttamalla tämän työkalun käyttöön annat tälle sovellukselle ja kaikille yhdistetyille AI-palveluille luvan:\n• Lukea puhelimesi nykyisen maantieteellisen sijainnin (GPS/verkko)\n\nVahvistat, että:\n• Yhdistetyt AI-palvelut voivat käsitellä sijaintiasi tietosuojakäytäntöjensä mukaisesti\n• Voit peruuttaa käyttöoikeuden milloin tahansa poistamalla tämän työkalun käytöstä\n\nEmme tallenna sijaintiasi, mutta yhdistetyt AI-palvelut saattavat tallentaa.</string>
+</resources>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_smsintent_name">SMS-Intent senden</string>
+    <string name="tools_smsintent_disclaimer">DATENSCHUTZHINWEIS: Erstellung von SMS-Intents\n\nMit der Aktivierung dieses Tools erlaubst du dieser App und allen verbundenen KI-Diensten:\n• SMS vorzubereiten, die du prüfen und manuell senden kannst\n• SMS-Sende-Intents zu erstellen, die du vor dem Senden bestätigen musst\n\nDu bestätigst, dass:\n• Dieses Tool NICHT ohne deine Zustimmung automatisch Nachrichten senden kann\n• Du immer die letzte Prüfung und Entscheidung hast, bevor eine Nachricht gesendet wird\n• Du für alle Nachrichten, die du sendest, und die damit verbundenen Kosten verantwortlich bist\n• Du den Zugriff jederzeit widerrufen kannst, indem du dieses Tool deaktivierst\n\nWir speichern den Inhalt deiner Nachrichten nicht, aber verbundene KI-Dienste können diese Informationen gemäß ihren Datenschutzrichtlinien verarbeiten.</string>
+</resources>

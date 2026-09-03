@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_contacts_name">Leer contactos</string>
+    <string name="tools_contacts_disclaimer">ADVERTENCIA DE PRIVACIDAD: activación del acceso a contactos\n\nAl activar esta herramienta, concedes a esta aplicación y a cualquier servicio de IA conectado permiso para:\n• Leer tu lista de contactos, incluidos nombres, números de teléfono y otra información personal\n• Procesar esta información personal identificable (PII) para responder a tus solicitudes\n\nReconoces que:\n• Has obtenido el consentimiento necesario de las personas de tu lista de contactos\n• Eres responsable de asegurarte de que los servicios de IA que conectes cumplan con las normativas de privacidad aplicables\n• Puedes revocar el acceso en cualquier momento desactivando esta herramienta\n\nNo almacenamos los datos de tus contactos, pero los servicios de IA conectados pueden procesar esta información según sus políticas de privacidad.</string>
+</resources>

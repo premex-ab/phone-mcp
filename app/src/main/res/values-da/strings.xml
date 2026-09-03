@@ -1,0 +1,90 @@
+<resources>
+    <string name="server_settings_help_text">• 0.0.0.0: Serveren lytter på alle netværksgrænseflader (anbefales)\n• 127.0.0.1: Serveren kan kun nås fra denne enhed (kun lokalt)\n• Port: Skift serverport, hvis 3001 allerede er i brug\n• Indstillingerne træder i kraft, når serveren genstartes</string>
+    <string name="configuration_info">Konfigurationsinfo</string>
+    <string name="valid_port_range_1_65535">Gyldigt portinterval: 1–65535</string>
+    <string name="server_port">Serverport</string>
+    <string name="toggle_dropdown">Vis eller skjul rullemenu</string>
+    <string name="host">Vært</string>
+    <string name="server_host">Servervært</string>
+    <string name="server_settings">Serverindstillinger</string>
+    <string name="all_interfaces">Alle grænseflader</string>
+    <string name="localhost_only">Kun localhost</string>
+    <string name="port_number">Portnummer</string>
+    <string name="save_settings">Gem indstillinger</string>
+    <string name="all_permissions_are_required_to_run_the_mcp_server_service">Alle tilladelser kræves for at køre MCP-servertjenesten</string>
+    <string name="permission_is_required_to_run_the_mcp_server_service">tilladelse kræves for at køre MCP-servertjenesten</string>
+    <string name="no_description_available">Ingen beskrivelse tilgængelig.</string>
+    <string name="warning_for">Advarsel for %1$s</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Annuller</string>
+    <string name="connection_url">URL:</string>
+    <string name="access_token">Token:</string>
+    <string name="connect_your_ai_client">Forbind din AI-klient</string>
+    <string name="client_other">Anden</string>
+    <string name="claude_code_instructions">Kør denne kommando i en terminal på din computer, og start derefter en ny Claude Code-session:</string>
+    <string name="claude_desktop_instructions">Åbn Settings → Developer → Edit Config på din computer, tilføj dette i claude_desktop_config.json, og genstart Claude Desktop helt. Kræver Node.js.\n\nBemærk: Dialogen “Add custom connector” accepterer kun HTTPS-servere — brug denne konfiguration i stedet.</string>
+    <string name="other_client_instructions">Forbind en vilkårlig MCP-klient med SSE-transport og en bearer-token:</string>
+    <string name="copy_command">Kopiér kommando</string>
+    <string name="copy_configuration">Kopiér konfiguration</string>
+    <string name="copy_details">Kopiér oplysninger</string>
+    <string name="copy">Kopiér %1$s</string>
+    <string name="copied_to_clipboard">Kopieret til udklipsholderen</string>
+    <string name="wifi_note">📶 Din computer skal være på samme Wi‑Fi-netværk som denne telefon.</string>
+    <string name="remote_access_title">Fjernadgang (phonemcp.ai)</string>
+    <string name="remote_access_description">Nå denne telefon hvor som helst fra via en sikker tunnel. Trafikken går gennem relayserveren, og hvert værktøj forbliver opt-in på denne telefon.</string>
+    <string name="remote_access_contacting_relay">Kontakter relay…</string>
+    <string name="server_running">Serveren kører</string>
+    <string name="server_stopped">Serveren er stoppet</string>
+    <string name="server_stopped_hint">Start serveren for at modtage forbindelser</string>
+    <string name="tools_title">Værktøjer</string>
+    <string name="connection_mode_remote">Fjernadgang</string>
+    <string name="connection_mode_local">Lokalt netværk</string>
+    <string name="enable_remote_access">Aktivér fjernadgang</string>
+    <string name="copy_url">Kopiér URL</string>
+    <string name="paired_clients_title">Parrede AI-klienter</string>
+    <string name="paired_clients_empty">Ingen endnu — par din første klient med koden ovenfor.</string>
+    <string name="refresh_paired_clients">Opdater parrede klienter</string>
+    <string name="revoke">Tilbagekald</string>
+    <string name="subscribe_monthly">%1$s / måned</string>
+    <string name="subscribe_yearly">%1$s / år</string>
+    <string name="yearly_savings">Årsplanen sparer %1$d %%.</string>
+    <string name="subscribe">Abonnér</string>
+    <string name="remote_trial_days_left">Gratis prøveperiode — %1$d dage tilbage</string>
+    <string name="remote_subscription_active">Abonnementet er aktivt</string>
+    <string name="remote_grace">Prøveperioden er slut — %1$d dages frist tilbage, før fjernadgangen stopper</string>
+    <string name="remote_expired">Fjernadgangen er udløbet. Abonnementer kommer snart.</string>
+    <string name="battery_hint">Android kan sætte forbindelsen på pause i dyb dvale. Undtag appen fra batterioptimering for at forblive tilgængelig hvor som helst fra.</string>
+    <string name="battery_button">Tillad baggrundsforbindelse</string>
+    <string name="restart_after_boot_title">Telefonen er genstartet</string>
+    <string name="restart_after_boot_body">Tryk for at starte din MCP-server igen</string>
+    <string name="remote_status_connected">Forbundet til phonemcp.ai</string>
+    <string name="remote_status_connecting">Forbinder til phonemcp.ai…</string>
+    <string name="add_client_title">Tilføj en AI-klient</string>
+    <string name="remote_step_code_1">1. Kør denne kommando i en terminal på din computer:</string>
+    <string name="remote_step_code_2">2. I Claude Code: Kør /mcp → phone → Authenticate. Din browser åbner og beder om en parringskode.</string>
+    <string name="remote_step_desktop_1">1. På din computer: Settings → Connectors → Add custom connector, og indsæt denne URL:</string>
+    <string name="remote_step_desktop_2">2. Claude Desktop åbner en loginside i din browser, der beder om en parringskode.</string>
+    <string name="remote_step_other_1">1. Forbind en vilkårlig MCP-klient, der understøtter fjernservere med OAuth 2.1:</string>
+    <string name="remote_step_other_2">2. Under autorisationen beder browseren om en parringskode.</string>
+    <string name="remote_step_3">3. Tryk på knappen, og indtast koden i browseren:</string>
+    <string name="show_pairing_code">Vis parringskode</string>
+    <string name="pairing_code_hint">Gyldig i 10 minutter, engangsbrug. Allerede parrede klienter genopretter forbindelsen automatisk — ingen ny kode nødvendig.</string>
+    <string name="tools_connect_note">Ændringer gælder, næste gang en klient forbinder.</string>
+    <string name="not_on_wifi_warning">Ikke forbundet til Wi-Fi. Serveren kan kun nås fra enheder på samme Wi-Fi-netværk — forbind først denne telefon til Wi-Fi.</string>
+    <string name="test_connection">Test forbindelse</string>
+    <string name="testing_connection">Tester forbindelse…</string>
+    <string name="connection_test_success">Serveren kan nås på %1$s. Hvis din MCP-klient stadig ikke kan forbinde, så tjek, at computeren er på samme Wi-Fi — du kan åbne %1$s i dens browser for at teste.</string>
+    <string name="connection_test_failure">Kunne ikke nå serveren på %1$s. Sørg for, at serveren kører, og at Vært er sat til 0.0.0.0 i indstillingerne.</string>
+    <string name="onboarding_title">Velkommen til Phone MCP</string>
+    <string name="onboarding_body">Phone MCP gør denne telefon til en server, som AI-assistenter (MCP-klienter) kan forbinde til. Appen har ingen indbygget AI — du forbinder din egen, for eksempel Claude Code eller Claude Desktop.
+
+1. Aktivér de værktøjer, du vil eksponere.
+2. Start serveren med kontakten.
+3. Forbind din AI-klient — eksternt via phonemcp.ai (virker hvor som helst fra) eller over samme Wi-Fi-netværk.
+
+Forbindelsesguiden på hovedskærmen fører dig gennem begge dele.</string>
+    <string name="get_started">Kom godt i gang</string>
+    <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">Ugyldigt portnummer. Indtast en værdi mellem 1 og 65535.</string>
+    <string name="back">Tilbage</string>
+    <string name="settings">Indstillinger</string>
+</resources>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_contacts_name">Contacten lezen</string>
+    <string name="tools_contacts_disclaimer">PRIVACYWAARSCHUWING: Toegang tot contacten inschakelen\n\nDoor deze tool in te schakelen geef je deze app en alle verbonden AI-diensten toestemming om:\n• Je contactenlijst te lezen, inclusief namen, telefoonnummers en andere persoonlijke informatie\n• Deze persoonsgegevens (PII) te verwerken om je verzoeken te beantwoorden\n\nJe erkent dat:\n• Je de benodigde toestemming hebt verkregen van de personen in je contactenlijst\n• Je er verantwoordelijk voor bent dat de AI-diensten die je verbindt voldoen aan de geldende privacyregels\n• Je de toegang op elk moment kunt intrekken door deze tool uit te schakelen\n\nWe slaan je contactgegevens niet op, maar verbonden AI-diensten kunnen deze informatie verwerken volgens hun privacybeleid.</string>
+</resources>

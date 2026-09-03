@@ -3,17 +3,21 @@ package se.premex.mcp
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
-import android.text.format.Formatter
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.clickable
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -24,19 +28,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -46,18 +47,22 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -69,12 +74,19 @@ import se.premex.mcp.auth.AuthRepository
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.data.ServerPreferencesRepository
 import se.premex.mcp.di.ToolService
+import se.premex.mcp.review.ReviewPrompter
+import se.premex.mcp.ui.ConnectionGuide
 import se.premex.mcp.ui.SettingsScreen
 import se.premex.mcp.ui.theme.MCPServerTheme
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    companion object {
+        /** Set by BootReceiver's tap-to-restart notification. */
+        const val EXTRA_AUTO_START_SERVER = "auto_start_server"
+    }
 
     // Add dialog state for tool warnings
     private var showToolWarningDialog = mutableStateOf(false)
@@ -124,12 +136,34 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (intent?.getBooleanExtra(EXTRA_AUTO_START_SERVER, false) == true &&
+            !McpServerService.isRunning.value
+        ) {
+            checkRequiredPermissions()
+        }
+
         enableEdgeToEdge()
         setContent {
             val toolStates by toolService.toolEnabledStates.collectAsState()
             val serverConfig by serverPreferencesRepository.getServerConfig().collectAsState(
                 initial = se.premex.mcp.data.ServerConfig()
             )
+            val onboardingCompleted by serverPreferencesRepository.isOnboardingCompleted()
+                .collectAsState(initial = true)
+            val hasClientConnected by serverPreferencesRepository.hasClientConnected()
+                .collectAsState(initial = false)
+            val reviewPrompted by serverPreferencesRepository.isReviewPrompted()
+                .collectAsState(initial = true)
+
+            // Ask for a Play Store review once, after the user has had their
+            // first successful MCP client connection — the moment the app has
+            // proven its value
+            LaunchedEffect(hasClientConnected, reviewPrompted) {
+                if (hasClientConnected && !reviewPrompted) {
+                    serverPreferencesRepository.markReviewPrompted()
+                    ReviewPrompter.requestReview(this@MainActivity)
+                }
+            }
 
             // Extract the auth token from the instructions string
             // The format is "Please use the token 'XXXXXX' to authenticate your connection."
@@ -153,7 +187,8 @@ class MainActivity : ComponentActivity() {
                                     toggleService(false)
                                 }
                             },
-                            getConnectionUrl = { getConnectionUrl() },
+                            getConnectionUrl = { getConnectionUrl(serverConfig.port) },
+                            isOnWifi = { NetworkUtils.getWifiIpAddress(this@MainActivity) != null },
                             tools = toolService.tools.toList(),
                             toolEnabledStates = toolStates,
                             onToggleTool = { tool ->
@@ -161,6 +196,13 @@ class MainActivity : ComponentActivity() {
                             },
                             authToken = authToken
                         )
+
+                        // First-run onboarding explaining what the app is and how to connect
+                        if (!onboardingCompleted) {
+                            OnboardingDialog(
+                                onDismiss = { serverPreferencesRepository.setOnboardingCompleted() }
+                            )
+                        }
 
                         // Show warning dialog if needed
                         if (showToolWarningDialog.value && currentToolRequiringWarning != null) {
@@ -244,6 +286,8 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun toggleService(start: Boolean) {
+        // Remember the intent so BootReceiver can restore the server after a reboot
+        serverPreferencesRepository.setServerShouldRun(start)
         val serviceIntent = Intent(this, McpServerService::class.java)
 
         if (start) {
@@ -258,10 +302,9 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun getConnectionUrl(): String {
-        val wifiManager = applicationContext.getSystemService(WIFI_SERVICE) as WifiManager
-        val ipAddress = Formatter.formatIpAddress(wifiManager.connectionInfo.ipAddress)
-        return "http://$ipAddress:3001/sse"
+    private fun getConnectionUrl(port: Int): String {
+        val ipAddress = NetworkUtils.getWifiIpAddress(this) ?: "0.0.0.0"
+        return "http://$ipAddress:$port/sse"
     }
 
     // Function to handle tool toggle with warning dialog if needed
@@ -283,6 +326,20 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @Composable
+    private fun OnboardingDialog(onDismiss: () -> Unit) {
+        AlertDialog(
+            onDismissRequest = onDismiss,
+            title = { Text(stringResource(R.string.onboarding_title)) },
+            text = { Text(stringResource(R.string.onboarding_body)) },
+            confirmButton = {
+                Button(onClick = onDismiss) {
+                    Text(stringResource(R.string.get_started))
+                }
+            }
+        )
+    }
+
     // Composable function for the warning dialog
     @Composable
     private fun ToolWarningDialog(
@@ -292,8 +349,19 @@ class MainActivity : ComponentActivity() {
     ) {
         AlertDialog(
             onDismissRequest = onDismiss,
-            title = { Text(stringResource(R.string.warning_for, tool.name)) },
-            text = { Text(tool.disclaim ?: stringResource(R.string.no_description_available)) },
+            title = {
+                val toolName = if (tool.nameRes != 0) stringResource(tool.nameRes) else tool.name
+                Text(stringResource(R.string.warning_for, toolName))
+            },
+            text = {
+                Text(
+                    when {
+                        tool.disclaimRes != 0 -> stringResource(tool.disclaimRes)
+                        tool.disclaim != null -> tool.disclaim!!
+                        else -> stringResource(R.string.no_description_available)
+                    }
+                )
+            },
             confirmButton = {
                 TextButton(onClick = onConfirm) {
                     Text(stringResource(R.string.ok))
@@ -319,7 +387,8 @@ fun HomeScreen(
     tools: List<McpTool>,
     toolEnabledStates: Map<String, Boolean>,
     onToggleTool: (McpTool) -> Unit,
-    authToken: String = "YTpi"
+    authToken: String = "YTpi",
+    isOnWifi: () -> Boolean = { true }
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -345,7 +414,8 @@ fun HomeScreen(
             tools = tools,
             toolEnabledStates = toolEnabledStates,
             onToggleTool = onToggleTool,
-            authToken = authToken
+            authToken = authToken,
+            isOnWifi = isOnWifi
         )
     }
 }
@@ -359,200 +429,150 @@ fun McpServerControl(
     tools: List<McpTool>,
     toolEnabledStates: Map<String, Boolean>,
     onToggleTool: (McpTool) -> Unit,
-    authToken: String = "YTpi"
+    authToken: String = "YTpi",
+    isOnWifi: () -> Boolean = { true }
 ) {
     val safeDrawingPadding = WindowInsets.safeDrawing.asPaddingValues()
 
     LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(
-                start = 16.dp + safeDrawingPadding.calculateLeftPadding(androidx.compose.ui.unit.LayoutDirection.Ltr),
-                end = 16.dp + safeDrawingPadding.calculateRightPadding(androidx.compose.ui.unit.LayoutDirection.Ltr),
-                top = 16.dp + safeDrawingPadding.calculateTopPadding(),
-                bottom = 16.dp + safeDrawingPadding.calculateBottomPadding()
-            ),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
+        modifier = modifier.fillMaxSize(),
+        contentPadding = PaddingValues(
+            start = 16.dp + safeDrawingPadding.calculateLeftPadding(LayoutDirection.Ltr),
+            end = 16.dp + safeDrawingPadding.calculateRightPadding(LayoutDirection.Ltr),
+            top = 8.dp,
+            bottom = 24.dp + safeDrawingPadding.calculateBottomPadding()
+        ),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         item {
-            Text(
-                text = stringResource(R.string.mcp_server_control),
-                style = MaterialTheme.typography.headlineMedium,
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold
+            ServerStatusCard(
+                isRunning = isRunning,
+                onToggleServer = onToggleServer,
+                getConnectionUrl = getConnectionUrl
             )
+        }
 
-            Spacer(modifier = Modifier.height(32.dp))
+        if (isRunning) {
+            item {
+                Card(modifier = Modifier.fillMaxWidth()) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        ConnectionGuide(
+                            connectionUrl = getConnectionUrl(),
+                            authToken = authToken,
+                            isOnWifi = isOnWifi
+                        )
+                    }
+                }
+            }
         }
 
         item {
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = stringResource(R.string.server_status),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-
-                    Text(
-                        text = if (isRunning) stringResource(R.string.running) else stringResource(R.string.stopped),
-                        style = MaterialTheme.typography.headlineSmall,
-                        color = if (isRunning) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            text = stringResource(R.string.toggle_server),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-
-                        Switch(
-                            checked = isRunning,
-                            onCheckedChange = onToggleServer
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    if (isRunning) {
-                        Instructions(getConnectionUrl, authToken)
-                        Spacer(modifier = Modifier.height(16.dp))
-                    }
-                }
+            Column(modifier = Modifier.padding(top = 8.dp)) {
+                Text(
+                    text = stringResource(R.string.tools_title),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = stringResource(R.string.tools_connect_note),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         }
 
-        items(tools) { tool ->
-
-            Column(modifier = Modifier.fillMaxWidth()) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = tool.name,
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-
-                    Checkbox(
-                        checked = toolEnabledStates[tool.id] == true,
-                        onCheckedChange = { onToggleTool(tool) }
-                    )
+        item {
+            Card(modifier = Modifier.fillMaxWidth()) {
+                Column {
+                    tools.forEachIndexed { index, tool ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = if (tool.nameRes != 0) stringResource(tool.nameRes) else tool.name,
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.weight(1f)
+                            )
+                            Switch(
+                                checked = toolEnabledStates[tool.id] == true,
+                                onCheckedChange = { onToggleTool(tool) }
+                            )
+                        }
+                        if (index < tools.lastIndex) {
+                            HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                        }
+                    }
                 }
-
             }
-
-            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
 
+/**
+ * Hero card: status dot + label + switch in one row, container tinted green
+ * while the server is running so state is readable at a glance.
+ */
 @Composable
-private fun Instructions(getConnectionUrl: () -> String, authToken: String = "YTpi") {
-    // State for tracking if client configuration section is expanded
-    var configExpanded by remember { mutableStateOf(false) }
+private fun ServerStatusCard(
+    isRunning: Boolean,
+    onToggleServer: (Boolean) -> Unit,
+    getConnectionUrl: () -> String,
+) {
+    val containerColor by animateColorAsState(
+        targetValue = if (isRunning) MaterialTheme.colorScheme.tertiaryContainer
+        else MaterialTheme.colorScheme.surfaceVariant,
+        label = "statusContainer"
+    )
+    val contentColor = if (isRunning) MaterialTheme.colorScheme.onTertiaryContainer
+    else MaterialTheme.colorScheme.onSurfaceVariant
 
-    Column {
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Connection URL row with expand/collapse icon
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = containerColor,
+            contentColor = contentColor
+        )
+    ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
+            Box(
+                modifier = Modifier
+                    .size(12.dp)
+                    .clip(CircleShape)
+                    .background(
+                        if (isRunning) MaterialTheme.colorScheme.tertiary
+                        else MaterialTheme.colorScheme.outline
+                    )
+            )
+            Spacer(modifier = Modifier.width(12.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = stringResource(R.string.connection_url),
-                    style = MaterialTheme.typography.bodyLarge
+                    text = stringResource(
+                        if (isRunning) R.string.server_running else R.string.server_stopped
+                    ),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
                 )
-
                 Text(
-                    text = getConnectionUrl(),
-                    style = MaterialTheme.typography.bodyMedium
+                    text = if (isRunning) {
+                        getConnectionUrl().removePrefix("http://").removeSuffix("/sse")
+                    } else {
+                        stringResource(R.string.server_stopped_hint)
+                    },
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
-
-            // Clickable icon to expand/collapse client config
-            Icon(
-                imageVector = if (configExpanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
-                contentDescription = if (configExpanded) stringResource(R.string.collapse_client_configuration) else stringResource(
-                    R.string.expand_client_configuration
-                ),
-                modifier = Modifier
-                    .size(24.dp)
-                    .clickable { configExpanded = !configExpanded }
+            Switch(
+                checked = isRunning,
+                onCheckedChange = onToggleServer
             )
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        // Client configuration instructions - only show when expanded
-        if (configExpanded) {
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant
-                )
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.mcp_client_configuration),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surface
-                        )
-                    ) {
-                        Text(
-                            text = """
-                                    {
-                                        "mcpServers": {
-                                            "phone": {
-                                                "command": "npx",
-                                                "args": [
-                                                    "mcp-remote", 
-                                                    "${getConnectionUrl().removePrefix("ws://")}",
-                                                    "--header",
-                                                    "Authorization: Bearer ${'\$'}{AUTH_TOKEN}",
-                                                    "--allow-http"
-                                                ],
-                                                "env": {
-                                                    "AUTH_TOKEN": "$authToken"
-                                                }
-                                            }
-                                        }
-                                    }
-                                    """.trimIndent(),
-                            style = MaterialTheme.typography.bodySmall,
-                            modifier = Modifier.padding(8.dp)
-                        )
-                    }
-                }
-            }
         }
     }
 }

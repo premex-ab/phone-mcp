@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_sms_name">Enviar SMS</string>
+    <string name="tools_sms_disclaimer">ADVERTENCIA DE PRIVACIDAD Y COSTOS: activación del acceso a SMS\n\nAl activar esta herramienta, concedes a esta aplicación y a cualquier servicio de IA conectado permiso para:\n• Enviar SMS desde tu dispositivo a cualquier número de teléfono\n• Acceder a tu historial de SMS para respuestas contextuales\n• Generar potencialmente cargos de tu operador móvil\n\nReconoces que:\n• Eres responsable de cualquier mensaje enviado y de los costos asociados\n• Eres responsable de asegurarte de que los servicios de IA que conectes no hagan un mal uso de esta capacidad\n• Puedes revocar el acceso en cualquier momento desactivando esta herramienta\n\nNo almacenamos el contenido de tus mensajes, pero los servicios de IA conectados pueden procesar esta información según sus políticas de privacidad.</string>
+</resources>

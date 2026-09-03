@@ -13,9 +13,14 @@ class AndroidApplicationJacocoConventionPlugin : Plugin<Project> {
 
             val androidExtension = extensions.getByType<ApplicationExtension>()
 
+            // Coverage instrumentation forces the variant to be debuggable, so
+            // it must never be enabled for release builds — Play rejects
+            // debuggable artifacts.
             androidExtension.buildTypes.configureEach {
-                enableAndroidTestCoverage = true
-                enableUnitTestCoverage = true
+                if (name == "debug") {
+                    enableAndroidTestCoverage = true
+                    enableUnitTestCoverage = true
+                }
             }
 
             configureJacoco(extensions.getByType<ApplicationAndroidComponentsExtension>())

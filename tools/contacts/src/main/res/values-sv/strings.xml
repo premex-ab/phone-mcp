@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_contacts_name">Läs kontakter</string>
+    <string name="tools_contacts_disclaimer">INTEGRITETSVARNING: Aktivering av kontaktåtkomst\n\nGenom att aktivera det här verktyget ger du den här appen och alla anslutna AI-tjänster tillåtelse att:\n• Läsa din kontaktlista, inklusive namn, telefonnummer och annan personlig information\n• Behandla dessa personuppgifter (PII) för att besvara dina förfrågningar\n\nDu bekräftar att:\n• Du har inhämtat nödvändigt samtycke från personerna i din kontaktlista\n• Du ansvarar för att de AI-tjänster du ansluter följer tillämpliga integritetsregler\n• Du när som helst kan återkalla åtkomsten genom att inaktivera verktyget\n\nVi lagrar inte dina kontaktuppgifter, men anslutna AI-tjänster kan behandla informationen enligt sina integritetspolicyer.</string>
+</resources>

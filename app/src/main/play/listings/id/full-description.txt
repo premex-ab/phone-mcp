@@ -1,0 +1,41 @@
+Phone MCP mengubah ponsel Android Anda menjadi server MCP yang aman dan dapat dihubungkan oleh asisten AI seperti Claude. Minta AI mencari foto, membaca PDF yang diunduh, memeriksa sensor, mengambil gambar, atau mencari kontak — sementara setiap kemampuan tetap di bawah kendali Anda, di perangkat Anda.
+
+Aplikasi ini tidak berisi AI apa pun. Anda menghubungkan asisten yang sudah Anda pakai — Claude Code, Claude Desktop, atau klien mana pun yang mendukung Model Context Protocol.
+
+Akses jarak jauh
+
+Jangkau ponsel Anda dari mana saja melalui phonemcp.ai. Pasangkan klien AI baru dalam waktu kurang dari satu menit: jalankan satu perintah, ketik kode pemasangan yang ditampilkan aplikasi, selesai. Klien yang sudah dipasangkan akan tersambung kembali secara otomatis.
+
+• Berfungsi dari jaringan mana pun — tanpa port forwarding, tanpa VPN, tanpa membuat akun
+• Otorisasi OAuth 2.1 dengan kode pemasangan sekali pakai
+• Ponsel Anda hanya membuat koneksi keluar
+• Relay tidak pernah melihat kredensial lokal ponsel Anda
+• Lihat dan cabut setiap klien AI yang terpasang dari dalam aplikasi
+• Uji coba gratis 30 hari, lalu langganan bulanan atau tahunan yang terjangkau
+
+Jaringan lokal
+
+Di Wi-Fi Anda sendiri, AI terhubung langsung ke ponsel. Tanpa cloud, tanpa langganan, tanpa batas. Ini akan selalu gratis.
+
+Yang bisa dilakukan AI Anda
+
+• File — menelusuri dan membaca foto, unduhan, dan dokumen
+• Kamera — mengambil foto dan langsung menyerahkannya ke model
+• Sensor — akselerometer, giroskop, barometer, cahaya, dan lainnya
+• Lokasi — posisi ponsel saat ini
+• Kontak — mencari orang
+• SMS — menyusun pesan (dengan konfirmasi Anda)
+• Dapat diperluas — aplikasi pihak ketiga dapat menyediakan alat MCP-nya sendiri
+
+Privasi sejak dirancang
+
+• Semua alat nonaktif sampai Anda mengaktifkannya — yang sensitif memerlukan persetujuan eksplisit
+• Autentikasi token Bearer secara lokal, OAuth 2.1 untuk jarak jauh
+• Matikan akses jarak jauh kapan saja; terowongan langsung tertutup
+• Tanpa iklan, tanpa pelacak, dan kami tidak pernah menjual data
+
+Sumber terbuka
+
+Aplikasi dan protokol terowongannya bersumber terbuka di GitHub — audit sendiri apa saja yang keluar dari ponsel Anda: github.com/premex-ab/phone-mcp
+
+Dibuat di Swedia oleh Premex.

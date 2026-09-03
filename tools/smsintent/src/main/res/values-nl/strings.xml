@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_smsintent_name">SMS-intent versturen</string>
+    <string name="tools_smsintent_disclaimer">PRIVACYMELDING: SMS-intents aanmaken\n\nDoor deze tool in te schakelen geef je deze app en alle verbonden AI-diensten toestemming om:\n• SMS-berichten voor te bereiden die je kunt controleren en handmatig versturen\n• SMS-verzendintents aan te maken die je moet goedkeuren voordat ze worden verstuurd\n\nJe erkent dat:\n• Deze tool NIET automatisch berichten kan versturen zonder jouw goedkeuring\n• Je altijd de laatste controle en beslissing hebt voordat een bericht wordt verstuurd\n• Je verantwoordelijk bent voor alle berichten die je kiest te versturen en de bijbehorende kosten\n• Je de toegang op elk moment kunt intrekken door deze tool uit te schakelen\n\nWe slaan de inhoud van je berichten niet op, maar verbonden AI-diensten kunnen deze informatie verwerken volgens hun privacybeleid.</string>
+</resources>

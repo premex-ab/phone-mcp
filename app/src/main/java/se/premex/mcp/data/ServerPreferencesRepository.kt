@@ -3,6 +3,7 @@ package se.premex.mcp.data
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -62,8 +63,83 @@ class ServerPreferencesRepository @Inject constructor(
         }
     }
 
+    /**
+     * Whether the first-run onboarding has been completed
+     */
+    fun isOnboardingCompleted(): Flow<Boolean> {
+        return dataStore.data.map { preferences ->
+            preferences[ONBOARDING_COMPLETED_KEY] ?: false
+        }
+    }
+
+    fun setOnboardingCompleted() {
+        appScope.launch {
+            dataStore.edit { preferences ->
+                preferences[ONBOARDING_COMPLETED_KEY] = true
+            }
+        }
+    }
+
+    /**
+     * Whether an MCP client has ever successfully connected to the server
+     */
+    fun hasClientConnected(): Flow<Boolean> {
+        return dataStore.data.map { preferences ->
+            preferences[CLIENT_CONNECTED_KEY] ?: false
+        }
+    }
+
+    fun markClientConnected() {
+        appScope.launch {
+            dataStore.edit { preferences ->
+                preferences[CLIENT_CONNECTED_KEY] = true
+            }
+        }
+    }
+
+    /**
+     * Whether the in-app review flow has already been requested
+     */
+    fun isReviewPrompted(): Flow<Boolean> {
+        return dataStore.data.map { preferences ->
+            preferences[REVIEW_PROMPTED_KEY] ?: false
+        }
+    }
+
+    fun markReviewPrompted() {
+        appScope.launch {
+            dataStore.edit { preferences ->
+                preferences[REVIEW_PROMPTED_KEY] = true
+            }
+        }
+    }
+
+    /**
+     * The user's intent: true between "start server" and "stop server".
+     * Read by [se.premex.mcp.BootReceiver] to bring the server back after a
+     * phone reboot — a remote-access phone must not go dark because Android
+     * restarted overnight.
+     */
+    fun serverShouldRun(): Flow<Boolean> {
+        return dataStore.data.map { preferences ->
+            preferences[SERVER_SHOULD_RUN_KEY] ?: false
+        }
+    }
+
+    fun setServerShouldRun(shouldRun: Boolean) {
+        appScope.launch {
+            dataStore.edit { preferences ->
+                preferences[SERVER_SHOULD_RUN_KEY] = shouldRun
+            }
+        }
+    }
+
     companion object {
         private val HOST_KEY = stringPreferencesKey("server_host")
         private val PORT_KEY = intPreferencesKey("server_port")
+        private val ONBOARDING_COMPLETED_KEY = booleanPreferencesKey("onboarding_completed")
+        private val CLIENT_CONNECTED_KEY = booleanPreferencesKey("client_connected")
+        private val REVIEW_PROMPTED_KEY = booleanPreferencesKey("review_prompted")
+        private val SERVER_SHOULD_RUN_KEY = booleanPreferencesKey("server_should_run")
     }
 }

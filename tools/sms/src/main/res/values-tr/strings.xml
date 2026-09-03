@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_sms_name">SMS gönderme</string>
+    <string name="tools_sms_disclaimer">GİZLİLİK VE MALİYET UYARISI: SMS erişimini etkinleştirme\n\nBu aracı etkinleştirerek bu uygulamaya ve bağlı tüm yapay zeka hizmetlerine şunlar için izin vermiş olursunuz:\n• Cihazınızdan herhangi bir telefon numarasına SMS mesajı gönderme\n• Bağlama uygun yanıtlar için SMS geçmişinize erişme\n• Mobil operatörünüzden ücret yansımasına neden olabilecek işlemler yapma\n\nŞunları kabul edersiniz:\n• Gönderilen mesajlardan ve ilgili maliyetlerden siz sorumlusunuz\n• Bağladığınız yapay zeka hizmetlerinin bu özelliği kötüye kullanmamasını sağlamak sizin sorumluluğunuzdadır\n• Bu aracı devre dışı bırakarak erişimi istediğiniz zaman iptal edebilirsiniz\n\nMesajlarınızın içeriğini saklamıyoruz, ancak bağlı yapay zeka hizmetleri bu bilgileri kendi gizlilik politikalarına göre işleyebilir.</string>
+</resources>

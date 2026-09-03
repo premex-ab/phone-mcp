@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_sms_name">SMS senden</string>
+    <string name="tools_sms_disclaimer">DATENSCHUTZ- UND KOSTENWARNUNG: Aktivierung des SMS-Zugriffs\n\nMit der Aktivierung dieses Tools erlaubst du dieser App und allen verbundenen KI-Diensten:\n• SMS von deinem Gerät an beliebige Telefonnummern zu senden\n• Auf deinen SMS-Verlauf zuzugreifen, um Antworten mit Kontext zu geben\n• Möglicherweise Kosten bei deinem Mobilfunkanbieter zu verursachen\n\nDu bestätigst, dass:\n• Du für alle gesendeten Nachrichten und die damit verbundenen Kosten verantwortlich bist\n• Du dafür verantwortlich bist, dass die von dir verbundenen KI-Dienste diese Funktion nicht missbrauchen\n• Du den Zugriff jederzeit widerrufen kannst, indem du dieses Tool deaktivierst\n\nWir speichern den Inhalt deiner Nachrichten nicht, aber verbundene KI-Dienste können diese Informationen gemäß ihren Datenschutzrichtlinien verarbeiten.</string>
+</resources>

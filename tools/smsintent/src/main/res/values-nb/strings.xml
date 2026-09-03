@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_smsintent_name">Send SMS-intent</string>
+    <string name="tools_smsintent_disclaimer">PERSONVERNMERKNAD: Oppretting av SMS-intents\n\nVed å aktivere dette verktøyet gir du denne appen og alle tilkoblede AI-tjenester tillatelse til å:\n• Forberede SMS som du kan se over og sende manuelt\n• Opprette SMS-sendingsintents som du må godkjenne før sending\n\nDu bekrefter at:\n• Dette verktøyet IKKE kan sende meldinger automatisk uten din godkjenning\n• Du alltid har den siste gjennomgangen og avgjørelsen før en melding sendes\n• Du er ansvarlig for alle meldinger du velger å sende, og tilhørende kostnader\n• Du når som helst kan trekke tilbake tilgangen ved å deaktivere dette verktøyet\n\nVi lagrer ikke innholdet i meldingene dine, men tilkoblede AI-tjenester kan behandle denne informasjonen i henhold til sine personvernerklæringer.</string>
+</resources>

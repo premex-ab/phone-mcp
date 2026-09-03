@@ -1,5 +1,7 @@
 package se.premex.mcp.smsintent.di
 
+import se.premex.mcp.smsintent.R
+
 import android.Manifest
 import android.content.Context
 import android.os.Build
@@ -19,7 +21,10 @@ import javax.inject.Singleton
 class SmsIntentTool(val smsIntentSender: SmsIntentSender) : McpTool {
     override val id: String = "sms"
     override val name: String = "Send SMS Intent"
+    override val nameRes: Int = R.string.tools_smsintent_name
     override val enabledByDefault: Boolean = false
+    override val disclaimRes: Int = R.string.tools_smsintent_disclaimer
+
     override val disclaim: String?
         get() = "PRIVACY NOTICE: SMS Intent Creation\n\n" +
                 "By enabling this tool, you grant this application and any connected AI services permission to:\n" +

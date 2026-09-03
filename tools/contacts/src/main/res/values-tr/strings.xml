@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_contacts_name">Kişileri okuma</string>
+    <string name="tools_contacts_disclaimer">GİZLİLİK UYARISI: Kişilere erişimi etkinleştirme\n\nBu aracı etkinleştirerek bu uygulamaya ve bağlı tüm yapay zeka hizmetlerine şunlar için izin vermiş olursunuz:\n• Adlar, telefon numaraları ve diğer kişisel bilgiler dahil olmak üzere kişi listenizi okuma\n• İsteklerinizi yanıtlamak için bu kişisel verileri (PII) işleme\n\nŞunları kabul edersiniz:\n• Kişi listenizdeki kişilerden gerekli onayı aldınız\n• Bağladığınız yapay zeka hizmetlerinin geçerli gizlilik düzenlemelerine uymasını sağlamak sizin sorumluluğunuzdadır\n• Bu aracı devre dışı bırakarak erişimi istediğiniz zaman iptal edebilirsiniz\n\nKişi verilerinizi saklamıyoruz, ancak bağlı yapay zeka hizmetleri bu bilgileri kendi gizlilik politikalarına göre işleyebilir.</string>
+</resources>

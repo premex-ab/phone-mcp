@@ -215,6 +215,7 @@ fun SettingsScreen(
             ) {
                 Text(stringResource(R.string.save_settings))
             }
+
         }
     }
 }

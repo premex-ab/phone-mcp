@@ -43,6 +43,10 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace = "se.premex.mcp"
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     lint {
         baseline = file("lint-baseline.xml")
     }
@@ -94,6 +98,9 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation(libs.firebase.analytics)
 
+    // Play Billing for the remote-access subscription
+    implementation(libs.billing.ktx)
+
     // DataStore for persisting authentication token
     implementation(libs.androidx.datastore.preferences)
 
@@ -111,6 +118,10 @@ dependencies {
     implementation(libs.io.modelcontextprotocol.kotlin.sdk)
     implementation(libs.org.slf4j.slf4j.nop)
 
+    // Ktor client for the phonemcp.ai remote tunnel
+    implementation(libs.io.ktor.ktor.client.cio)
+    implementation(libs.io.ktor.ktor.client.websockets)
+
     // Ktor dependencies
     implementation(libs.io.ktor.ktor.server.core)
     implementation(libs.io.ktor.ktor.server.cio)
@@ -122,6 +133,7 @@ dependencies {
 
     // SMS tool - only for full builds (requires SMS permission)
     "fullImplementation"(project(":tools:sms"))
+    "playImplementation"(libs.play.review)
 
     implementation(project(":tools:smsintent"))
     implementation(project(":tools:ads"))
@@ -129,6 +141,8 @@ dependencies {
     implementation(project(":tools:sensor"))
     implementation(project(":tools:camera"))
     implementation(project(":tools:appfunctions"))
+    implementation(project(":tools:location"))
+    implementation(project(":tools:files"))
     implementation(project(":tools:externaltools"))
     implementation(project(":mcp-provider"))
 
@@ -141,6 +155,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.zxing.core)
     ksp(libs.kotlin.metadata.jvm)
 
     testImplementation(libs.junit)

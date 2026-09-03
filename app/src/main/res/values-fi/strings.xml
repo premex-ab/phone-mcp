@@ -1,0 +1,90 @@
+<resources>
+    <string name="server_settings_help_text">• 0.0.0.0: Palvelin kuuntelee kaikkia verkkoliitäntöjä (suositus)\n• 127.0.0.1: Palvelin on käytettävissä vain tältä laitteelta (vain paikallinen)\n• Portti: Vaihda palvelimen porttia, jos 3001 on jo käytössä\n• Asetukset tulevat voimaan, kun palvelin käynnistetään uudelleen</string>
+    <string name="configuration_info">Määritystiedot</string>
+    <string name="valid_port_range_1_65535">Kelvollinen porttialue: 1–65535</string>
+    <string name="server_port">Palvelimen portti</string>
+    <string name="toggle_dropdown">Avaa tai sulje pudotusvalikko</string>
+    <string name="host">Isäntä</string>
+    <string name="server_host">Palvelimen isäntä</string>
+    <string name="server_settings">Palvelimen asetukset</string>
+    <string name="all_interfaces">Kaikki liitännät</string>
+    <string name="localhost_only">Vain localhost</string>
+    <string name="port_number">Porttinumero</string>
+    <string name="save_settings">Tallenna asetukset</string>
+    <string name="all_permissions_are_required_to_run_the_mcp_server_service">Kaikki käyttöoikeudet vaaditaan MCP-palvelinpalvelun suorittamiseen</string>
+    <string name="permission_is_required_to_run_the_mcp_server_service">käyttöoikeus vaaditaan MCP-palvelinpalvelun suorittamiseen</string>
+    <string name="no_description_available">Kuvausta ei ole saatavilla.</string>
+    <string name="warning_for">Varoitus: %1$s</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Peruuta</string>
+    <string name="connection_url">URL:</string>
+    <string name="access_token">Token:</string>
+    <string name="connect_your_ai_client">Yhdistä AI-asiakasohjelmasi</string>
+    <string name="client_other">Muu</string>
+    <string name="claude_code_instructions">Suorita tämä komento tietokoneesi päätteessä ja aloita sitten uusi Claude Code -istunto:</string>
+    <string name="claude_desktop_instructions">Avaa tietokoneellasi Settings → Developer → Edit Config, lisää tämä claude_desktop_config.json-tiedostoon ja käynnistä Claude Desktop kokonaan uudelleen. Vaatii Node.js:n.\n\nHuomautus: ”Add custom connector” -valintaikkuna hyväksyy vain HTTPS-palvelimet — käytä sen sijaan tätä määritystä.</string>
+    <string name="other_client_instructions">Yhdistä mikä tahansa MCP-asiakasohjelma SSE-siirtotavalla ja bearer-tunnuksella:</string>
+    <string name="copy_command">Kopioi komento</string>
+    <string name="copy_configuration">Kopioi määritys</string>
+    <string name="copy_details">Kopioi tiedot</string>
+    <string name="copy">Kopioi %1$s</string>
+    <string name="copied_to_clipboard">Kopioitu leikepöydälle</string>
+    <string name="wifi_note">📶 Tietokoneesi täytyy olla samassa Wi‑Fi-verkossa kuin tämä puhelin.</string>
+    <string name="remote_access_title">Etäkäyttö (phonemcp.ai)</string>
+    <string name="remote_access_description">Tavoita tämä puhelin mistä tahansa suojatun tunnelin kautta. Liikenne kulkee välityspalvelimen kautta, ja jokainen työkalu on edelleen otettava erikseen käyttöön tällä puhelimella.</string>
+    <string name="remote_access_contacting_relay">Otetaan yhteyttä välityspalvelimeen…</string>
+    <string name="server_running">Palvelin käynnissä</string>
+    <string name="server_stopped">Palvelin pysäytetty</string>
+    <string name="server_stopped_hint">Käynnistä palvelin, jotta se voi vastaanottaa yhteyksiä</string>
+    <string name="tools_title">Työkalut</string>
+    <string name="connection_mode_remote">Etäyhteys</string>
+    <string name="connection_mode_local">Lähiverkko</string>
+    <string name="enable_remote_access">Ota etäkäyttö käyttöön</string>
+    <string name="copy_url">Kopioi URL</string>
+    <string name="paired_clients_title">Yhdistetyt AI-asiakasohjelmat</string>
+    <string name="paired_clients_empty">Ei vielä yhtään — yhdistä ensimmäinen asiakasohjelma yllä olevalla koodilla.</string>
+    <string name="refresh_paired_clients">Päivitä yhdistetyt asiakasohjelmat</string>
+    <string name="revoke">Peru</string>
+    <string name="subscribe_monthly">%1$s / kk</string>
+    <string name="subscribe_yearly">%1$s / vuosi</string>
+    <string name="yearly_savings">Vuositilaus säästää %1$d %%.</string>
+    <string name="subscribe">Tilaa</string>
+    <string name="remote_trial_days_left">Ilmainen kokeilu — %1$d päivää jäljellä</string>
+    <string name="remote_subscription_active">Tilaus aktiivinen</string>
+    <string name="remote_grace">Kokeilu päättyi — %1$d lisäpäivää jäljellä ennen kuin etäkäyttö lakkaa</string>
+    <string name="remote_expired">Etäkäyttö on päättynyt. Tilaukset tulevat pian.</string>
+    <string name="battery_hint">Android voi keskeyttää yhteyden syvässä lepotilassa. Vapauta sovellus akun optimoinnista, jotta puhelin pysyy tavoitettavissa mistä tahansa.</string>
+    <string name="battery_button">Salli taustayhteys</string>
+    <string name="restart_after_boot_title">Puhelin käynnistyi uudelleen</string>
+    <string name="restart_after_boot_body">Napauta käynnistääksesi MCP-palvelimesi uudelleen</string>
+    <string name="remote_status_connected">Yhdistetty phonemcp.ai:hin</string>
+    <string name="remote_status_connecting">Yhdistetään phonemcp.ai:hin…</string>
+    <string name="add_client_title">Lisää AI-asiakasohjelma</string>
+    <string name="remote_step_code_1">1. Suorita tämä komento tietokoneesi päätteessä:</string>
+    <string name="remote_step_code_2">2. Suorita Claude Code -istunnossa /mcp → phone → Authenticate. Selain avautuu ja pyytää yhdistämiskoodia.</string>
+    <string name="remote_step_desktop_1">1. Tietokoneellasi: Settings → Connectors → Add custom connector, ja liitä tämä URL:</string>
+    <string name="remote_step_desktop_2">2. Claude Desktop avaa selaimeen kirjautumissivun, joka pyytää yhdistämiskoodia.</string>
+    <string name="remote_step_other_1">1. Yhdistä mikä tahansa MCP-asiakasohjelma, joka tukee etäpalvelimia OAuth 2.1:llä:</string>
+    <string name="remote_step_other_2">2. Valtuutuksen aikana selain pyytää yhdistämiskoodia.</string>
+    <string name="remote_step_3">3. Napauta painiketta ja kirjoita koodi selaimeen:</string>
+    <string name="show_pairing_code">Näytä yhdistämiskoodi</string>
+    <string name="pairing_code_hint">Voimassa 10 minuuttia, kertakäyttöinen. Jo yhdistetyt asiakasohjelmat muodostavat yhteyden uudelleen automaattisesti — uutta koodia ei tarvita.</string>
+    <string name="tools_connect_note">Muutokset tulevat voimaan, kun asiakasohjelma yhdistää seuraavan kerran.</string>
+    <string name="not_on_wifi_warning">Ei yhteyttä Wi-Fi-verkkoon. Palvelin on käytettävissä vain samassa Wi-Fi-verkossa olevilta laitteilta — yhdistä tämä puhelin ensin Wi-Fi-verkkoon.</string>
+    <string name="test_connection">Testaa yhteys</string>
+    <string name="testing_connection">Testataan yhteyttä…</string>
+    <string name="connection_test_success">Palvelin on tavoitettavissa osoitteessa %1$s. Jos MCP-asiakasohjelmasi ei silti voi yhdistää, varmista, että tietokone on samassa Wi-Fi-verkossa — voit avata osoitteen %1$s sen selaimessa tarkistaaksesi.</string>
+    <string name="connection_test_failure">Palvelinta ei tavoitettu osoitteessa %1$s. Varmista, että palvelin on käynnissä ja että isännäksi on asetettu 0.0.0.0 asetuksissa.</string>
+    <string name="onboarding_title">Tervetuloa Phone MCP:hen</string>
+    <string name="onboarding_body">Phone MCP muuttaa tämän puhelimen palvelimeksi, johon AI-avustajat (MCP-asiakasohjelmat) voivat yhdistää. Sovelluksessa ei ole sisäänrakennettua tekoälyä — yhdistät oman avustajasi, esimerkiksi Claude Code- tai Claude Desktop -sovelluksen.
+
+1. Ota käyttöön työkalut, jotka haluat jakaa.
+2. Käynnistä palvelin kytkimestä.
+3. Yhdistä AI-asiakasohjelmasi — etänä phonemcp.ai:n kautta (toimii mistä tahansa) tai saman Wi-Fi-verkon yli.
+
+Päänäytön yhteysopas opastaa sinut molempien läpi.</string>
+    <string name="get_started">Aloita</string>
+    <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">Virheellinen porttinumero. Anna arvo väliltä 1–65535.</string>
+    <string name="back">Takaisin</string>
+    <string name="settings">Asetukset</string>
+</resources>

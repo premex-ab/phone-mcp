@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_files_name">Akses file</string>
+    <string name="tools_files_disclaimer">PERINGATAN PRIVASI: Mengaktifkan akses file\n\nDengan mengaktifkan alat ini, Anda memberikan izin kepada aplikasi ini dan layanan AI apa pun yang terhubung untuk:\n• Menjelajahi file dan direktori di penyimpanan bersama perangkat ini\n• Membaca isi file, termasuk foto, dokumen, dan unduhan\n\nAnda mengakui bahwa:\n• File di perangkat Anda mungkin berisi informasi pribadi yang sensitif\n• Layanan AI yang terhubung dapat memproses isi file sesuai dengan kebijakan privasinya\n• Di Android 13+, akses ke penyimpanan bersama terbatas pada file media (gambar, video, audio)\n• Anda dapat mencabut akses kapan saja dengan menonaktifkan alat ini\n\nKami tidak menyimpan file Anda, tetapi layanan AI yang terhubung dapat memproses informasi ini sesuai dengan kebijakan privasinya.</string>
+</resources>

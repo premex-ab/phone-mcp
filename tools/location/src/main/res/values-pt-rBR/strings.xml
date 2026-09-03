@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_location_name">Localização</string>
+    <string name="tools_location_disclaimer">AVISO DE PRIVACIDADE: ativação do acesso à localização\n\nAo ativar esta ferramenta, você concede a este aplicativo e a qualquer serviço de IA conectado permissão para:\n• Ler a posição geográfica atual do seu telefone (GPS/rede)\n\nVocê reconhece que:\n• Os serviços de IA conectados podem processar sua localização de acordo com suas políticas de privacidade\n• Você pode revogar o acesso a qualquer momento desativando esta ferramenta\n\nNão armazenamos sua localização, mas os serviços de IA conectados podem fazê-lo.</string>
+</resources>

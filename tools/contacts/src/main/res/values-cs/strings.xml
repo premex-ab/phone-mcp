@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_contacts_name">Čtení kontaktů</string>
+    <string name="tools_contacts_disclaimer">UPOZORNĚNÍ NA OCHRANU SOUKROMÍ: povolení přístupu ke kontaktům\n\nPovolením tohoto nástroje udělujete této aplikaci a všem připojeným AI službám oprávnění:\n• Číst váš seznam kontaktů včetně jmen, telefonních čísel a dalších osobních údajů\n• Zpracovávat tyto osobní identifikovatelné údaje (PII) pro odpovídání na vaše požadavky\n\nBerete na vědomí, že:\n• Jste získali potřebný souhlas od osob ve vašem seznamu kontaktů\n• Jste odpovědní za to, že AI služby, které připojíte, dodržují platné předpisy o ochraně soukromí\n• Přístup můžete kdykoli odvolat vypnutím tohoto nástroje\n\nData vašich kontaktů neukládáme, ale připojené AI služby mohou tyto informace zpracovávat podle svých zásad ochrany soukromí.</string>
+</resources>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_contacts_name">Les kontakter</string>
+    <string name="tools_contacts_disclaimer">PERSONVERNADVARSEL: Aktivering av kontakttilgang\n\nVed å aktivere dette verktøyet gir du denne appen og alle tilkoblede AI-tjenester tillatelse til å:\n• Lese kontaktlisten din, inkludert navn, telefonnumre og annen personlig informasjon\n• Behandle disse personopplysningene (PII) for å svare på forespørslene dine\n\nDu bekrefter at:\n• Du har innhentet nødvendig samtykke fra personene i kontaktlisten din\n• Du er ansvarlig for at AI-tjenestene du kobler til, overholder gjeldende personvernregler\n• Du når som helst kan trekke tilbake tilgangen ved å deaktivere dette verktøyet\n\nVi lagrer ikke kontaktdataene dine, men tilkoblede AI-tjenester kan behandle denne informasjonen i henhold til sine personvernerklæringer.</string>
+</resources>

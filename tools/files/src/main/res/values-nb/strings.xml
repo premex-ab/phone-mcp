@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_files_name">Filtilgang</string>
+    <string name="tools_files_disclaimer">PERSONVERNADVARSEL: Aktivering av filtilgang\n\nVed å aktivere dette verktøyet gir du denne appen og alle tilkoblede AI-tjenester tillatelse til å:\n• Bla gjennom filer og mapper i enhetens delte lagring\n• Lese innholdet i filer, inkludert bilder, dokumenter og nedlastinger\n\nDu bekrefter at:\n• Filer på enheten din kan inneholde sensitiv personlig informasjon\n• Tilkoblede AI-tjenester kan behandle filinnhold i henhold til sine personvernerklæringer\n• På Android 13+ er tilgangen til delt lagring begrenset til mediefiler (bilder, video, lyd)\n• Du når som helst kan trekke tilbake tilgangen ved å deaktivere dette verktøyet\n\nVi lagrer ikke filene dine, men tilkoblede AI-tjenester kan behandle denne informasjonen i henhold til sine personvernerklæringer.</string>
+</resources>

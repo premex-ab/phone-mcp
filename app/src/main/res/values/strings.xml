@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MCP server</string>
+    <string name="app_name" translatable="false">MCP server</string>
     <string name="server_settings_help_text">• 0.0.0.0: Server listens on all network interfaces (recommended)\n• 127.0.0.1: Server only accessible from this device (local only)\n• Port: Change the server port if 3001 is already in use\n• Settings take effect after restarting the server</string>
     <string name="configuration_info">Configuration Info</string>
     <string name="valid_port_range_1_65535">Valid port range: 1 - 65535</string>
@@ -18,16 +18,76 @@
     <string name="warning_for">Warning for %1$s</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
-    <string name="mcp_server">MCP Server</string>
-    <string name="mcp_server_control">MCP Server Control</string>
-    <string name="server_status">Server Status:</string>
-    <string name="running">RUNNING</string>
-    <string name="stopped">STOPPED</string>
-    <string name="toggle_server">Toggle Server</string>
-    <string name="connection_url">Connection URL:</string>
-    <string name="collapse_client_configuration">Collapse client configuration</string>
-    <string name="expand_client_configuration">Expand client configuration</string>
-    <string name="mcp_client_configuration">MCP Client Configuration</string>
+    <string name="mcp_server" translatable="false">MCP Server</string>
+    <string name="connection_url">URL:</string>
+    <string name="access_token">Token:</string>
+    <string name="connect_your_ai_client">Connect your AI client</string>
+    <string name="client_claude_code" translatable="false">Claude Code</string>
+    <string name="client_claude_desktop" translatable="false">Claude Desktop</string>
+    <string name="client_other">Other</string>
+    <string name="claude_code_instructions">Run this command in a terminal on your computer, then start a new Claude Code session:</string>
+    <string name="claude_desktop_instructions">Open Settings → Developer → Edit Config on your computer and add this to claude_desktop_config.json, then fully restart Claude Desktop. Requires Node.js.\n\nNote: the “Add custom connector” dialog only accepts HTTPS servers — use this config instead.</string>
+    <string name="other_client_instructions">Connect any MCP client using the SSE transport and a bearer token:</string>
+    <string name="copy_command">Copy command</string>
+    <string name="copy_configuration">Copy configuration</string>
+    <string name="copy_details">Copy details</string>
+    <string name="copy">Copy %1$s</string>
+    <string name="copied_to_clipboard">Copied to clipboard</string>
+    <string name="wifi_note">📶 Your computer must be on the same Wi‑Fi network as this phone.</string>
+    <string name="remote_access_title">Remote access (phonemcp.ai)</string>
+    <string name="remote_access_description">Reach this phone from anywhere through a secure tunnel. Traffic passes through the relay server, and every tool stays opt-in on this phone.</string>
+    <string name="remote_access_contacting_relay">Contacting relay…</string>
+    <string name="server_running">Server running</string>
+    <string name="server_stopped">Server stopped</string>
+    <string name="server_stopped_hint">Start the server to accept connections</string>
+    <string name="tools_title">Tools</string>
+    <string name="connection_mode_remote">Remote</string>
+    <string name="connection_mode_local">Local network</string>
+    <string name="enable_remote_access">Enable remote access</string>
+    <string name="copy_url">Copy URL</string>
+    <string name="paired_clients_title">Paired AI clients</string>
+    <string name="paired_clients_empty">None yet — pair your first client with the code above.</string>
+    <string name="refresh_paired_clients">Refresh paired clients</string>
+    <string name="revoke">Revoke</string>
+    <string name="subscribe_monthly">%1$s / month</string>
+    <string name="subscribe_yearly">%1$s / year</string>
+    <string name="yearly_savings">The yearly plan saves %1$d %%.</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="remote_trial_days_left">Free trial — %1$d days left</string>
+    <string name="remote_subscription_active">Subscription active</string>
+    <string name="remote_grace">Trial ended — %1$d grace days left before remote access stops</string>
+    <string name="remote_expired">Remote access has expired. Subscriptions are coming soon.</string>
+    <string name="battery_hint">Android can pause the connection in deep sleep. Exempt the app from battery optimization to stay reachable from anywhere.</string>
+    <string name="battery_button">Allow background connection</string>
+    <string name="restart_after_boot_title">Phone restarted</string>
+    <string name="restart_after_boot_body">Tap to start your MCP server again</string>
+    <string name="remote_status_connected">Connected to phonemcp.ai</string>
+    <string name="remote_status_connecting">Connecting to phonemcp.ai…</string>
+    <string name="add_client_title">Add an AI client</string>
+    <string name="remote_step_code_1">1. Run this command in a terminal on your computer:</string>
+    <string name="remote_step_code_2">2. Inside Claude Code, run /mcp → phone → Authenticate. Your browser opens and asks for a pairing code.</string>
+    <string name="remote_step_desktop_1">1. On your computer: Settings → Connectors → Add custom connector, and paste this URL:</string>
+    <string name="remote_step_desktop_2">2. Claude Desktop opens a sign-in page in your browser that asks for a pairing code.</string>
+    <string name="remote_step_other_1">1. Connect any MCP client that supports remote servers with OAuth 2.1:</string>
+    <string name="remote_step_other_2">2. During authorization, the browser asks for a pairing code.</string>
+    <string name="remote_step_3">3. Tap the button and type the code into the browser:</string>
+    <string name="show_pairing_code">Show pairing code</string>
+    <string name="pairing_code_hint">Valid for 10 minutes, single use. Already-paired clients reconnect automatically — no new code needed.</string>
+    <string name="tools_connect_note">Changes apply the next time a client connects.</string>
+    <string name="not_on_wifi_warning">Not connected to Wi-Fi. The server can only be reached from devices on the same Wi-Fi network — connect this phone to Wi-Fi first.</string>
+    <string name="test_connection">Test connection</string>
+    <string name="testing_connection">Testing connection…</string>
+    <string name="connection_test_success">Server is reachable at %1$s. If your MCP client still can\'t connect, verify your computer is on the same Wi-Fi — you can open %1$s in its browser to check.</string>
+    <string name="connection_test_failure">Could not reach the server at %1$s. Make sure the server is running and that Host is set to 0.0.0.0 in Settings.</string>
+    <string name="onboarding_title">Welcome to Phone MCP</string>
+    <string name="onboarding_body">Phone MCP turns this phone into a server that AI assistants (MCP clients) can connect to. The app has no AI built in — you connect your own, for example Claude Code or Claude Desktop.
+
+1. Enable the tools you want to expose.
+2. Start the server with the toggle.
+3. Connect your AI client — remotely through phonemcp.ai (works from anywhere), or over the same Wi-Fi network.
+
+The connection guide on the main screen walks you through both.</string>
+    <string name="get_started">Get started</string>
     <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">Invalid port number. Please enter a value between 1 and 65535.</string>
     <string name="back">Back</string>
     <string name="settings">Settings</string>

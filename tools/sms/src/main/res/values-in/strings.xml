@@ -1,0 +1,4 @@
+<resources>
+    <string name="tools_sms_name">Kirim SMS</string>
+    <string name="tools_sms_disclaimer">PERINGATAN PRIVASI DAN BIAYA: Mengaktifkan akses SMS\n\nDengan mengaktifkan alat ini, Anda memberikan izin kepada aplikasi ini dan layanan AI apa pun yang terhubung untuk:\n• Mengirim pesan SMS dari perangkat Anda ke nomor telepon mana pun\n• Mengakses riwayat SMS Anda untuk tanggapan yang sesuai konteks\n• Berpotensi menimbulkan biaya dari operator seluler Anda\n\nAnda mengakui bahwa:\n• Anda bertanggung jawab atas semua pesan yang dikirim dan biaya terkaitnya\n• Anda bertanggung jawab memastikan layanan AI apa pun yang Anda hubungkan tidak akan menyalahgunakan kemampuan ini\n• Anda dapat mencabut akses kapan saja dengan menonaktifkan alat ini\n\nKami tidak menyimpan isi pesan Anda, tetapi layanan AI yang terhubung dapat memproses informasi ini sesuai dengan kebijakan privasinya.</string>
+</resources>

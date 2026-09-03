@@ -1,0 +1,13 @@
+<!-- Monochrome status-bar icon: a phone with a signal dot -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M15.5,1h-7C7.1,1 6,2.1 6,3.5v17C6,21.9 7.1,23 8.5,23h7c1.4,0 2.5,-1.1 2.5,-2.5v-17C18,2.1 16.9,1 15.5,1zM16,18H8V4h8V18z" />
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M12,19.5m-1.2,0a1.2,1.2 0,1 1,2.4 0a1.2,1.2 0,1 1,-2.4 0" />
+</vector>
