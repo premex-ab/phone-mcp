@@ -81,6 +81,8 @@ androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycl
 androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraxVersion" }
 androidx-camera-extensions = { group = "androidx.camera", name = "camera-extensions", version.ref = "cameraxVersion" }
 androidx-appfunctions = { group = "androidx.appfunctions", name = "appfunctions", version.ref = "androidxAppfunctions" }
+androidx-appfunctions-service = { group = "androidx.appfunctions", name = "appfunctions-service", version.ref = "androidxAppfunctions" }
+androidx-appfunctions-compiler = { group = "androidx.appfunctions", name = "appfunctions-compiler", version.ref = "androidxAppfunctions" }
 kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0"
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycleProcess" }
 org-jetbrains-kotlinx-kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0"
@@ -124,6 +126,7 @@ mcp-android-feature-impl = { id = "mcp.android.feature.impl" }
 mcp-android-feature-api = { id = "mcp.android.feature.api" }
 mcp-android-library = { id = "mcp.android.library" }
 mcp-android-tool = { id = "mcp.android.tool" }
+mcp-android-appfunctions = { id = "mcp.android.appfunctions" }
 mcp-android-library-compose = { id = "mcp.android.library.compose" }
 mcp-android-library-jacoco = { id = "mcp.android.library.jacoco" }
 mcp-android-lint = { id = "mcp.android.lint" }

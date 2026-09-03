@@ -1,4 +1,5 @@
 <resources>
+    <string name="appfunctions_app_description">Brug godkendte assistenter på enheden til at klargøre eller sende beskeder, søge i kontakter og tage billeder.</string>
     <string name="server_settings_help_text">• 0.0.0.0: Serveren lytter på alle netværksgrænseflader (anbefales)\n• 127.0.0.1: Serveren kan kun nås fra denne enhed (kun lokalt)\n• Port: Skift serverport, hvis 3001 allerede er i brug\n• Indstillingerne træder i kraft, når serveren genstartes</string>
     <string name="configuration_info">Konfigurationsinfo</string>
     <string name="valid_port_range_1_65535">Gyldigt portinterval: 1–65535</string>

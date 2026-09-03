@@ -8,4 +8,5 @@ android {
 
 dependencies {
     implementation(libs.androidx.appfunctions)
+    api(libs.androidx.appfunctions.service)
 }

@@ -1,5 +1,9 @@
 # Android AppFunctions Integration — Design Spec
 
+> **Implementation status:** Phase 1 and Phase 2 are implemented on the AppFunctions branch.
+> The Phase 2 implementation and flavor-specific decisions are recorded in
+> [`2026-09-03-appfunctions-phase2-outbound-publishing.md`](../plans/2026-09-03-appfunctions-phase2-outbound-publishing.md).
+
 ## Overview
 
 Bridge Google's [Android AppFunctions](https://developer.android.com/reference/androidx/appfunctions/package-summary) (API 36+) into this MCP server in **both** directions:

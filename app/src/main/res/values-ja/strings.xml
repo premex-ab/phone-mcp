@@ -1,4 +1,5 @@
 <resources>
+    <string name="appfunctions_app_description">承認済みのオンデバイス アシスタントを使用して、メッセージの作成や送信、連絡先の検索、写真の撮影を行います。</string>
     <string name="server_settings_help_text">• 0.0.0.0: サーバーはすべてのネットワークインターフェースで待ち受けます（推奨）\n• 127.0.0.1: サーバーはこの端末からのみアクセスできます（ローカルのみ）\n• ポート: 3001 が既に使用中の場合はサーバーポートを変更してください\n• 設定はサーバーの再起動後に有効になります</string>
     <string name="configuration_info">設定情報</string>
     <string name="valid_port_range_1_65535">有効なポート範囲: 1～65535</string>

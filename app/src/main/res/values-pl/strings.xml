@@ -1,4 +1,5 @@
 <resources>
+    <string name="appfunctions_app_description">Korzystaj z autoryzowanych asystentów na urządzeniu, aby przygotowywać lub wysyłać wiadomości, wyszukiwać kontakty i robić zdjęcia.</string>
     <string name="server_settings_help_text">• 0.0.0.0: Serwer nasłuchuje na wszystkich interfejsach sieciowych (zalecane)\n• 127.0.0.1: Serwer dostępny tylko z tego urządzenia (tylko lokalnie)\n• Port: Zmień port serwera, jeśli 3001 jest już zajęty\n• Ustawienia zaczną obowiązywać po ponownym uruchomieniu serwera</string>
     <string name="configuration_info">Informacje o konfiguracji</string>
     <string name="valid_port_range_1_65535">Prawidłowy zakres portów: 1–65535</string>

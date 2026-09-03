@@ -1,4 +1,5 @@
 <resources>
+    <string name="appfunctions_app_description">Gunakan asisten di perangkat yang diizinkan untuk menyiapkan atau mengirim pesan, mencari kontak, dan mengambil foto.</string>
     <string name="server_settings_help_text">• 0.0.0.0: Server mendengarkan di semua antarmuka jaringan (disarankan)\n• 127.0.0.1: Server hanya dapat diakses dari perangkat ini (lokal saja)\n• Port: Ubah port server jika 3001 sudah digunakan\n• Setelan berlaku setelah server dimulai ulang</string>
     <string name="configuration_info">Info Konfigurasi</string>
     <string name="valid_port_range_1_65535">Rentang port yang valid: 1 - 65535</string>

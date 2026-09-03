@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.mcp.android.application.flavors)
     alias(libs.plugins.mcp.android.application.jacoco)
     alias(libs.plugins.mcp.android.application.firebase)
+    alias(libs.plugins.mcp.android.appfunctions)
     alias(libs.plugins.mcp.hilt)
     alias(libs.plugins.play.publisher)
 }

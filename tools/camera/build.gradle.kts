@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.mcp.android.tool)
+    alias(libs.plugins.mcp.android.appfunctions)
 }
 
 android {
@@ -8,6 +9,8 @@ android {
 
 
 dependencies {
+    implementation(project(":tools:appfunctions"))
+
     // Lifecycle process for lifecycle-aware operations
     implementation(libs.androidx.lifecycle.process)
 
