@@ -14,6 +14,7 @@
     <string name="appfunctions_info_preview">Hỗ trợ trợ lý hiện bị giới hạn trong giai đoạn xem trước thử nghiệm của Android, vì vậy khả năng sử dụng phụ thuộc vào thiết bị, trợ lý và tài khoản.</string>
     <string name="manage_permissions">Quản lý quyền</string>
     <string name="close">Đóng</string>
+    <string name="show_appfunctions_discovery">Hiển thị thẻ giới thiệu trên màn hình chính</string>
     <string name="server_settings_help_text">• 0.0.0.0: Máy chủ lắng nghe trên tất cả giao diện mạng (khuyến nghị)\n• 127.0.0.1: Máy chủ chỉ truy cập được từ thiết bị này (chỉ cục bộ)\n• Cổng: Đổi cổng máy chủ nếu 3001 đã được sử dụng\n• Cài đặt có hiệu lực sau khi khởi động lại máy chủ</string>
     <string name="configuration_info">Thông tin cấu hình</string>
     <string name="valid_port_range_1_65535">Phạm vi cổng hợp lệ: 1 - 65535</string>

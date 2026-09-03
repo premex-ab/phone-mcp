@@ -14,6 +14,7 @@
     <string name="appfunctions_info_preview">Assistant support is currently limited during Android’s experimental preview, so availability depends on your device, assistant, and account.</string>
     <string name="manage_permissions">Manage permissions</string>
     <string name="close">Close</string>
+    <string name="show_appfunctions_discovery">Show the discovery card on the home screen</string>
     <string name="app_name" translatable="false">MCP server</string>
     <string name="server_settings_help_text">• 0.0.0.0: Server listens on all IPv4 network interfaces\n• Select a named interface to limit access to that address (for example, a VPN)\n• 127.0.0.1: Server only accessible from this device\n• Settings take effect after restarting the server</string>
     <string name="configuration_info">Configuration Info</string>

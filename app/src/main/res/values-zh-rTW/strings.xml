@@ -14,6 +14,7 @@
     <string name="appfunctions_info_preview">在 Android 實驗性預覽期間，助理支援仍有限，因此可用性取決於你的裝置、助理和帳戶。</string>
     <string name="manage_permissions">管理權限</string>
     <string name="close">關閉</string>
+    <string name="show_appfunctions_discovery">在主畫面顯示功能介紹卡片</string>
     <string name="server_settings_help_text">• 0.0.0.0: 伺服器在所有網路介面上監聽（建議）\n• 127.0.0.1: 伺服器僅可從此裝置存取（僅限本機）\n• 連接埠: 如果 3001 已被使用，請變更伺服器連接埠\n• 設定將在伺服器重新啟動後生效</string>
     <string name="configuration_info">設定資訊</string>
     <string name="valid_port_range_1_65535">有效連接埠範圍: 1 - 65535</string>

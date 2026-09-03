@@ -41,7 +41,8 @@ ADB is the reliable way to verify the integration.
 
 Phone MCP shows an **On-device assistants** card on its home screen. Open **How it works** to see
 whether the phone supports AppFunctions, which actions the installed flavor publishes, how
-authorization differs from the MCP server, and a shortcut to Android's permission settings.
+authorization differs from the MCP server, and a shortcut to Android's permission settings. The
+card can be dismissed with its close button and restored from **Settings → On-device assistants**.
 
 ## Permissions and trust model
 

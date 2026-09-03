@@ -14,6 +14,7 @@
     <string name="appfunctions_info_preview">在 Android 实验性预览期间，助手支持仍然有限，因此可用性取决于您的设备、助手和账号。</string>
     <string name="manage_permissions">管理权限</string>
     <string name="close">关闭</string>
+    <string name="show_appfunctions_discovery">在主屏幕上显示功能介绍卡片</string>
     <string name="server_settings_help_text">• 0.0.0.0: 服务器在所有网络接口上监听（推荐）\n• 127.0.0.1: 服务器仅可从本设备访问（仅限本地）\n• 端口: 如果 3001 已被占用，请更改服务器端口\n• 设置将在服务器重启后生效</string>
     <string name="configuration_info">配置信息</string>
     <string name="valid_port_range_1_65535">有效端口范围: 1 - 65535</string>

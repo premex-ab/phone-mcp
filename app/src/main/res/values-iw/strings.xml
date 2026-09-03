@@ -14,6 +14,7 @@
     <string name="appfunctions_info_preview">התמיכה במסייעים מוגבלת במהלך התצוגה המקדימה הניסיונית של Android, ולכן הזמינות תלויה במכשיר, במסייע ובחשבון.</string>
     <string name="manage_permissions">ניהול הרשאות</string>
     <string name="close">סגירה</string>
+    <string name="show_appfunctions_discovery">הצגת כרטיס הגילוי במסך הבית</string>
     <string name="server_settings_help_text">• 0.0.0.0: השרת מאזין בכל ממשקי הרשת (מומלץ)\n• 127.0.0.1: השרת נגיש רק מהמכשיר הזה (מקומי בלבד)\n• פורט: יש לשנות את פורט השרת אם 3001 כבר בשימוש\n• ההגדרות נכנסות לתוקף לאחר הפעלה מחדש של השרת</string>
     <string name="configuration_info">פרטי תצורה</string>
     <string name="valid_port_range_1_65535">טווח פורטים חוקי: 1–65535</string>

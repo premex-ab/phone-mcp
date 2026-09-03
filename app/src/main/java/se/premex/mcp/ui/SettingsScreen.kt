@@ -33,6 +33,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
@@ -139,7 +140,9 @@ private fun rememberBindableNetworkAddresses(): List<NetworkAddress> {
 fun SettingsScreen(
     serverConfig: ServerConfig,
     onNavigateBack: () -> Unit,
-    onSaveSettings: (host: String, port: Int) -> Unit
+    onSaveSettings: (host: String, port: Int) -> Unit,
+    showAppFunctionsDiscovery: Boolean,
+    onShowAppFunctionsDiscoveryChange: (Boolean) -> Unit,
 ) {
     var selectedHost by remember(serverConfig.host) { mutableStateOf(serverConfig.host) }
     var portInput by remember(serverConfig.port) { mutableStateOf(serverConfig.port.toString()) }
@@ -195,7 +198,7 @@ fun SettingsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.server_settings)) },
+                title = { Text(stringResource(R.string.settings)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
@@ -344,6 +347,36 @@ fun SettingsScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(stringResource(R.string.save_settings))
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            Text(
+                text = stringResource(R.string.appfunctions_title),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        onShowAppFunctionsDiscoveryChange(!showAppFunctionsDiscovery)
+                    }
+                    .padding(vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = stringResource(R.string.show_appfunctions_discovery),
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.weight(1f),
+                )
+                Switch(
+                    checked = showAppFunctionsDiscovery,
+                    onCheckedChange = onShowAppFunctionsDiscoveryChange,
+                )
             }
 
         }

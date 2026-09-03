@@ -14,6 +14,7 @@
     <string name="appfunctions_info_preview">Il supporto degli assistenti è limitato durante l’anteprima sperimentale di Android, quindi la disponibilità dipende da dispositivo, assistente e account.</string>
     <string name="manage_permissions">Gestisci autorizzazioni</string>
     <string name="close">Chiudi</string>
+    <string name="show_appfunctions_discovery">Mostra la scheda informativa nella schermata iniziale</string>
     <string name="server_settings_help_text">• 0.0.0.0: il server è in ascolto su tutte le interfacce di rete (consigliato)\n• 127.0.0.1: il server è accessibile solo da questo dispositivo (solo locale)\n• Porta: cambia la porta del server se la 3001 è già in uso\n• Le impostazioni hanno effetto dopo il riavvio del server</string>
     <string name="configuration_info">Info di configurazione</string>
     <string name="valid_port_range_1_65535">Intervallo di porte valido: 1–65535</string>

@@ -14,6 +14,7 @@
     <string name="appfunctions_info_preview">การรองรับผู้ช่วยยังมีข้อจำกัดในช่วงตัวอย่างทดลองของ Android ดังนั้นความพร้อมใช้งานจึงขึ้นอยู่กับอุปกรณ์ ผู้ช่วย และบัญชีของคุณ</string>
     <string name="manage_permissions">จัดการสิทธิ์</string>
     <string name="close">ปิด</string>
+    <string name="show_appfunctions_discovery">แสดงการ์ดแนะนำบนหน้าจอหลัก</string>
     <string name="server_settings_help_text">• 0.0.0.0: เซิร์ฟเวอร์รับการเชื่อมต่อจากทุกอินเทอร์เฟซเครือข่าย (แนะนำ)\n• 127.0.0.1: เข้าถึงเซิร์ฟเวอร์ได้จากอุปกรณ์นี้เท่านั้น (ภายในเครื่องเท่านั้น)\n• พอร์ต: เปลี่ยนพอร์ตของเซิร์ฟเวอร์หากพอร์ต 3001 ถูกใช้งานอยู่แล้ว\n• การตั้งค่าจะมีผลหลังจากรีสตาร์ทเซิร์ฟเวอร์</string>
     <string name="configuration_info">ข้อมูลการกำหนดค่า</string>
     <string name="valid_port_range_1_65535">ช่วงพอร์ตที่ใช้ได้: 1–65535</string>

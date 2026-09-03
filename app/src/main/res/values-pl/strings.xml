@@ -14,6 +14,7 @@
     <string name="appfunctions_info_preview">Obsługa asystentów jest ograniczona podczas eksperymentalnej wersji zapoznawczej Androida, więc dostępność zależy od urządzenia, asystenta i konta.</string>
     <string name="manage_permissions">Zarządzaj uprawnieniami</string>
     <string name="close">Zamknij</string>
+    <string name="show_appfunctions_discovery">Pokaż kartę informacyjną na ekranie głównym</string>
     <string name="server_settings_help_text">• 0.0.0.0: Serwer nasłuchuje na wszystkich interfejsach sieciowych (zalecane)\n• 127.0.0.1: Serwer dostępny tylko z tego urządzenia (tylko lokalnie)\n• Port: Zmień port serwera, jeśli 3001 jest już zajęty\n• Ustawienia zaczną obowiązywać po ponownym uruchomieniu serwera</string>
     <string name="configuration_info">Informacje o konfiguracji</string>
     <string name="valid_port_range_1_65535">Prawidłowy zakres portów: 1–65535</string>
