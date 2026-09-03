@@ -134,6 +134,21 @@ class ServerPreferencesRepository @Inject constructor(
         }
     }
 
+    /** Whether the AppFunctions discovery card is shown on the home screen. */
+    fun isAppFunctionsDiscoveryVisible(): Flow<Boolean> {
+        return dataStore.data.map { preferences ->
+            preferences[APP_FUNCTIONS_DISCOVERY_VISIBLE_KEY] ?: true
+        }
+    }
+
+    fun setAppFunctionsDiscoveryVisible(isVisible: Boolean) {
+        appScope.launch {
+            dataStore.edit { preferences ->
+                preferences[APP_FUNCTIONS_DISCOVERY_VISIBLE_KEY] = isVisible
+            }
+        }
+    }
+
     companion object {
         private val HOST_KEY = stringPreferencesKey("server_host")
         private val PORT_KEY = intPreferencesKey("server_port")
@@ -141,5 +156,7 @@ class ServerPreferencesRepository @Inject constructor(
         private val CLIENT_CONNECTED_KEY = booleanPreferencesKey("client_connected")
         private val REVIEW_PROMPTED_KEY = booleanPreferencesKey("review_prompted")
         private val SERVER_SHOULD_RUN_KEY = booleanPreferencesKey("server_should_run")
+        private val APP_FUNCTIONS_DISCOVERY_VISIBLE_KEY =
+            booleanPreferencesKey("appfunctions_discovery_visible")
     }
 }

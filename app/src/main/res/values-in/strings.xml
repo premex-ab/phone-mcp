@@ -14,6 +14,7 @@
     <string name="appfunctions_info_preview">Dukungan asisten masih terbatas selama pratinjau eksperimental Android, sehingga ketersediaannya bergantung pada perangkat, asisten, dan akun Anda.</string>
     <string name="manage_permissions">Kelola izin</string>
     <string name="close">Tutup</string>
+    <string name="show_appfunctions_discovery">Tampilkan kartu penemuan di layar utama</string>
     <string name="server_settings_help_text">• 0.0.0.0: Server mendengarkan di semua antarmuka jaringan (disarankan)\n• 127.0.0.1: Server hanya dapat diakses dari perangkat ini (lokal saja)\n• Port: Ubah port server jika 3001 sudah digunakan\n• Setelan berlaku setelah server dimulai ulang</string>
     <string name="configuration_info">Info Konfigurasi</string>
     <string name="valid_port_range_1_65535">Rentang port yang valid: 1 - 65535</string>

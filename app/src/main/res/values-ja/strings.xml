@@ -14,6 +14,7 @@
     <string name="appfunctions_info_preview">Android の試験運用プレビュー中はアシスタントの対応が限定されるため、利用可否はデバイス、アシスタント、アカウントによって異なります。</string>
     <string name="manage_permissions">権限を管理</string>
     <string name="close">閉じる</string>
+    <string name="show_appfunctions_discovery">ホーム画面に案内カードを表示</string>
     <string name="server_settings_help_text">• 0.0.0.0: サーバーはすべてのネットワークインターフェースで待ち受けます（推奨）\n• 127.0.0.1: サーバーはこの端末からのみアクセスできます（ローカルのみ）\n• ポート: 3001 が既に使用中の場合はサーバーポートを変更してください\n• 設定はサーバーの再起動後に有効になります</string>
     <string name="configuration_info">設定情報</string>
     <string name="valid_port_range_1_65535">有効なポート範囲: 1～65535</string>

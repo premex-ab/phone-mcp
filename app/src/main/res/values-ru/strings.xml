@@ -14,6 +14,7 @@
     <string name="appfunctions_info_preview">Поддержка помощников ограничена во время экспериментальной предварительной версии Android, поэтому доступность зависит от устройства, помощника и аккаунта.</string>
     <string name="manage_permissions">Управление разрешениями</string>
     <string name="close">Закрыть</string>
+    <string name="show_appfunctions_discovery">Показывать информационную карточку на главном экране</string>
     <string name="server_settings_help_text">• 0.0.0.0: сервер слушает все сетевые интерфейсы (рекомендуется)\n• 127.0.0.1: сервер доступен только с этого устройства (только локально)\n• Порт: измените порт сервера, если 3001 уже занят\n• Настройки вступают в силу после перезапуска сервера</string>
     <string name="configuration_info">Сведения о конфигурации</string>
     <string name="valid_port_range_1_65535">Допустимый диапазон портов: 1–65535</string>

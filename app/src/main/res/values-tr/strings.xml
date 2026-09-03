@@ -14,6 +14,7 @@
     <string name="appfunctions_info_preview">Android’in deneysel önizlemesi sırasında asistan desteği sınırlıdır; kullanılabilirlik cihazınıza, asistana ve hesaba bağlıdır.</string>
     <string name="manage_permissions">İzinleri yönet</string>
     <string name="close">Kapat</string>
+    <string name="show_appfunctions_discovery">Keşif kartını ana ekranda göster</string>
     <string name="server_settings_help_text">• 0.0.0.0: Sunucu tüm ağ arayüzlerini dinler (önerilir)\n• 127.0.0.1: Sunucuya yalnızca bu cihazdan erişilebilir (yalnızca yerel)\n• Port: 3001 zaten kullanılıyorsa sunucu portunu değiştirin\n• Ayarlar, sunucu yeniden başlatıldığında geçerli olur</string>
     <string name="configuration_info">Yapılandırma bilgisi</string>
     <string name="valid_port_range_1_65535">Geçerli port aralığı: 1–65535</string>

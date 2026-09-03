@@ -14,6 +14,7 @@
     <string name="appfunctions_info_preview">Die Assistentenunterstützung ist während der experimentellen Android-Vorschau derzeit eingeschränkt. Die Verfügbarkeit hängt von Gerät, Assistent und Konto ab.</string>
     <string name="manage_permissions">Berechtigungen verwalten</string>
     <string name="close">Schließen</string>
+    <string name="show_appfunctions_discovery">Infokarte auf dem Startbildschirm anzeigen</string>
     <string name="server_settings_help_text">• 0.0.0.0: Der Server lauscht auf allen Netzwerkschnittstellen (empfohlen)\n• 127.0.0.1: Der Server ist nur von diesem Gerät aus erreichbar (nur lokal)\n• Port: Ändere den Serverport, falls 3001 bereits belegt ist\n• Die Einstellungen werden nach einem Neustart des Servers wirksam</string>
     <string name="configuration_info">Konfigurationsinfo</string>
     <string name="valid_port_range_1_65535">Gültiger Portbereich: 1–65535</string>

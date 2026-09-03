@@ -14,6 +14,7 @@
     <string name="appfunctions_info_preview">La compatibilidad con asistentes está limitada durante la vista previa experimental de Android, por lo que la disponibilidad depende del dispositivo, el asistente y la cuenta.</string>
     <string name="manage_permissions">Gestionar permisos</string>
     <string name="close">Cerrar</string>
+    <string name="show_appfunctions_discovery">Mostrar la tarjeta informativa en la pantalla principal</string>
     <string name="server_settings_help_text">• 0.0.0.0: el servidor escucha en todas las interfaces de red (recomendado)\n• 127.0.0.1: el servidor solo es accesible desde este dispositivo (solo local)\n• Puerto: cambia el puerto del servidor si el 3001 ya está en uso\n• La configuración surte efecto después de reiniciar el servidor</string>
     <string name="configuration_info">Información de configuración</string>
     <string name="valid_port_range_1_65535">Rango de puertos válido: 1–65535</string>

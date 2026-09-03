@@ -14,6 +14,7 @@
     <string name="appfunctions_info_preview">Podpora asistentů je během experimentálního náhledu Androidu omezená, takže dostupnost závisí na zařízení, asistentovi a účtu.</string>
     <string name="manage_permissions">Spravovat oprávnění</string>
     <string name="close">Zavřít</string>
+    <string name="show_appfunctions_discovery">Zobrazit informační kartu na domovské obrazovce</string>
     <string name="server_settings_help_text">• 0.0.0.0: server naslouchá na všech síťových rozhraních (doporučeno)\n• 127.0.0.1: server je dostupný pouze z tohoto zařízení (jen místně)\n• Port: změňte port serveru, pokud je 3001 již obsazen\n• Nastavení se projeví po restartu serveru</string>
     <string name="configuration_info">Informace o konfiguraci</string>
     <string name="valid_port_range_1_65535">Platný rozsah portů: 1–65535</string>

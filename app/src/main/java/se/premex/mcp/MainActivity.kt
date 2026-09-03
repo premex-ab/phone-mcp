@@ -36,6 +36,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Android
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -162,6 +163,9 @@ class MainActivity : ComponentActivity() {
                 .collectAsState(initial = false)
             val reviewPrompted by serverPreferencesRepository.isReviewPrompted()
                 .collectAsState(initial = true)
+            val appFunctionsDiscoveryVisible by serverPreferencesRepository
+                .isAppFunctionsDiscoveryVisible()
+                .collectAsState(initial = false)
 
             // Ask for a Play Store review once, after the user has had their
             // first successful MCP client connection — the moment the app has
@@ -207,7 +211,11 @@ class MainActivity : ComponentActivity() {
                             onToggleTool = { tool ->
                                 handleToolToggle(tool)
                             },
-                            authToken = authToken
+                            authToken = authToken,
+                            showAppFunctionsDiscovery = appFunctionsDiscoveryVisible,
+                            onDismissAppFunctionsDiscovery = {
+                                serverPreferencesRepository.setAppFunctionsDiscoveryVisible(false)
+                            },
                         )
 
                         // First-run onboarding explaining what the app is and how to connect
@@ -244,7 +252,11 @@ class MainActivity : ComponentActivity() {
                             onNavigateBack = { navController.popBackStack() },
                             onSaveSettings = { host: String, port: Int ->
                                 serverPreferencesRepository.updateServerConfig(host, port)
-                            }
+                            },
+                            showAppFunctionsDiscovery = appFunctionsDiscoveryVisible,
+                            onShowAppFunctionsDiscoveryChange = {
+                                serverPreferencesRepository.setAppFunctionsDiscoveryVisible(it)
+                            },
                         )
                     }
                 }
@@ -405,7 +417,9 @@ fun HomeScreen(
     toolEnabledStates: Map<String, Boolean>,
     onToggleTool: (McpTool) -> Unit,
     authToken: String = "YTpi",
-    isSelectedInterfaceAvailable: () -> Boolean = { true }
+    isSelectedInterfaceAvailable: () -> Boolean = { true },
+    showAppFunctionsDiscovery: Boolean = true,
+    onDismissAppFunctionsDiscovery: () -> Unit = {},
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -432,7 +446,9 @@ fun HomeScreen(
             toolEnabledStates = toolEnabledStates,
             onToggleTool = onToggleTool,
             authToken = authToken,
-            isSelectedInterfaceAvailable = isSelectedInterfaceAvailable
+            isSelectedInterfaceAvailable = isSelectedInterfaceAvailable,
+            showAppFunctionsDiscovery = showAppFunctionsDiscovery,
+            onDismissAppFunctionsDiscovery = onDismissAppFunctionsDiscovery,
         )
     }
 }
@@ -447,7 +463,9 @@ fun McpServerControl(
     toolEnabledStates: Map<String, Boolean>,
     onToggleTool: (McpTool) -> Unit,
     authToken: String = "YTpi",
-    isSelectedInterfaceAvailable: () -> Boolean = { true }
+    isSelectedInterfaceAvailable: () -> Boolean = { true },
+    showAppFunctionsDiscovery: Boolean = true,
+    onDismissAppFunctionsDiscovery: () -> Unit = {},
 ) {
     val safeDrawingPadding = WindowInsets.safeDrawing.asPaddingValues()
 
@@ -469,11 +487,14 @@ fun McpServerControl(
             )
         }
 
-        item {
-            AppFunctionsDiscoveryCard(
-                isSupported = Build.VERSION.SDK_INT >= 36,
-                tools = tools,
-            )
+        if (showAppFunctionsDiscovery) {
+            item {
+                AppFunctionsDiscoveryCard(
+                    isSupported = Build.VERSION.SDK_INT >= 36,
+                    tools = tools,
+                    onDismiss = onDismissAppFunctionsDiscovery,
+                )
+            }
         }
 
         if (isRunning) {
@@ -539,6 +560,7 @@ fun McpServerControl(
 private fun AppFunctionsDiscoveryCard(
     isSupported: Boolean,
     tools: List<McpTool>,
+    onDismiss: () -> Unit,
 ) {
     var showDetails by remember { mutableStateOf(false) }
     val appFunctionTools = tools.filter { it.appFunctionIds.isNotEmpty() }
@@ -580,6 +602,16 @@ private fun AppFunctionsDiscoveryCard(
                         text = stringResource(R.string.experimental),
                         style = MaterialTheme.typography.labelMedium,
                         modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
+                    )
+                }
+                IconButton(
+                    onClick = onDismiss,
+                    modifier = Modifier.size(40.dp),
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Close,
+                        contentDescription = stringResource(R.string.close),
+                        modifier = Modifier.size(20.dp),
                     )
                 }
             }

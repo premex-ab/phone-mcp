@@ -14,6 +14,7 @@
     <string name="appfunctions_info_preview">Assistentstøtten er begrenset under Androids eksperimentelle forhåndsvisning, så tilgjengeligheten avhenger av enhet, assistent og konto.</string>
     <string name="manage_permissions">Administrer tillatelser</string>
     <string name="close">Lukk</string>
+    <string name="show_appfunctions_discovery">Vis oppdagelseskortet på startskjermen</string>
     <string name="server_settings_help_text">• 0.0.0.0: Serveren lytter på alle nettverksgrensesnitt (anbefales)\n• 127.0.0.1: Serveren kan bare nås fra denne enheten (kun lokalt)\n• Port: Bytt serverport hvis 3001 allerede er i bruk\n• Innstillingene trer i kraft når serveren startes på nytt</string>
     <string name="configuration_info">Konfigurasjonsinfo</string>
     <string name="valid_port_range_1_65535">Gyldig portområde: 1–65535</string>

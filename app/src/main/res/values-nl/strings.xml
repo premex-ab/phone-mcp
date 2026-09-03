@@ -14,6 +14,7 @@
     <string name="appfunctions_info_preview">Assistentondersteuning is beperkt tijdens de experimentele Android-preview. Beschikbaarheid hangt daarom af van apparaat, assistent en account.</string>
     <string name="manage_permissions">Machtigingen beheren</string>
     <string name="close">Sluiten</string>
+    <string name="show_appfunctions_discovery">Ontdekkingskaart op het startscherm tonen</string>
     <string name="server_settings_help_text">• 0.0.0.0: De server luistert op alle netwerkinterfaces (aanbevolen)\n• 127.0.0.1: De server is alleen bereikbaar vanaf dit apparaat (alleen lokaal)\n• Poort: Wijzig de serverpoort als 3001 al in gebruik is\n• De instellingen worden van kracht nadat de server opnieuw is gestart</string>
     <string name="configuration_info">Configuratie-info</string>
     <string name="valid_port_range_1_65535">Geldig poortbereik: 1–65535</string>
