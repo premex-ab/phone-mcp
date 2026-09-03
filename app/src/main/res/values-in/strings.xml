@@ -6,10 +6,11 @@
     <string name="appfunctions_unsupported_description">Akses langsung asisten memerlukan Android 16 atau yang lebih baru. Server MCP Anda tetap berfungsi normal.</string>
     <string name="appfunctions_capabilities_play">Kontak • Kamera • Draf SMS</string>
     <string name="appfunctions_capabilities_full">Kontak • Kamera • Draf SMS • SMS langsung</string>
+    <string name="appfunctions_switches_hint">Sakelar alat di bawah mengontrol akses MCP dan asisten.</string>
     <string name="how_appfunctions_work">Cara kerjanya</string>
     <string name="appfunctions_info_available">Android AppFunctions memungkinkan asisten yang kompatibel dan diizinkan menggunakan tindakan ini secara lokal di ponsel ini.</string>
     <string name="appfunctions_info_unavailable">Ponsel ini tidak mendukung Android AppFunctions. Diperlukan Android 16 atau yang lebih baru.</string>
-    <string name="appfunctions_info_security">Android menentukan asisten mana yang diizinkan. Panggilan ini tidak menggunakan token server MCP atau sakelar alatnya. Izin Kontak, Kamera, Notifikasi, dan SMS tetap berlaku. SMS yang disiapkan selalu menunggu untuk Anda tinjau dan kirim; SMS langsung dikirim seketika dan hanya tersedia dalam build Full.</string>
+    <string name="appfunctions_info_security">Android menentukan asisten mana yang diizinkan. Panggilan ini tidak menggunakan token server MCP. Sakelar alat mengontrol akses melalui MCP dan AppFunctions, dan izin Android tetap berlaku. SMS yang disiapkan selalu menunggu untuk Anda tinjau dan kirim; SMS langsung dikirim seketika dan hanya tersedia dalam build Full.</string>
     <string name="appfunctions_info_preview">Dukungan asisten masih terbatas selama pratinjau eksperimental Android, sehingga ketersediaannya bergantung pada perangkat, asisten, dan akun Anda.</string>
     <string name="manage_permissions">Kelola izin</string>
     <string name="close">Tutup</string>
@@ -83,7 +84,7 @@
     <string name="remote_step_3">3. Ketuk tombol dan ketik kodenya di browser:</string>
     <string name="show_pairing_code">Tampilkan kode pemasangan</string>
     <string name="pairing_code_hint">Berlaku selama 10 menit, sekali pakai. Klien yang sudah dipasangkan terhubung kembali secara otomatis — tidak perlu kode baru.</string>
-    <string name="tools_connect_note">Perubahan berlaku saat klien terhubung berikutnya.</string>
+    <string name="tools_connect_note">Perubahan langsung berlaku untuk asisten dan saat klien MCP terhubung berikutnya.</string>
     <string name="not_on_wifi_warning">Tidak terhubung ke Wi-Fi. Server hanya dapat dijangkau dari perangkat di jaringan Wi-Fi yang sama — hubungkan ponsel ini ke Wi-Fi terlebih dahulu.</string>
     <string name="test_connection">Uji koneksi</string>
     <string name="testing_connection">Menguji koneksi…</string>

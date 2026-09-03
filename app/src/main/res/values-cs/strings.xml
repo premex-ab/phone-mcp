@@ -6,10 +6,11 @@
     <string name="appfunctions_unsupported_description">Přímý přístup asistenta vyžaduje Android 16 nebo novější. Server MCP bude dál fungovat jako obvykle.</string>
     <string name="appfunctions_capabilities_play">Kontakty • Fotoaparát • Koncepty SMS</string>
     <string name="appfunctions_capabilities_full">Kontakty • Fotoaparát • Koncepty SMS • Přímé SMS</string>
+    <string name="appfunctions_switches_hint">Přepínače nástrojů níže řídí přístup přes MCP i asistenty.</string>
     <string name="how_appfunctions_work">Jak to funguje</string>
     <string name="appfunctions_info_available">Android AppFunctions umožňují kompatibilním autorizovaným asistentům používat tyto akce místně v tomto telefonu.</string>
     <string name="appfunctions_info_unavailable">Tento telefon nepodporuje Android AppFunctions. Je vyžadován Android 16 nebo novější.</string>
-    <string name="appfunctions_info_security">Android určuje, kteří asistenti jsou autorizovaní. Tato volání nepoužívají token serveru MCP ani jeho přepínače nástrojů. Oprávnění pro Kontakty, Fotoaparát, Oznámení a SMS platí i nadále. Připravená SMS vždy čeká na vaši kontrolu a odeslání; Přímá SMS se odešle okamžitě a je jen ve verzi Full.</string>
+    <string name="appfunctions_info_security">Android určuje, kteří asistenti jsou autorizovaní. Tato volání nepoužívají token serveru MCP. Přepínače nástrojů řídí přístup přes MCP i AppFunctions a oprávnění Androidu platí i nadále. Připravená SMS vždy čeká na vaši kontrolu a odeslání; Přímá SMS se odešle okamžitě a je jen ve verzi Full.</string>
     <string name="appfunctions_info_preview">Podpora asistentů je během experimentálního náhledu Androidu omezená, takže dostupnost závisí na zařízení, asistentovi a účtu.</string>
     <string name="manage_permissions">Spravovat oprávnění</string>
     <string name="close">Zavřít</string>
@@ -83,7 +84,7 @@
     <string name="remote_step_3">3. Klepněte na tlačítko a zadejte kód do prohlížeče:</string>
     <string name="show_pairing_code">Zobrazit párovací kód</string>
     <string name="pairing_code_hint">Platí 10 minut, na jedno použití. Již spárovaní klienti se znovu připojí automaticky — nový kód není potřeba.</string>
-    <string name="tools_connect_note">Změny se projeví při příštím připojení klienta.</string>
+    <string name="tools_connect_note">Změny platí pro asistenty okamžitě a pro klienta MCP při příštím připojení.</string>
     <string name="not_on_wifi_warning">Nepřipojeno k Wi-Fi. Server je dostupný pouze ze zařízení na stejné Wi-Fi síti — nejprve připojte tento telefon k Wi-Fi.</string>
     <string name="test_connection">Otestovat připojení</string>
     <string name="testing_connection">Testování připojení…</string>

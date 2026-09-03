@@ -19,7 +19,7 @@ On your own Wi-Fi, your AI connects directly to the phone. No cloud, no subscrip
 
 On-device assistants (experimental)
 
-On Android 16 and newer, compatible assistants can use selected Phone MCP actions directly through Android AppFunctions — no MCP server connection needed. Search contacts, take a photo or prepare an SMS for review while normal Android permissions continue to apply. Assistant support is currently limited during Android's experimental preview and depends on your device, assistant and account.
+On Android 16 and newer, assistants with AppFunctions access can use enabled Phone MCP tools directly — no MCP server connection needed. Search contacts, take a photo, get location and sensor snapshots, browse files or prepare an SMS for review. The same tool switches control MCP and assistant access, while normal Android permissions continue to apply. Assistant support is currently limited during Android's experimental preview and depends on your device, assistant and account.
 
 What your AI can do
 

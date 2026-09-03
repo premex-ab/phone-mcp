@@ -6,10 +6,11 @@
     <string name="appfunctions_unsupported_description">助手直接访问需要 Android 16 或更高版本。MCP 服务器仍可正常工作。</string>
     <string name="appfunctions_capabilities_play">联系人 • 相机 • 短信草稿</string>
     <string name="appfunctions_capabilities_full">联系人 • 相机 • 短信草稿 • 直接发送短信</string>
+    <string name="appfunctions_switches_hint">下方的工具开关同时控制 MCP 和助手访问。</string>
     <string name="how_appfunctions_work">工作原理</string>
     <string name="appfunctions_info_available">Android AppFunctions 可让兼容且获授权的助手在此手机上本地使用这些操作。</string>
     <string name="appfunctions_info_unavailable">此手机不支持 Android AppFunctions。需要 Android 16 或更高版本。</string>
-    <string name="appfunctions_info_security">Android 决定哪些助手获得授权。这些调用不使用 MCP 服务器令牌或工具开关。联系人、相机、通知和短信权限仍然适用。准备好的短信始终由您审核并发送；直接短信会立即发送，并且仅包含在 Full 版本中。</string>
+    <string name="appfunctions_info_security">Android 决定哪些助手获得授权。这些调用不使用 MCP 服务器令牌。工具开关同时控制通过 MCP 和 AppFunctions 的访问，Android 权限仍然适用。准备好的短信始终由您审核并发送；直接短信会立即发送，并且仅包含在 Full 版本中。</string>
     <string name="appfunctions_info_preview">在 Android 实验性预览期间，助手支持仍然有限，因此可用性取决于您的设备、助手和账号。</string>
     <string name="manage_permissions">管理权限</string>
     <string name="close">关闭</string>
@@ -83,7 +84,7 @@
     <string name="remote_step_3">3. 点按按钮，然后在浏览器中输入配对码：</string>
     <string name="show_pairing_code">显示配对码</string>
     <string name="pairing_code_hint">有效期 10 分钟，仅限使用一次。已配对的客户端会自动重新连接 — 无需新配对码。</string>
-    <string name="tools_connect_note">更改将在客户端下次连接时生效。</string>
+    <string name="tools_connect_note">更改会立即应用于助手，并在 MCP 客户端下次连接时应用。</string>
     <string name="not_on_wifi_warning">未连接到 Wi-Fi。只有同一 Wi-Fi 网络中的设备才能访问服务器 — 请先将本手机连接到 Wi-Fi。</string>
     <string name="test_connection">测试连接</string>
     <string name="testing_connection">正在测试连接…</string>

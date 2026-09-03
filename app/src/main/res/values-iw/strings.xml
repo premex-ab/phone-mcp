@@ -6,10 +6,11 @@
     <string name="appfunctions_unsupported_description">גישה ישירה של מסייע דורשת Android 16 ואילך. שרת MCP ימשיך לפעול כרגיל.</string>
     <string name="appfunctions_capabilities_play">אנשי קשר • מצלמה • טיוטות SMS</string>
     <string name="appfunctions_capabilities_full">אנשי קשר • מצלמה • טיוטות SMS • SMS ישיר</string>
+    <string name="appfunctions_switches_hint">מתגי הכלים שלמטה שולטים בגישה דרך MCP ודרך מסייעים.</string>
     <string name="how_appfunctions_work">איך זה עובד</string>
     <string name="appfunctions_info_available">Android AppFunctions מאפשר למסייעים תואמים ומורשים להשתמש בפעולות האלה באופן מקומי בטלפון.</string>
     <string name="appfunctions_info_unavailable">הטלפון הזה אינו תומך ב-Android AppFunctions. נדרשת Android 16 ואילך.</string>
-    <string name="appfunctions_info_security">Android קובע אילו מסייעים מורשים. הקריאות האלה אינן משתמשות באסימון של שרת MCP או במתגי הכלים שלו. ההרשאות לאנשי קשר, למצלמה, להתראות ול-SMS עדיין חלות. SMS מוכן תמיד נשאר לבדיקה ולשליחה שלך; SMS ישיר נשלח מיד ונכלל רק בגרסת Full.</string>
+    <string name="appfunctions_info_security">Android קובע אילו מסייעים מורשים. הקריאות האלה אינן משתמשות באסימון של שרת MCP. מתגי הכלים שולטים בגישה דרך MCP ו-AppFunctions, והרשאות Android עדיין חלות. SMS מוכן תמיד נשאר לבדיקה ולשליחה שלך; SMS ישיר נשלח מיד ונכלל רק בגרסת Full.</string>
     <string name="appfunctions_info_preview">התמיכה במסייעים מוגבלת במהלך התצוגה המקדימה הניסיונית של Android, ולכן הזמינות תלויה במכשיר, במסייע ובחשבון.</string>
     <string name="manage_permissions">ניהול הרשאות</string>
     <string name="close">סגירה</string>
@@ -83,7 +84,7 @@
     <string name="remote_step_3">3. יש להקיש על הכפתור ולהקליד את הקוד בדפדפן:</string>
     <string name="show_pairing_code">הצגת קוד צימוד</string>
     <string name="pairing_code_hint">בתוקף ל-10 דקות, לשימוש חד-פעמי. לקוחות שכבר צומדו יתחברו מחדש אוטומטית — אין צורך בקוד חדש.</string>
-    <string name="tools_connect_note">השינויים ייכנסו לתוקף בפעם הבאה שלקוח יתחבר.</string>
+    <string name="tools_connect_note">השינויים חלים מיד על מסייעים ובחיבור הבא של לקוח MCP.</string>
     <string name="not_on_wifi_warning">אין חיבור ל-Wi-Fi. אפשר להגיע לשרת רק ממכשירים באותה רשת Wi-Fi — יש לחבר קודם את הטלפון הזה ל-Wi-Fi.</string>
     <string name="test_connection">בדיקת חיבור</string>
     <string name="testing_connection">בודק את החיבור…</string>

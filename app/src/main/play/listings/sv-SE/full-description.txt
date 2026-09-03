@@ -19,7 +19,7 @@ På ditt eget Wi-Fi ansluter din AI direkt till mobilen. Inget moln, ingen prenu
 
 Assistenter på enheten (experimentellt)
 
-På Android 16 och senare kan kompatibla assistenter använda utvalda Phone MCP-funktioner direkt via Android AppFunctions — ingen anslutning till MCP-servern behövs. Sök i kontakter, ta ett foto eller förbered ett SMS för granskning medan vanliga Android-behörigheter fortsätter att gälla. Stödet för assistenter är för närvarande begränsat under Androids experimentella förhandsvisning och beror på enhet, assistent och konto.
+På Android 16 och senare kan assistenter med åtkomst till AppFunctions använda aktiverade Phone MCP-verktyg direkt — ingen anslutning till MCP-servern behövs. Sök i kontakter, ta ett foto, hämta plats- och sensorinformation, bläddra bland filer eller förbered ett SMS för granskning. Samma verktygsreglage styr MCP- och assistentåtkomst, medan vanliga Android-behörigheter fortsätter att gälla. Stödet för assistenter är för närvarande begränsat under Androids experimentella förhandsvisning och beror på enhet, assistent och konto.
 
 Vad din AI kan göra
 

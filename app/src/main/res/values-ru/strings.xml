@@ -6,10 +6,11 @@
     <string name="appfunctions_unsupported_description">Для прямого доступа помощника требуется Android 16 или новее. Сервер MCP продолжит работать как обычно.</string>
     <string name="appfunctions_capabilities_play">Контакты • Камера • Черновики SMS</string>
     <string name="appfunctions_capabilities_full">Контакты • Камера • Черновики SMS • Прямая отправка SMS</string>
+    <string name="appfunctions_switches_hint">Переключатели инструментов ниже управляют доступом через MCP и ассистентов.</string>
     <string name="how_appfunctions_work">Как это работает</string>
     <string name="appfunctions_info_available">Android AppFunctions позволяет совместимым авторизованным помощникам локально использовать эти действия на телефоне.</string>
     <string name="appfunctions_info_unavailable">Этот телефон не поддерживает Android AppFunctions. Требуется Android 16 или новее.</string>
-    <string name="appfunctions_info_security">Android определяет, какие помощники авторизованы. Эти вызовы не используют токен сервера MCP или его переключатели инструментов. Разрешения для Контактов, Камеры, Уведомлений и SMS продолжают действовать. Подготовленное SMS всегда остаётся для вашей проверки и отправки; прямая отправка SMS выполняется немедленно и доступна только в версии Full.</string>
+    <string name="appfunctions_info_security">Android определяет, какие помощники авторизованы. Эти вызовы не используют токен сервера MCP. Переключатели инструментов управляют доступом через MCP и AppFunctions, а разрешения Android продолжают действовать. Подготовленное SMS всегда остаётся для вашей проверки и отправки; прямая отправка SMS выполняется немедленно и доступна только в версии Full.</string>
     <string name="appfunctions_info_preview">Поддержка помощников ограничена во время экспериментальной предварительной версии Android, поэтому доступность зависит от устройства, помощника и аккаунта.</string>
     <string name="manage_permissions">Управление разрешениями</string>
     <string name="close">Закрыть</string>
@@ -83,7 +84,7 @@
     <string name="remote_step_3">3. Нажмите кнопку и введите код в браузере:</string>
     <string name="show_pairing_code">Показать код сопряжения</string>
     <string name="pairing_code_hint">Действует 10 минут, одноразовый. Уже сопряжённые клиенты переподключаются автоматически — новый код не нужен.</string>
-    <string name="tools_connect_note">Изменения вступят в силу при следующем подключении клиента.</string>
+    <string name="tools_connect_note">Изменения применяются к помощникам сразу, а к клиенту MCP — при следующем подключении.</string>
     <string name="not_on_wifi_warning">Нет подключения к Wi-Fi. Сервер доступен только устройствам в той же сети Wi-Fi — сначала подключите этот телефон к Wi-Fi.</string>
     <string name="test_connection">Проверить соединение</string>
     <string name="testing_connection">Проверка соединения…</string>

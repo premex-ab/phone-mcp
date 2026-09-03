@@ -3,6 +3,7 @@ package se.premex.mcp.location.tool
 import se.premex.mcp.location.R
 
 import io.modelcontextprotocol.kotlin.sdk.server.Server
+import se.premex.mcp.location.appfunctions.LocationAppFunctionsIds
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.location.configurator.LocationToolConfiguratorImpl
 
@@ -13,6 +14,8 @@ class LocationTool(
     override val name: String = "Location"
     override val nameRes: Int = R.string.tools_location_name
     override val enabledByDefault: Boolean = false
+    override val appFunctionIds: Set<String> =
+        setOf(LocationAppFunctionsIds.GET_CURRENT_LOCATION_ID)
     override val disclaimRes: Int = R.string.tools_location_disclaimer
 
     override val disclaim: String?

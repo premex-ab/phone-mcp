@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AppFunctionAppMetadata xmlns:appfn="http://schemas.android.com/apk/androidx.appfunctions"
-    appfn:description="Provides phone actions and device data to authorized on-device agents. Direct SMS is available only in the full distribution and sends immediately. SMS intent prepares a message for user review. Contact search requires contacts permission. Camera capture requires camera permission."
+    appfn:description="Provides enabled Phone MCP tools to authorized on-device agents, including contacts, camera, location, sensor snapshots, bounded file access, and SMS. Tool switches and Android permissions apply. Direct SMS is available only in the full distribution and sends immediately; SMS intent prepares a message for user review."
     appfn:displayDescription="@string/appfunctions_app_description" />

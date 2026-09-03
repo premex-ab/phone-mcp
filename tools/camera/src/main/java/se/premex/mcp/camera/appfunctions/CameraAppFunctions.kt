@@ -27,7 +27,7 @@ class CameraAppFunctions @Inject constructor(
      * @throws AppFunctionPermissionRequiredException If camera permission has not been granted.
      * @throws AppFunctionInvalidArgumentException If lens or quality is unsupported.
      */
-    @AppFunction(isDescribedByKDoc = true)
+    @AppFunction(isDescribedByKDoc = true, isEnabled = false)
     suspend fun takePhoto(
         appFunctionContext: AppFunctionContext,
         lens: String? = null,

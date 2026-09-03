@@ -6,10 +6,11 @@
     <string name="appfunctions_unsupported_description">Avustajan suora käyttö vaatii Android 16:n tai uudemman. MCP-palvelimesi toimii edelleen normaalisti.</string>
     <string name="appfunctions_capabilities_play">Yhteystiedot • Kamera • SMS-luonnokset</string>
     <string name="appfunctions_capabilities_full">Yhteystiedot • Kamera • SMS-luonnokset • Suora SMS</string>
+    <string name="appfunctions_switches_hint">Alla olevat työkalukytkimet hallitsevat sekä MCP- että avustajakäyttöä.</string>
     <string name="how_appfunctions_work">Näin se toimii</string>
     <string name="appfunctions_info_available">Android AppFunctions antaa yhteensopivien, valtuutettujen avustajien käyttää näitä toimintoja paikallisesti tässä puhelimessa.</string>
     <string name="appfunctions_info_unavailable">Tämä puhelin ei tue Android AppFunctions -toimintoja. Android 16 tai uudempi vaaditaan.</string>
-    <string name="appfunctions_info_security">Android päättää, mitkä avustajat ovat valtuutettuja. Nämä kutsut eivät käytä MCP-palvelimen tunnistetta tai työkalukytkimiä. Yhteystietojen, Kameran, Ilmoitusten ja SMS:n käyttöoikeudet ovat edelleen voimassa. Valmisteltu SMS jää aina tarkistettavaksi ja lähetettäväksi; suora SMS lähetetään heti ja sisältyy vain Full-versioon.</string>
+    <string name="appfunctions_info_security">Android päättää, mitkä avustajat ovat valtuutettuja. Nämä kutsut eivät käytä MCP-palvelimen tunnistetta. Työkalukytkimet hallitsevat käyttöä sekä MCP:n että AppFunctionsin kautta, ja Android-käyttöoikeudet ovat edelleen voimassa. Valmisteltu SMS jää aina tarkistettavaksi ja lähetettäväksi; suora SMS lähetetään heti ja sisältyy vain Full-versioon.</string>
     <string name="appfunctions_info_preview">Avustajien tuki on Androidin kokeellisen esikatselun aikana rajallinen, joten saatavuus riippuu laitteesta, avustajasta ja tilistä.</string>
     <string name="manage_permissions">Hallinnoi käyttöoikeuksia</string>
     <string name="close">Sulje</string>
@@ -83,7 +84,7 @@
     <string name="remote_step_3">3. Napauta painiketta ja kirjoita koodi selaimeen:</string>
     <string name="show_pairing_code">Näytä yhdistämiskoodi</string>
     <string name="pairing_code_hint">Voimassa 10 minuuttia, kertakäyttöinen. Jo yhdistetyt asiakasohjelmat muodostavat yhteyden uudelleen automaattisesti — uutta koodia ei tarvita.</string>
-    <string name="tools_connect_note">Muutokset tulevat voimaan, kun asiakasohjelma yhdistää seuraavan kerran.</string>
+    <string name="tools_connect_note">Muutokset tulevat avustajille voimaan heti ja MCP-asiakkaalle seuraavalla yhteyskerralla.</string>
     <string name="not_on_wifi_warning">Ei yhteyttä Wi-Fi-verkkoon. Palvelin on käytettävissä vain samassa Wi-Fi-verkossa olevilta laitteilta — yhdistä tämä puhelin ensin Wi-Fi-verkkoon.</string>
     <string name="test_connection">Testaa yhteys</string>
     <string name="testing_connection">Testataan yhteyttä…</string>

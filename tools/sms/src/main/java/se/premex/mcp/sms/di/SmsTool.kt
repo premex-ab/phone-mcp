@@ -15,6 +15,7 @@ import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.sms.SmsSender
 import se.premex.mcp.sms.SmsSenderImpl
 import se.premex.mcp.sms.appfunctions.SmsAppFunctions
+import se.premex.mcp.sms.appfunctions.SmsAppFunctionsIds
 import se.premex.mcp.appfunctions.service.AppFunctionFactoryRegistration
 import javax.inject.Singleton
 
@@ -23,6 +24,7 @@ class SmsTool(val smsSender: SmsSender) : McpTool {
     override val name: String = "Send SMS"
     override val nameRes: Int = R.string.tools_sms_name
     override val enabledByDefault: Boolean = false
+    override val appFunctionIds: Set<String> = setOf(SmsAppFunctionsIds.SEND_SMS_ID)
     override val disclaimRes: Int = R.string.tools_sms_disclaimer
 
     override val disclaim: String?

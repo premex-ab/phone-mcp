@@ -472,7 +472,7 @@ fun McpServerControl(
         item {
             AppFunctionsDiscoveryCard(
                 isSupported = Build.VERSION.SDK_INT >= 36,
-                isFullBuild = BuildConfig.FLAVOR == "full"
+                tools = tools,
             )
         }
 
@@ -538,9 +538,15 @@ fun McpServerControl(
 @Composable
 private fun AppFunctionsDiscoveryCard(
     isSupported: Boolean,
-    isFullBuild: Boolean,
+    tools: List<McpTool>,
 ) {
     var showDetails by remember { mutableStateOf(false) }
+    val appFunctionTools = tools.filter { it.appFunctionIds.isNotEmpty() }
+    val capabilityNames = mutableListOf<String>()
+    for (tool in appFunctionTools) {
+        capabilityNames += if (tool.nameRes != 0) stringResource(tool.nameRes) else tool.name
+    }
+    val publishedCapabilities = capabilityNames.joinToString(" • ")
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -591,13 +597,12 @@ private fun AppFunctionsDiscoveryCard(
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = stringResource(
-                    if (isFullBuild) {
-                        R.string.appfunctions_capabilities_full
-                    } else {
-                        R.string.appfunctions_capabilities_play
-                    }
-                ),
+                text = publishedCapabilities,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSecondaryContainer
+            )
+            Text(
+                text = stringResource(R.string.appfunctions_switches_hint),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSecondaryContainer
             )
@@ -613,7 +618,7 @@ private fun AppFunctionsDiscoveryCard(
     if (showDetails) {
         AppFunctionsInfoDialog(
             isSupported = isSupported,
-            isFullBuild = isFullBuild,
+            publishedCapabilities = publishedCapabilities,
             onDismiss = { showDetails = false }
         )
     }
@@ -622,7 +627,7 @@ private fun AppFunctionsDiscoveryCard(
 @Composable
 private fun AppFunctionsInfoDialog(
     isSupported: Boolean,
-    isFullBuild: Boolean,
+    publishedCapabilities: String,
     onDismiss: () -> Unit,
 ) {
     val context = LocalContext.current
@@ -643,13 +648,7 @@ private fun AppFunctionsInfoDialog(
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = stringResource(
-                        if (isFullBuild) {
-                            R.string.appfunctions_capabilities_full
-                        } else {
-                            R.string.appfunctions_capabilities_play
-                        }
-                    ),
+                    text = publishedCapabilities,
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(12.dp))

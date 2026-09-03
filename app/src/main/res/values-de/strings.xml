@@ -6,10 +6,11 @@
     <string name="appfunctions_unsupported_description">Direkter Assistentenzugriff erfordert Android 16 oder neuer. Dein MCP-Server funktioniert weiterhin normal.</string>
     <string name="appfunctions_capabilities_play">Kontakte • Kamera • SMS-Entwürfe</string>
     <string name="appfunctions_capabilities_full">Kontakte • Kamera • SMS-Entwürfe • SMS direkt senden</string>
+    <string name="appfunctions_switches_hint">Die Werkzeugschalter unten steuern sowohl den MCP- als auch den Assistentenzugriff.</string>
     <string name="how_appfunctions_work">So funktioniert es</string>
     <string name="appfunctions_info_available">Mit Android AppFunctions können kompatible, autorisierte Assistenten diese Aktionen lokal auf diesem Smartphone verwenden.</string>
     <string name="appfunctions_info_unavailable">Dieses Smartphone unterstützt Android AppFunctions nicht. Android 16 oder neuer ist erforderlich.</string>
-    <string name="appfunctions_info_security">Android legt fest, welche Assistenten autorisiert sind. Diese Aufrufe verwenden weder das Token des MCP-Servers noch dessen Werkzeugschalter. Berechtigungen für Kontakte, Kamera, Benachrichtigungen und SMS gelten weiterhin. Eine vorbereitete SMS wartet immer auf deine Prüfung und das Senden; direkte SMS werden sofort gesendet und sind nur in der Full-Version enthalten.</string>
+    <string name="appfunctions_info_security">Android legt fest, welche Assistenten autorisiert sind. Diese Aufrufe verwenden nicht das Token des MCP-Servers. Die Werkzeugschalter steuern den Zugriff über MCP und AppFunctions; Android-Berechtigungen gelten weiterhin. Eine vorbereitete SMS wartet immer auf deine Prüfung und das Senden; direkte SMS werden sofort gesendet und sind nur in der Full-Version enthalten.</string>
     <string name="appfunctions_info_preview">Die Assistentenunterstützung ist während der experimentellen Android-Vorschau derzeit eingeschränkt. Die Verfügbarkeit hängt von Gerät, Assistent und Konto ab.</string>
     <string name="manage_permissions">Berechtigungen verwalten</string>
     <string name="close">Schließen</string>
@@ -83,7 +84,7 @@
     <string name="remote_step_3">3. Tippe auf die Schaltfläche und gib den Code im Browser ein:</string>
     <string name="show_pairing_code">Pairing-Code anzeigen</string>
     <string name="pairing_code_hint">10 Minuten gültig, einmal verwendbar. Bereits gekoppelte Clients verbinden sich automatisch neu — kein neuer Code nötig.</string>
-    <string name="tools_connect_note">Änderungen gelten ab der nächsten Verbindung eines Clients.</string>
+    <string name="tools_connect_note">Änderungen gelten für Assistenten sofort und für MCP-Clients ab der nächsten Verbindung.</string>
     <string name="not_on_wifi_warning">Nicht mit Wi-Fi verbunden. Der Server ist nur von Geräten im selben Wi-Fi-Netzwerk erreichbar — verbinde dieses Telefon zuerst mit Wi-Fi.</string>
     <string name="test_connection">Verbindung testen</string>
     <string name="testing_connection">Verbindung wird getestet…</string>

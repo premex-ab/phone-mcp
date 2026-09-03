@@ -7,7 +7,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
+import se.premex.mcp.appfunctions.service.AppFunctionFactoryRegistration
 import se.premex.mcp.core.tool.McpTool
+import se.premex.mcp.files.appfunctions.FilesAppFunctions
 import se.premex.mcp.files.configurator.FilesToolConfiguratorImpl
 import se.premex.mcp.files.repositories.FilesRepository
 import se.premex.mcp.files.repositories.FilesRepositoryImpl
@@ -29,5 +31,14 @@ object FilesToolModule {
     @Singleton
     fun provideFilesRepository(@ApplicationContext context: Context): FilesRepository {
         return FilesRepositoryImpl(context)
+    }
+
+    @Provides
+    @Singleton
+    @IntoSet
+    fun provideFilesAppFunctionFactory(
+        functions: FilesAppFunctions,
+    ): AppFunctionFactoryRegistration = AppFunctionFactoryRegistration { builder ->
+        builder.addEnclosingClassFactory(FilesAppFunctions::class.java) { functions }
     }
 }

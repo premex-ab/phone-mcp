@@ -29,7 +29,7 @@ class SmsAppFunctions @Inject constructor(
      * @throws AppFunctionPermissionRequiredException If SMS permission has not been granted.
      * @throws AppFunctionInvalidArgumentException If a required value is blank.
      */
-    @AppFunction(isDescribedByKDoc = true)
+    @AppFunction(isDescribedByKDoc = true, isEnabled = false)
     suspend fun sendSms(
         appFunctionContext: AppFunctionContext,
         phoneNumber: String,

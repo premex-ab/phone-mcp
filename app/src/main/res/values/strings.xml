@@ -1,15 +1,16 @@
 <resources>
-    <string name="appfunctions_app_description">Use authorized on-device assistants to prepare or send messages, search contacts, and take photos.</string>
+    <string name="appfunctions_app_description">Use authorized on-device assistants to access enabled Phone MCP tools, including messages, contacts, camera, location, sensors, and files.</string>
     <string name="appfunctions_title">On-device assistants</string>
     <string name="experimental">Experimental</string>
-    <string name="appfunctions_supported_description">Compatible Android assistants can use selected Phone MCP actions directly, without starting the MCP server.</string>
+    <string name="appfunctions_supported_description">Android 16 assistants with AppFunctions access can use enabled Phone MCP tools directly, without starting the MCP server.</string>
     <string name="appfunctions_unsupported_description">Direct assistant access requires Android 16 or newer. Your MCP server continues to work normally.</string>
     <string name="appfunctions_capabilities_play">Contacts • Camera • SMS drafts</string>
     <string name="appfunctions_capabilities_full">Contacts • Camera • SMS drafts • Direct SMS</string>
+    <string name="appfunctions_switches_hint">The tool switches below control both MCP and assistant access.</string>
     <string name="how_appfunctions_work">How it works</string>
-    <string name="appfunctions_info_available">Android AppFunctions let compatible, authorized assistants use these actions locally on this phone.</string>
+    <string name="appfunctions_info_available">Android AppFunctions let authorized assistants with preview access use these actions locally on this phone.</string>
     <string name="appfunctions_info_unavailable">This phone does not support Android AppFunctions. They require Android 16 or newer.</string>
-    <string name="appfunctions_info_security">Android decides which assistants are authorized. These calls do not use the MCP server token or its tool switches. Contacts, Camera, Notifications, and SMS permissions still apply. Preparing an SMS always leaves it for you to review and send; Direct SMS sends immediately and is only included in the Full build.</string>
+    <string name="appfunctions_info_security">Android decides which assistants are authorized. These calls do not use the MCP server token. The tool switches control access through both MCP and AppFunctions, and Android permissions still apply. Preparing an SMS always leaves it for you to review and send; Direct SMS sends immediately and is only included in the Full build.</string>
     <string name="appfunctions_info_preview">Assistant support is currently limited during Android’s experimental preview, so availability depends on your device, assistant, and account.</string>
     <string name="manage_permissions">Manage permissions</string>
     <string name="close">Close</string>
@@ -92,7 +93,7 @@
     <string name="remote_step_3">3. Tap the button and type the code into the browser:</string>
     <string name="show_pairing_code">Show pairing code</string>
     <string name="pairing_code_hint">Valid for 10 minutes, single use. Already-paired clients reconnect automatically — no new code needed.</string>
-    <string name="tools_connect_note">Changes apply the next time a client connects.</string>
+    <string name="tools_connect_note">Changes apply immediately to assistants and the next time an MCP client connects.</string>
     <string name="not_on_wifi_warning">Not connected to Wi-Fi. The server can only be reached from devices on the same Wi-Fi network — connect this phone to Wi-Fi first.</string>
     <string name="test_connection">Test connection</string>
     <string name="testing_connection">Testing connection…</string>

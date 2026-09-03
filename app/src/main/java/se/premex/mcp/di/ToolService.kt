@@ -4,8 +4,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import se.premex.mcp.AppFunctionStateSynchronizer
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.data.ToolPreferencesRepository
 import javax.inject.Inject
@@ -18,6 +20,7 @@ import javax.inject.Singleton
 class ToolService @Inject constructor(
     private val availableTools: Set<@JvmSuppressWildcards McpTool>,
     private val toolPreferencesRepository: ToolPreferencesRepository,
+    private val appFunctionStateSynchronizer: AppFunctionStateSynchronizer,
     @AppCoroutineScope private val appScope: CoroutineScope,
 ) {
     private val _toolEnabledStates = MutableStateFlow(
@@ -30,26 +33,24 @@ class ToolService @Inject constructor(
     val toolEnabledStates: StateFlow<Map<String, Boolean>> = _toolEnabledStates.asStateFlow()
 
     init {
-        // Load saved tool states from DataStore
+        // Load saved tool states before observing changes so defaults cannot
+        // overwrite persisted choices during application startup.
         appScope.launch {
             val savedToolStates = toolPreferencesRepository.getToolEnabledStates().first()
-
-            // Merge saved states with defaults for any new tools
-            val mergedStates = _toolEnabledStates.value.toMutableMap()
-            savedToolStates.forEach { (toolId, isEnabled) ->
-                // Only use saved state if the tool still exists
-                if (availableTools.any { it.id == toolId }) {
-                    mergedStates[toolId] = isEnabled
+            _toolEnabledStates.value = mergeSavedToolStates(
+                availableTools = availableTools,
+                defaultStates = _toolEnabledStates.value,
+                savedStates = savedToolStates,
+            )
+            appScope.launch {
+                toolEnabledStates.collect { states ->
+                    toolPreferencesRepository.updateAllToolStates(states)
                 }
             }
-
-            _toolEnabledStates.value = mergedStates
-        }
-
-        // Set up collection of tool state changes to persist them
-        appScope.launch {
-            toolEnabledStates.collect { states ->
-                toolPreferencesRepository.updateAllToolStates(states)
+            appScope.launch {
+                toolEnabledStates.collectLatest { states ->
+                    appFunctionStateSynchronizer.synchronize(availableTools, states)
+                }
             }
         }
     }
@@ -83,4 +84,31 @@ class ToolService @Inject constructor(
     fun getToolById(toolId: String): McpTool? {
         return availableTools.find { it.id == toolId }
     }
+
 }
+
+internal fun mergeSavedToolStates(
+    availableTools: Set<McpTool>,
+    defaultStates: Map<String, Boolean>,
+    savedStates: Map<String, Boolean>,
+): Map<String, Boolean> {
+    val availableToolIds = availableTools.mapTo(mutableSetOf()) { it.id }
+    val mergedStates = defaultStates.toMutableMap()
+    savedStates.forEach { (toolId, isEnabled) ->
+        if (toolId in availableToolIds) {
+            mergedStates[toolId] = isEnabled
+        }
+    }
+
+    // Before the SMS tools had distinct IDs, both rows were persisted as "sms".
+    // Preserve that choice for the newly independent SMS-draft tool.
+    if (SMS_INTENT_TOOL_ID in availableToolIds && SMS_INTENT_TOOL_ID !in savedStates) {
+        savedStates[LEGACY_SMS_TOOL_ID]?.let { wasEnabled ->
+            mergedStates[SMS_INTENT_TOOL_ID] = wasEnabled
+        }
+    }
+    return mergedStates
+}
+
+private const val LEGACY_SMS_TOOL_ID = "sms"
+private const val SMS_INTENT_TOOL_ID = "sms_intent"

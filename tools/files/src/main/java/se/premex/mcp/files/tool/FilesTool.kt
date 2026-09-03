@@ -6,6 +6,7 @@ import android.Manifest
 import android.os.Build
 import io.modelcontextprotocol.kotlin.sdk.server.Server
 import se.premex.mcp.core.tool.McpTool
+import se.premex.mcp.files.appfunctions.FilesAppFunctionsIds
 import se.premex.mcp.files.configurator.FilesToolConfigurator
 
 class FilesTool(
@@ -15,6 +16,11 @@ class FilesTool(
     override val name: String = "File access"
     override val nameRes: Int = R.string.tools_files_name
     override val enabledByDefault: Boolean = false
+    override val appFunctionIds: Set<String> = setOf(
+        FilesAppFunctionsIds.LIST_FILES_ID,
+        FilesAppFunctionsIds.GET_FILE_INFO_ID,
+        FilesAppFunctionsIds.READ_FILE_ID,
+    )
     override val disclaimRes: Int = R.string.tools_files_disclaimer
 
     override val disclaim: String?

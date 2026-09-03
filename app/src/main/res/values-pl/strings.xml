@@ -6,10 +6,11 @@
     <string name="appfunctions_unsupported_description">Bezpośredni dostęp asystenta wymaga Androida 16 lub nowszego. Serwer MCP nadal działa normalnie.</string>
     <string name="appfunctions_capabilities_play">Kontakty • Aparat • Wersje robocze SMS</string>
     <string name="appfunctions_capabilities_full">Kontakty • Aparat • Wersje robocze SMS • Bezpośredni SMS</string>
+    <string name="appfunctions_switches_hint">Poniższe przełączniki narzędzi sterują dostępem przez MCP i asystentów.</string>
     <string name="how_appfunctions_work">Jak to działa</string>
     <string name="appfunctions_info_available">Android AppFunctions pozwala zgodnym, autoryzowanym asystentom używać tych działań lokalnie na telefonie.</string>
     <string name="appfunctions_info_unavailable">Ten telefon nie obsługuje Android AppFunctions. Wymagany jest Android 16 lub nowszy.</string>
-    <string name="appfunctions_info_security">Android decyduje, którzy asystenci są autoryzowani. Te wywołania nie używają tokenu serwera MCP ani jego przełączników narzędzi. Uprawnienia do Kontaktów, Aparatu, Powiadomień i SMS nadal obowiązują. Przygotowany SMS zawsze czeka na Twoją kontrolę i wysłanie; Bezpośredni SMS jest wysyłany natychmiast i znajduje się tylko w wersji Full.</string>
+    <string name="appfunctions_info_security">Android decyduje, którzy asystenci są autoryzowani. Te wywołania nie używają tokenu serwera MCP. Przełączniki narzędzi sterują dostępem przez MCP i AppFunctions, a uprawnienia Androida nadal obowiązują. Przygotowany SMS zawsze czeka na Twoją kontrolę i wysłanie; Bezpośredni SMS jest wysyłany natychmiast i znajduje się tylko w wersji Full.</string>
     <string name="appfunctions_info_preview">Obsługa asystentów jest ograniczona podczas eksperymentalnej wersji zapoznawczej Androida, więc dostępność zależy od urządzenia, asystenta i konta.</string>
     <string name="manage_permissions">Zarządzaj uprawnieniami</string>
     <string name="close">Zamknij</string>
@@ -83,7 +84,7 @@
     <string name="remote_step_3">3. Dotknij przycisku i wpisz kod w przeglądarce:</string>
     <string name="show_pairing_code">Pokaż kod parowania</string>
     <string name="pairing_code_hint">Ważny przez 10 minut, jednorazowy. Sparowani wcześniej klienci łączą się ponownie automatycznie — nowy kod nie jest potrzebny.</string>
-    <string name="tools_connect_note">Zmiany zaczną obowiązywać przy następnym połączeniu klienta.</string>
+    <string name="tools_connect_note">Zmiany dotyczą asystentów natychmiast, a klienta MCP przy następnym połączeniu.</string>
     <string name="not_on_wifi_warning">Brak połączenia z Wi-Fi. Serwer jest osiągalny tylko z urządzeń w tej samej sieci Wi-Fi — najpierw połącz ten telefon z Wi-Fi.</string>
     <string name="test_connection">Testuj połączenie</string>
     <string name="testing_connection">Testowanie połączenia…</string>
