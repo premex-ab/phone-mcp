@@ -41,7 +41,9 @@ class MainActivity : ComponentActivity() {
             PhonemcpTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     CalculatorScreen(
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .consumeWindowInsets(innerPadding)
                     )
                 }
             }
@@ -62,6 +64,7 @@ fun CalculatorScreen(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .padding(16.dp)
+            .imePadding()
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
