@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <!-- Camera FGS type lets the camera tool capture while the app is backgrounded (issue #72).
          CAMERA also comes from the camera tool module, but lint checks per-manifest. -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
@@ -63,7 +63,11 @@
             android:name=".McpServerService"
             android:enabled="true"
             android:exported="false"
-            android:foregroundServiceType="dataSync|camera" />
+            android:foregroundServiceType="specialUse|camera">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="User-started MCP server that keeps an authenticated HTTP/SSE endpoint and optional remote-access tunnel available to AI clients while the app is in the background. The ongoing notification shows server status and opens the app, where the user can stop the server. Requests arrive interactively, so this cannot be scheduled as deferred data synchronization." />
+        </service>
     </application>
 
 </manifest>
