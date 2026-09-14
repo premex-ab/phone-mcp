@@ -19,8 +19,8 @@ import javax.inject.Inject
  * Brings the MCP server back after a reboot when the user left it running —
  * a remote-access phone must not go dark because Android restarted.
  *
- * Newer Android versions refuse dataSync foreground services started from
- * BOOT_COMPLETED; in that case a tap-to-restart notification is posted
+ * Android 14+ restricts camera foreground services started from
+ * BOOT_COMPLETED; a tap-to-restart notification is posted
  * instead, so the user is one tap from being reachable again.
  */
 @AndroidEntryPoint
@@ -33,6 +33,13 @@ class BootReceiver : BroadcastReceiver() {
         if (intent.action != Intent.ACTION_BOOT_COMPLETED) return
         val shouldRun = runBlocking { serverPreferencesRepository.serverShouldRun().first() }
         if (!shouldRun) return
+
+        // Service creation is asynchronous: a catch around startForegroundService
+        // cannot catch a rejection from Service.startForeground in onCreate.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            postRestartNotification(context)
+            return
+        }
 
         Log.i(TAG, "Boot completed and the server was running — restoring")
         try {
