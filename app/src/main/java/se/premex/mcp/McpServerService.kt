@@ -36,6 +36,7 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
 import io.ktor.server.sse.SSE
+import io.ktor.server.sse.heartbeat
 import io.ktor.server.sse.sse
 import io.ktor.util.collections.ConcurrentMap
 import io.modelcontextprotocol.kotlin.sdk.types.Implementation
@@ -66,6 +67,7 @@ import java.net.InetSocketAddress
 import java.net.ServerSocket
 import javax.inject.Inject
 import kotlin.collections.set
+import kotlin.time.Duration.Companion.seconds
 
 @AndroidEntryPoint
 class McpServerService : Service() {
@@ -81,6 +83,7 @@ class McpServerService : Service() {
         private const val LOG_PREFIX_NOTIFICATION = "Notification"
         private const val LOG_PREFIX_TOOLS = "Tools"
         private const val LOG_PREFIX_TRANSPORT = "Transport"
+        private val SSE_HEARTBEAT_INTERVAL = 15.seconds
     }
 
     private val serviceJob = Job()
@@ -583,6 +586,9 @@ class McpServerService : Service() {
                     authenticate("bearer-auth") {
                         sse("/sse") {
                             Log.d(TAG, "$LOG_PREFIX_TRANSPORT: New SSE connection established")
+                            heartbeat {
+                                period = SSE_HEARTBEAT_INTERVAL
+                            }
                             val transport = SseServerTransport("/message", this)
                             Log.d(
                                 TAG,
