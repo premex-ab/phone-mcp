@@ -37,6 +37,8 @@
     <string name="access_token">Token:</string>
     <string name="connect_your_ai_client">Anslut din AI-klient</string>
     <string name="client_other">Annan</string>
+    <string name="gemini_cli_instructions">Kör kommandot i en terminal på din dator, starta sedan Gemini CLI och kör /mcp list. Kör /mcp reload om klienten redan är öppen. Stegen gäller Gemini CLI på datorn.</string>
+    <string name="codex_instructions">Installera Node.js på datorn. Lägg till detta i ~/.codex/config.toml (ersätt ett befintligt phone-avsnitt) och starta sedan om Codex-appen eller CLI. Anslutningen använder mcp-remote på din dator. Kontrollera /mcp i CLI eller MCP-inställningarna i appen.</string>
     <string name="claude_code_instructions">Kör det här kommandot i en terminal på din dator och starta sedan en ny Claude Code-session:</string>
     <string name="claude_desktop_instructions">Öppna Settings → Developer → Edit Config på din dator, lägg till detta i claude_desktop_config.json och starta om Claude Desktop helt. Kräver Node.js.\n\nObs: dialogen ”Add custom connector” accepterar bara HTTPS-servrar — använd den här konfigurationen i stället.</string>
     <string name="other_client_instructions">Anslut valfri MCP-klient med SSE-transport och en bearer-token:</string>
@@ -78,7 +80,12 @@
     <string name="add_client_title">Lägg till en AI-klient</string>
     <string name="remote_step_code_1">1. Kör det här kommandot i en terminal på din dator:</string>
     <string name="remote_step_code_2">2. I Claude Code: kör /mcp → phone → Authenticate. Webbläsaren öppnas och frågar efter en parningskod.</string>
-    <string name="remote_step_desktop_1">1. På din dator: Settings → Connectors → Add custom connector, och klistra in den här URL:en:</string>
+    <string name="remote_step_desktop_1">1. På din dator: Customize → Connectors → Add custom connector, och klistra in den här URL:en:</string>
+    <string name="remote_step_gemini_1">1. Kör det här kommandot i en terminal på din dator för Gemini CLI:</string>
+    <string name="remote_step_gemini_2">2. Starta Gemini CLI och kör /mcp auth phone. Webbläsaren öppnas för parkoppling. Kör /mcp list efter parkopplingen för att kontrollera anslutningen.</string>
+    <string name="remote_step_codex_1">1. Installera Node.js på datorn och kör sedan det här kommandot där för att förbereda anslutningen till Codex-appen eller CLI:</string>
+    <string name="remote_step_codex_2">2. Låt terminalen vara öppen. mcp-remote öppnar en webbläsare för parkoppling. Gör detta en gång på samma dator som du använder Codex på.</string>
+    <string name="remote_step_codex_finish">4. När terminalen visar att anslutningen fungerar, tryck Ctrl+C. Lägg till detta i ~/.codex/config.toml (ersätt ett befintligt phone-avsnitt) och starta sedan om Codex. Kontrollera /mcp i CLI eller MCP-inställningarna i appen.</string>
     <string name="remote_step_desktop_2">2. Claude Desktop öppnar en inloggningssida i webbläsaren som frågar efter en parningskod.</string>
     <string name="remote_step_other_1">1. Anslut valfri MCP-klient som stöder fjärrservrar med OAuth 2.1:</string>
     <string name="remote_step_other_2">2. Under auktoriseringen frågar webbläsaren efter en parningskod.</string>
@@ -92,7 +99,7 @@
     <string name="connection_test_success">Servern kan nås på %1$s. Om din MCP-klient ändå inte kan ansluta, kontrollera att datorn är på samma Wi-Fi — du kan öppna %1$s i dess webbläsare för att testa.</string>
     <string name="connection_test_failure">Kunde inte nå servern på %1$s. Kontrollera att servern körs och att Värd är satt till 0.0.0.0 i inställningarna.</string>
     <string name="onboarding_title">Välkommen till Phone MCP</string>
-    <string name="onboarding_body">Phone MCP gör telefonen till en server som AI-assistenter (MCP-klienter) kan ansluta till. Appen har ingen egen AI — du ansluter din egen, till exempel Claude Code eller Claude Desktop.
+    <string name="onboarding_body">Phone MCP gör telefonen till en server som AI-assistenter (MCP-klienter) kan ansluta till. Anslut din egen AI på datorn, till exempel Claude, Gemini CLI eller Codex.
 
 1. Aktivera de verktyg du vill exponera.
 2. Starta servern med reglaget.
@@ -111,7 +118,11 @@ Anslutningsguiden på huvudskärmen leder dig genom båda.</string>
     <string name="activation_success" tools:ignore="MissingTranslation">Det fungerar — din AI har använt ett telefonverktyg</string>
     <string name="activation_connect" tools:ignore="MissingTranslation">1. Låt servern vara igång och vänta på fjärranslutningen. Kontrollera internet och tillåt batterianvändning i bakgrunden nedan om anslutningen uteblir.</string>
     <string name="activation_pair" tools:ignore="MissingTranslation">2. Välj din AI-klient nedan, följ stegen och ange en parkopplingskod. Den här vyn uppdateras automatiskt.</string>
-    <string name="activation_try" tools:ignore="MissingTranslation">3. Aktivera Sensorer i verktygslistan, anslut AI-klienten igen så att den hittar verktyget och klistra sedan in frågan i din AI-klient. En bekräftelse visas här efter ett riktigt verktygssvar.</string>
+    <string name="activation_try" tools:ignore="MissingTranslation">3. Aktivera Sensorer nedan, anslut AI-klienten igen så att den hittar verktyget och klistra sedan in frågan i din AI-klient. En bekräftelse visas här efter ett riktigt verktygssvar.</string>
+    <string name="activation_enable_sensor">Aktivera Sensorer för testet</string>
+    <string name="activation_sensor_explanation">Börja med ett sensorvärde. Detta aktiverar bara Sensorer, till exempel rörelse och ljus. Du kan stänga av verktyget i listan.</string>
+    <string name="activation_sensor_ready">✓ Sensorer aktiverat. Anslut din AI-klient igen så att den hittar verktyget.</string>
+    <string name="activation_local_try">Följ anslutningsstegen för din klient nedan och klistra sedan in frågan i AI-klienten. Ett riktigt sensorvärde i svaret bekräftar att verktyget fungerar.</string>
     <string name="activation_prompt" tools:ignore="MissingTranslation">Använd phone_sensor för att läsa telefonens sensorer. Berätta vilka sensorer som finns och förklara ett mätvärde. Gissa inte om telefonen inte kan nås.</string>
     <string name="activation_next" tools:ignore="MissingTranslation">Prova en till uppgift: aktivera Filer, välj en mapp du vill dela och be din AI att hitta ett dokument. Du styr vilka verktyg och filer som är tillgängliga.</string>
     <string name="activation_next_prompt" tools:ignore="MissingTranslation">Lista filerna jag har delat från min telefon. Fråga vilket dokument jag vill läsa innan du öppnar det.</string>
