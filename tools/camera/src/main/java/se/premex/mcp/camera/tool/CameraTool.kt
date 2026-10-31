@@ -13,7 +13,7 @@ class CameraTool(
     override val id: String = "camera"
     override val name: String = "Camera"
     override val nameRes: Int = R.string.tools_camera_name
-    override val enabledByDefault: Boolean = true
+    override val enabledByDefault: Boolean = false
     override val appFunctionIds: Set<String> = setOf(CameraAppFunctionsIds.TAKE_PHOTO_ID)
     override val disclaim: String? = null
 

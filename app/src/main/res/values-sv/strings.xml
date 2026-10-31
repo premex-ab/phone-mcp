@@ -111,7 +111,7 @@ Anslutningsguiden på huvudskärmen leder dig genom båda.</string>
     <string name="activation_success" tools:ignore="MissingTranslation">Det fungerar — din AI har använt ett telefonverktyg</string>
     <string name="activation_connect" tools:ignore="MissingTranslation">1. Låt servern vara igång och vänta på fjärranslutningen. Kontrollera internet och tillåt batterianvändning i bakgrunden nedan om anslutningen uteblir.</string>
     <string name="activation_pair" tools:ignore="MissingTranslation">2. Välj din AI-klient nedan, följ stegen och ange en parkopplingskod. Den här vyn uppdateras automatiskt.</string>
-    <string name="activation_try" tools:ignore="MissingTranslation">3. Aktivera Sensorer i verktygslistan och klistra sedan in frågan i din AI-klient. En bekräftelse visas här efter ett riktigt verktygssvar.</string>
+    <string name="activation_try" tools:ignore="MissingTranslation">3. Aktivera Sensorer i verktygslistan, anslut AI-klienten igen så att den hittar verktyget och klistra sedan in frågan i din AI-klient. En bekräftelse visas här efter ett riktigt verktygssvar.</string>
     <string name="activation_prompt" tools:ignore="MissingTranslation">Använd phone_sensor för att läsa telefonens sensorer. Berätta vilka sensorer som finns och förklara ett mätvärde. Gissa inte om telefonen inte kan nås.</string>
     <string name="activation_next" tools:ignore="MissingTranslation">Prova en till uppgift: aktivera Filer, välj en mapp du vill dela och be din AI att hitta ett dokument. Du styr vilka verktyg och filer som är tillgängliga.</string>
     <string name="activation_next_prompt" tools:ignore="MissingTranslation">Lista filerna jag har delat från min telefon. Fråga vilket dokument jag vill läsa innan du öppnar det.</string>

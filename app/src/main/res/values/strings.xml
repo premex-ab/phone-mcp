@@ -120,7 +120,7 @@ The connection guide on the main screen walks you through both.</string>
     <string name="activation_success" tools:ignore="MissingTranslation">It works — your AI has used a phone tool</string>
     <string name="activation_connect" tools:ignore="MissingTranslation">1. Keep the server running and wait for the remote connection. If it stays disconnected, check internet access and allow background battery use below.</string>
     <string name="activation_pair" tools:ignore="MissingTranslation">2. Choose your AI client below, follow its setup steps, then enter a pairing code. This screen updates automatically.</string>
-    <string name="activation_try" tools:ignore="MissingTranslation">3. Enable the Sensors tool in the tool list, then paste this prompt into your AI client. Success appears here after an actual tool response.</string>
+    <string name="activation_try" tools:ignore="MissingTranslation">3. Enable Sensors in the tool list, reconnect your AI client so it discovers the tool, then paste this prompt into your AI client. Success appears here after an actual tool response.</string>
     <string name="activation_prompt" tools:ignore="MissingTranslation">Use phone_sensor to read my phone sensors. Tell me which sensors are available and explain one reading. Do not guess if the phone cannot be reached.</string>
     <string name="activation_next" tools:ignore="MissingTranslation">Try another useful task: enable Files, choose a folder you want to share, then ask your AI to find a document. You control which tools and files are accessible.</string>
     <string name="activation_next_prompt" tools:ignore="MissingTranslation">List the files I have shared from my phone. Ask me which document to read before opening it.</string>

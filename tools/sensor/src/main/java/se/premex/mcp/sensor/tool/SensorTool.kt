@@ -13,7 +13,7 @@ class SensorTool(
     override val id: String = "sensor"
     override val name: String = "Sensors"
     override val nameRes: Int = R.string.tools_sensor_name
-    override val enabledByDefault: Boolean = true
+    override val enabledByDefault: Boolean = false
     override val appFunctionIds: Set<String> =
         setOf(SensorAppFunctionsIds.GET_SENSOR_SNAPSHOT_ID)
     override val disclaim: String? = null
