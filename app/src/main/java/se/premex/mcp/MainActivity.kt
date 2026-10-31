@@ -211,6 +211,12 @@ class MainActivity : ComponentActivity() {
                             onToggleTool = { tool ->
                                 handleToolToggle(tool)
                             },
+                            onEnableSensor = {
+                                toolService.getToolById("sensor")?.let { tool ->
+                                    // Read current state so repeated taps can never disable it.
+                                    if (!toolService.isToolEnabled(tool.id)) handleToolToggle(tool)
+                                }
+                            },
                             authToken = authToken,
                             showAppFunctionsDiscovery = appFunctionsDiscoveryVisible,
                             onDismissAppFunctionsDiscovery = {
@@ -416,6 +422,7 @@ fun HomeScreen(
     tools: List<McpTool>,
     toolEnabledStates: Map<String, Boolean>,
     onToggleTool: (McpTool) -> Unit,
+    onEnableSensor: () -> Unit = {},
     authToken: String = "YTpi",
     isSelectedInterfaceAvailable: () -> Boolean = { true },
     showAppFunctionsDiscovery: Boolean = true,
@@ -453,6 +460,7 @@ fun HomeScreen(
             tools = tools,
             toolEnabledStates = toolEnabledStates,
             onToggleTool = onToggleTool,
+            onEnableSensor = onEnableSensor,
             authToken = authToken,
             isSelectedInterfaceAvailable = isSelectedInterfaceAvailable,
             showAppFunctionsDiscovery = showAppFunctionsDiscovery,
@@ -470,6 +478,7 @@ fun McpServerControl(
     tools: List<McpTool>,
     toolEnabledStates: Map<String, Boolean>,
     onToggleTool: (McpTool) -> Unit,
+    onEnableSensor: () -> Unit = {},
     contentPadding: PaddingValues = PaddingValues(
         horizontal = 16.dp,
         vertical = 8.dp,
@@ -509,6 +518,8 @@ fun McpServerControl(
                         ConnectionGuide(
                             connectionUrl = getConnectionUrl(),
                             authToken = authToken,
+                            sensorEnabled = toolEnabledStates["sensor"] == true,
+                            onEnableSensor = onEnableSensor,
                             isSelectedInterfaceAvailable = isSelectedInterfaceAvailable
                         )
                     }

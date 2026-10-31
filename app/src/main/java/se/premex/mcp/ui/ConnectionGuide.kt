@@ -16,6 +16,7 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -98,8 +99,16 @@ fun ConnectionGuide(
     authToken: String,
     modifier: Modifier = Modifier,
     isSelectedInterfaceAvailable: () -> Boolean = { true },
+    sensorEnabled: Boolean = false,
+    onEnableSensor: () -> Unit = {},
 ) {
     var mode by rememberSaveable { mutableStateOf(ConnectionMode.REMOTE) }
+    var selectedClient by rememberSaveable { mutableStateOf(McpClient.CLAUDE_CODE) }
+
+    val localGuide: @Composable () -> Unit = {
+        LocalGuide(connectionUrl, authToken, selectedClient, { selectedClient = it },
+            sensorEnabled, onEnableSensor, isSelectedInterfaceAvailable)
+    }
 
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
@@ -113,7 +122,7 @@ fun ConnectionGuide(
         // Remote access is Play-exclusive (its subscription can only be sold
         // through Play Billing) — sideloaded builds are local-network only.
         if (!BuildConfig.REMOTE_ACCESS) {
-            LocalGuide(connectionUrl, authToken, isSelectedInterfaceAvailable)
+            localGuide()
             return@Column
         }
 
@@ -136,12 +145,12 @@ fun ConnectionGuide(
             // hiltViewModel is unavailable when rendering @Preview compositions
             ConnectionMode.REMOTE ->
                 if (LocalInspectionMode.current) {
-                    LocalGuide(connectionUrl, authToken, isSelectedInterfaceAvailable)
+                    localGuide()
                 }
-                else RemoteGuide()
+                else RemoteGuide(selectedClient, { selectedClient = it }, sensorEnabled, onEnableSensor)
 
             ConnectionMode.LOCAL -> {
-                LocalGuide(connectionUrl, authToken, isSelectedInterfaceAvailable)
+                localGuide()
             }
         }
 
@@ -150,7 +159,13 @@ fun ConnectionGuide(
 
 /** Remote mode: tunnel through phonemcp.ai, authorized with a pairing code. */
 @Composable
-private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
+private fun RemoteGuide(
+    selectedClient: McpClient,
+    onSelectClient: (McpClient) -> Unit,
+    sensorEnabled: Boolean,
+    onEnableSensor: () -> Unit,
+    viewModel: RemoteAccessViewModel = hiltViewModel(),
+) {
     val config by viewModel.config.collectAsState()
     val tunnelConnected by viewModel.tunnelConnected.collectAsState()
     val context = LocalContext.current
@@ -361,8 +376,9 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
                 connected = tunnelConnected == true,
                 paired = viewModel.pairedClients.isNotEmpty(),
                 successful = viewModel.entitlement?.firstToolSuccess == true,
+                sensorEnabled = sensorEnabled,
+                onEnableSensor = onEnableSensor,
             )
-            var selectedClient by rememberSaveable { mutableStateOf(McpClient.CLAUDE_CODE) }
 
             Text(
                 text = stringResource(R.string.add_client_title),
@@ -372,7 +388,7 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            ClientChips(selectedClient) { selectedClient = it }
+            ClientChips(selectedClient, onSelectClient)
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -430,6 +446,15 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+            }
+
+            selectedClient.remoteFinishInstructions?.let { instructions ->
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(stringResource(instructions), style = MaterialTheme.typography.bodySmall)
+                val finishSnippet = selectedClient.remoteFinishSnippet().orEmpty()
+                CodeBlock(finishSnippet, stringResource(R.string.copy_configuration)) {
+                    copyToClipboard(context, finishSnippet)
+                }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -493,7 +518,13 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
 
 /** A real successful tools/call response, observed by the relay, completes setup. */
 @Composable
-private fun ActivationGuide(connected: Boolean, paired: Boolean, successful: Boolean) {
+private fun ActivationGuide(
+    connected: Boolean,
+    paired: Boolean,
+    successful: Boolean,
+    sensorEnabled: Boolean,
+    onEnableSensor: () -> Unit,
+) {
     val context = LocalContext.current
     Card(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -505,13 +536,29 @@ private fun ActivationGuide(connected: Boolean, paired: Boolean, successful: Boo
                 !successful -> R.string.activation_try
                 else -> R.string.activation_next
             }), style = MaterialTheme.typography.bodySmall)
+            if (!successful) SensorTestSetup(sensorEnabled, onEnableSensor)
             if (connected && paired) {
                 val prompt = stringResource(if (successful) R.string.activation_next_prompt else R.string.activation_prompt)
-                CodeBlock(prompt, stringResource(R.string.copy_prompt)) { copyToClipboard(context, prompt) }
+                CodeBlock(prompt, stringResource(R.string.copy_prompt), wrapText = true) { copyToClipboard(context, prompt) }
             }
             if (!successful) {
                 Text(stringResource(R.string.activation_help), style = MaterialTheme.typography.bodySmall)
             }
+        }
+    }
+}
+
+/** Explicit opt-in, before the client discovers its tools. */
+@Composable
+private fun SensorTestSetup(sensorEnabled: Boolean, onEnableSensor: () -> Unit) {
+    if (sensorEnabled) {
+        Text(stringResource(R.string.activation_sensor_ready),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.primary)
+    } else {
+        Text(stringResource(R.string.activation_sensor_explanation), style = MaterialTheme.typography.bodySmall)
+        FilledTonalButton(onClick = onEnableSensor) {
+            Text(stringResource(R.string.activation_enable_sensor))
         }
     }
 }
@@ -521,12 +568,27 @@ private fun ActivationGuide(connected: Boolean, paired: Boolean, successful: Boo
 private fun LocalGuide(
     connectionUrl: String,
     authToken: String,
+    selectedClient: McpClient,
+    onSelectClient: (McpClient) -> Unit,
+    sensorEnabled: Boolean,
+    onEnableSensor: () -> Unit,
     isSelectedInterfaceAvailable: () -> Boolean = { true },
 ) {
     val context = LocalContext.current
-    var selectedClient by rememberSaveable { mutableStateOf(McpClient.CLAUDE_CODE) }
 
     Column(modifier = Modifier.fillMaxWidth()) {
+        ClientChips(selectedClient, onSelectClient)
+
+        Card(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
+            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(stringResource(R.string.activation_title), style = MaterialTheme.typography.titleSmall)
+                SensorTestSetup(sensorEnabled, onEnableSensor)
+                Text(stringResource(R.string.activation_local_try), style = MaterialTheme.typography.bodySmall)
+                val prompt = stringResource(R.string.activation_prompt)
+                CodeBlock(prompt, stringResource(R.string.copy_prompt), wrapText = true) { copyToClipboard(context, prompt) }
+            }
+        }
+
         CopyableValue(
             label = stringResource(R.string.connection_url),
             value = connectionUrl,
@@ -537,10 +599,6 @@ private fun LocalGuide(
             value = authToken,
             onCopy = { copyToClipboard(context, it) }
         )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        ClientChips(selectedClient) { selectedClient = it }
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -647,7 +705,7 @@ private fun ConnectionDiagnostics(
 
 @Composable
 private fun ClientChips(selected: McpClient, onSelect: (McpClient) -> Unit) {
-    Row(modifier = Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+    FlowRow(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         McpClient.entries.forEach { client ->
             FilterChip(
                 selected = selected == client,
@@ -675,6 +733,7 @@ private enum class McpClient(
     @StringRes val remoteStep1: Int,
     @StringRes val remoteStep2: Int,
     @StringRes val remoteCopyButtonText: Int,
+    @StringRes val remoteFinishInstructions: Int? = null,
 ) {
     CLAUDE_CODE(
         title = R.string.client_claude_code,
@@ -718,6 +777,49 @@ private enum class McpClient(
 
         override fun remoteSnippet(): String = REMOTE_SSE_URL
     },
+    GEMINI_CLI(
+        title = R.string.client_gemini_cli,
+        instructions = R.string.gemini_cli_instructions,
+        copyButtonText = R.string.copy_command,
+        remoteStep1 = R.string.remote_step_gemini_1,
+        remoteStep2 = R.string.remote_step_gemini_2,
+        remoteCopyButtonText = R.string.copy_command,
+    ) {
+        override fun snippet(url: String, token: String): String =
+            "gemini mcp add --scope user --transport sse --header \"Authorization: Bearer $token\" phone $url"
+
+        override fun remoteSnippet(): String =
+            "gemini mcp add --scope user --transport sse phone $REMOTE_SSE_URL"
+    },
+    CODEX(
+        title = R.string.client_codex,
+        instructions = R.string.codex_instructions,
+        copyButtonText = R.string.copy_configuration,
+        remoteStep1 = R.string.remote_step_codex_1,
+        remoteStep2 = R.string.remote_step_codex_2,
+        remoteCopyButtonText = R.string.copy_command,
+        remoteFinishInstructions = R.string.remote_step_codex_finish,
+    ) {
+        override fun snippet(url: String, token: String): String = """
+            [mcp_servers.phone]
+            command = "npx"
+            args = ["-y", "mcp-remote@0.15.2", "$url", "--transport", "sse-only", "--allow-http", "--header", "Authorization:${'$'}{PHONE_MCP_AUTH}"]
+            startup_timeout_sec = 120
+
+            [mcp_servers.phone.env]
+            PHONE_MCP_AUTH = "Bearer $token"
+        """.trimIndent()
+
+        override fun remoteSnippet(): String =
+            "npx -y mcp-remote@0.15.2 $REMOTE_SSE_URL --transport sse-only"
+
+        override fun remoteFinishSnippet(): String = """
+            [mcp_servers.phone]
+            command = "npx"
+            args = ["-y", "mcp-remote@0.15.2", "$REMOTE_SSE_URL", "--transport", "sse-only"]
+            startup_timeout_sec = 120
+        """.trimIndent()
+    },
     OTHER(
         title = R.string.client_other,
         instructions = R.string.other_client_instructions,
@@ -737,6 +839,7 @@ private enum class McpClient(
 
     abstract fun snippet(url: String, token: String): String
     abstract fun remoteSnippet(): String
+    open fun remoteFinishSnippet(): String? = null
 }
 
 @Composable
@@ -777,6 +880,7 @@ private fun CopyableValue(
 private fun CodeBlock(
     code: String,
     copyButtonText: String,
+    wrapText: Boolean = false,
     onCopy: () -> Unit,
 ) {
     Card(
@@ -793,7 +897,7 @@ private fun CodeBlock(
                 fontFamily = FontFamily.Monospace,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .horizontalScroll(rememberScrollState())
+                    .then(if (wrapText) Modifier else Modifier.horizontalScroll(rememberScrollState()))
                     .padding(12.dp)
             )
             TextButton(

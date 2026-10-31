@@ -54,7 +54,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.auth.AuthRepository
-import se.premex.mcp.data.ToolPreferencesRepository
 import se.premex.mcp.data.ServerPreferencesRepository
 import se.premex.mcp.di.ToolService
 import se.premex.mcp.remote.RemoteAccessRepository
@@ -91,14 +90,8 @@ class McpServerService : Service() {
     private var foregroundStarted = false
     private var initializationStarted = false
 
-    // Tool states will be loaded from the repository
-    private var toolStates: Map<String, Boolean> = emptyMap()
-
     @Inject
     lateinit var toolService: ToolService
-
-    @Inject
-    lateinit var toolPreferencesRepository: ToolPreferencesRepository
 
     @Inject
     lateinit var serverPreferencesRepository: ServerPreferencesRepository
@@ -210,9 +203,7 @@ class McpServerService : Service() {
         // Launch server initialization in a background coroutine
         Log.d(TAG, "$LOG_PREFIX_SERVER: Launching server initialization in background coroutine")
         serviceScope.launch {
-            // Load tool states from the repository (suspend) before starting server
-            toolStates = toolPreferencesRepository.getToolEnabledStates().first()
-            Log.d(TAG, "$LOG_PREFIX_TOOLS: Loaded tool states from repository: $toolStates")
+            toolService.awaitLoaded()
 
             // Call suspend startMcpServer within coroutine scope
             startMcpServer()
@@ -451,7 +442,10 @@ class McpServerService : Service() {
             )
         )
 
-        // Add tools based on their enabled state from the repository
+        // Each connection gets current choices, including changes made while
+        // the service is running. A startup snapshot would require restarting
+        // the entire server even after the AI client reconnects.
+        val toolStates = toolService.toolEnabledStates.value
         Log.d(TAG, "$LOG_PREFIX_TOOLS: Configuring ${availableTools.size} available tools")
         var enabledCount = 0
         for (tool in availableTools) {

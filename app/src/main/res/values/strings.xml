@@ -45,6 +45,10 @@
     <string name="connect_your_ai_client">Connect your AI client</string>
     <string name="client_claude_code" translatable="false">Claude Code</string>
     <string name="client_claude_desktop" translatable="false">Claude Desktop</string>
+    <string name="client_gemini_cli" translatable="false">Gemini CLI</string>
+    <string name="client_codex" translatable="false">Codex</string>
+    <string name="gemini_cli_instructions" tools:ignore="MissingTranslation">Run this command in a terminal on your computer, then start Gemini CLI and run /mcp list. If the client is already open, run /mcp reload. These steps are for Gemini CLI on your computer.</string>
+    <string name="codex_instructions" tools:ignore="MissingTranslation">Install Node.js on your computer. Add this to ~/.codex/config.toml (replace an existing phone section), then restart the Codex app or CLI. It runs the mcp-remote bridge on your computer. Check /mcp in the CLI or MCP settings in the app.</string>
     <string name="client_other">Other</string>
     <string name="claude_code_instructions">Run this command in a terminal on your computer, then start a new Claude Code session:</string>
     <string name="claude_desktop_instructions">Open Settings → Developer → Edit Config on your computer and add this to claude_desktop_config.json, then fully restart Claude Desktop. Requires Node.js.\n\nNote: the “Add custom connector” dialog only accepts HTTPS servers — use this config instead.</string>
@@ -87,7 +91,12 @@
     <string name="add_client_title">Add an AI client</string>
     <string name="remote_step_code_1">1. Run this command in a terminal on your computer:</string>
     <string name="remote_step_code_2">2. Inside Claude Code, run /mcp → phone → Authenticate. Your browser opens and asks for a pairing code.</string>
-    <string name="remote_step_desktop_1">1. On your computer: Settings → Connectors → Add custom connector, and paste this URL:</string>
+    <string name="remote_step_desktop_1">1. On your computer: Customize → Connectors → Add custom connector, and paste this URL:</string>
+    <string name="remote_step_gemini_1" tools:ignore="MissingTranslation">1. Run this command in a terminal on your computer for Gemini CLI:</string>
+    <string name="remote_step_gemini_2" tools:ignore="MissingTranslation">2. Start Gemini CLI and run /mcp auth phone. Your browser opens for pairing. After pairing, run /mcp list to check the connection.</string>
+    <string name="remote_step_codex_1" tools:ignore="MissingTranslation">1. Install Node.js on your computer, then run this command there to set up the connection for the Codex app or CLI:</string>
+    <string name="remote_step_codex_2" tools:ignore="MissingTranslation">2. Keep the terminal open. The mcp-remote bridge opens a browser for pairing. Complete this once on the same computer that runs Codex.</string>
+    <string name="remote_step_codex_finish" tools:ignore="MissingTranslation">4. Once the terminal says it is connected, press Ctrl+C. Add this to ~/.codex/config.toml (replace an existing phone section), then restart Codex. Check /mcp in the CLI or MCP settings in the app.</string>
     <string name="remote_step_desktop_2">2. Claude Desktop opens a sign-in page in your browser that asks for a pairing code.</string>
     <string name="remote_step_other_1">1. Connect any MCP client that supports remote servers with OAuth 2.1:</string>
     <string name="remote_step_other_2">2. During authorization, the browser asks for a pairing code.</string>
@@ -101,7 +110,7 @@
     <string name="connection_test_success">Server is reachable at %1$s. If your MCP client still can\'t connect, verify your computer is on the same Wi-Fi — you can open %1$s in its browser to check.</string>
     <string name="connection_test_failure">Could not reach the server at %1$s. Make sure the server is running and that Host is set to 0.0.0.0 in Settings.</string>
     <string name="onboarding_title">Welcome to Phone MCP</string>
-    <string name="onboarding_body">Phone MCP turns this phone into a server that AI assistants (MCP clients) can connect to. The app has no AI built in — you connect your own, for example Claude Code or Claude Desktop.
+    <string name="onboarding_body">Phone MCP turns this phone into a server that AI assistants (MCP clients) can connect to. Connect your own AI on your computer, such as Claude, Gemini CLI or Codex.
 
 1. Enable the tools you want to expose.
 2. Start the server with the toggle.
@@ -120,7 +129,11 @@ The connection guide on the main screen walks you through both.</string>
     <string name="activation_success" tools:ignore="MissingTranslation">It works — your AI has used a phone tool</string>
     <string name="activation_connect" tools:ignore="MissingTranslation">1. Keep the server running and wait for the remote connection. If it stays disconnected, check internet access and allow background battery use below.</string>
     <string name="activation_pair" tools:ignore="MissingTranslation">2. Choose your AI client below, follow its setup steps, then enter a pairing code. This screen updates automatically.</string>
-    <string name="activation_try" tools:ignore="MissingTranslation">3. Enable Sensors in the tool list, reconnect your AI client so it discovers the tool, then paste this prompt into your AI client. Success appears here after an actual tool response.</string>
+    <string name="activation_try" tools:ignore="MissingTranslation">3. Enable Sensors below, reconnect your AI client so it discovers the tool, then paste this prompt into your AI client. Success appears here after an actual tool response.</string>
+    <string name="activation_enable_sensor" tools:ignore="MissingTranslation">Enable Sensors for this test</string>
+    <string name="activation_sensor_explanation" tools:ignore="MissingTranslation">Start with a sensor reading. This enables only Sensors, such as motion and light. You can turn it off in the tool list.</string>
+    <string name="activation_sensor_ready" tools:ignore="MissingTranslation">✓ Sensors enabled. Connect or reconnect your AI client to discover the tool.</string>
+    <string name="activation_local_try" tools:ignore="MissingTranslation">Follow your client’s connection steps below, then paste this prompt into your AI client. A real sensor reading in its reply confirms that the tool works.</string>
     <string name="activation_prompt" tools:ignore="MissingTranslation">Use phone_sensor to read my phone sensors. Tell me which sensors are available and explain one reading. Do not guess if the phone cannot be reached.</string>
     <string name="activation_next" tools:ignore="MissingTranslation">Try another useful task: enable Files, choose a folder you want to share, then ask your AI to find a document. You control which tools and files are accessible.</string>
     <string name="activation_next_prompt" tools:ignore="MissingTranslation">List the files I have shared from my phone. Ask me which document to read before opening it.</string>
