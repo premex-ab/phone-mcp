@@ -32,7 +32,7 @@ Prywatność w standardzie
 • Każde narzędzie jest wyłączone, dopóki go nie włączysz — wrażliwe wymagają wyraźnej zgody
 • Lokalnie uwierzytelnianie tokenem Bearer, zdalnie OAuth 2.1
 • Zdalny dostęp wyłączysz w każdej chwili; tunel zamyka się natychmiast
-• Zero reklam, zero trackerów — nigdy nie sprzedajemy danych
+• Zero reklam. Nigdy nie sprzedajemy Twoich danych.
 
 Open source
 

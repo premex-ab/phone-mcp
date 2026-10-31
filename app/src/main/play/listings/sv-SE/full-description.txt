@@ -36,7 +36,7 @@ Privat i grunden
 • Alla verktyg är av tills du aktiverar dem — känsliga kräver uttryckligt samtycke
 • Bearer token-autentisering lokalt, OAuth 2.1 på distans
 • Stäng av fjärråtkomsten när som helst; tunneln stängs omedelbart
-• Inga annonser, ingen försäljning av dina data och din data säljs aldrig
+• Inga annonser och ingen försäljning av dina data
 
 Öppen källkod
 

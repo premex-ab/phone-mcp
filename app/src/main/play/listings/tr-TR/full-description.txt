@@ -32,7 +32,7 @@ Tasarım gereği gizlilik
 • Siz etkinleştirene kadar her araç kapalıdır — hassas olanlar açık onay gerektirir
 • Yerelde bearer token, uzaktan OAuth 2.1 kimlik doğrulaması
 • Uzaktan erişimi istediğiniz an kapatın; tünel anında kapanır
-• Reklam yok, izleyici yok; verilerinizi asla satmayız
+• Reklam yok. Verilerinizi asla satmayız.
 
 Açık kaynak
 

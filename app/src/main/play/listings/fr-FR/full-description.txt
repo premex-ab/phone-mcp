@@ -32,7 +32,7 @@ Privé par conception
 • Chaque outil est désactivé tant que vous ne l'activez pas — les plus sensibles exigent un consentement explicite
 • Authentification par jeton Bearer en local, OAuth 2.1 à distance
 • Désactivez l'accès à distance à tout moment ; le tunnel se ferme immédiatement
-• Pas de publicité, pas de traceurs, et vos données ne sont jamais vendues
+• Pas de publicité. Vos données ne sont jamais vendues.
 
 Open source
 

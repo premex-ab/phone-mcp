@@ -32,7 +32,7 @@ Riêng tư từ thiết kế
 • Mọi công cụ đều tắt cho đến khi bạn bật — công cụ nhạy cảm cần sự đồng ý rõ ràng
 • Xác thực bằng Bearer token trong mạng nội bộ, OAuth 2.1 khi từ xa
 • Tắt truy cập từ xa bất cứ lúc nào; đường hầm đóng ngay lập tức
-• Không quảng cáo, không trình theo dõi, không bao giờ bán dữ liệu
+• Không quảng cáo. Chúng tôi không bao giờ bán dữ liệu của bạn.
 
 Mã nguồn mở
 
