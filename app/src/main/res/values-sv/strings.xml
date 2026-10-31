@@ -118,4 +118,5 @@ Anslutningsguiden på huvudskärmen leder dig genom båda.</string>
     <string name="activation_help" tools:ignore="MissingTranslation">Saknas verktyg i AI-klienten? Aktivera ett verktyg i den här appen, anslut klienten igen och kontrollera dess telefonanslutning. Koden ansluter klienten; frågan testar verktyget.</string>
     <string name="copy_prompt" tools:ignore="MissingTranslation">Kopiera fråga</string>
     <string name="trial_reminder" tools:ignore="MissingTranslation">Fortsätt använda telefonens verktyg från valfritt nätverk efter provperioden med en prenumeration. Månads- och årsplaner förnyas automatiskt tills de sägs upp i Google Play. Lokalt wifi är fortsatt gratis.</string>
+    <string name="privacy_policy">Integritetspolicy</string>
 </resources>

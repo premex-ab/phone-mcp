@@ -127,4 +127,5 @@ The connection guide on the main screen walks you through both.</string>
     <string name="activation_help" tools:ignore="MissingTranslation">No tools in your AI client? Enable a tool in this app, reconnect the client and check its phone connection. A pairing code connects the client; the prompt tests the tool.</string>
     <string name="copy_prompt" tools:ignore="MissingTranslation">Copy prompt</string>
     <string name="trial_reminder" tools:ignore="MissingTranslation">Keep using your phone tools from any network after the trial with a subscription. Monthly and yearly plans renew automatically until canceled in Google Play. Local Wi-Fi stays free.</string>
+    <string name="privacy_policy" tools:ignore="MissingTranslation">Privacy policy</string>
 </resources>
