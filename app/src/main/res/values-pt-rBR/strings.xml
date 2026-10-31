@@ -67,8 +67,8 @@
     <string name="subscribe">Assinar</string>
     <string name="remote_trial_days_left">Teste grátis — %1$d dias restantes</string>
     <string name="remote_subscription_active">Assinatura ativa</string>
-    <string name="remote_grace">O teste terminou — %1$d dias de carência antes que o acesso remoto pare</string>
-    <string name="remote_expired">O acesso remoto expirou. As assinaturas chegarão em breve.</string>
+    <string name="remote_grace">Seu período de acesso terminou — restam %1$d dias extras. Assine para continuar conectado.</string>
+    <string name="remote_expired">O acesso remoto expirou. Assine abaixo para se conectar novamente. O acesso pela rede local continua gratuito.</string>
     <string name="battery_hint">O Android pode pausar a conexão no modo de suspensão profunda. Isente o app da otimização de bateria para continuar acessível de qualquer lugar.</string>
     <string name="battery_button">Permitir conexão em segundo plano</string>
     <string name="restart_after_boot_title">Telefone reiniciado</string>

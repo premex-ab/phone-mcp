@@ -15,6 +15,8 @@ import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -48,13 +50,18 @@ class BillingManager @Inject constructor(
 
     private val client = BillingClient.newBuilder(context)
         .setListener(this)
+        .enableAutoServiceReconnection()
         .enablePendingPurchases(
             PendingPurchasesParams.newBuilder().enableOneTimeProducts().build()
         )
         .build()
 
     fun connect() {
-        if (client.isReady) return
+        if (client.isReady) {
+            queryExistingPurchases()
+            queryProduct()
+            return
+        }
         client.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(result: BillingResult) {
                 if (result.responseCode == BillingClient.BillingResponseCode.OK) {
@@ -95,7 +102,7 @@ class BillingManager @Inject constructor(
             .build()
         client.queryPurchasesAsync(params) { result, purchases ->
             if (result.responseCode == BillingClient.BillingResponseCode.OK) {
-                purchases.firstOrNull { PRODUCT_ID in it.products }?.let {
+                purchases.firstOrNull { PRODUCT_ID in it.products && it.purchaseState == Purchase.PurchaseState.PURCHASED }?.let {
                     _pendingPurchase.value = it
                 }
             }
@@ -109,7 +116,8 @@ class BillingManager @Inject constructor(
     fun launchPurchase(activity: Activity, basePlanId: String?): Boolean {
         val details = _productDetails.value ?: return false
         val offers = details.subscriptionOfferDetails ?: return false
-        val offerToken = (offers.firstOrNull { it.basePlanId == basePlanId } ?: offers.firstOrNull())
+        val offerToken = (if (basePlanId == null) offers.firstOrNull { it.offerId == null }
+            else offers.firstOrNull { it.basePlanId == basePlanId && it.offerId == null })
             ?.offerToken ?: return false
         val params = BillingFlowParams.newBuilder()
             .setProductDetailsParamsList(
@@ -127,21 +135,25 @@ class BillingManager @Inject constructor(
 
     override fun onPurchasesUpdated(result: BillingResult, purchases: MutableList<Purchase>?) {
         if (result.responseCode == BillingClient.BillingResponseCode.OK) {
-            purchases?.firstOrNull { PRODUCT_ID in it.products }?.let {
+            purchases?.firstOrNull { PRODUCT_ID in it.products && it.purchaseState == Purchase.PurchaseState.PURCHASED }?.let {
                 _pendingPurchase.value = it
             }
         }
     }
 
     /** Must be called within 3 days of purchase or Play refunds it. */
-    fun acknowledge(purchase: Purchase) {
-        if (purchase.isAcknowledged) return
-        client.acknowledgePurchase(
-            AcknowledgePurchaseParams.newBuilder()
-                .setPurchaseToken(purchase.purchaseToken)
-                .build()
-        ) { result ->
-            Log.i(TAG, "Acknowledge result: ${result.responseCode}")
+    suspend fun acknowledge(purchase: Purchase): Boolean {
+        if (purchase.isAcknowledged) return true
+        return suspendCancellableCoroutine { continuation ->
+            client.acknowledgePurchase(
+                AcknowledgePurchaseParams.newBuilder()
+                    .setPurchaseToken(purchase.purchaseToken)
+                    .build()
+            ) { result ->
+                if (continuation.isActive) {
+                    continuation.resume(result.responseCode == BillingClient.BillingResponseCode.OK)
+                }
+            }
         }
     }
 

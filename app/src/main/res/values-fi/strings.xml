@@ -67,8 +67,8 @@
     <string name="subscribe">Tilaa</string>
     <string name="remote_trial_days_left">Ilmainen kokeilu — %1$d päivää jäljellä</string>
     <string name="remote_subscription_active">Tilaus aktiivinen</string>
-    <string name="remote_grace">Kokeilu päättyi — %1$d lisäpäivää jäljellä ennen kuin etäkäyttö lakkaa</string>
-    <string name="remote_expired">Etäkäyttö on päättynyt. Tilaukset tulevat pian.</string>
+    <string name="remote_grace">Käyttöjakso on päättynyt — %1$d lisäpäivää jäljellä. Tilaa jatkaaksesi käyttöä.</string>
+    <string name="remote_expired">Etäkäyttö on päättynyt. Tilaa alta, jotta voit muodostaa yhteyden uudelleen. Lähiverkkokäyttö pysyy maksuttomana.</string>
     <string name="battery_hint">Android voi keskeyttää yhteyden syvässä lepotilassa. Vapauta sovellus akun optimoinnista, jotta puhelin pysyy tavoitettavissa mistä tahansa.</string>
     <string name="battery_button">Salli taustayhteys</string>
     <string name="restart_after_boot_title">Puhelin käynnistyi uudelleen</string>

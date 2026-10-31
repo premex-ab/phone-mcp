@@ -67,8 +67,8 @@
     <string name="subscribe">S\'abonner</string>
     <string name="remote_trial_days_left">Essai gratuit — %1$d jours restants</string>
     <string name="remote_subscription_active">Abonnement actif</string>
-    <string name="remote_grace">Essai terminé — %1$d jours de grâce avant l\'arrêt de l\'accès à distance</string>
-    <string name="remote_expired">L\'accès à distance a expiré. Les abonnements arrivent bientôt.</string>
+    <string name="remote_grace">Votre période d’accès est terminée — il reste %1$d jours supplémentaires. Abonnez-vous pour rester connecté.</string>
+    <string name="remote_expired">L’accès à distance a expiré. Abonnez-vous ci-dessous pour vous reconnecter. L’accès au réseau local reste gratuit.</string>
     <string name="battery_hint">Android peut suspendre la connexion en veille profonde. Exemptez l\'application de l\'optimisation de la batterie pour rester joignable où que vous soyez.</string>
     <string name="battery_button">Autoriser la connexion en arrière-plan</string>
     <string name="restart_after_boot_title">Téléphone redémarré</string>

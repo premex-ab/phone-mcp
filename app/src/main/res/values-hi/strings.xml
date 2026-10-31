@@ -67,8 +67,8 @@
     <string name="subscribe">सब्सक्राइब करें</string>
     <string name="remote_trial_days_left">फ़्री ट्रायल — %1$d दिन बाकी</string>
     <string name="remote_subscription_active">सब्सक्रिप्शन चालू है</string>
-    <string name="remote_grace">ट्रायल खत्म — रिमोट एक्सेस बंद होने से पहले %1$d अतिरिक्त दिन बाकी</string>
-    <string name="remote_expired">रिमोट एक्सेस की अवधि खत्म हो गई है। सब्सक्रिप्शन जल्द आ रहे हैं।</string>
+    <string name="remote_grace">आपकी ऐक्सेस अवधि समाप्त हो गई है — %1$d अतिरिक्त दिन बाकी हैं। जुड़े रहने के लिए सदस्यता लें।</string>
+    <string name="remote_expired">रिमोट ऐक्सेस समाप्त हो गया है। फिर से कनेक्ट करने के लिए नीचे सदस्यता लें। स्थानीय नेटवर्क ऐक्सेस मुफ़्त रहेगा।</string>
     <string name="battery_hint">डीप स्लीप में Android कनेक्शन रोक सकता है। कहीं से भी पहुँच बनाए रखने के लिए ऐप को बैटरी ऑप्टिमाइज़ेशन से छूट दें।</string>
     <string name="battery_button">बैकग्राउंड कनेक्शन की अनुमति दें</string>
     <string name="restart_after_boot_title">फ़ोन रीस्टार्ट हुआ</string>

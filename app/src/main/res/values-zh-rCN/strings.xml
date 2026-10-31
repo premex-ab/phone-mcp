@@ -67,8 +67,8 @@
     <string name="subscribe">订阅</string>
     <string name="remote_trial_days_left">免费试用 — 剩余 %1$d 天</string>
     <string name="remote_subscription_active">订阅已生效</string>
-    <string name="remote_grace">试用已结束 — 距远程访问停止还有 %1$d 天宽限期</string>
-    <string name="remote_expired">远程访问已过期。订阅功能即将推出。</string>
+    <string name="remote_grace">访问期限已结束，还剩%1$d天额外访问时间。请订阅以保持连接。</string>
+    <string name="remote_expired">远程访问已到期。请在下方订阅以重新连接。本地网络访问仍然免费。</string>
     <string name="battery_hint">Android 可能会在深度休眠时暂停连接。请将本应用排除在电池优化之外，以便随时随地保持可访问。</string>
     <string name="battery_button">允许后台连接</string>
     <string name="restart_after_boot_title">手机已重启</string>

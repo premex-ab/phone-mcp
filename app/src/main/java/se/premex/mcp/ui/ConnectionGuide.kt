@@ -69,6 +69,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.net.HttpURLConnection
@@ -153,8 +155,15 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
     val tunnelConnected by viewModel.tunnelConnected.collectAsState()
     val context = LocalContext.current
 
-    LaunchedEffect(config.enabled) {
-        if (config.enabled) viewModel.refreshPairedClients()
+    val guideLifecycle = androidx.compose.ui.platform.LocalLifecycleOwner.current
+    LaunchedEffect(config.enabled, guideLifecycle) {
+        if (config.enabled) guideLifecycle.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewModel.restorePurchases()
+            while (true) {
+                viewModel.refreshPairedClients()
+                delay(20_000)
+            }
+        }
     }
 
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -192,14 +201,9 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
                 Spacer(modifier = Modifier.height(8.dp))
             }
 
-            viewModel.entitlement?.let { (status, activeUntil) ->
-                // java.time needs API 26; minSdk is 24 — parse the ISO instant by hand
-                val daysLeft = runCatching {
-                    val format = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", java.util.Locale.US)
-                    format.timeZone = java.util.TimeZone.getTimeZone("UTC")
-                    val end = format.parse(activeUntil.substringBefore('.').removeSuffix("Z"))!!.time
-                    ((end - System.currentTimeMillis()) / 86_400_000L).coerceAtLeast(0)
-                }.getOrDefault(0L)
+            viewModel.entitlement?.let { entitlement ->
+                val status = entitlement.status
+                val daysLeft = entitlement.daysLeft()
                 val (text, color) = when (status) {
                     "trial" -> stringResource(R.string.remote_trial_days_left, daysLeft) to
                         MaterialTheme.colorScheme.onSurfaceVariant
@@ -221,11 +225,16 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
                 // and the device is not already covered by a paid subscription
                 val product by viewModel.subscriptionProduct.collectAsState()
                 if (status != "paid") {
+                    if (status == "trial" && daysLeft <= 7) {
+                        Text(stringResource(R.string.trial_reminder), style = MaterialTheme.typography.bodySmall)
+                        LaunchedEffect(daysLeft) { viewModel.recordMilestone("trial_reminder_viewed") }
+                    }
                     product?.let { details ->
-                        val offers = details.subscriptionOfferDetails.orEmpty()
+                        LaunchedEffect(details.productId) { viewModel.recordMilestone("paywall_viewed") }
+                        val offers = details.subscriptionOfferDetails.orEmpty().filter { it.offerId == null }
                         fun pricing(basePlanId: String) = offers
                             .firstOrNull { it.basePlanId == basePlanId }
-                            ?.pricingPhases?.pricingPhaseList?.firstOrNull()
+                            ?.pricingPhases?.pricingPhaseList?.lastOrNull()
 
                         val monthly = pricing("monthly")
                         val yearly = pricing("yearly")
@@ -240,6 +249,7 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
                                         onClick = {
                                             (context as? Activity)?.let { viewModel.subscribe(it, "monthly") }
                                         },
+                                        enabled = !viewModel.verifyingPurchase,
                                         modifier = Modifier.weight(1f)
                                     ) {
                                         Text(stringResource(R.string.subscribe_monthly, plan.formattedPrice))
@@ -250,6 +260,7 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
                                         onClick = {
                                             (context as? Activity)?.let { viewModel.subscribe(it, "yearly") }
                                         },
+                                        enabled = !viewModel.verifyingPurchase,
                                         modifier = Modifier.weight(1f)
                                     ) {
                                         Text(stringResource(R.string.subscribe_yearly, plan.formattedPrice))
@@ -280,6 +291,17 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                 }
+            }
+
+            if (viewModel.verifyingPurchase) {
+                Text(stringResource(R.string.purchase_confirmation_pending), style = MaterialTheme.typography.bodySmall)
+            }
+            TextButton(onClick = { viewModel.restorePurchases() }) { Text(stringResource(R.string.restore_purchases)) }
+            if (viewModel.entitlement?.status == "paid") {
+                TextButton(onClick = {
+                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(
+                        "https://play.google.com/store/account/subscriptions?sku=remote_access&package=se.premex.mcp")))
+                }) { Text(stringResource(R.string.manage_subscription)) }
             }
 
             // Doze can pause the tunnel; ask for the battery exemption right
@@ -335,6 +357,11 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
                 )
             }
         } else {
+            ActivationGuide(
+                connected = tunnelConnected == true,
+                paired = viewModel.pairedClients.isNotEmpty(),
+                successful = viewModel.entitlement?.firstToolSuccess == true,
+            )
             var selectedClient by rememberSaveable { mutableStateOf(McpClient.CLAUDE_CODE) }
 
             Text(
@@ -460,6 +487,31 @@ private fun RemoteGuide(viewModel: RemoteAccessViewModel = hiltViewModel()) {
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.error
             )
+        }
+    }
+}
+
+/** A real successful tools/call response, observed by the relay, completes setup. */
+@Composable
+private fun ActivationGuide(connected: Boolean, paired: Boolean, successful: Boolean) {
+    val context = LocalContext.current
+    Card(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text(stringResource(if (successful) R.string.activation_success else R.string.activation_title),
+                style = MaterialTheme.typography.titleSmall)
+            Text(stringResource(when {
+                !connected -> R.string.activation_connect
+                !paired -> R.string.activation_pair
+                !successful -> R.string.activation_try
+                else -> R.string.activation_next
+            }), style = MaterialTheme.typography.bodySmall)
+            if (connected && paired) {
+                val prompt = stringResource(if (successful) R.string.activation_next_prompt else R.string.activation_prompt)
+                CodeBlock(prompt, stringResource(R.string.copy_prompt)) { copyToClipboard(context, prompt) }
+            }
+            if (!successful) {
+                Text(stringResource(R.string.activation_help), style = MaterialTheme.typography.bodySmall)
+            }
         }
     }
 }
@@ -595,7 +647,7 @@ private fun ConnectionDiagnostics(
 
 @Composable
 private fun ClientChips(selected: McpClient, onSelect: (McpClient) -> Unit) {
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+    Row(modifier = Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         McpClient.entries.forEach { client ->
             FilterChip(
                 selected = selected == client,

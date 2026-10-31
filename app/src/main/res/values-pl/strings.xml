@@ -67,8 +67,8 @@
     <string name="subscribe">Subskrybuj</string>
     <string name="remote_trial_days_left">Bezpłatny okres próbny — pozostało dni: %1$d</string>
     <string name="remote_subscription_active">Subskrypcja aktywna</string>
-    <string name="remote_grace">Okres próbny dobiegł końca — dni karencji do wyłączenia dostępu zdalnego: %1$d</string>
-    <string name="remote_expired">Dostęp zdalny wygasł. Subskrypcje będą dostępne wkrótce.</string>
+    <string name="remote_grace">Okres dostępu zakończył się — pozostało %1$d dodatkowych dni. Wykup subskrypcję, aby kontynuować.</string>
+    <string name="remote_expired">Dostęp zdalny wygasł. Wykup subskrypcję poniżej, aby połączyć się ponownie. Dostęp w sieci lokalnej pozostaje bezpłatny.</string>
     <string name="battery_hint">Android może wstrzymać połączenie w trybie głębokiego uśpienia. Wyłącz optymalizację baterii dla tej aplikacji, aby telefon był osiągalny z dowolnego miejsca.</string>
     <string name="battery_button">Zezwól na połączenie w tle</string>
     <string name="restart_after_boot_title">Telefon został uruchomiony ponownie</string>
