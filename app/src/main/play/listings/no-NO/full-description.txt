@@ -32,7 +32,7 @@ Bygget for personvern
 • Hvert verktøy er av til du aktiverer det — sensitive krever uttrykkelig samtykke
 • Bearer token-autentisering lokalt, OAuth 2.1 eksternt
 • Slå av fjerntilgang når som helst; tunnelen lukkes umiddelbart
-• Ingen annonser, ingen sporere, og dataene dine selges aldri
+• Ingen annonser. Dataene dine selges aldri.
 
 Åpen kildekode
 

@@ -32,7 +32,7 @@ Soukromí na prvním místě
 • Každý nástroj je vypnutý, dokud ho sami nezapnete — citlivé nástroje vyžadují výslovný souhlas
 • Místně ověřování tokenem Bearer, vzdáleně OAuth 2.1
 • Vzdálený přístup můžete kdykoli vypnout; tunel se okamžitě uzavře
-• Žádné reklamy, žádné trackery a vaše data nikdy neprodáváme
+• Žádné reklamy. Vaše data nikdy neprodáváme.
 
 Open source
 

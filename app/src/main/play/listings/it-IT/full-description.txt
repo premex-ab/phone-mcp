@@ -32,7 +32,7 @@ Privacy by design
 • Ogni strumento è disattivato finché non lo abiliti — quelli sensibili richiedono un consenso esplicito
 • Autenticazione con token Bearer in locale, OAuth 2.1 da remoto
 • Disattiva l'accesso remoto in qualsiasi momento; il tunnel si chiude immediatamente
-• Nessuna pubblicità, nessun tracker e i tuoi dati non vengono mai venduti
+• Nessuna pubblicità. I tuoi dati non vengono mai venduti.
 
 Open source
 

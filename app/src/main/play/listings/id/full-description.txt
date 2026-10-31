@@ -32,7 +32,7 @@ Privasi sejak dirancang
 • Semua alat nonaktif sampai Anda mengaktifkannya — yang sensitif memerlukan persetujuan eksplisit
 • Autentikasi token Bearer secara lokal, OAuth 2.1 untuk jarak jauh
 • Matikan akses jarak jauh kapan saja; terowongan langsung tertutup
-• Tanpa iklan, tanpa pelacak, dan kami tidak pernah menjual data
+• Tanpa iklan. Kami tidak pernah menjual data Anda.
 
 Sumber terbuka
 

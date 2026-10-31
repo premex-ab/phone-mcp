@@ -32,7 +32,7 @@ Privatsphäre von Grund auf
 • Jedes Tool ist aus, bis du es aktivierst — sensible erfordern ausdrückliche Zustimmung
 • Bearer-Token-Authentifizierung lokal, OAuth 2.1 aus der Ferne
 • Schalte den Fernzugriff jederzeit ab; der Tunnel schließt sofort
-• Keine Werbung, keine Tracker — und deine Daten werden niemals verkauft
+• Keine Werbung. Deine Daten werden niemals verkauft.
 
 Open Source
 

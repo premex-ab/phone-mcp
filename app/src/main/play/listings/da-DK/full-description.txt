@@ -32,7 +32,7 @@ Designet til privatliv
 • Alle værktøjer er slået fra, indtil du aktiverer dem — følsomme kræver udtrykkeligt samtykke
 • Bearer token-godkendelse lokalt, OAuth 2.1 på afstand
 • Slå fjernadgang fra når som helst; tunnellen lukker øjeblikkeligt
-• Ingen reklamer, ingen trackere, og dine data sælges aldrig
+• Ingen reklamer. Dine data sælges aldrig.
 
 Open source
 
