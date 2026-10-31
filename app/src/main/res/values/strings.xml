@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="appfunctions_app_description">Use authorized on-device assistants to access enabled Phone MCP tools, including messages, contacts, camera, location, sensors, and files.</string>
     <string name="appfunctions_title">On-device assistants</string>
     <string name="experimental">Experimental</string>
@@ -76,8 +76,8 @@
     <string name="subscribe">Subscribe</string>
     <string name="remote_trial_days_left">Free trial — %1$d days left</string>
     <string name="remote_subscription_active">Subscription active</string>
-    <string name="remote_grace">Trial ended — %1$d grace days left before remote access stops</string>
-    <string name="remote_expired">Remote access has expired. Subscriptions are coming soon.</string>
+    <string name="remote_grace" tools:ignore="MissingTranslation">Your access period has ended — %1$d days of extra access remain. Subscribe to stay connected.</string>
+    <string name="remote_expired" tools:ignore="MissingTranslation">Remote access has ended. Subscribe below to reconnect. Local network access remains free.</string>
     <string name="battery_hint">Android can pause the connection in deep sleep. Exempt the app from battery optimization to stay reachable from anywhere.</string>
     <string name="battery_button">Allow background connection</string>
     <string name="restart_after_boot_title">Phone restarted</string>
@@ -112,4 +112,19 @@ The connection guide on the main screen walks you through both.</string>
     <string name="invalid_port_number_please_enter_a_value_between_1_and_65535">Invalid port number. Please enter a value between 1 and 65535.</string>
     <string name="back">Back</string>
     <string name="settings">Settings</string>
+    <string name="billing_unavailable" tools:ignore="MissingTranslation">Google Play could not load purchases. Check your connection and tap Restore purchases to retry.</string>
+    <string name="purchase_confirmation_pending" tools:ignore="MissingTranslation">Confirming your purchase. We will retry automatically while this screen is open. You can also restore it later; do not buy again.</string>
+    <string name="restore_purchases" tools:ignore="MissingTranslation">Restore purchases</string>
+    <string name="manage_subscription" tools:ignore="MissingTranslation">Manage subscription in Google Play</string>
+    <string name="activation_title" tools:ignore="MissingTranslation">Your first useful phone command</string>
+    <string name="activation_success" tools:ignore="MissingTranslation">It works — your AI has used a phone tool</string>
+    <string name="activation_connect" tools:ignore="MissingTranslation">1. Keep the server running and wait for the remote connection. If it stays disconnected, check internet access and allow background battery use below.</string>
+    <string name="activation_pair" tools:ignore="MissingTranslation">2. Choose your AI client below, follow its setup steps, then enter a pairing code. This screen updates automatically.</string>
+    <string name="activation_try" tools:ignore="MissingTranslation">3. Enable the Sensors tool in the tool list, then paste this prompt into your AI client. Success appears here after an actual tool response.</string>
+    <string name="activation_prompt" tools:ignore="MissingTranslation">Use phone_sensor to read my phone sensors. Tell me which sensors are available and explain one reading. Do not guess if the phone cannot be reached.</string>
+    <string name="activation_next" tools:ignore="MissingTranslation">Try another useful task: enable Files, choose a folder you want to share, then ask your AI to find a document. You control which tools and files are accessible.</string>
+    <string name="activation_next_prompt" tools:ignore="MissingTranslation">List the files I have shared from my phone. Ask me which document to read before opening it.</string>
+    <string name="activation_help" tools:ignore="MissingTranslation">No tools in your AI client? Enable a tool in this app, reconnect the client and check its phone connection. A pairing code connects the client; the prompt tests the tool.</string>
+    <string name="copy_prompt" tools:ignore="MissingTranslation">Copy prompt</string>
+    <string name="trial_reminder" tools:ignore="MissingTranslation">Keep using your phone tools from any network after the trial with a subscription. Monthly and yearly plans renew automatically until canceled in Google Play. Local Wi-Fi stays free.</string>
 </resources>

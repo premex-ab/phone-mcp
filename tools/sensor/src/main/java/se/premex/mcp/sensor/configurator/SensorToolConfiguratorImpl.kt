@@ -39,7 +39,8 @@ class SensorToolConfiguratorImpl(
                     contactsRepository.getStatus()
                 } catch (e: Exception) {
                     return@addTool CallToolResult(
-                        content = listOf(TextContent("Error retrieving sensor data "))
+                        content = listOf(TextContent("Error retrieving sensor data")),
+                        isError = true
                     )
                 }
 

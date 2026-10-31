@@ -67,8 +67,8 @@
     <string name="subscribe">สมัครใช้บริการ</string>
     <string name="remote_trial_days_left">ทดลองใช้ฟรี — เหลืออีก %1$d วัน</string>
     <string name="remote_subscription_active">การสมัครใช้บริการใช้งานอยู่</string>
-    <string name="remote_grace">ช่วงทดลองใช้สิ้นสุดแล้ว — เหลือเวลาผ่อนผันอีก %1$d วันก่อนที่การเข้าถึงระยะไกลจะหยุดทำงาน</string>
-    <string name="remote_expired">การเข้าถึงระยะไกลหมดอายุแล้ว เร็วๆ นี้จะเปิดให้สมัครใช้บริการ</string>
+    <string name="remote_grace">ระยะเวลาการเข้าถึงสิ้นสุดแล้ว — เหลือเวลาเพิ่มเติม %1$d วัน สมัครสมาชิกเพื่อใช้งานต่อ</string>
+    <string name="remote_expired">การเข้าถึงระยะไกลหมดอายุแล้ว สมัครสมาชิกด้านล่างเพื่อเชื่อมต่ออีกครั้ง การเข้าถึงผ่านเครือข่ายภายในยังคงฟรี</string>
     <string name="battery_hint">Android อาจหยุดการเชื่อมต่อชั่วคราวเมื่อเครื่องเข้าสู่โหมดสลีปลึก ยกเว้นแอปนี้จากการเพิ่มประสิทธิภาพแบตเตอรี่เพื่อให้เข้าถึงได้จากทุกที่</string>
     <string name="battery_button">อนุญาตการเชื่อมต่อในเบื้องหลัง</string>
     <string name="restart_after_boot_title">โทรศัพท์รีสตาร์ทแล้ว</string>

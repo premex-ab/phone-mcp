@@ -36,10 +36,17 @@ Privat i grunden
 • Alla verktyg är av tills du aktiverar dem — känsliga kräver uttryckligt samtycke
 • Bearer token-autentisering lokalt, OAuth 2.1 på distans
 • Stäng av fjärråtkomsten när som helst; tunneln stängs omedelbart
-• Inga annonser, inga spårare och din data säljs aldrig
+• Inga annonser, ingen försäljning av dina data och din data säljs aldrig
 
 Öppen källkod
 
 Appen och dess tunnelprotokoll är öppen källkod på GitHub — granska exakt vad som lämnar din mobil: github.com/premex-ab/phone-mcp
 
 Utvecklad i Sverige av Premex.
+
+
+Prova en första uppgift
+
+Aktivera Sensorer och be din AI: ”Använd phone_sensor. Vilka sensorer finns och vad betyder ett mätvärde?” Guiden bekräftar ett lyckat fjärranrop. Prova sedan att dela en mapp via Filer och be din AI att lista dokumenten innan den öppnar ett.
+
+Betalda planer förnyas automatiskt tills de sägs upp i Google Play. Lokalt wifi är fortsatt gratis. Driftstatistik och Firebase-diagnostik beskrivs i integritetspolicyn; verktygsinnehåll sparas inte som analysdata.
