@@ -4,14 +4,15 @@ The app contains no AI of its own. You connect the assistant you already use —
 
 Remote access
 
-Reach your phone from anywhere through phonemcp.ai. Pair a new AI client in under a minute: run one command, type the pairing code the app shows you, done. Paired clients reconnect automatically.
+Reach your phone from anywhere through phonemcp.ai. Pair your AI client: run one command, type the pairing code the app shows you, done. Paired clients reconnect automatically.
 
 • Works from any network — no port forwarding, no VPN, no account creation
 • OAuth 2.1 authorization with single-use pairing codes
 • Your phone only ever makes outbound connections
 • The relay never sees your phone's local credentials
 • See and revoke every paired AI client in the app
-• Free 30-day trial, then a small monthly or yearly subscription
+• Free 30-day remote trial, then an optional monthly or yearly subscription
+• Paid plans renew automatically until canceled in Google Play; local Wi-Fi remains free
 
 Local network
 
@@ -20,6 +21,14 @@ On your own Wi-Fi, your AI connects directly to the phone. No cloud, no subscrip
 On-device assistants (experimental)
 
 On Android 16 and newer, assistants with AppFunctions access can use enabled Phone MCP tools directly — no MCP server connection needed. Search contacts, take a photo, get location and sensor snapshots, browse files or prepare an SMS for review. The same tool switches control MCP and assistant access, while normal Android permissions continue to apply. Assistant support is currently limited during Android's experimental preview and depends on your device, assistant and account.
+
+Try a useful first task
+
+• Enable Sensors and ask: “Use phone_sensor. Which sensors are available, and what does one reading mean?”
+• Enable Files, choose a shared folder, then ask your AI to list the documents before opening one.
+• Enable Camera and ask an image-capable AI to inspect a photo of the object you are working on.
+
+The setup guide confirms a successful remote tool response and helps with connection problems. Your AI client interprets the results; Phone MCP provides the tools.
 
 What your AI can do
 
@@ -36,7 +45,8 @@ Private by design
 • Every tool is off until you enable it — sensitive ones require explicit consent
 • Bearer-token authentication locally, OAuth 2.1 remotely
 • Turn remote access off at any time; the tunnel closes immediately
-• No ads, no trackers, and your data is never sold
+• No ads and no sale of your data
+• Service metrics and Firebase diagnostics are described in our privacy policy; tool contents are not saved as analytics
 
 Open source
 

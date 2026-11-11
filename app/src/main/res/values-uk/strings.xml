@@ -67,8 +67,8 @@
     <string name="subscribe">Оформити підписку</string>
     <string name="remote_trial_days_left">Безкоштовний пробний період — залишилося днів: %1$d</string>
     <string name="remote_subscription_active">Підписка активна</string>
-    <string name="remote_grace">Пробний період завершився — залишилося %1$d дн. пільгового періоду до вимкнення віддаленого доступу</string>
-    <string name="remote_expired">Термін віддаленого доступу минув. Підписки незабаром з\'являться.</string>
+    <string name="remote_grace">Період доступу завершився — залишилося %1$d додаткових днів. Оформіть підписку, щоб залишатися на зв’язку.</string>
+    <string name="remote_expired">Віддалений доступ завершився. Оформіть підписку нижче, щоб підключитися знову. Доступ через локальну мережу залишається безкоштовним.</string>
     <string name="battery_hint">Android може призупиняти з\'єднання в режимі глибокого сну. Вимкніть оптимізацію батареї для застосунку, щоб телефон залишався доступним звідусіль.</string>
     <string name="battery_button">Дозволити фонове з\'єднання</string>
     <string name="restart_after_boot_title">Телефон перезавантажено</string>

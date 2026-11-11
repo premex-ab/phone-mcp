@@ -67,8 +67,8 @@
     <string name="subscribe">定期購入する</string>
     <string name="remote_trial_days_left">無料トライアル — 残り %1$d 日</string>
     <string name="remote_subscription_active">サブスクリプションは有効です</string>
-    <string name="remote_grace">トライアル終了 — リモートアクセスが停止するまでの猶予期間は残り %1$d 日です</string>
-    <string name="remote_expired">リモートアクセスの期限が切れました。サブスクリプションは近日提供予定です。</string>
+    <string name="remote_grace">アクセス期間が終了しました。追加の猶予期間はあと%1$d日です。接続を続けるには購読してください。</string>
+    <string name="remote_expired">リモートアクセスの有効期限が切れました。再接続するには下記から購読してください。ローカルネットワークでのアクセスは引き続き無料です。</string>
     <string name="battery_hint">Android はディープスリープ中に接続を一時停止することがあります。どこからでも到達できるようにするには、アプリを電池の最適化から除外してください。</string>
     <string name="battery_button">バックグラウンド接続を許可</string>
     <string name="restart_after_boot_title">スマートフォンが再起動しました</string>

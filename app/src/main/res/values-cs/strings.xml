@@ -67,8 +67,8 @@
     <string name="subscribe">Předplatit</string>
     <string name="remote_trial_days_left">Bezplatná zkušební doba — zbývá dní: %1$d</string>
     <string name="remote_subscription_active">Předplatné je aktivní</string>
-    <string name="remote_grace">Zkušební doba skončila — počet dní ochranné lhůty, než se vzdálený přístup vypne: %1$d</string>
-    <string name="remote_expired">Platnost vzdáleného přístupu vypršela. Předplatná budou brzy k dispozici.</string>
+    <string name="remote_grace">Období přístupu skončilo — zbývá %1$d dní navíc. Pro pokračování si pořiďte předplatné.</string>
+    <string name="remote_expired">Vzdálený přístup skončil. Pro opětovné připojení si níže pořiďte předplatné. Přístup v místní síti zůstává zdarma.</string>
     <string name="battery_hint">Android může připojení v hlubokém spánku pozastavit. Vyjměte aplikaci z optimalizace baterie, abyste zůstali dostupní odkudkoli.</string>
     <string name="battery_button">Povolit připojení na pozadí</string>
     <string name="restart_after_boot_title">Telefon byl restartován</string>

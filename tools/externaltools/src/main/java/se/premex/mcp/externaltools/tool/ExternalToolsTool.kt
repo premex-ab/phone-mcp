@@ -25,7 +25,7 @@ class ExternalToolsTool @Inject constructor(
     override val id = "external_tools"
     override val name = "External Tools"
     override val nameRes: Int = R.string.tools_externaltools_name
-    override val enabledByDefault = true
+    override val enabledByDefault = false
     override val disclaim: String? = null
 
     override fun configure(server: Server) {

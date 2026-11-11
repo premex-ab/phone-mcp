@@ -67,8 +67,8 @@
     <string name="subscribe">Abone ol</string>
     <string name="remote_trial_days_left">Ücretsiz deneme — %1$d gün kaldı</string>
     <string name="remote_subscription_active">Abonelik etkin</string>
-    <string name="remote_grace">Deneme süresi bitti — uzaktan erişim durmadan önce %1$d günlük ek süre kaldı</string>
-    <string name="remote_expired">Uzaktan erişimin süresi doldu. Abonelikler çok yakında.</string>
+    <string name="remote_grace">Erişim süreniz sona erdi — %1$d ek gün kaldı. Bağlı kalmak için abone olun.</string>
+    <string name="remote_expired">Uzaktan erişim sona erdi. Yeniden bağlanmak için aşağıdan abone olun. Yerel ağ erişimi ücretsiz kalır.</string>
     <string name="battery_hint">Android, derin uykuda bağlantıyı duraklatabilir. Her yerden erişilebilir kalmak için uygulamayı pil optimizasyonundan muaf tutun.</string>
     <string name="battery_button">Arka plan bağlantısına izin ver</string>
     <string name="restart_after_boot_title">Telefon yeniden başlatıldı</string>

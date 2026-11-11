@@ -67,8 +67,8 @@
     <string name="subscribe">Berlangganan</string>
     <string name="remote_trial_days_left">Uji coba gratis — %1$d hari tersisa</string>
     <string name="remote_subscription_active">Langganan aktif</string>
-    <string name="remote_grace">Uji coba berakhir — %1$d hari masa tenggang tersisa sebelum akses jarak jauh berhenti</string>
-    <string name="remote_expired">Akses jarak jauh telah berakhir. Langganan segera hadir.</string>
+    <string name="remote_grace">Masa akses telah berakhir — tersisa %1$d hari tambahan. Berlangganan agar tetap terhubung.</string>
+    <string name="remote_expired">Akses jarak jauh telah berakhir. Berlangganan di bawah untuk terhubung kembali. Akses jaringan lokal tetap gratis.</string>
     <string name="battery_hint">Android dapat menjeda koneksi saat tidur nyenyak. Kecualikan aplikasi dari pengoptimalan baterai agar tetap dapat dijangkau dari mana saja.</string>
     <string name="battery_button">Izinkan koneksi latar belakang</string>
     <string name="restart_after_boot_title">Ponsel dimulai ulang</string>

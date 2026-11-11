@@ -4,6 +4,20 @@ A powerful, modular Android application that implements a **Server-Sent Events (
 
 [![Get it on Google Play](https://play.google.com/intl/en_US/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=se.premex.mcp)
 
+
+## Try your first remote command
+
+Install [Phone MCP from Google Play](https://play.google.com/store/apps/details?id=se.premex.mcp), start the server and enable Remote access.
+
+1. In a terminal, run `claude mcp add --transport sse phone https://phonemcp.ai/sse`.
+2. In Claude Code, open `/mcp`, select `phone`, then authenticate with the pairing code from the app.
+3. Enable **Sensors** in the app and reconnect the client to discover the tool. Ask: “Use phone_sensor. List the available sensors and explain one reading.”
+4. After a successful response, try enabling **Files** and sharing a folder. Ask the client to list its documents before opening one.
+
+The app confirms the first successful remote tool response. If tools are missing, check that the tool is enabled and reconnect the client. Sensor availability depends on the phone; file and image interpretation depends on your AI client.
+
+Remote access includes a 30-day trial, then an optional Google Play subscription. Local Wi-Fi access remains free. See [setup examples and pricing](https://phonemcp.ai/#examples).
+
 ## Features
 
 ✨ **Core Capabilities**

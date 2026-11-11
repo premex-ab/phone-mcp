@@ -32,7 +32,7 @@ Privacy by design
 • Elke tool staat uit tot jij hem inschakelt — gevoelige tools vragen expliciete toestemming
 • Bearer-token-authenticatie lokaal, OAuth 2.1 op afstand
 • Zet toegang op afstand elk moment uit; de tunnel sluit direct
-• Geen advertenties, geen trackers, en je data wordt nooit verkocht
+• Geen advertenties. Je data wordt nooit verkocht.
 
 Open source
 

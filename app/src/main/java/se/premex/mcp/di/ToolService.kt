@@ -1,6 +1,7 @@
 package se.premex.mcp.di
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,27 +33,30 @@ class ToolService @Inject constructor(
      */
     val toolEnabledStates: StateFlow<Map<String, Boolean>> = _toolEnabledStates.asStateFlow()
 
-    init {
+    private val initialization = appScope.async<Unit> {
         // Load saved tool states before observing changes so defaults cannot
         // overwrite persisted choices during application startup.
+        val savedToolStates = toolPreferencesRepository.getToolEnabledStates().first()
+        _toolEnabledStates.value = mergeSavedToolStates(
+            availableTools = availableTools,
+            defaultStates = _toolEnabledStates.value,
+            savedStates = savedToolStates,
+        )
         appScope.launch {
-            val savedToolStates = toolPreferencesRepository.getToolEnabledStates().first()
-            _toolEnabledStates.value = mergeSavedToolStates(
-                availableTools = availableTools,
-                defaultStates = _toolEnabledStates.value,
-                savedStates = savedToolStates,
-            )
-            appScope.launch {
-                toolEnabledStates.collect { states ->
-                    toolPreferencesRepository.updateAllToolStates(states)
-                }
-            }
-            appScope.launch {
-                toolEnabledStates.collectLatest { states ->
-                    appFunctionStateSynchronizer.synchronize(availableTools, states)
-                }
+            toolEnabledStates.collect { states ->
+                toolPreferencesRepository.updateAllToolStates(states)
             }
         }
+        appScope.launch {
+            toolEnabledStates.collectLatest { states ->
+                appFunctionStateSynchronizer.synchronize(availableTools, states)
+            }
+        }
+    }
+
+    /** Wait for persisted choices before accepting the first MCP connection. */
+    suspend fun awaitLoaded() {
+        initialization.await()
     }
 
     /**

@@ -67,8 +67,8 @@
     <string name="subscribe">Abonnieren</string>
     <string name="remote_trial_days_left">Kostenlose Testphase — noch %1$d Tage</string>
     <string name="remote_subscription_active">Abo aktiv</string>
-    <string name="remote_grace">Testphase beendet — noch %1$d Tage Kulanz, bevor der Fernzugriff endet</string>
-    <string name="remote_expired">Der Fernzugriff ist abgelaufen. Abos sind bald verfügbar.</string>
+    <string name="remote_grace">Dein Zugriffszeitraum ist abgelaufen — noch %1$d zusätzliche Tage. Schließe ein Abo ab, um verbunden zu bleiben.</string>
+    <string name="remote_expired">Der Fernzugriff ist abgelaufen. Schließe unten ein Abo ab, um dich wieder zu verbinden. Der Zugriff im lokalen Netzwerk bleibt kostenlos.</string>
     <string name="battery_hint">Android kann die Verbindung im Tiefschlaf pausieren. Nimm die App von der Akku-Optimierung aus, um von überall erreichbar zu bleiben.</string>
     <string name="battery_button">Hintergrundverbindung erlauben</string>
     <string name="restart_after_boot_title">Telefon neu gestartet</string>

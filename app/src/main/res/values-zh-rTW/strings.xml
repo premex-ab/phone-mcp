@@ -67,8 +67,8 @@
     <string name="subscribe">訂閱</string>
     <string name="remote_trial_days_left">免費試用 — 剩餘 %1$d 天</string>
     <string name="remote_subscription_active">訂閱已生效</string>
-    <string name="remote_grace">試用已結束 — 距遠端存取停止還有 %1$d 天寬限期</string>
-    <string name="remote_expired">遠端存取已過期。訂閱功能即將推出。</string>
+    <string name="remote_grace">存取期限已結束，還剩%1$d天額外存取時間。請訂閱以保持連線。</string>
+    <string name="remote_expired">遠端存取已到期。請在下方訂閱以重新連線。本機網路存取仍然免費。</string>
     <string name="battery_hint">Android 可能會在深度睡眠時暫停連線。請將本應用程式排除在電池最佳化之外，以便隨時隨地保持可連線。</string>
     <string name="battery_button">允許背景連線</string>
     <string name="restart_after_boot_title">手機已重新啟動</string>

@@ -67,8 +67,8 @@
     <string name="subscribe">הצטרפות למינוי</string>
     <string name="remote_trial_days_left">תקופת ניסיון בחינם — נותרו %1$d ימים</string>
     <string name="remote_subscription_active">המינוי פעיל</string>
-    <string name="remote_grace">תקופת הניסיון הסתיימה — נותרו %1$d ימי חסד לפני שהגישה מרחוק תיפסק</string>
-    <string name="remote_expired">הגישה מרחוק פגה. מינויים יגיעו בקרוב.</string>
+    <string name="remote_grace">תקופת הגישה הסתיימה — נותרו %1$d ימים נוספים. יש להירשם למינוי כדי להמשיך.</string>
+    <string name="remote_expired">הגישה מרחוק הסתיימה. ניתן להירשם למינוי למטה כדי להתחבר מחדש. הגישה ברשת המקומית נשארת בחינם.</string>
     <string name="battery_hint">Android עשוי להשהות את החיבור במצב שינה עמוקה. כדי להישאר נגישים מכל מקום, יש להחריג את האפליקציה מאופטימיזציית הסוללה.</string>
     <string name="battery_button">אישור חיבור ברקע</string>
     <string name="restart_after_boot_title">הטלפון הופעל מחדש</string>

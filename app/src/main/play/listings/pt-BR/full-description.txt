@@ -32,7 +32,7 @@ Privado por design
 • Toda ferramenta fica desligada até você ativá-la — as sensíveis exigem consentimento explícito
 • Autenticação com token Bearer na rede local e OAuth 2.1 no acesso remoto
 • Desligue o acesso remoto a qualquer momento; o túnel fecha imediatamente
-• Sem anúncios, sem rastreadores, e nunca vendemos seus dados
+• Sem anúncios. Nunca vendemos seus dados.
 
 Código aberto
 

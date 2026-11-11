@@ -67,8 +67,8 @@
     <string name="subscribe">구독</string>
     <string name="remote_trial_days_left">무료 체험 — %1$d일 남음</string>
     <string name="remote_subscription_active">구독 활성 상태</string>
-    <string name="remote_grace">체험 기간 종료 — 원격 액세스가 중지되기까지 유예 기간 %1$d일 남음</string>
-    <string name="remote_expired">원격 액세스가 만료되었습니다. 구독 기능이 곧 제공됩니다.</string>
+    <string name="remote_grace">액세스 기간이 종료되었습니다. 추가 이용 기간이 %1$d일 남았습니다. 계속 연결하려면 구독하세요.</string>
+    <string name="remote_expired">원격 액세스가 만료되었습니다. 다시 연결하려면 아래에서 구독하세요. 로컬 네트워크 액세스는 계속 무료입니다.</string>
     <string name="battery_hint">Android는 절전 상태에서 연결을 일시 중지할 수 있습니다. 어디서나 연결 상태를 유지하려면 앱을 배터리 최적화에서 제외하세요.</string>
     <string name="battery_button">백그라운드 연결 허용</string>
     <string name="restart_after_boot_title">휴대전화가 다시 시작됨</string>

@@ -21,15 +21,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -65,12 +65,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -210,6 +210,12 @@ class MainActivity : ComponentActivity() {
                             toolEnabledStates = toolStates,
                             onToggleTool = { tool ->
                                 handleToolToggle(tool)
+                            },
+                            onEnableSensor = {
+                                toolService.getToolById("sensor")?.let { tool ->
+                                    // Read current state so repeated taps can never disable it.
+                                    if (!toolService.isToolEnabled(tool.id)) handleToolToggle(tool)
+                                }
                             },
                             authToken = authToken,
                             showAppFunctionsDiscovery = appFunctionsDiscoveryVisible,
@@ -416,11 +422,14 @@ fun HomeScreen(
     tools: List<McpTool>,
     toolEnabledStates: Map<String, Boolean>,
     onToggleTool: (McpTool) -> Unit,
+    onEnableSensor: () -> Unit = {},
     authToken: String = "YTpi",
     isSelectedInterfaceAvailable: () -> Boolean = { true },
     showAppFunctionsDiscovery: Boolean = true,
     onDismissAppFunctionsDiscovery: () -> Unit = {},
 ) {
+    val layoutDirection = LocalLayoutDirection.current
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -440,11 +449,18 @@ fun HomeScreen(
         McpServerControl(
             isRunning = isRunning,
             onToggleServer = onToggleServer,
-            modifier = modifier.padding(innerPadding),
+            modifier = modifier.consumeWindowInsets(innerPadding),
+            contentPadding = PaddingValues(
+                start = innerPadding.calculateStartPadding(layoutDirection) + 16.dp,
+                top = innerPadding.calculateTopPadding() + 8.dp,
+                end = innerPadding.calculateEndPadding(layoutDirection) + 16.dp,
+                bottom = innerPadding.calculateBottomPadding() + 24.dp,
+            ),
             getConnectionUrl = getConnectionUrl,
             tools = tools,
             toolEnabledStates = toolEnabledStates,
             onToggleTool = onToggleTool,
+            onEnableSensor = onEnableSensor,
             authToken = authToken,
             isSelectedInterfaceAvailable = isSelectedInterfaceAvailable,
             showAppFunctionsDiscovery = showAppFunctionsDiscovery,
@@ -462,21 +478,19 @@ fun McpServerControl(
     tools: List<McpTool>,
     toolEnabledStates: Map<String, Boolean>,
     onToggleTool: (McpTool) -> Unit,
+    onEnableSensor: () -> Unit = {},
+    contentPadding: PaddingValues = PaddingValues(
+        horizontal = 16.dp,
+        vertical = 8.dp,
+    ),
     authToken: String = "YTpi",
     isSelectedInterfaceAvailable: () -> Boolean = { true },
     showAppFunctionsDiscovery: Boolean = true,
     onDismissAppFunctionsDiscovery: () -> Unit = {},
 ) {
-    val safeDrawingPadding = WindowInsets.safeDrawing.asPaddingValues()
-
     LazyColumn(
         modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(
-            start = 16.dp + safeDrawingPadding.calculateLeftPadding(LayoutDirection.Ltr),
-            end = 16.dp + safeDrawingPadding.calculateRightPadding(LayoutDirection.Ltr),
-            top = 8.dp,
-            bottom = 24.dp + safeDrawingPadding.calculateBottomPadding()
-        ),
+        contentPadding = contentPadding,
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         item {
@@ -504,6 +518,8 @@ fun McpServerControl(
                         ConnectionGuide(
                             connectionUrl = getConnectionUrl(),
                             authToken = authToken,
+                            sensorEnabled = toolEnabledStates["sensor"] == true,
+                            onEnableSensor = onEnableSensor,
                             isSelectedInterfaceAvailable = isSelectedInterfaceAvailable
                         )
                     }

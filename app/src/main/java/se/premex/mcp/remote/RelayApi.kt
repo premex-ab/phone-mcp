@@ -13,7 +13,7 @@ data class PairedClientInfo(
 /** Small HTTP client for the relay's device API (registration + pairing codes). */
 object RelayApi {
 
-    class RelayException(message: String) : Exception(message)
+    class RelayException(val status: Int, message: String) : Exception(message)
 
     /**
      * Returns deviceId to deviceSecret. [trialAnchor] is a stable hash of a
@@ -31,7 +31,7 @@ object RelayApi {
     }
 
     /** Current remote-access entitlement: status ("trial"/"paid"/"grace"/"expired") to activeUntil ISO instant. */
-    fun getEntitlement(relayUrl: String, deviceId: String, deviceSecret: String): Pair<String, String> {
+    fun getEntitlement(relayUrl: String, deviceId: String, deviceSecret: String): RemoteEntitlement {
         val response = request(
             method = "GET",
             url = "$relayUrl/api/devices/$deviceId/entitlement",
@@ -39,7 +39,7 @@ object RelayApi {
             headers = mapOf("X-Device-Secret" to deviceSecret),
         )
         val json = JSONObject(response)
-        return json.getString("status") to json.getString("activeUntil")
+        return RemoteEntitlement(json.getString("status"), json.getString("activeUntil"), json.optBoolean("firstToolSuccess"), json.optBoolean("acknowledged"))
     }
 
     /** Returns the pairing code to its validity in seconds. */
@@ -84,7 +84,7 @@ object RelayApi {
         deviceId: String,
         deviceSecret: String,
         purchaseToken: String,
-    ): Pair<String, String> {
+    ): RemoteEntitlement {
         val response = post(
             url = "$relayUrl/api/devices/$deviceId/subscription",
             body = JSONObject().put("purchaseToken", purchaseToken).toString(),
@@ -94,7 +94,13 @@ object RelayApi {
             ),
         )
         val json = JSONObject(response)
-        return json.getString("status") to json.getString("activeUntil")
+        return RemoteEntitlement(json.getString("status"), json.getString("activeUntil"), json.optBoolean("firstToolSuccess"), json.optBoolean("acknowledged"))
+    }
+
+    fun milestone(config: RemoteAccessConfig, event: String) {
+        if (!config.registered) return
+        post("${config.relayUrl}/api/devices/${config.deviceId}/milestones/$event", "",
+            mapOf("X-Device-Secret" to requireNotNull(config.deviceSecret)))
     }
 
     /** Revoke every token binding this client to this device. */
@@ -126,7 +132,7 @@ object RelayApi {
             val text = (if (status < 400) connection.inputStream else connection.errorStream)
                 ?.bufferedReader()?.readText().orEmpty()
             if (status >= 400) {
-                throw RelayException("Relay error $status: ${text.take(200)}")
+                throw RelayException(status, "Relay error $status: ${text.take(200)}")
             }
             return text
         } finally {

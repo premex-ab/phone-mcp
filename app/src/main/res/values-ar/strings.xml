@@ -67,8 +67,8 @@
     <string name="subscribe">اشتراك</string>
     <string name="remote_trial_days_left">تجربة مجانية — يتبقى %1$d يومًا</string>
     <string name="remote_subscription_active">الاشتراك نشط</string>
-    <string name="remote_grace">انتهت الفترة التجريبية — يتبقى %1$d يومًا من المهلة قبل توقف الوصول عن بُعد</string>
-    <string name="remote_expired">انتهت صلاحية الوصول عن بُعد. الاشتراكات قادمة قريبًا.</string>
+    <string name="remote_grace">انتهت فترة الوصول — تبقى %1$d أيام إضافية. اشترك لمواصلة الاتصال.</string>
+    <string name="remote_expired">انتهى الوصول عن بُعد. اشترك أدناه للاتصال مجددًا. يبقى الوصول عبر الشبكة المحلية مجانيًا.</string>
     <string name="battery_hint">قد يوقف Android الاتصال مؤقتًا في وضع السكون العميق. استثنِ التطبيق من تحسين البطارية ليظل قابلًا للوصول من أي مكان.</string>
     <string name="battery_button">السماح بالاتصال في الخلفية</string>
     <string name="restart_after_boot_title">تمت إعادة تشغيل الهاتف</string>

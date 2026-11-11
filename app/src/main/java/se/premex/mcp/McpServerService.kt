@@ -1,6 +1,7 @@
 package se.premex.mcp
 
 import android.Manifest
+import android.app.ForegroundServiceStartNotAllowedException
 import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -54,7 +55,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import se.premex.mcp.core.tool.McpTool
 import se.premex.mcp.auth.AuthRepository
-import se.premex.mcp.data.ToolPreferencesRepository
 import se.premex.mcp.data.ServerPreferencesRepository
 import se.premex.mcp.di.ToolService
 import se.premex.mcp.remote.RemoteAccessRepository
@@ -90,15 +90,11 @@ class McpServerService : Service() {
     private var server: EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration>? =
         null
     private var notificationManager: NotificationManager? = null
-
-    // Tool states will be loaded from the repository
-    private var toolStates: Map<String, Boolean> = emptyMap()
+    private var foregroundStarted = false
+    private var initializationStarted = false
 
     @Inject
     lateinit var toolService: ToolService
-
-    @Inject
-    lateinit var toolPreferencesRepository: ToolPreferencesRepository
 
     @Inject
     lateinit var serverPreferencesRepository: ServerPreferencesRepository
@@ -120,7 +116,6 @@ class McpServerService : Service() {
     private var remoteAccessObserverStarted = false
 
     override fun onCreate() {
-        isRunning.value = true
         super.onCreate()
 
         Log.i(TAG, "$LOG_PREFIX_LIFECYCLE: Service onCreate started")
@@ -146,7 +141,22 @@ class McpServerService : Service() {
             pendingIntent
         )
 
-        startInForeground(initialNotification)
+        try {
+            startInForeground(initialNotification)
+        } catch (e: IllegalStateException) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
+                e is ForegroundServiceStartNotAllowedException
+            ) {
+                Log.w(TAG, "$LOG_PREFIX_LIFECYCLE: Foreground start rejected", e)
+                isRunning.value = false
+                stopSelf()
+                postStartupFailureNotification("Android could not start the server in the background. Open the app and start it again.")
+                return
+            }
+            throw e
+        }
+        foregroundStarted = true
+        isRunning.value = true
         Log.i(
             TAG,
             "$LOG_PREFIX_LIFECYCLE: Service started in foreground with notification ID $NOTIFICATION_ID"
@@ -154,36 +164,40 @@ class McpServerService : Service() {
     }
 
     /**
-     * Foreground with an explicit type mask: camera is included only when the
-     * runtime permission is granted (starting a camera-type FGS without it
-     * throws on Android 14+), with a dataSync-only fallback for starts where
-     * while-in-use types are not allowed (e.g. restored after boot). Without
-     * the camera type, the camera tool cannot capture while the app is
-     * backgrounded on API 29+ (issue #72).
+     * The interactive MCP server uses specialUse rather than the time-limited
+     * dataSync type. Camera is added when permission is granted, and omitted
+     * if Android rejects while-in-use camera access during a background restart.
      */
     private fun startInForeground(notification: Notification) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            var type = ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
-            if (checkSelfPermission(Manifest.permission.CAMERA) ==
-                PackageManager.PERMISSION_GRANTED
-            ) {
-                type = type or ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA
-            }
-            try {
-                ServiceCompat.startForeground(this, NOTIFICATION_ID, notification, type)
-            } catch (e: Exception) {
-                Log.w(TAG, "$LOG_PREFIX_LIFECYCLE: camera FGS type refused, dataSync only", e)
-                ServiceCompat.startForeground(
-                    this, NOTIFICATION_ID, notification,
-                    ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
-                )
-            }
+        val serverType = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
         } else {
-            startForeground(NOTIFICATION_ID, notification)
+            0
+        }
+        val includeCamera = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
+            checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+        val type = if (includeCamera) {
+            serverType or ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA
+        } else {
+            serverType
+        }
+        try {
+            ServiceCompat.startForeground(this, NOTIFICATION_ID, notification, type)
+        } catch (e: SecurityException) {
+            if (!includeCamera) throw e
+            Log.w(TAG, "$LOG_PREFIX_LIFECYCLE: Camera FGS type refused, server only", e)
+            ServiceCompat.startForeground(this, NOTIFICATION_ID, notification, serverType)
         }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        // A pending start may still arrive after onCreate requested stopSelf().
+        if (!foregroundStarted) {
+            stopSelf()
+            return START_NOT_STICKY
+        }
+        if (initializationStarted) return START_STICKY
+        initializationStarted = true
         Log.i(
             TAG,
             "$LOG_PREFIX_LIFECYCLE: onStartCommand called with startId=$startId, flags=$flags"
@@ -192,9 +206,7 @@ class McpServerService : Service() {
         // Launch server initialization in a background coroutine
         Log.d(TAG, "$LOG_PREFIX_SERVER: Launching server initialization in background coroutine")
         serviceScope.launch {
-            // Load tool states from the repository (suspend) before starting server
-            toolStates = toolPreferencesRepository.getToolEnabledStates().first()
-            Log.d(TAG, "$LOG_PREFIX_TOOLS: Loaded tool states from repository: $toolStates")
+            toolService.awaitLoaded()
 
             // Call suspend startMcpServer within coroutine scope
             startMcpServer()
@@ -433,7 +445,10 @@ class McpServerService : Service() {
             )
         )
 
-        // Add tools based on their enabled state from the repository
+        // Each connection gets current choices, including changes made while
+        // the service is running. A startup snapshot would require restarting
+        // the entire server even after the AI client reconnects.
+        val toolStates = toolService.toolEnabledStates.value
         Log.d(TAG, "$LOG_PREFIX_TOOLS: Configuring ${availableTools.size} available tools")
         var enabledCount = 0
         for (tool in availableTools) {

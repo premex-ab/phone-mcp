@@ -11,6 +11,11 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withTimeoutOrNull
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
@@ -37,9 +42,16 @@ class RemoteAccessViewModel @Inject constructor(
         // Any purchase (new, or restored after reinstall) is sent to the relay
         // for verification; only then is it acknowledged towards Play.
         viewModelScope.launch {
-            billingManager.pendingPurchase.collect { purchase ->
-                if (purchase != null) submitPurchase(purchase)
-            }
+            combine(billingManager.pendingPurchase, repository.config()) { purchase, config -> purchase to config }
+                .collectLatest { (purchase, config) ->
+                    if (purchase != null && config.registered) {
+                        var retryDelay = 2_000L
+                        while (!submitPurchase(purchase)) {
+                            delay(retryDelay)
+                            retryDelay = (retryDelay * 2).coerceAtMost(60_000L)
+                        }
+                    }
+                }
         }
     }
 
@@ -47,25 +59,60 @@ class RemoteAccessViewModel @Inject constructor(
     // and no purchases can ever arrive.)
 
     fun subscribe(activity: android.app.Activity, basePlanId: String? = null) {
+        error = null
         if (!billingManager.launchPurchase(activity, basePlanId)) {
-            error = "Google Play billing is not available on this device"
+            error = context.getString(se.premex.mcp.R.string.billing_unavailable)
+            billingManager.connect()
+        } else {
+            recordMilestone("checkout_started")
         }
     }
 
-    private suspend fun submitPurchase(purchase: com.android.billingclient.api.Purchase) {
+    private suspend fun submitPurchase(purchase: com.android.billingclient.api.Purchase): Boolean {
         val current = repository.config().first()
-        val deviceId = current.deviceId ?: return
-        val deviceSecret = current.deviceSecret ?: return
-        try {
+        val deviceId = current.deviceId ?: return false
+        val deviceSecret = current.deviceSecret ?: return false
+        verifyingPurchase = true
+        return try {
             entitlement = withContext(Dispatchers.IO) {
                 RelayApi.submitPurchase(current.relayUrl, deviceId, deviceSecret, purchase.purchaseToken)
             }
-            billingManager.acknowledge(purchase)
-            billingManager.clearPending()
-        } catch (e: Exception) {
-            // Left pending: retried on next app start via queryExistingPurchases
-            error = e.message ?: "Could not verify the purchase"
+            // Backend retries durably. Keep the client acknowledgement as a fallback
+            // during rollout or temporary Play service-account permission failures.
+            if (entitlement?.acknowledged != true && withTimeoutOrNull(30_000) { billingManager.acknowledge(purchase) } != true) {
+                error = context.getString(se.premex.mcp.R.string.purchase_confirmation_pending)
+                false
+            } else {
+                error = null
+                verifyingPurchase = false
+                billingManager.clearPending()
+                true
+            }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (_: Exception) {
+            error = context.getString(se.premex.mcp.R.string.purchase_confirmation_pending)
+            false
         }
+    }
+
+    var verifyingPurchase by mutableStateOf(false)
+        private set
+
+    private val recordedMilestones = mutableSetOf<String>()
+    fun recordMilestone(event: String) {
+        if (!recordedMilestones.add(event)) return
+        viewModelScope.launch {
+            try {
+                withContext(Dispatchers.IO) { RelayApi.milestone(repository.config().first(), event) }
+            } catch (e: CancellationException) { throw e }
+            catch (_: Exception) { recordedMilestones.remove(event) }
+        }
+    }
+
+    fun restorePurchases() {
+        billingManager.connect()
+        refreshPairedClients()
     }
 
     val config: StateFlow<RemoteAccessConfig> = repository.config()
@@ -84,7 +131,7 @@ class RemoteAccessViewModel @Inject constructor(
         private set
 
     /** "trial"/"paid"/"grace"/"expired" to activeUntil ISO instant; null until fetched. */
-    var entitlement by mutableStateOf<Pair<String, String>?>(null)
+    var entitlement by mutableStateOf<RemoteEntitlement?>(null)
         private set
 
     fun setEnabled(enabled: Boolean) {

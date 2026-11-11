@@ -67,8 +67,8 @@
     <string name="subscribe">Abonnér</string>
     <string name="remote_trial_days_left">Gratis prøveperiode — %1$d dage tilbage</string>
     <string name="remote_subscription_active">Abonnementet er aktivt</string>
-    <string name="remote_grace">Prøveperioden er slut — %1$d dages frist tilbage, før fjernadgangen stopper</string>
-    <string name="remote_expired">Fjernadgangen er udløbet. Abonnementer kommer snart.</string>
+    <string name="remote_grace">Adgangsperioden er udløbet — %1$d ekstra dage tilbage. Abonner for at fortsætte.</string>
+    <string name="remote_expired">Fjernadgang er udløbet. Abonner nedenfor for at oprette forbindelse igen. Lokal netværksadgang er fortsat gratis.</string>
     <string name="battery_hint">Android kan sætte forbindelsen på pause i dyb dvale. Undtag appen fra batterioptimering for at forblive tilgængelig hvor som helst fra.</string>
     <string name="battery_button">Tillad baggrundsforbindelse</string>
     <string name="restart_after_boot_title">Telefonen er genstartet</string>

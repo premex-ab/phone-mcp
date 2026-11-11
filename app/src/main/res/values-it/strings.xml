@@ -67,8 +67,8 @@
     <string name="subscribe">Abbonati</string>
     <string name="remote_trial_days_left">Prova gratuita — %1$d giorni rimasti</string>
     <string name="remote_subscription_active">Abbonamento attivo</string>
-    <string name="remote_grace">Prova terminata — %1$d giorni di tolleranza prima che l\'accesso remoto si interrompa</string>
-    <string name="remote_expired">L\'accesso remoto è scaduto. Gli abbonamenti arriveranno presto.</string>
+    <string name="remote_grace">Il periodo di accesso è terminato — restano %1$d giorni aggiuntivi. Abbonati per restare connesso.</string>
+    <string name="remote_expired">L’accesso remoto è scaduto. Abbonati qui sotto per riconnetterti. L’accesso alla rete locale resta gratuito.</string>
     <string name="battery_hint">Android può sospendere la connessione durante il sonno profondo. Escludi l\'app dall\'ottimizzazione della batteria per restare raggiungibile ovunque.</string>
     <string name="battery_button">Consenti connessione in background</string>
     <string name="restart_after_boot_title">Telefono riavviato</string>

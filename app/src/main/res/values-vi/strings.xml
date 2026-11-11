@@ -67,8 +67,8 @@
     <string name="subscribe">Đăng ký</string>
     <string name="remote_trial_days_left">Dùng thử miễn phí — còn %1$d ngày</string>
     <string name="remote_subscription_active">Gói đăng ký đang hoạt động</string>
-    <string name="remote_grace">Đã hết thời gian dùng thử — còn %1$d ngày ân hạn trước khi truy cập từ xa dừng lại</string>
-    <string name="remote_expired">Truy cập từ xa đã hết hạn. Tính năng đăng ký sắp ra mắt.</string>
+    <string name="remote_grace">Thời gian truy cập đã kết thúc — còn %1$d ngày bổ sung. Đăng ký để tiếp tục kết nối.</string>
+    <string name="remote_expired">Quyền truy cập từ xa đã hết hạn. Đăng ký bên dưới để kết nối lại. Truy cập mạng cục bộ vẫn miễn phí.</string>
     <string name="battery_hint">Android có thể tạm dừng kết nối khi ngủ sâu. Hãy loại trừ ứng dụng khỏi tối ưu hóa pin để luôn truy cập được từ bất cứ đâu.</string>
     <string name="battery_button">Cho phép kết nối nền</string>
     <string name="restart_after_boot_title">Điện thoại đã khởi động lại</string>
