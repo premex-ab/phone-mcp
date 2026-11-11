@@ -580,6 +580,8 @@ class McpServerService : Service() {
                     authenticate("bearer-auth") {
                         sse("/sse") {
                             Log.d(TAG, "$LOG_PREFIX_TRANSPORT: New SSE connection established")
+                            // SSE comments keep idle streams active without entering the MCP
+                            // message channel. The job is scoped to this connection.
                             heartbeat {
                                 period = SSE_HEARTBEAT_INTERVAL
                             }
