@@ -29,6 +29,7 @@ class RemoteAccessViewModel @Inject constructor(
     private val repository: RemoteAccessRepository,
     tunnelStatusRepository: TunnelStatusRepository,
     private val billingManager: BillingManager,
+    private val analytics: JourneyAnalytics,
     @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
@@ -61,10 +62,12 @@ class RemoteAccessViewModel @Inject constructor(
     fun subscribe(activity: android.app.Activity, basePlanId: String? = null) {
         error = null
         if (!billingManager.launchPurchase(activity, basePlanId)) {
+            analytics.record(JourneyEvent.CHECKOUT_FAILED, plan = basePlanId)
             error = context.getString(se.premex.mcp.R.string.billing_unavailable)
             billingManager.connect()
         } else {
             recordMilestone("checkout_started")
+            analytics.record(JourneyEvent.CHECKOUT_STARTED, plan = basePlanId)
         }
     }
 
@@ -86,6 +89,8 @@ class RemoteAccessViewModel @Inject constructor(
                 error = null
                 verifyingPurchase = false
                 billingManager.clearPending()
+                // Restoring a purchase must not fabricate a new sale or revenue event.
+                if (entitlement?.status == "paid") analytics.observedOnce(JourneyEvent.ENTITLEMENT_ACTIVE)
                 true
             }
         } catch (e: CancellationException) {
@@ -100,8 +105,25 @@ class RemoteAccessViewModel @Inject constructor(
         private set
 
     private val recordedMilestones = mutableSetOf<String>()
+    fun recordJourney(event: JourneyEvent, client: String? = null, step: ActivationStep? = null) {
+        analytics.record(event, client, step)
+    }
+
+    fun observeActivation(step: ActivationStep, client: String) {
+        analytics.record(JourneyEvent.SETUP_STEP, client, step)
+        if (tunnelConnected.value == true) analytics.observedOnce(JourneyEvent.CONNECTED)
+        if (pairedClients.isNotEmpty()) analytics.observedOnce(JourneyEvent.PAIRED)
+        if (entitlement?.firstToolSuccess == true) analytics.observedOnce(JourneyEvent.TOOL_SUCCESS)
+    }
+
     fun recordMilestone(event: String) {
+        if (!config.value.registered) return
         if (!recordedMilestones.add(event)) return
+        when (event) {
+            "paywall_viewed" -> analytics.record(JourneyEvent.PAYWALL_VIEWED)
+            "trial_reminder_viewed" -> analytics.record(JourneyEvent.TRIAL_REMINDER_VIEWED)
+            "trial_help_viewed" -> analytics.record(JourneyEvent.TRIAL_HELP_VIEWED)
+        }
         viewModelScope.launch {
             try {
                 withContext(Dispatchers.IO) { RelayApi.milestone(repository.config().first(), event) }
@@ -150,6 +172,7 @@ class RemoteAccessViewModel @Inject constructor(
                         RelayApi.registerDevice(current.relayUrl, Build.MODEL, trialAnchor())
                     }
                     repository.saveDevice(deviceId, deviceSecret)
+                    analytics.record(JourneyEvent.REGISTERED)
                 }
                 repository.setEnabled(true)
             } catch (e: Exception) {

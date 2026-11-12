@@ -129,7 +129,10 @@ The connection guide on the main screen walks you through both.</string>
     <string name="activation_success" tools:ignore="MissingTranslation">It works — your AI has used a phone tool</string>
     <string name="activation_connect" tools:ignore="MissingTranslation">1. Keep the server running and wait for the remote connection. If it stays disconnected, check internet access and allow background battery use below.</string>
     <string name="activation_pair" tools:ignore="MissingTranslation">2. Choose your AI client below, follow its setup steps, then enter a pairing code. This screen updates automatically.</string>
-    <string name="activation_try" tools:ignore="MissingTranslation">3. Enable Sensors below, reconnect your AI client so it discovers the tool, then paste this prompt into your AI client. Success appears here after an actual tool response.</string>
+    <string name="activation_try" tools:ignore="MissingTranslation">3. Reconnect your AI client so it discovers Sensors, then paste this prompt into your AI client. Success appears here after an actual tool response.</string>
+    <string name="activation_enable_sensor_step" tools:ignore="MissingTranslation">3. Enable Sensors for a first test. Then reconnect your AI client so it can discover the tool.</string>
+    <string name="activation_reconnect_title" tools:ignore="MissingTranslation">Reconnect your AI to your phone</string>
+    <string name="activation_open_guide" tools:ignore="MissingTranslation">Open the %1$s setup guide</string>
     <string name="activation_enable_sensor" tools:ignore="MissingTranslation">Enable Sensors for this test</string>
     <string name="activation_sensor_explanation" tools:ignore="MissingTranslation">Start with a sensor reading. This enables only Sensors, such as motion and light. You can turn it off in the tool list.</string>
     <string name="activation_sensor_ready" tools:ignore="MissingTranslation">✓ Sensors enabled. Connect or reconnect your AI client to discover the tool.</string>
@@ -140,5 +143,6 @@ The connection guide on the main screen walks you through both.</string>
     <string name="activation_help" tools:ignore="MissingTranslation">No tools in your AI client? Enable a tool in this app, reconnect the client and check its phone connection. A pairing code connects the client; the prompt tests the tool.</string>
     <string name="copy_prompt" tools:ignore="MissingTranslation">Copy prompt</string>
     <string name="trial_reminder" tools:ignore="MissingTranslation">Keep using your phone tools from any network after the trial with a subscription. Monthly and yearly plans renew automatically until canceled in Google Play. Local Wi-Fi stays free.</string>
+    <string name="trial_get_started" tools:ignore="MissingTranslation">Your remote trial is ending soon. Try the phone command above while the trial is active. The setup guide can help you connect your AI. Local Wi-Fi stays free.</string>
     <string name="privacy_policy" tools:ignore="MissingTranslation">Privacy policy</string>
 </resources>
