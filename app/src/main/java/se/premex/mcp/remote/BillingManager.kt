@@ -31,6 +31,7 @@ import javax.inject.Singleton
 @Singleton
 class BillingManager @Inject constructor(
     @ApplicationContext context: Context,
+    private val analytics: JourneyAnalytics,
 ) : PurchasesUpdatedListener {
 
     companion object {
@@ -138,6 +139,10 @@ class BillingManager @Inject constructor(
             purchases?.firstOrNull { PRODUCT_ID in it.products && it.purchaseState == Purchase.PurchaseState.PURCHASED }?.let {
                 _pendingPurchase.value = it
             }
+        } else if (result.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
+            analytics.record(JourneyEvent.CHECKOUT_CANCELLED)
+        } else {
+            analytics.record(JourneyEvent.CHECKOUT_FAILED)
         }
     }
 

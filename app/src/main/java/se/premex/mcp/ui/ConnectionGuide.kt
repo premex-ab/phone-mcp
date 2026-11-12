@@ -80,6 +80,10 @@ import se.premex.mcp.BuildConfig
 import se.premex.mcp.R
 import se.premex.mcp.remote.RemoteAccessConfig
 import se.premex.mcp.remote.RemoteAccessViewModel
+import se.premex.mcp.remote.ActivationStep
+import se.premex.mcp.remote.JourneyEvent
+import se.premex.mcp.remote.TrialMessage
+import se.premex.mcp.remote.trialMessage
 import se.premex.mcp.ui.theme.MCPServerTheme
 
 private val REMOTE_SSE_URL = "${RemoteAccessConfig.RELAY_URL}/sse"
@@ -102,11 +106,20 @@ fun ConnectionGuide(
     sensorEnabled: Boolean = false,
     onEnableSensor: () -> Unit = {},
 ) {
+    val context = LocalContext.current
+    val clientPreferences = remember(context) { context.getSharedPreferences("connection_guide", Context.MODE_PRIVATE) }
     var mode by rememberSaveable { mutableStateOf(ConnectionMode.REMOTE) }
-    var selectedClient by rememberSaveable { mutableStateOf(McpClient.CLAUDE_CODE) }
+    var selectedClient by rememberSaveable { mutableStateOf(
+        McpClient.entries.firstOrNull { it.name == clientPreferences.getString("selected_client", null) }
+            ?: McpClient.CLAUDE_CODE
+    ) }
+    val selectClient: (McpClient) -> Unit = {
+        selectedClient = it
+        clientPreferences.edit().putString("selected_client", it.name).apply()
+    }
 
     val localGuide: @Composable () -> Unit = {
-        LocalGuide(connectionUrl, authToken, selectedClient, { selectedClient = it },
+        LocalGuide(connectionUrl, authToken, selectedClient, selectClient,
             sensorEnabled, onEnableSensor, isSelectedInterfaceAvailable)
     }
 
@@ -147,7 +160,7 @@ fun ConnectionGuide(
                 if (LocalInspectionMode.current) {
                     localGuide()
                 }
-                else RemoteGuide(selectedClient, { selectedClient = it }, sensorEnabled, onEnableSensor)
+                else RemoteGuide(selectedClient, selectClient, sensorEnabled, onEnableSensor)
 
             ConnectionMode.LOCAL -> {
                 localGuide()
@@ -216,6 +229,23 @@ private fun RemoteGuide(
                 Spacer(modifier = Modifier.height(8.dp))
             }
 
+            val step = ActivationStep.from(
+                connected = tunnelConnected == true,
+                paired = viewModel.pairedClients.isNotEmpty(),
+                successful = viewModel.entitlement?.firstToolSuccess == true,
+                sensorEnabled = sensorEnabled,
+            )
+            LaunchedEffect(step, selectedClient) { viewModel.observeActivation(step, selectedClient.name) }
+            ActivationGuide(
+                step = step,
+                successful = viewModel.entitlement?.firstToolSuccess == true,
+                sensorEnabled = sensorEnabled,
+                selectedClient = selectedClient,
+                onEnableSensor = onEnableSensor,
+                onPromptCopied = { viewModel.recordJourney(JourneyEvent.PROMPT_COPIED, selectedClient.name, step) },
+                onGuideOpened = { viewModel.recordJourney(JourneyEvent.GUIDE_OPENED, selectedClient.name, step) },
+            )
+
             viewModel.entitlement?.let { entitlement ->
                 val status = entitlement.status
                 val daysLeft = entitlement.daysLeft()
@@ -240,9 +270,13 @@ private fun RemoteGuide(
                 // and the device is not already covered by a paid subscription
                 val product by viewModel.subscriptionProduct.collectAsState()
                 if (status != "paid") {
-                    if (status == "trial" && daysLeft <= 7) {
-                        Text(stringResource(R.string.trial_reminder), style = MaterialTheme.typography.bodySmall)
-                        LaunchedEffect(daysLeft) { viewModel.recordMilestone("trial_reminder_viewed") }
+                    entitlement.trialMessage()?.let { message ->
+                        Text(stringResource(if (message == TrialMessage.KEEP_USING) R.string.trial_reminder
+                            else R.string.trial_get_started), style = MaterialTheme.typography.bodySmall)
+                        LaunchedEffect(message) {
+                            viewModel.recordMilestone(if (message == TrialMessage.KEEP_USING)
+                                "trial_reminder_viewed" else "trial_help_viewed")
+                        }
                     }
                     product?.let { details ->
                         LaunchedEffect(details.productId) { viewModel.recordMilestone("paywall_viewed") }
@@ -372,14 +406,6 @@ private fun RemoteGuide(
                 )
             }
         } else {
-            ActivationGuide(
-                connected = tunnelConnected == true,
-                paired = viewModel.pairedClients.isNotEmpty(),
-                successful = viewModel.entitlement?.firstToolSuccess == true,
-                sensorEnabled = sensorEnabled,
-                onEnableSensor = onEnableSensor,
-            )
-
             Text(
                 text = stringResource(R.string.add_client_title),
                 style = MaterialTheme.typography.titleSmall,
@@ -388,7 +414,10 @@ private fun RemoteGuide(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            ClientChips(selectedClient, onSelectClient)
+            ClientChips(selectedClient) {
+                onSelectClient(it)
+                viewModel.recordJourney(JourneyEvent.CLIENT_SELECTED, it.name)
+            }
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -518,34 +547,64 @@ private fun RemoteGuide(
 
 /** A real successful tools/call response, observed by the relay, completes setup. */
 @Composable
-private fun ActivationGuide(
-    connected: Boolean,
-    paired: Boolean,
+internal fun ActivationGuide(
+    step: ActivationStep,
     successful: Boolean,
     sensorEnabled: Boolean,
+    selectedClient: McpClient,
     onEnableSensor: () -> Unit,
+    onPromptCopied: () -> Unit,
+    onGuideOpened: () -> Unit,
 ) {
     val context = LocalContext.current
     Card(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text(stringResource(if (successful) R.string.activation_success else R.string.activation_title),
-                style = MaterialTheme.typography.titleSmall)
             Text(stringResource(when {
-                !connected -> R.string.activation_connect
-                !paired -> R.string.activation_pair
-                !successful -> R.string.activation_try
-                else -> R.string.activation_next
+                step == ActivationStep.READY -> R.string.activation_success
+                successful -> R.string.activation_reconnect_title
+                else -> R.string.activation_title
+            }),
+                style = MaterialTheme.typography.titleSmall)
+            Text(stringResource(when (step) {
+                ActivationStep.CONNECT -> R.string.activation_connect
+                ActivationStep.PAIR -> R.string.activation_pair
+                ActivationStep.ENABLE_SENSOR -> R.string.activation_enable_sensor_step
+                ActivationStep.TRY_COMMAND -> R.string.activation_try
+                ActivationStep.READY -> R.string.activation_next
             }), style = MaterialTheme.typography.bodySmall)
-            if (!successful) SensorTestSetup(sensorEnabled, onEnableSensor)
-            if (connected && paired) {
-                val prompt = stringResource(if (successful) R.string.activation_next_prompt else R.string.activation_prompt)
-                CodeBlock(prompt, stringResource(R.string.copy_prompt), wrapText = true) { copyToClipboard(context, prompt) }
+            if (step == ActivationStep.ENABLE_SENSOR || step == ActivationStep.TRY_COMMAND) {
+                SensorTestSetup(sensorEnabled, onEnableSensor)
             }
-            if (!successful) {
+            if (step == ActivationStep.TRY_COMMAND || step == ActivationStep.READY) {
+                val prompt = stringResource(if (step == ActivationStep.READY) R.string.activation_next_prompt else R.string.activation_prompt)
+                CodeBlock(prompt, stringResource(R.string.copy_prompt), wrapText = true) {
+                    copyToClipboard(context, prompt)
+                    onPromptCopied()
+                }
+            }
+            if (step != ActivationStep.READY) {
                 Text(stringResource(R.string.activation_help), style = MaterialTheme.typography.bodySmall)
+                selectedClient.guidePath()?.let { path ->
+                    TextButton(onClick = {
+                        val uri = Uri.parse("https://phonemcp.ai$path").buildUpon()
+                            .appendQueryParameter("utm_source", "phone_mcp_app")
+                            .appendQueryParameter("utm_medium", "app")
+                            .appendQueryParameter("utm_campaign", "setup_help")
+                            .build()
+                        context.startActivity(Intent(Intent.ACTION_VIEW, uri))
+                        onGuideOpened()
+                    }) { Text(stringResource(R.string.activation_open_guide, stringResource(selectedClient.title))) }
+                }
             }
         }
     }
+}
+
+private fun McpClient.guidePath(): String? = when (this) {
+    McpClient.CLAUDE_CODE, McpClient.CLAUDE_DESKTOP -> "/guides/claude-android"
+    McpClient.GEMINI_CLI -> "/guides/gemini-android"
+    McpClient.CODEX -> "/guides/codex-android"
+    McpClient.OTHER -> null
 }
 
 /** Explicit opt-in, before the client discovers its tools. */
@@ -726,7 +785,7 @@ private fun ClientChips(selected: McpClient, onSelect: (McpClient) -> Unit) {
 }
 
 /** The MCP clients the guide can generate ready-to-paste setup snippets for. */
-private enum class McpClient(
+internal enum class McpClient(
     @StringRes val title: Int,
     @StringRes val instructions: Int,
     @StringRes val copyButtonText: Int,
